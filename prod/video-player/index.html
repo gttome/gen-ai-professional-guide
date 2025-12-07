@@ -1,0 +1,2810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generative AI Video Learning Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-left: #e4e7ff;
+      --bg-right: #e5ffe9;
+      --card-radius: 28px;
+      --card-width: min(480px, 90vw);
+      --card-height: min(620px, 78vh);
+      --shadow-soft: 0 18px 35px rgba(0, 0, 0, 0.16);
+      --accent-blue: #2563eb;
+      --accent-heart: #ec4899;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: #e5e7eb;
+      --nav-btn-size: 46px;
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 0% 50%, #e4e7ff, #ffffff 45%),
+        radial-gradient(circle at 100% 50%, #e5ffe9, #ffffff 45%);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .app {
+      max-width: 960px;
+      width: 100%;
+      padding: 16px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chapter-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chapter-tab {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .chapter-tab span:first-child {
+      font-weight: 600;
+    }
+
+    .chapter-tab span:last-child {
+      opacity: 0.9;
+    }
+
+    .chapter-tab.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+    }
+
+    .top-row-subtitle {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .mobile-swipe-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 2px;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-swipe-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .pill-btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      white-space: nowrap;
+    }
+
+    .pill-btn span.icon {
+      font-size: 0.9rem;
+    }
+
+    .favorites-toggle.active {
+      background: #ec4899;
+      border-color: #ec4899;
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(236, 72, 153, 0.45);
+    }
+
+    .review-toggle.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
+    }
+
+    .stats-toggle.active {
+      background: #0f172a;
+      border-color: #0f172a;
+      color: #e5e7eb;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.6);
+    }
+
+    .card-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 8px;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .nav-btn {
+      width: var(--nav-btn-size);
+      height: var(--nav-btn-size);
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--accent-blue);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.15);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      z-index: 5;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      background: #f9fafb;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .card-shell {
+      position: relative;
+      width: var(--card-width);
+      max-width: 100%;
+      height: var(--card-height);
+      max-height: calc(100vh - 220px);
+      background:
+        radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(52, 211, 153, 0.2), transparent 55%),
+        #f9fafb;
+      border-radius: var(--card-radius);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.25),
+        0 0 0 1px rgba(148, 163, 184, 0.35);
+      padding: 14px 18px 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .card-stack-shadow {
+      position: absolute;
+      inset: auto 18px 6px 18px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
+      filter: blur(10px);
+      z-index: 0;
+    }
+
+    .card {
+      flex: 1;
+      min-height: 0;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 20px;
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow:
+        inset 0 0 0 1px rgba(229, 231, 235, 0.9),
+        0 10px 30px rgba(15, 23, 42, 0.18);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    .card-section-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--text-main);
+    }
+
+    .card-header-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .transcript-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .transcript-missing {
+      background: #f9fafb;
+      color: #9ca3af;
+      border-color: #e5e7eb;
+    }
+
+    .transcript-available {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #22c55e;
+    }
+
+    .favorite-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 5px 9px;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      background: #fef2f2;
+      color: #b91c1c;
+      box-shadow: 0 8px 18px rgba(248, 113, 113, 0.35);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
+        color 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .favorite-btn span {
+      font-size: 0.95rem;
+      line-height: 1;
+    }
+
+    .favorite-btn:hover {
+      transform: translateY(-1px);
+      background: #fee2e2;
+      box-shadow: 0 10px 24px rgba(248, 113, 113, 0.45);
+    }
+
+    .favorite-btn.inactive {
+      background: #f9fafb;
+      color: #6b7280;
+      box-shadow: 0 6px 12px rgba(148, 163, 184, 0.35);
+    }
+
+    .review-add-btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 4px 9px;
+      font-size: 0.78rem;
+      background: #eff6ff;
+      color: #1d4ed8;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .review-add-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    /* VIDEO WRAPPER (16:9) */
+    .image-wrapper {
+      margin: 4px 0 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      background: radial-gradient(circle at 0 0, #eff6ff, #ffffff 55%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .image-wrapper::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%; /* 16:9 */
+    }
+
+    .image-wrapper-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+    }
+
+    .image-wrapper-inner video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .video-overlay-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+}
+
+
+    .video-overlay-play.hidden {
+      opacity: 0;
+    }
+
+    .video-overlay-play .play-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f9fafb;
+      font-size: 1.8rem;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      max-height: 120px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    /* SMART SEGMENT BOOKMARKS */
+    .bookmark-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .bookmark-bar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .bookmark-title {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .bookmark-btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      padding: 3px 9px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .bookmark-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .bookmark-list {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 4px;
+      padding-bottom: 2px;
+    }
+
+    .bookmark-chip {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .bookmark-chip-time {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .bookmark-chip-label {
+      color: #6b7280;
+    }
+
+    .bookmark-chip:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    /* INLINE NOTES DOCK */
+    .notes-dock {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .notes-title {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .notes-btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      padding: 3px 9px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .notes-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .notes-list {
+      max-height: 70px;
+      overflow-y: auto;
+      padding-left: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .notes-item-btn {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .notes-item-btn span.time {
+      font-weight: 600;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    .notes-item-btn span.text {
+      color: #4b5563;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .notes-item-btn:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .card-footer-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    .bottom-bar {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .progress-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: #2563eb;
+      transition: width 0.25s ease;
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      color: #4b5563;
+      text-align: center;
+    }
+
+    .favorites-count {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    .bottom-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: #111827;
+      color: #f9fafb;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 50;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* THEATER MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: min(920px, 96vw);
+      max-height: min(720px, 90vh);
+      width: 100%;
+      background: #020617;
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: linear-gradient(
+        to right,
+        rgba(15, 23, 42, 0.96),
+        rgba(30, 64, 175, 0.9)
+      );
+      color: #e5e7eb;
+      font-size: 0.85rem;
+    }
+
+    .modal-header-title {
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .modal-close-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      padding: 4px 9px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .modal-body {
+      padding: 8px 8px 10px;
+      background: radial-gradient(circle at 0 0, #eff6ff, #020617 60%);
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-image-wrapper {
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-image-wrapper video {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: auto;
+      background: #000;
+    }
+
+    /* REVIEW DECK PANEL */
+    .review-deck-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      display: none;
+      z-index: 55;
+    }
+
+    .review-deck-backdrop.active {
+      display: block;
+    }
+
+    .review-deck-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 100%);
+      width: min(960px, 100%);
+      max-height: 60vh;
+      background: #020617;
+      color: #e5e7eb;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -18px 35px rgba(0, 0, 0, 0.55);
+      padding: 10px 12px 12px;
+      z-index: 56;
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .review-deck-panel.open {
+      transform: translate(-50%, 0);
+    }
+
+    .review-deck-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .review-deck-title {
+      font-weight: 500;
+    }
+
+    .review-deck-close {
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      padding: 3px 9px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .review-deck-empty {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      padding: 4px 2px 6px;
+    }
+
+    .review-deck-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 40vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .review-item {
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: #020617;
+      border: 1px solid #374151;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+
+    .review-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .review-item-title {
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    .review-item-meta {
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    .review-item-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .review-item-btn {
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .review-item-btn.primary {
+      border-color: #2563eb;
+      background: #1d4ed8;
+    }
+
+    /* STATS PANEL (METRICS) */
+    .stats-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      display: none;
+      z-index: 57;
+    }
+
+    .stats-backdrop.active {
+      display: block;
+    }
+
+    .stats-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 100%);
+      width: min(960px, 100%);
+      max-height: 60vh;
+      background: #020617;
+      color: #e5e7eb;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -18px 35px rgba(0, 0, 0, 0.55);
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.2s ease;
+    }
+
+    .stats-panel.open {
+      transform: translate(-50%, 0);
+    }
+
+    .stats-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .stats-title {
+      font-weight: 500;
+    }
+
+    .stats-close {
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      padding: 3px 9px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .stats-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .stats-summary-card {
+      border-radius: 10px;
+      border: 1px solid #374151;
+      background: #020617;
+      padding: 6px 8px;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stats-summary-label {
+      color: #9ca3af;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .stats-summary-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .stats-summary-sub {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .stats-list {
+      margin-top: 4px;
+      max-height: 40vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stats-empty {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      padding: 4px 2px 6px;
+    }
+
+    .stats-row {
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: #020617;
+      border: 1px solid #374151;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+
+    .stats-row-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .stats-row-title {
+      font-weight: 500;
+      color: #e5e7eb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stats-row-meta {
+      color: #9ca3af;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stats-row-progress {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .stats-row-status {
+      font-size: 0.75rem;
+      color: #e5e7eb;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      white-space: nowrap;
+    }
+
+    .stats-row-progress-bar {
+      flex: 1;
+      height: 5px;
+      border-radius: 999px;
+      background: #1f2937;
+      overflow: hidden;
+    }
+
+    .stats-row-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #2563eb;
+      transition: width 0.25s ease;
+    }
+
+    .stats-row-percent {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    .stats-row-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .stats-row-btn {
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .app {
+        padding: 12px 10px 16px;
+      }
+
+      .card-area {
+        gap: 10px;
+      }
+
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+      }
+
+      .card-shell {
+        width: min(100%, 420px);
+        height: min(560px, 72vh);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .top-actions {
+        align-self: flex-end;
+      }
+
+      .bottom-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding-bottom: 36px;
+      }
+
+      .progress-area {
+        order: 3;
+      }
+
+      .bottom-hint {
+        order: 2;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top-row">
+      <div>
+        <div class="chapter-tabs" id="chapterTabs"></div>
+        <div class="top-row-subtitle">
+          Use ← / → or the buttons to navigate. Tap the video to play / pause, or open in theater mode.
+        </div>
+        <div class="mobile-swipe-hint" id="mobileSwipeHint">
+          Swipe left/right to navigate. Tap the video to play or pause.
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="pill-btn favorites-toggle" id="favoritesToggle" type="button">
+          <span class="icon">♥</span>
+          <span class="label">View Favorites</span>
+        </button>
+        <button class="pill-btn review-toggle" id="reviewDeckToggle" type="button">
+          <span class="icon">📚</span>
+          <span class="label">Review Deck</span>
+        </button>
+        <button class="pill-btn stats-toggle" id="statsToggle" type="button">
+          <span class="icon">📊</span>
+          <span class="label">Learning Stats</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="card-area">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous video">&#8592;</button>
+
+      <div class="card-shell" id="cardShell">
+        <div class="card-stack-shadow"></div>
+
+        <article class="card" id="card">
+          <div class="card-section-tag" id="imageSection"></div>
+
+          <div class="card-header-row">
+            <h2 class="card-title" id="imageTitle"></h2>
+
+            <div class="card-header-actions">
+              <span
+                class="transcript-badge transcript-missing"
+                id="transcriptBadge"
+              >
+                Transcript coming soon
+              </span>
+
+              <button
+                class="favorite-btn inactive"
+                id="favoriteBtn"
+                type="button"
+                aria-label="Toggle favorite"
+              >
+                <span>♥</span>
+              </button>
+
+              <button
+                class="review-add-btn"
+                id="addToReviewBtn"
+                type="button"
+              >
+                + Add to Review Deck
+              </button>
+            </div>
+          </div>
+
+          <div class="image-wrapper">
+            <div class="image-wrapper-inner">
+              <video
+                id="imageElement"
+                playsinline
+                preload="metadata"
+                controls
+              >
+                <track
+                  id="captionTrack"
+                  kind="subtitles"
+                  srclang="en"
+                  label="English"
+                  default
+                />
+              </video>
+
+              <div class="video-overlay-play" id="videoOverlayPlay">
+                <div class="play-circle">▶</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-description" id="imageDescription"></div>
+
+          <!-- SMART SEGMENT BOOKMARKS -->
+          <div class="bookmark-bar">
+            <div class="bookmark-bar-header">
+              <div class="bookmark-title">Smart bookmarks</div>
+              <button
+                class="bookmark-btn"
+                id="addBookmarkBtn"
+                type="button"
+              >
+                + Bookmark this moment
+              </button>
+            </div>
+            <div class="bookmark-list" id="bookmarkList"></div>
+          </div>
+
+          <!-- INLINE NOTES DOCK -->
+          <div class="notes-dock">
+            <div class="notes-header">
+              <div class="notes-title">Notes for this video</div>
+              <button
+                class="notes-btn"
+                id="addNoteBtn"
+                type="button"
+              >
+                + Note at current time
+              </button>
+            </div>
+            <ul class="notes-list" id="notesList"></ul>
+          </div>
+
+          <div class="card-footer-hint" id="cardFooterHint">
+            Tap the video to play or pause. Swipe to move between videos.
+          </div>
+        </article>
+      </div>
+
+      <button class="nav-btn" id="nextBtn" aria-label="Next video">&#8594;</button>
+    </section>
+
+    <footer class="bottom-bar">
+      <div class="favorites-count" id="favoritesCount">
+        Favorites: 0
+      </div>
+
+      <div class="progress-area">
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0 of 0 videos</div>
+      </div>
+
+      <div class="bottom-hint">
+        Tip: Use “+ Note at current time” to capture your own explanation; future you will thank you.
+      </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Theater Modal -->
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-header-title" id="modalTitle"></div>
+          <button class="modal-close-btn" id="modalCloseBtn" type="button">
+            ✕ Close
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-image-wrapper">
+            <video
+              id="modalImage"
+              playsinline
+              controls
+            >
+              <track
+                id="modalCaptionTrack"
+                kind="subtitles"
+                srclang="en"
+                label="English"
+                default
+              />
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Deck Panel -->
+    <div class="review-deck-backdrop" id="reviewDeckBackdrop">
+      <div class="review-deck-panel" id="reviewDeckPanel">
+        <div class="review-deck-header">
+          <div class="review-deck-title">
+            Review Deck
+          </div>
+          <button class="review-deck-close" id="reviewDeckCloseBtn" type="button">
+            Close
+          </button>
+        </div>
+        <div class="review-deck-empty" id="reviewDeckEmpty">
+          No videos in your review deck yet. Add any video using “+ Add to Review Deck”.
+        </div>
+        <ul class="review-deck-list" id="reviewDeckList"></ul>
+      </div>
+    </div>
+
+    <!-- Stats / Metrics Panel -->
+    <div class="stats-backdrop" id="statsBackdrop">
+      <div class="stats-panel" id="statsPanel">
+        <div class="stats-header">
+          <div class="stats-title">Learning Stats</div>
+          <button class="stats-close" id="statsCloseBtn" type="button">
+            Close
+          </button>
+        </div>
+        <div class="stats-summary-grid" id="statsSummary"></div>
+        <div class="stats-list" id="statsList"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- CSV Parsing for Video Data ---
+    function parseVideoCsv(text, chapterNumber) {
+      if (!text) return [];
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+
+      const rows = [];
+      let field = "";
+      let row = [];
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+
+        if (ch === '"') {
+          if (inQuotes && text[i + 1] === '"') {
+            field += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === "," && !inQuotes) {
+          row.push(field);
+          field = "";
+        } else if ((ch === "\n" || ch === "\r") && !inQuotes) {
+          if (field.length > 0 || row.length > 0) {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = "";
+          }
+        } else {
+          field += ch;
+        }
+      }
+
+      if (field.length > 0 || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+
+      if (rows.length <= 1) return [];
+
+      const header = rows[0];
+      const dataRows = rows.slice(1);
+
+      const idxVideo = header.indexOf("VideoFileName");
+      const idxPoster = header.indexOf("PosterImage");
+      const idxTitle = header.indexOf("Title");
+      const idxDesc = header.indexOf("Description");
+      const idxSection = header.indexOf("Section");
+      const idxTranscript = header.indexOf("TranscriptText");
+      const idxCaption = header.indexOf("CaptionFile");
+
+      return dataRows
+        .map(r => {
+          const videoFileName = (r[idxVideo] || "").trim();
+          if (!videoFileName) return null;
+
+          const posterImage = (r[idxPoster] || "").trim();
+          const title = (r[idxTitle] || "").trim();
+          const description = (r[idxDesc] || "").trim();
+          const section = (r[idxSection] || "").trim();
+          const transcriptText = (r[idxTranscript] || "").trim();
+          const captionFile = (r[idxCaption] || "").trim();
+
+          const id = `ch${chapterNumber}:${videoFileName}`;
+          return {
+            id,
+            chapter: chapterNumber,
+            videoFileName,
+            posterImage,
+            title,
+            description,
+            section,
+            transcriptText,
+            captionFile,
+          };
+        })
+        .filter(Boolean);
+    }
+
+    // --- Chapter CSVs ---
+    const chapter1Csv = `VideoFileName,PosterImage,Title,Description,Section,TranscriptText,CaptionFile
+"Chapter 1 Introduction – Looking Under the Hood of Generative AI.mp4","Chapter 1 Introduction – Looking Under the Hood of Generative AI.jpg","Chapter 1 Introduction – Looking Under the Hood of Generative AI","Reframes generative AI from magic to a statistical engine that maps text into geometry, setting up the chapter’s focus on how latent space, transformers, prompts, RAG, and evaluation really work.","Chapter 1 Introduction – Looking Under the Hood of Generative AI","Transcript Text TBD","Chapter 1 Introduction – Looking Under the Hood of Generative AI.vtt"
+"1.1 Latent Space - The Model’s Map of Meaning.mp4","1.1 Latent Space - The Model’s Map of Meaning.jpg","1.1 Latent Space - The Model’s Map of Meaning","Explains latent space as the model’s high-dimensional map of meaning where similar concepts cluster together and prompts nudge you into different conceptual neighborhoods.","1.1 Latent Space - The Model’s Map of Meaning","Transcript Text TBD","1.1 Latent Space - The Model’s Map of Meaning.vtt"
+"1.2 Embeddings - Coordinates in that Space.mp4","1.2 Embeddings - Coordinates in that Space.jpg","1.2 Embeddings - Coordinates in that Space","Shows how embeddings act like coordinates in latent space for semantic search and analogy, while also warning about pattern-completion bias and hallucinations.","1.2 Embeddings - Coordinates in that Space","Transcript Text TBD","1.2 Embeddings - Coordinates in that Space.vtt"
+"1.3 Semantic Drift - When Meaning Slowly Slides Away.mp4","1.3 Semantic Drift - When Meaning Slowly Slides Away.jpg","1.3 Semantic Drift - When Meaning Slowly Slides Away","Illustrates how iterative rewrites and long conversations can cause semantic drift away from the original intent and why you must periodically re-anchor to source constraints.","1.3 Semantic Drift - When Meaning Slowly Slides Away","Transcript Text TBD","1.3 Semantic Drift - When Meaning Slowly Slides Away.vtt"
+"2.1 Multi-Head Attention – Many “Views” on the Same Text.mp4","2.1 Multi-Head Attention – Many “Views” on the Same Text.jpg","2.1 Multi-Head Attention – Many “Views” on the Same Text","Introduces multi-head attention as a set of parallel specialists that each focus on different relationships in text and combine to create a rich representation of meaning.","2.1 Multi-Head Attention – Many “Views” on the Same Text","Transcript Text TBD","2.1 Multi-Head Attention – Many “Views” on the Same Text.vtt"
+"2.2 Context Window - Big Memory, Selective Focus.mp4","2.2 Context Window - Big Memory, Selective Focus.jpg","2.2 Context Window - Big Memory, Selective Focus","Clarifies that long context windows behave more like a spotlight than perfect memory, with models prioritizing the beginning and end of prompts and often losing details in the middle.","2.2 Context Window - Big Memory, Selective Focus","Transcript Text TBD","2.2 Context Window - Big Memory, Selective Focus.vtt"
+"2.3 Information Compression and the Economics of Tokens.mp4","2.3 Information Compression and the Economics of Tokens.jpg","2.3 Information Compression and the Economics of Tokens","Frames tokens as the true cost driver of LLM usage and explains why efficient prompts and smart chunking are essential for controlling compute and spend.","2.3 Information Compression and the Economics of Tokens","Transcript Text TBD","2.3 Information Compression and the Economics of Tokens.vtt"
+"3.1 Temperature - The “Risk Dial”.mp4","3.1 Temperature - The “Risk Dial”.jpg","3.1 Temperature - The “Risk Dial”","Describes temperature as a control that trades off deterministic, repeatable outputs for more creative but risky generations.","3.1 Temperature - The “Risk Dial”","Transcript Text TBD","3.1 Temperature - The “Risk Dial”.vtt"
+"3.3 Entropy - How “Sure” Is the Model.mp4","3.3 Entropy - How “Sure” Is the Model.jpg","3.3 Entropy - How “Sure” Is the Model","Explains entropy as a measure of how peaked or flat the next-token distribution is, distinguishing confident answers from inherently diverse or uncertain situations.","3.3 Entropy - How “Sure” Is the Model","Transcript Text TBD","3.3 Entropy - How “Sure” Is the Model.vtt"
+"4.1 System Messages - The Constitution of the Model.mp4","4.1 System Messages - The Constitution of the Model.jpg","4.1 System Messages - The Constitution of the Model","Defines system messages as the highest-priority rules and roles that constrain everything the model does in a conversation.","4.1 System Messages - The Constitution of the Model","Transcript Text TBD","4.1 System Messages - The Constitution of the Model.vtt"
+"4.2 Chain-of-Thought and Anchor Thoughts .mp4","4.2 Chain-of-Thought and Anchor Thoughts .jpg","4.2 Chain-of-Thought and Anchor Thoughts ","Explains chain-of-thought and anchor thoughts as ways to structure step-by-step reasoning while reducing the risk of the model wandering into hallucinated explanations.","4.2 Chain-of-Thought and Anchor Thoughts ","Transcript Text TBD","4.2 Chain-of-Thought and Anchor Thoughts .vtt"
+"4.3 Controlling Output Format and Length.mp4","4.3 Controlling Output Format and Length.jpg","4.3 Controlling Output Format and Length","Presents output schemas and recursive summarization as reliable patterns for constraining format, length, and complexity when working with long inputs.","4.3 Controlling Output Format and Length","Transcript Text TBD","4.3 Controlling Output Format and Length.vtt"
+"4.4 Complexity and Its Pitfalls.mp4","4.4 Complexity and Its Pitfalls.jpg","4.4 Complexity and Its Pitfalls","Highlights pitfalls of overly complex prompt designs like few-shot fragility, meta-prompting risk, and monolithic prompt bloat, and argues for modular prompt libraries.","4.4 Complexity and Its Pitfalls","Transcript Text TBD","4.4 Complexity and Its Pitfalls.vtt"
+"5.1 RAG - Connecting the Model to Real Knowledge.mp4","5.1 RAG - Connecting the Model to Real Knowledge.jpg","5.1 RAG - Connecting the Model to Real Knowledge","Introduces retrieval-augmented generation as a way to ground answers in real documents and emphasizes that retrieval quality, not the model, is usually the weakest link.","5.1 RAG - Connecting the Model to Real Knowledge","Transcript Text TBD","5.1 RAG - Connecting the Model to Real Knowledge.vtt"
+"5.2 Tools and Hybrid Intelligence.mp4","5.2 Tools and Hybrid Intelligence.jpg","5.2 Tools and Hybrid Intelligence","Shows how tool-calling combines LLM pattern recognition with deterministic systems like calculators and APIs to create more reliable hybrid intelligence.","5.2 Tools and Hybrid Intelligence","Transcript Text TBD","5.2 Tools and Hybrid Intelligence.vtt"
+"5.3 Multi-Agent Systems and Prompt Collisions.mp4","5.3 Multi-Agent Systems and Prompt Collisions.jpg","5.3 Multi-Agent Systems and Prompt Collisions","Describes multi-agent systems, the risk of prompt collisions when roles are unclear, and the value of explicit message contracts between agents.","5.3 Multi-Agent Systems and Prompt Collisions","Transcript Text TBD","5.3 Multi-Agent Systems and Prompt Collisions.vtt"
+"6.1 The Alignment Tax - Safety vs. Raw Capability.mp4","6.1 The Alignment Tax - Safety vs. Raw Capability.jpg","6.1 The Alignment Tax - Safety vs. Raw Capability","Explores the alignment tax as the trade-off between raw unconstrained capability and safer, more reliable behavior that better fits enterprise risk.","6.1 The Alignment Tax - Safety vs. Raw Capability","Transcript Text TBD","6.1 The Alignment Tax - Safety vs. Raw Capability.vtt"
+"6.2 Evaluating Quality - Beyond Word Overlap.mp4","6.2 Evaluating Quality - Beyond Word Overlap.jpg","6.2 Evaluating Quality - Beyond Word Overlap","Argues that organizations should evaluate models with truthfulness- and risk-oriented benchmarks, not just word-overlap scores, so they measure what actually matters for the business.","6.2 Evaluating Quality - Beyond Word Overlap","Transcript Text TBD","6.2 Evaluating Quality - Beyond Word Overlap.vtt"
+"6.3_Security_Perspective_-_Training_vs.mp4","6.3_Security_Perspective_-_Training_vs.jpg","6.3_Security_Perspective_-_Training_vs","Takes a security perspective that distinguishes training-time risks like gradient leakage from inference-time concerns about logging, data exposure, and pipeline design.","6.3_Security_Perspective_-_Training_vs","Transcript Text TBD","6.3_Security_Perspective_-_Training_vs.vtt"
+"Chapter 1 Conclusion - From User to Engineer.mp4","Chapter 1 Conclusion - From User to Engineer.jpg","Chapter 1 Conclusion - From User to Engineer","Synthesizes the chapter’s ideas and invites you to think like an engineer who designs prompts, workflows, and guardrails around a statistical machine rather than a mind that understands.","Chapter 1 Conclusion - From User to Engineer","Transcript Text TBD","Chapter 1 Conclusion - From User to Engineer.vtt"
+`;
+
+    const chapter2Csv = `VideoFileName,PosterImage,Title,Description,Section,TranscriptText,CaptionFile
+"2.1 Applications Overview.mp4","2.1 Applications Overview Poster.jpg","2.1 Applications Overview","A quick tour through real-world Generative AI applications from the textbook.","2.1 Applications Overview","Transcript Text TBD","2.1 Applications Overview.vtt"
+`;
+
+    const chapter3Csv = `VideoFileName,PosterImage,Title,Description,Section,TranscriptText,CaptionFile
+"3.2 Prompt Patterns Overview.mp4","3.2 Prompt Patterns Overview Poster.jpg","3.2 Prompt Patterns Overview","An overview of core prompt patterns you will use in practice across tasks and domains.","3.2 Prompt Patterns Overview","Transcript Text TBD","3.2 Prompt Patterns Overview.vtt"
+`;
+
+    const chapter4Csv = `VideoFileName,PosterImage,Title,Description,Section,TranscriptText,CaptionFile
+"4.5 Advanced Techniques Overview.mp4","4.5 Advanced Techniques Overview Poster.jpg","4.5 Advanced Techniques Overview","A summary of advanced techniques introduced in the later sections of the textbook.","4.5 Advanced Techniques Overview","Transcript Text TBD","4.5 Advanced Techniques Overview.vtt"
+`;
+
+    const FAVORITES_KEY = "videoLearningHubFavorites_v1";
+    const BOOKMARK_KEY = "videoBookmarks_v1";
+    const NOTES_KEY = "videoNotes_v1";
+    const REVIEW_KEY = "videoReviewDeck_v1";
+    const STATS_KEY = "videoStats_v1";
+
+    let videosByChapter = {
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+    };
+
+    let currentChapter = 1;
+    let currentIndex = 0;
+    let favorites = new Set();
+    let inFavoritesView = false;
+
+    let currentVideoId = null;
+    let currentVideoTitle = "";
+
+    let videoStats = {};
+    let lastStatsSaveTime = 0;
+
+    const chapterTabsContainer = document.getElementById("chapterTabs");
+    const favoritesToggle = document.getElementById("favoritesToggle");
+    const favoritesToggleLabel = favoritesToggle.querySelector(".label");
+    const reviewDeckToggle = document.getElementById("reviewDeckToggle");
+    const reviewDeckToggleLabel = reviewDeckToggle.querySelector(".label");
+    const statsToggle = document.getElementById("statsToggle");
+
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const imageSection = document.getElementById("imageSection");
+    const imageTitle = document.getElementById("imageTitle");
+    const imageDescription = document.getElementById("imageDescription");
+    const videoElement = document.getElementById("imageElement");
+    const favoriteBtn = document.getElementById("favoriteBtn");
+    const addToReviewBtn = document.getElementById("addToReviewBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressLabel = document.getElementById("progressLabel");
+    const favoritesCount = document.getElementById("favoritesCount");
+    const cardFooterHint = document.getElementById("cardFooterHint");
+    const toast = document.getElementById("toast");
+    const mobileSwipeHint = document.getElementById("mobileSwipeHint");
+    const cardShell = document.getElementById("cardShell");
+    const videoOverlayPlay = document.getElementById("videoOverlayPlay");
+    const captionTrack = document.getElementById("captionTrack");
+    const transcriptBadge = document.getElementById("transcriptBadge");
+
+    const addBookmarkBtn = document.getElementById("addBookmarkBtn");
+    const bookmarkList = document.getElementById("bookmarkList");
+
+    const addNoteBtn = document.getElementById("addNoteBtn");
+    const notesList = document.getElementById("notesList");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalVideo = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCaptionTrack = document.getElementById("modalCaptionTrack");
+
+    const reviewDeckBackdrop = document.getElementById("reviewDeckBackdrop");
+    const reviewDeckPanel = document.getElementById("reviewDeckPanel");
+    const reviewDeckCloseBtn = document.getElementById("reviewDeckCloseBtn");
+    const reviewDeckEmpty = document.getElementById("reviewDeckEmpty");
+    const reviewDeckList = document.getElementById("reviewDeckList");
+
+    const statsBackdrop = document.getElementById("statsBackdrop");
+    const statsPanel = document.getElementById("statsPanel");
+    const statsCloseBtn = document.getElementById("statsCloseBtn");
+    const statsSummary = document.getElementById("statsSummary");
+    const statsList = document.getElementById("statsList");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+
+    function saveFavorites() {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favorites)));
+    }
+
+    function loadFavorites() {
+      const raw = localStorage.getItem(FAVORITES_KEY);
+      if (!raw) return;
+      try {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr)) {
+          favorites = new Set(arr);
+        }
+      } catch (e) {
+        console.warn("Failed to parse favorites", e);
+      }
+    }
+
+    function formatTime(seconds) {
+      if (!isFinite(seconds) || seconds < 0) seconds = 0;
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s.toString().padStart(2, "0")}`;
+    }
+
+    // --- Smart Segment Bookmarks ---
+    function loadBookmarks(videoId) {
+      const raw = localStorage.getItem(BOOKMARK_KEY);
+      if (!raw) return [];
+      try {
+        const data = JSON.parse(raw);
+        return data[videoId] || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveBookmarks(videoId, bookmarks) {
+      const raw = localStorage.getItem(BOOKMARK_KEY);
+      let data = {};
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        data = {};
+      }
+      data[videoId] = bookmarks;
+      localStorage.setItem(BOOKMARK_KEY, JSON.stringify(data));
+    }
+
+    function renderBookmarks(videoId) {
+      if (!bookmarkList) return;
+      bookmarkList.innerHTML = "";
+      if (!videoId) return;
+
+      const bookmarks = loadBookmarks(videoId);
+      if (!bookmarks.length) {
+        const empty = document.createElement("div");
+        empty.style.fontSize = "0.75rem";
+        empty.style.color = "#9ca3af";
+        empty.textContent = "No bookmarks yet";
+        bookmarkList.appendChild(empty);
+        return;
+      }
+
+      bookmarks
+        .slice()
+        .sort((a, b) => a.time - b.time)
+        .forEach((bm, index) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "bookmark-chip";
+          const timeSpan = document.createElement("span");
+          timeSpan.className = "bookmark-chip-time";
+          timeSpan.textContent = formatTime(bm.time);
+          const labelSpan = document.createElement("span");
+          labelSpan.className = "bookmark-chip-label";
+          labelSpan.textContent = bm.label ? `– ${bm.label}` : "";
+          btn.appendChild(timeSpan);
+          if (bm.label) btn.appendChild(labelSpan);
+
+          btn.addEventListener("click", () => {
+            if (!isNaN(bm.time)) {
+              videoElement.currentTime = bm.time;
+              videoElement.play().catch(() => {});
+            }
+          });
+
+          btn.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            const confirmDelete = window.confirm("Remove this bookmark?");
+            if (!confirmDelete) return;
+            const all = loadBookmarks(videoId);
+            all.splice(index, 1);
+            saveBookmarks(videoId, all);
+            renderBookmarks(videoId);
+          });
+
+          bookmarkList.appendChild(btn);
+        });
+    }
+
+    if (addBookmarkBtn) {
+      addBookmarkBtn.addEventListener("click", () => {
+        if (!currentVideoId) return;
+        const time = videoElement.currentTime || 0;
+        const label = window.prompt(
+          "Optional label for this bookmark:",
+          ""
+        );
+        const bookmarks = loadBookmarks(currentVideoId);
+        bookmarks.push({
+          time,
+          label: label ? label.trim() : ""
+        });
+        saveBookmarks(currentVideoId, bookmarks);
+        renderBookmarks(currentVideoId);
+        showToast("Bookmark added");
+      });
+    }
+
+    // --- Inline Notes Dock ---
+    function loadNotes(videoId) {
+      const raw = localStorage.getItem(NOTES_KEY);
+      if (!raw) return [];
+      try {
+        const data = JSON.parse(raw);
+        return data[videoId] || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveNotes(videoId, notes) {
+      const raw = localStorage.getItem(NOTES_KEY);
+      let data = {};
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        data = {};
+      }
+      data[videoId] = notes;
+      localStorage.setItem(NOTES_KEY, JSON.stringify(data));
+    }
+
+    function renderNotes(videoId) {
+      if (!notesList) return;
+      notesList.innerHTML = "";
+      if (!videoId) return;
+
+      const notes = loadNotes(videoId);
+      if (!notes.length) {
+        const li = document.createElement("li");
+        li.style.fontSize = "0.75rem";
+        li.style.color = "#9ca3af";
+        li.textContent = "No notes yet";
+        notesList.appendChild(li);
+        return;
+      }
+
+      notes
+        .slice()
+        .sort((a, b) => a.time - b.time)
+        .forEach((note, index) => {
+          const li = document.createElement("li");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "notes-item-btn";
+
+          const timeSpan = document.createElement("span");
+          timeSpan.className = "time";
+          timeSpan.textContent = formatTime(note.time);
+
+          const textSpan = document.createElement("span");
+          textSpan.className = "text";
+          textSpan.textContent = note.text;
+
+          btn.appendChild(timeSpan);
+          btn.appendChild(textSpan);
+
+          btn.addEventListener("click", () => {
+            if (!isNaN(note.time)) {
+              videoElement.currentTime = note.time;
+              videoElement.play().catch(() => {});
+            }
+          });
+
+          btn.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            const confirmDelete = window.confirm("Remove this note?");
+            if (!confirmDelete) return;
+            const all = loadNotes(videoId);
+            all.splice(index, 1);
+            saveNotes(videoId, all);
+            renderNotes(videoId);
+          });
+
+          li.appendChild(btn);
+          notesList.appendChild(li);
+        });
+    }
+
+    if (addNoteBtn) {
+      addNoteBtn.addEventListener("click", () => {
+        if (!currentVideoId) return;
+        const time = videoElement.currentTime || 0;
+        const text = window.prompt(
+          "Note for this moment:",
+          ""
+        );
+        if (!text || !text.trim()) return;
+        const notes = loadNotes(currentVideoId);
+        notes.push({
+          time,
+          text: text.trim()
+        });
+        saveNotes(currentVideoId, notes);
+        renderNotes(currentVideoId);
+        showToast("Note added");
+      });
+    }
+
+    // --- Cross-Video Review Deck ---
+    function loadReviewDeck() {
+      const raw = localStorage.getItem(REVIEW_KEY);
+      if (!raw) return [];
+      try {
+        const data = JSON.parse(raw);
+        if (Array.isArray(data)) return data;
+        return [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveReviewDeck(deck) {
+      localStorage.setItem(REVIEW_KEY, JSON.stringify(deck));
+    }
+
+// --- Review Deck helpers for button state ---
+function isInReviewDeck(videoId) {
+  if (!videoId) return false;
+  const deck = loadReviewDeck();
+  return deck.some(entry => entry.id === videoId);
+}
+
+function updateReviewButtonState(videoId) {
+  if (!addToReviewBtn) return;
+
+  if (!videoId) {
+    addToReviewBtn.disabled = true;
+    addToReviewBtn.textContent = "+ Add to Review Deck";
+    return;
+  }
+
+  const inDeck = isInReviewDeck(videoId);
+
+  if (inDeck) {
+    addToReviewBtn.disabled = true;
+    addToReviewBtn.textContent = "In Review Deck";
+  } else {
+    addToReviewBtn.disabled = false;
+    addToReviewBtn.textContent = "+ Add to Review Deck";
+  }
+}
+
+
+    function findVideoById(videoId) {
+      for (const ch of [1, 2, 3, 4]) {
+        const list = videosByChapter[ch] || [];
+        const idx = list.findIndex(v => v.id === videoId);
+        if (idx !== -1) {
+          return { chapter: ch, index: idx, item: list[idx] };
+        }
+      }
+      return null;
+    }
+    
+// --- Deep link helpers (URL → specific video) ---
+// Supports:
+//   ?videoId=...   or   ?video=...
+//   #videoId=...   or   #video=...
+function getDeepLinkTargetId() {
+  // 1) Try normal query string: ?videoId=...
+  let search = window.location.search || "";
+  if (search.startsWith("?")) search = search.slice(1);
+
+  let params = new URLSearchParams(search);
+  let rawId = params.get("videoId") || params.get("video");
+
+  // 2) If nothing in search, try hash: #videoId=... or just #<id>
+  if (!rawId && window.location.hash) {
+    let hash = window.location.hash.replace(/^#/, "");
+    const hashParams = new URLSearchParams(hash);
+    rawId = hashParams.get("videoId") || hashParams.get("video") || hash;
+  }
+
+  if (!rawId) return null;
+
+  return decodeURIComponent(rawId).trim();
+}
+
+function goToVideoById(targetId, autoPlay = false) {
+  if (!targetId) return;
+
+  const info = findVideoById(targetId);
+  if (!info) {
+    console.warn("Deep-link video not found for id:", targetId);
+    return;
+  }
+
+  // Jump to that chapter/index, leave Favorites view
+  inFavoritesView = false;
+  currentChapter = info.chapter;
+  currentIndex = info.index;
+
+  // Re-render the UI for this video
+  render();
+
+  if (autoPlay) {
+    videoElement.play().catch(() => {
+      showToast("Tap the video to start playback.");
+    });
+  }
+}
+
+function handleDeepLinkOnLoad() {
+  const targetId = getDeepLinkTargetId();
+  if (!targetId) return;
+
+  goToVideoById(targetId, true);
+}
+
+
+function goToVideoById(targetId, autoPlay = false) {
+  if (!targetId) return;
+
+  const info = findVideoById(targetId);
+  if (!info) {
+    console.warn("Deep-link video not found for id:", targetId);
+    return;
+  }
+
+  // Jump to that chapter/index, leave Favorites view
+  inFavoritesView = false;
+  currentChapter = info.chapter;
+  currentIndex = info.index;
+
+  // Re-render the UI for this video
+  render();
+
+  if (autoPlay) {
+    // Try to start playback; some mobile browsers may still require user interaction.
+    videoElement.play().catch(() => {
+      // Optional: show a toast so the user knows they should tap to start.
+      showToast("Tap the video to start playback.");
+    });
+  }
+}
+
+function handleDeepLinkOnLoad() {
+  const targetId = getDeepLinkTargetId();
+  if (!targetId) return;
+
+  goToVideoById(targetId, true);
+}
+
+ 
+   function addToReviewDeckCurrent() {
+      if (!currentVideoId) return;
+      const info = findVideoById(currentVideoId);
+      if (!info) return;
+      const deck = loadReviewDeck();
+      if (!deck.some(v => v.id === currentVideoId)) {
+        deck.push({
+          id: currentVideoId,
+          title: info.item.title,
+          chapter: info.chapter,
+          section: info.item.section || ""
+        });
+        saveReviewDeck(deck);
+        showToast("Added to review deck");
+        updateReviewButtonState(currentVideoId); // NEW
+		if (reviewDeckPanel.classList.contains("open")) {
+          renderReviewDeck();
+        }
+      } else {
+        showToast("Already in review deck");
+      }
+    }
+
+    function removeFromReviewDeck(idToRemove) {
+  const deck = loadReviewDeck().filter(v => v.id !== idToRemove);
+  saveReviewDeck(deck);
+  renderReviewDeck();
+
+  if (currentVideoId === idToRemove) {
+    updateReviewButtonState(currentVideoId);
+  }
+}
+
+
+    function openReviewDeck() {
+      reviewDeckBackdrop.classList.add("active");
+      reviewDeckPanel.classList.add("open");
+      reviewDeckToggle.classList.add("active");
+      renderReviewDeck();
+    }
+
+    function closeReviewDeck() {
+      reviewDeckPanel.classList.remove("open");
+      reviewDeckBackdrop.classList.remove("active");
+      reviewDeckToggle.classList.remove("active");
+    }
+
+    function renderReviewDeck() {
+      const deck = loadReviewDeck();
+      reviewDeckList.innerHTML = "";
+
+      if (!deck.length) {
+        reviewDeckEmpty.style.display = "block";
+        return;
+      }
+
+      reviewDeckEmpty.style.display = "none";
+
+      deck.forEach(entry => {
+        const li = document.createElement("li");
+        li.className = "review-item";
+
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "review-item-info";
+
+        const titleDiv = document.createElement("div");
+        titleDiv.className = "review-item-title";
+        titleDiv.textContent = entry.title;
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "review-item-meta";
+        metaDiv.textContent = `Chapter ${entry.chapter}${
+          entry.section ? " • " + entry.section : ""
+        }`;
+
+        infoDiv.appendChild(titleDiv);
+        infoDiv.appendChild(metaDiv);
+
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "review-item-actions";
+
+        const watchBtn = document.createElement("button");
+        watchBtn.type = "button";
+        watchBtn.className = "review-item-btn primary";
+        watchBtn.textContent = "Watch";
+        watchBtn.addEventListener("click", () => {
+          const info = findVideoById(entry.id);
+          if (!info) return;
+          inFavoritesView = false;
+          currentChapter = info.chapter;
+          currentIndex = info.index;
+          closeReviewDeck();
+          render();
+        });
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "review-item-btn";
+        removeBtn.textContent = "Remove";
+        removeBtn.addEventListener("click", () => {
+          removeFromReviewDeck(entry.id);
+        });
+
+        actionsDiv.appendChild(watchBtn);
+        actionsDiv.appendChild(removeBtn);
+
+        li.appendChild(infoDiv);
+        li.appendChild(actionsDiv);
+        reviewDeckList.appendChild(li);
+      });
+    }
+
+    if (addToReviewBtn) {
+      addToReviewBtn.addEventListener("click", () => {
+        addToReviewDeckCurrent();
+      });
+    }
+
+    if (reviewDeckToggle) {
+      reviewDeckToggle.addEventListener("click", () => {
+        if (reviewDeckPanel.classList.contains("open")) {
+          closeReviewDeck();
+        } else {
+          openReviewDeck();
+        }
+      });
+    }
+
+    if (reviewDeckCloseBtn) {
+      reviewDeckCloseBtn.addEventListener("click", () => {
+        closeReviewDeck();
+      });
+    }
+
+    if (reviewDeckBackdrop) {
+      reviewDeckBackdrop.addEventListener("click", (e) => {
+        if (e.target === reviewDeckBackdrop) {
+          closeReviewDeck();
+        }
+      });
+    }
+
+    // --- Stats (Learning Metrics) ---
+    function loadStats() {
+      const raw = localStorage.getItem(STATS_KEY);
+      if (!raw) {
+        videoStats = {};
+        return;
+      }
+      try {
+        const data = JSON.parse(raw);
+        if (data && typeof data === "object") {
+          videoStats = data;
+        } else {
+          videoStats = {};
+        }
+      } catch {
+        videoStats = {};
+      }
+    }
+
+    function saveStats() {
+      try {
+        localStorage.setItem(STATS_KEY, JSON.stringify(videoStats));
+      } catch (e) {
+        console.warn("Failed to save stats", e);
+      }
+    }
+
+    function getVideoStats(videoId) {
+      if (!videoStats[videoId]) {
+        videoStats[videoId] = {
+          maxPosition: 0,
+          duration: 0,
+          rewatchCount: 0,
+          lastWatched: null,
+          completed: false,
+        };
+      }
+      return videoStats[videoId];
+    }
+
+    function openStats() {
+      statsBackdrop.classList.add("active");
+      statsPanel.classList.add("open");
+      statsToggle.classList.add("active");
+      renderStats();
+    }
+
+    function closeStats() {
+      statsPanel.classList.remove("open");
+      statsBackdrop.classList.remove("active");
+      statsToggle.classList.remove("active");
+    }
+
+    function renderStats() {
+      if (!statsSummary || !statsList) return;
+
+      statsSummary.innerHTML = "";
+      statsList.innerHTML = "";
+
+      const deck = loadReviewDeck();
+      const deckSet = new Set(deck.map(d => d.id));
+
+      // Per-chapter summary
+      [1, 2, 3, 4].forEach(ch => {
+        const videos = videosByChapter[ch] || [];
+        if (!videos.length) return;
+
+        let totalVideos = videos.length;
+        let completedCount = 0;
+        let inReviewCount = 0;
+        let totalBookmarks = 0;
+        let totalNotes = 0;
+
+        videos.forEach(item => {
+          const s = videoStats[item.id] || {};
+          const duration = s.duration || 0;
+          const maxPos = s.maxPosition || 0;
+          const frac = duration > 0 ? maxPos / duration : 0;
+          if (s.completed || frac >= 0.8) completedCount++;
+          if (deckSet.has(item.id)) inReviewCount++;
+          totalBookmarks += (loadBookmarks(item.id) || []).length;
+          totalNotes += (loadNotes(item.id) || []).length;
+        });
+
+        const card = document.createElement("div");
+        card.className = "stats-summary-card";
+        card.innerHTML = `
+          <div class="stats-summary-label">Chapter ${ch}</div>
+          <div class="stats-summary-value">${completedCount}/${totalVideos}</div>
+          <div class="stats-summary-sub">Completed • In review: ${inReviewCount}</div>
+          <div class="stats-summary-sub">Bookmarks: ${totalBookmarks} • Notes: ${totalNotes}</div>
+        `;
+        statsSummary.appendChild(card);
+      });
+
+      // Per-video list
+      const allVideos = [];
+      [1, 2, 3, 4].forEach(ch => {
+        (videosByChapter[ch] || []).forEach(item => allVideos.push(item));
+      });
+
+      if (!allVideos.length) {
+        const empty = document.createElement("div");
+        empty.className = "stats-empty";
+        empty.textContent = "No videos loaded.";
+        statsList.appendChild(empty);
+        return;
+      }
+
+      allVideos.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "stats-row";
+
+        const s = videoStats[item.id] || {};
+        const duration = s.duration || 0;
+        const maxPos = s.maxPosition || 0;
+        const frac = duration > 0 ? Math.min(1, maxPos / duration) : 0;
+        const percentDisplay = Math.round(frac * 100);
+
+        const bookmarksCount = (loadBookmarks(item.id) || []).length;
+        const notesCount = (loadNotes(item.id) || []).length;
+        const rewatches = s.rewatchCount || 0;
+        const inReview = deckSet.has(item.id);
+
+        let status = "Not started";
+        if (frac >= 0.8 || s.completed) status = "Completed";
+        else if (frac >= 0.05) status = "In progress";
+        if (inReview) status = "Needs review";
+
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "stats-row-main";
+
+        const titleDiv = document.createElement("div");
+        titleDiv.className = "stats-row-title";
+        titleDiv.textContent = item.title;
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "stats-row-meta";
+        metaDiv.textContent = `Ch ${item.chapter} • ${item.section || "No section"}`;
+
+        const metricsDiv = document.createElement("div");
+        metricsDiv.className = "stats-row-meta";
+        metricsDiv.textContent = `Bookmarks: ${bookmarksCount} • Notes: ${notesCount} • Rewatches: ${rewatches}`;
+
+        const progressRow = document.createElement("div");
+        progressRow.className = "stats-row-progress";
+
+        const statusSpan = document.createElement("span");
+        statusSpan.className = "stats-row-status";
+        statusSpan.textContent = status;
+
+        const barOuter = document.createElement("div");
+        barOuter.className = "stats-row-progress-bar";
+
+        const barInner = document.createElement("div");
+        barInner.className = "stats-row-progress-fill";
+        barInner.style.width = percentDisplay + "%";
+
+        barOuter.appendChild(barInner);
+
+        const percentSpan = document.createElement("span");
+        percentSpan.className = "stats-row-percent";
+        percentSpan.textContent = `${percentDisplay}% watched`;
+
+        progressRow.appendChild(statusSpan);
+        progressRow.appendChild(barOuter);
+        progressRow.appendChild(percentSpan);
+
+        mainDiv.appendChild(titleDiv);
+        mainDiv.appendChild(metaDiv);
+        mainDiv.appendChild(metricsDiv);
+        mainDiv.appendChild(progressRow);
+
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "stats-row-actions";
+
+        const watchBtn = document.createElement("button");
+        watchBtn.type = "button";
+        watchBtn.className = "stats-row-btn";
+        watchBtn.textContent = "Watch";
+        watchBtn.addEventListener("click", () => {
+          const info = findVideoById(item.id);
+          if (!info) return;
+          inFavoritesView = false;
+          currentChapter = info.chapter;
+          currentIndex = info.index;
+          closeStats();
+          render();
+        });
+
+        actionsDiv.appendChild(watchBtn);
+
+        row.appendChild(mainDiv);
+        row.appendChild(actionsDiv);
+
+        statsList.appendChild(row);
+      });
+    }
+
+    if (statsToggle) {
+      statsToggle.addEventListener("click", () => {
+        if (statsPanel.classList.contains("open")) {
+          closeStats();
+        } else {
+          openStats();
+        }
+      });
+    }
+
+    if (statsCloseBtn) {
+      statsCloseBtn.addEventListener("click", () => {
+        closeStats();
+      });
+    }
+
+    if (statsBackdrop) {
+      statsBackdrop.addEventListener("click", (e) => {
+        if (e.target === statsBackdrop) {
+          closeStats();
+        }
+      });
+    }
+
+    function getActiveList() {
+      if (!inFavoritesView) {
+        return videosByChapter[currentChapter] || [];
+      }
+
+      const all = [];
+      for (const chapter of [1, 2, 3, 4]) {
+        const videos = videosByChapter[chapter] || [];
+        videos.forEach(v => {
+          if (favorites.has(v.id)) {
+            all.push(v);
+          }
+        });
+      }
+      return all;
+    }
+
+    function updateChapterTabs() {
+      chapterTabsContainer.innerHTML = "";
+      const chapters = [
+        { id: 1, label: "Ch 1 Foundations" },
+        { id: 2, label: "Ch 2 Applications" },
+        { id: 3, label: "Ch 3 Patterns" },
+        { id: 4, label: "Ch 4 Advanced" },
+      ];
+
+      chapters.forEach(ch => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className =
+          "chapter-tab" + (ch.id === currentChapter && !inFavoritesView ? " active" : "");
+        const parts = ch.label.split(" ");
+        const mainLabel = document.createElement("span");
+        mainLabel.textContent = parts[0] + " " + parts[1];
+        const subLabel = document.createElement("span");
+        subLabel.textContent = parts.slice(2).join(" ");
+        btn.appendChild(mainLabel);
+        btn.appendChild(subLabel);
+
+        btn.addEventListener("click", () => {
+          if (inFavoritesView) {
+            inFavoritesView = false;
+            updateFavoritesToggleState();
+          }
+          currentChapter = ch.id;
+          currentIndex = 0;
+          render();
+        });
+
+        chapterTabsContainer.appendChild(btn);
+      });
+    }
+
+    function updateFavoritesToggleState() {
+      favoritesToggle.classList.toggle("active", inFavoritesView);
+      favoritesToggleLabel.textContent = inFavoritesView ? "Exit Favorites" : "View Favorites";
+    }
+
+    function updateFavoritesCount() {
+      favoritesCount.textContent = `Favorites: ${favorites.size}`;
+    }
+
+    function getVideoUrl(item) {
+      return `videos/chapter${item.chapter}/${item.videoFileName}`;
+    }
+
+    function getPosterUrl(item) {
+      if (!item.posterImage) return "";
+      return `thumbnails/chapter${item.chapter}/${item.posterImage}`;
+    }
+
+    function getCaptionUrl(item) {
+      if (!item.captionFile) return "";
+      return `captions/chapter${item.chapter}/${item.captionFile}`;
+    }
+
+    function pauseCurrentVideo() {
+      if (videoElement && !videoElement.paused) {
+        videoElement.pause();
+      }
+    }
+
+    function resetVideoSource() {
+      if (!videoElement) return;
+      videoElement.pause();
+      videoElement.removeAttribute("src");
+      videoElement.load();
+      if (captionTrack) {
+        captionTrack.removeAttribute("src");
+      }
+    }
+
+    function resetModalVideo() {
+      if (!modalVideo) return;
+      modalVideo.pause();
+      modalVideo.removeAttribute("src");
+      modalVideo.load();
+      if (modalCaptionTrack) {
+        modalCaptionTrack.removeAttribute("src");
+      }
+    }
+
+    function render() {
+      const list = getActiveList();
+      const total = list.length;
+
+      updateChapterTabs();
+      updateFavoritesToggleState();
+      updateFavoritesCount();
+
+      resetVideoSource();
+
+      if (total === 0) {
+        currentVideoId = null;
+        currentVideoTitle = "";
+
+        imageSection.textContent = inFavoritesView
+          ? "No favorites yet"
+          : `No videos defined for this view`;
+        imageTitle.textContent = inFavoritesView
+          ? "Add favorites from any chapter"
+          : "No videos available";
+        imageDescription.textContent = inFavoritesView
+          ? "Tap the heart icon on any video card to save it as a favorite, then return here."
+          : "Once videos are added to this chapter, they will appear in this learning hub.";
+        cardFooterHint.textContent = "";
+        favoriteBtn.classList.add("inactive");
+        favoriteBtn.disabled = true;
+        if (addToReviewBtn) addToReviewBtn.disabled = true;
+updateReviewButtonState(null); // NEW
+
+        progressBar.style.width = "0%";
+        progressLabel.textContent = "0 of 0 videos";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+
+        if (transcriptBadge) {
+          transcriptBadge.textContent = "Transcript coming soon";
+          transcriptBadge.classList.add("transcript-missing");
+          transcriptBadge.classList.remove("transcript-available");
+        }
+
+        if (addBookmarkBtn) addBookmarkBtn.disabled = true;
+        if (bookmarkList) {
+          bookmarkList.innerHTML = "";
+          const empty = document.createElement("div");
+          empty.style.fontSize = "0.75rem";
+          empty.style.color = "#9ca3af";
+          empty.textContent = "No bookmarks yet";
+          bookmarkList.appendChild(empty);
+        }
+
+        if (addNoteBtn) addNoteBtn.disabled = true;
+        if (notesList) {
+          notesList.innerHTML = "";
+          const li = document.createElement("li");
+          li.style.fontSize = "0.75rem";
+          li.style.color = "#9ca3af";
+          li.textContent = "No notes yet";
+          notesList.appendChild(li);
+        }
+
+        videoOverlayPlay.classList.remove("hidden");
+        return;
+      }
+
+      if (currentIndex < 0) currentIndex = 0;
+      if (currentIndex >= total) currentIndex = total - 1;
+
+      const item = list[currentIndex];
+      currentVideoId = item.id;
+      currentVideoTitle = item.title;
+
+      const chapterLabel = inFavoritesView
+        ? "Favorites view"
+        : `Ch ${item.chapter} • ${
+            item.chapter === 1
+              ? "Foundations"
+              : item.chapter === 2
+              ? "Applications"
+              : item.chapter === 3
+              ? "Patterns"
+              : "Advanced"
+          }`;
+
+      imageSection.textContent = chapterLabel;
+      imageTitle.textContent = item.title;
+
+      const transcriptOrDesc = item.transcriptText || item.description || "";
+      imageDescription.textContent = transcriptOrDesc;
+
+      const hasTranscript =
+        item.transcriptText &&
+        item.transcriptText.trim() !== "" &&
+        item.transcriptText.trim() !== "Transcript Text TBD";
+
+      if (transcriptBadge) {
+        if (hasTranscript) {
+          transcriptBadge.textContent = "Transcript available";
+        } else {
+          transcriptBadge.textContent = "Transcript coming soon";
+        }
+
+        transcriptBadge.classList.toggle("transcript-available", hasTranscript);
+        transcriptBadge.classList.toggle("transcript-missing", !hasTranscript);
+      }
+
+      const videoUrl = getVideoUrl(item);
+      const posterUrl = getPosterUrl(item);
+      const captionUrl = getCaptionUrl(item);
+
+      videoElement.src = videoUrl;
+      if (posterUrl) {
+        videoElement.poster = posterUrl;
+      } else {
+        videoElement.removeAttribute("poster");
+      }
+
+      if (captionTrack) {
+        if (captionUrl) {
+          captionTrack.src = captionUrl;
+          captionTrack.default = true;
+        } else {
+          captionTrack.removeAttribute("src");
+        }
+      }
+
+      const isFavorite = favorites.has(item.id);
+favoriteBtn.classList.toggle("inactive", !isFavorite);
+favoriteBtn.textContent = isFavorite ? "♥ In Favorites" : "♥ Add Favorite";
+favoriteBtn.disabled = false;
+
+// NEW: set Review Deck button label/state based on membership
+updateReviewButtonState(item.id);
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === total - 1;
+
+      const progressPercentage = total === 0 ? 0 : ((currentIndex + 1) / total) * 100;
+      progressBar.style.width = `${progressPercentage}%`;
+      progressLabel.textContent = `${currentIndex + 1} of ${total} videos`;
+
+      cardFooterHint.textContent =
+        "Tap the video to play or pause. Tap a bookmark or note to jump, or swipe to move between videos.";
+
+      if (addBookmarkBtn) addBookmarkBtn.disabled = false;
+      renderBookmarks(item.id);
+
+      if (addNoteBtn) addNoteBtn.disabled = false;
+      renderNotes(item.id);
+
+      videoOverlayPlay.classList.remove("hidden");
+    }
+
+    prevBtn.addEventListener("click", () => {
+      const list = getActiveList();
+      if (!list.length) return;
+      if (currentIndex > 0) {
+        pauseCurrentVideo();
+        currentIndex--;
+        render();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const list = getActiveList();
+      if (!list.length) return;
+      if (currentIndex < list.length - 1) {
+        pauseCurrentVideo();
+        currentIndex++;
+        render();
+      }
+    });
+
+    favoritesToggle.addEventListener("click", () => {
+      inFavoritesView = !inFavoritesView;
+      currentIndex = 0;
+      render();
+    });
+
+    favoriteBtn.addEventListener("click", () => {
+      const list = getActiveList();
+      if (!list.length) return;
+      const item = list[currentIndex];
+      if (favorites.has(item.id)) {
+        favorites.delete(item.id);
+        showToast("Removed from favorites");
+      } else {
+        favorites.add(item.id);
+        showToast("Added to favorites");
+      }
+      saveFavorites();
+      updateFavoritesCount();
+
+      if (inFavoritesView) {
+        const newList = getActiveList();
+        if (!newList.length) {
+          inFavoritesView = false;
+          currentIndex = 0;
+        } else if (currentIndex >= newList.length) {
+          currentIndex = newList.length - 1;
+        }
+      }
+
+      render();
+    });
+
+    function openModal() {
+      const list = getActiveList();
+      if (!list.length) return;
+      const item = list[currentIndex];
+
+      const videoUrl = getVideoUrl(item);
+      const posterUrl = getPosterUrl(item);
+      const captionUrl = getCaptionUrl(item);
+
+      modalVideo.src = videoUrl;
+      if (posterUrl) {
+        modalVideo.poster = posterUrl;
+      } else {
+        modalVideo.removeAttribute("poster");
+      }
+
+      if (modalCaptionTrack) {
+        if (captionUrl) {
+          modalCaptionTrack.src = captionUrl;
+          modalCaptionTrack.default = true;
+        } else {
+          modalCaptionTrack.removeAttribute("src");
+        }
+      }
+
+      modalTitle.textContent = item.title;
+      modalBackdrop.classList.add("active");
+
+      pauseCurrentVideo();
+      modalVideo.play().catch(() => {});
+    }
+
+    function closeModal() {
+      modalBackdrop.classList.remove("active");
+      resetModalVideo();
+    }
+
+    videoElement.addEventListener("click", () => {
+      if (videoElement.paused) {
+        videoElement.play().catch(() => {});
+      } else {
+        videoElement.pause();
+      }
+    });
+
+    videoOverlayPlay.addEventListener("click", (event) => {
+  event.stopPropagation();
+  if (videoElement.paused) {
+    videoElement.play().catch(() => {});
+  } else {
+    videoElement.pause();
+  }
+});
+
+
+    videoElement.addEventListener("play", () => {
+      videoOverlayPlay.classList.add("hidden");
+    });
+
+    videoElement.addEventListener("pause", () => {
+      videoOverlayPlay.classList.remove("hidden");
+    });
+
+    modalCloseBtn.addEventListener("click", closeModal);
+
+    modalBackdrop.addEventListener("click", (event) => {
+      if (event.target === modalBackdrop) {
+        closeModal();
+      }
+    });
+
+    // Clicking the transcript badge scrolls the transcript panel into view
+    if (transcriptBadge) {
+      transcriptBadge.addEventListener("click", () => {
+        if (!imageDescription) return;
+        imageDescription.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      });
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        if (modalBackdrop.classList.contains("active")) {
+          closeModal();
+        } else if (reviewDeckPanel.classList.contains("open")) {
+          closeReviewDeck();
+        } else if (statsPanel.classList.contains("open")) {
+          closeStats();
+        }
+      } else if (event.key === "ArrowLeft") {
+        prevBtn.click();
+      } else if (event.key === "ArrowRight") {
+        nextBtn.click();
+      }
+    });
+
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      mobileSwipeHint.classList.add("hidden");
+    }
+
+    let touchStartX = null;
+    cardShell.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+        }
+      },
+      { passive: true }
+    );
+
+    cardShell.addEventListener(
+      "touchend",
+      (e) => {
+        if (touchStartX == null) return;
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = endX - touchStartX;
+        const threshold = 40;
+
+        if (Math.abs(deltaX) > threshold) {
+          if (deltaX < 0) {
+            nextBtn.click();
+          } else {
+            prevBtn.click();
+          }
+        }
+
+        touchStartX = null;
+      },
+      { passive: true }
+    );
+
+    // --- Stats tracking via <video> events ---
+    videoElement.addEventListener("loadedmetadata", () => {
+      if (!currentVideoId) return;
+      const vs = getVideoStats(currentVideoId);
+      const duration = videoElement.duration || 0;
+      if (duration > 0 && !vs.duration) {
+        vs.duration = duration;
+      }
+      vs.lastWatched = new Date().toISOString();
+      saveStats();
+    });
+
+    videoElement.addEventListener("timeupdate", () => {
+      if (!currentVideoId) return;
+      const vs = getVideoStats(currentVideoId);
+      const t = videoElement.currentTime || 0;
+      if (t > vs.maxPosition) {
+        vs.maxPosition = t;
+        const now = Date.now();
+        if (now - lastStatsSaveTime > 1000) {
+          lastStatsSaveTime = now;
+          saveStats();
+        }
+      }
+    });
+
+    videoElement.addEventListener("ended", () => {
+      if (!currentVideoId) return;
+      const vs = getVideoStats(currentVideoId);
+      vs.rewatchCount = (vs.rewatchCount || 0) + 1;
+      vs.lastWatched = new Date().toISOString();
+      const duration = vs.duration || videoElement.duration || 0;
+      if (duration > 0) {
+        const frac = vs.maxPosition / duration;
+        if (frac >= 0.8) {
+          vs.completed = true;
+        }
+      }
+      saveStats();
+    });
+
+    // --- Data init ---
+    function initData() {
+      videosByChapter[1] = parseVideoCsv(chapter1Csv, 1);
+      videosByChapter[2] = parseVideoCsv(chapter2Csv, 2);
+      videosByChapter[3] = parseVideoCsv(chapter3Csv, 3);
+      videosByChapter[4] = parseVideoCsv(chapter4Csv, 4);
+    }
+
+loadStats();
+initData();
+loadFavorites();
+
+// Try to honor deep link first; if none, fall back to default render
+const deepId = getDeepLinkTargetId();
+if (deepId) {
+  goToVideoById(deepId, true);
+} else {
+  render();
+}
+  </script>
+  
+  <!-- Contact / Feedback Button -->
+<button
+  id="contactBtn"
+  style="
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+  "
+>
+  💬 Feedback / Contact
+</button>
+
+<script>
+  // Update with your email + tweak subject per app if you’d like
+  const APP_NAME = "Gen AI Videos Learning Hub"; // change per app
+  const CONTACT_EMAIL = "agilityaiwork@gmail.com";
+
+  document.getElementById("contactBtn").addEventListener("click", () => {
+    const subject = encodeURIComponent(`[Feedback] ${APP_NAME}`);
+    const body = encodeURIComponent(
+`Hi George,
+
+I’m using the ${APP_NAME} and wanted to share:
+
+
+(Feel free to add screenshots.)
+
+Thanks!`
+    );
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+  
+</body>
+</html>

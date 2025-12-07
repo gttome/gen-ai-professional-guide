@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gen AI – Chapter Exam App</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <h1>Gen AI – Chapter Exam App</h1>
+        <p>Refactored into ES Modules (logic &amp; UI decoupled).</p>
+      </header>
+
+      <main class="app-main">
+        <!-- Mode & chapter tabs -->
+        <div class="top-bar">
+          <div class="mode-tabs" id="modeTabs">
+            <button type="button" class="mode-tab active" data-mode="exam">
+              Exam
+            </button>
+            <button type="button" class="mode-tab" data-mode="study">
+              Study
+            </button>
+            <button type="button" class="mode-tab" data-mode="experiment">
+              Experiment
+            </button>
+          </div>
+
+          <div class="chapter-tabs" id="chapterTabs">
+            <button
+              type="button"
+              class="chapter-pill active"
+              data-chapter-id="ch1"
+            >
+              1
+            </button>
+            <button type="button" class="chapter-pill" data-chapter-id="ch2">
+              2
+            </button>
+            <button type="button" class="chapter-pill" data-chapter-id="ch3">
+              3
+            </button>
+            <button type="button" class="chapter-pill" data-chapter-id="ch4">
+              4
+            </button>
+            <span class="chapters-label">Chapters</span>
+          </div>
+
+          <div class="timer-pill">
+            <span>Time:</span>
+            <span id="timerDisplay">00:00</span>
+          </div>
+        </div>
+
+        <!-- Exam template bar (Exam length) -->
+        <section class="exam-template-bar" id="examTemplateBar">
+          <span class="exam-template-label">Exam length:</span>
+          <div class="exam-template-chips" id="examTemplateChips">
+            <button
+              type="button"
+              class="exam-template-chip active"
+              data-template="full"
+            >
+              Full Exam
+            </button>
+            <button
+              type="button"
+              class="exam-template-chip"
+              data-template="quick10"
+            >
+              Quick Check (10)
+            </button>
+          </div>
+        </section>
+
+
+<!-- Suggested Next Session indicator (Study mode only) -->
+<section id="suggestedSessionStrip" class="suggested-session-strip" hidden>
+  <button
+    type="button"
+    id="suggestedSessionPill"
+    class="suggested-session-pill"
+  >
+    Suggested session
+  </button>
+  <div id="suggestedSessionPopup" class="suggested-session-popup" hidden>
+    <h2 class="suggested-title">Suggested next session</h2>
+    <p id="suggestedSessionText" class="suggested-text"></p>
+    <ul id="suggestedSessionReasons" class="suggested-reasons"></ul>
+    <div class="suggested-session-actions">
+      <button type="button" id="suggestedApplyBtn" class="primary small">
+        Apply
+      </button>
+      <button type="button" id="suggestedDismissBtn" class="secondary small">
+        Dismiss
+      </button>
+    </div>
+  </div>
+</section>
+
+
+        <!-- Experiment configuration bar (only visible in Experiment mode) -->
+        <section class="experiment-config-bar" id="experimentConfigBar">
+          <div class="experiment-config-group">
+            <span class="experiment-config-label">Chapters:</span>
+            <div class="experiment-chips" id="experimentChapterChips">
+              <button
+                type="button"
+                class="experiment-chip active"
+                data-exp-chapter="ch1"
+              >
+                1
+              </button>
+              <button
+                type="button"
+                class="experiment-chip"
+                data-exp-chapter="ch2"
+              >
+                2
+              </button>
+              <button
+                type="button"
+                class="experiment-chip"
+                data-exp-chapter="ch3"
+              >
+                3
+              </button>
+              <button
+                type="button"
+                class="experiment-chip"
+                data-exp-chapter="ch4"
+              >
+                4
+              </button>
+            </div>
+          </div>
+
+          <div class="experiment-config-group">
+            <span class="experiment-config-label">Session size:</span>
+            <div class="experiment-chips" id="experimentSizeChips">
+              <button
+                type="button"
+                class="experiment-chip active"
+                data-session-size="10"
+              >
+                10
+              </button>
+              <button
+                type="button"
+                class="experiment-chip"
+                data-session-size="20"
+              >
+                20
+              </button>
+              <button
+                type="button"
+                class="experiment-chip"
+                data-session-size="30"
+              >
+                30
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="buildExperimentBtn"
+            class="primary experiment-build-btn"
+          >
+            Build Experiment Session
+          </button>
+        </section>
+
+        <!-- Question card -->
+        <section class="question-card">
+          <div class="question-header">
+            <div class="question-meta">
+              <span id="questionCounter"></span>
+            </div>
+            <button
+              type="button"
+              id="questionDifficulty"
+              class="difficulty-pill"
+            >
+              <!-- label injected by JS -->
+            </button>
+          </div>
+
+          <div class="question-body">
+            <h2 id="questionText" class="question-text">
+              <!-- prompt -->
+            </h2>
+            <div id="answersContainer" class="answers-container"></div>
+          </div>
+
+          <div id="explanationPanel" class="explanation-panel">
+            <h3>Explanation</h3>
+            <p id="explanationText"></p>
+          </div>
+        </section>
+
+        <!-- Controls -->
+        <section class="controls-panel">
+          <div class="controls-row">
+            <label class="mark-review-label">
+              <input type="checkbox" id="reviewCheckbox" />
+              Mark for review
+            </label>
+
+            <div class="controls-buttons">
+              <button id="prevBtn" class="secondary" type="button">
+                Previous
+              </button>
+              <button id="nextBtn" class="secondary" type="button">
+                Next
+              </button>
+              <button id="checkAnswerBtn" class="secondary toggle-pill" type="button">
+                Check Answer
+              </button>
+              <button id="reviewMarkedBtn" class="secondary toggle-pill" type="button">
+                Review Marked
+              </button>
+              <button id="masteryBtn" class="secondary" type="button">
+                Analytics
+              </button>
+              <button id="submitBtn" class="primary" type="button">
+                Submit
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Results panel -->
+        <section class="results-panel" id="resultsPanel" style="display: none">
+          <div class="results-header">
+            <h2 id="resultsTitle">Session results</h2>
+            <p id="resultsSummary"></p>
+          </div>
+          <div id="resultsBreakdown"></div>
+          <button type="button" id="restartBtn" class="primary">
+            Retake Exam
+          </button>
+        </section>
+      </main>
+    </div>
+
+    <!-- Analytics Overlay -->
+    <div id="masteryOverlay" class="mastery-overlay" hidden>
+      <div class="mastery-dialog">
+        <div class="mastery-header">
+          <h2>Analytic Dashboard</h2>
+          <div>
+            <button
+              id="masteryClearBtn"
+              class="secondary small"
+              type="button"
+              style="margin-right: 8px"
+            >
+              Clear Metrics
+            </button>
+            <button id="masteryCloseBtn" class="secondary small" type="button">
+              Close
+            </button>
+          </div>
+        </div>
+        <div id="masteryBody" class="mastery-body">
+          <!-- Populated by controller using analytics.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ES module entry point -->
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

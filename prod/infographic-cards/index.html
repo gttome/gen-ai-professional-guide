@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter Infographic Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-left: #e4e7ff;
+      --bg-right: #e5ffe9;
+      --card-radius: 28px;
+      --card-width: min(480px, 90vw);
+      --card-height: min(620px, 78vh);
+      --shadow-soft: 0 18px 35px rgba(0, 0, 0, 0.16);
+      --accent-blue: #2563eb;
+      --accent-heart: #ec4899;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: #e5e7eb;
+      --nav-btn-size: 46px;
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 0% 50%, #e4e7ff, #ffffff 45%),
+        radial-gradient(circle at 100% 50%, #e5ffe9, #ffffff 45%);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .app {
+      max-width: 960px;
+      width: 100%;
+      padding: 16px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chapter-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chapter-tab {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .chapter-tab span:first-child {
+      font-weight: 600;
+    }
+
+    .chapter-tab span:last-child {
+      opacity: 0.9;
+    }
+
+    .chapter-tab.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+    }
+
+    .favorites-toggle {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .favorites-toggle span.icon {
+      font-size: 0.9rem;
+    }
+
+    .favorites-toggle.active {
+      background: #ec4899;
+      border-color: #ec4899;
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(236, 72, 153, 0.45);
+    }
+
+    .top-row-subtitle {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .mobile-swipe-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 2px;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-swipe-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 8px;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .nav-btn {
+      width: var(--nav-btn-size);
+      height: var(--nav-btn-size);
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--accent-blue);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.15);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      z-index: 5;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      background: #f9fafb;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    /* UPDATED: Definition-style outer shell */
+    .card-shell {
+      position: relative;
+      width: var(--card-width);
+      max-width: 100%;
+      height: var(--card-height);
+      max-height: calc(100vh - 220px);
+      background:
+        radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(52, 211, 153, 0.2), transparent 55%),
+        #f9fafb;
+      border-radius: var(--card-radius);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.25),
+        0 0 0 1px rgba(148, 163, 184, 0.35);
+      padding: 14px 18px 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .card-stack-shadow {
+      position: absolute;
+      inset: auto 18px 6px 18px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
+      filter: blur(10px);
+      z-index: 0;
+    }
+
+    /* UPDATED: Inner white panel like Definition app */
+    .card {
+      flex: 1;
+      min-height: 0;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 20px;
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow:
+        inset 0 0 0 1px rgba(229, 231, 235, 0.9),
+        0 10px 30px rgba(15, 23, 42, 0.18);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    .card-section-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--text-main);
+    }
+
+    .favorite-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 5px 9px;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      background: #fef2f2;
+      color: #b91c1c;
+      box-shadow: 0 8px 18px rgba(248, 113, 113, 0.35);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
+        color 0.12s ease;
+    }
+
+    .favorite-btn span {
+      font-size: 0.95rem;
+      line-height: 1;
+    }
+
+    .favorite-btn:hover {
+      transform: translateY(-1px);
+      background: #fee2e2;
+      box-shadow: 0 10px 24px rgba(248, 113, 113, 0.45);
+    }
+
+    .favorite-btn.inactive {
+      background: #f9fafb;
+      color: #6b7280;
+      box-shadow: 0 6px 12px rgba(148, 163, 184, 0.35);
+    }
+
+    .image-wrapper {
+  margin: 4px 0 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  background: radial-gradient(circle at 0 0, #eff6ff, #ffffff 55%);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sets the aspect ratio (square-ish) */
+.image-wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 100%; /* 1:1; change to 70% if you want 10:7 style */
+}
+
+.image-wrapper-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.image-wrapper-inner img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+
+    .card-description {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      max-height: 120px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .card-footer-hint {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    .bottom-bar {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .progress-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: #2563eb;
+      transition: width 0.25s ease;
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      color: #4b5563;
+      text-align: center;
+    }
+
+    .favorites-count {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    .bottom-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: #111827;
+      color: #f9fafb;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 50;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: min(920px, 96vw);
+      max-height: min(720px, 90vh);
+      width: 100%;
+      background: #020617;
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+	   /* NEW: let header + body stack and share height */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: linear-gradient(
+        to right,
+        rgba(15, 23, 42, 0.96),
+        rgba(30, 64, 175, 0.9)
+      );
+      color: #e5e7eb;
+      font-size: 0.85rem;
+    }
+
+    .modal-header-title {
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .modal-close-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      padding: 4px 9px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .modal-body {
+      padding: 8px 8px 10px;
+      background: radial-gradient(circle at 0 0, #eff6ff, #020617 60%);
+
+      /* NEW: take remaining height + allow scrolling */
+      flex: 1;
+      overflow: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+}
+
+
+    .modal-image-wrapper {
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto;          /* extra safety if needed */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+}
+
+     .modal-image-wrapper img {
+       display: block;
+       max-width: 100%;
+       max-height: 100%;
+       width: auto;
+       height: auto;
+       margin: 0 auto;
+}
+
+
+    @media (max-width: 768px) {
+      .app {
+        padding: 12px 10px 16px;
+      }
+
+      .card-area {
+        gap: 10px;
+      }
+
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+      }
+
+      .card-shell {
+        width: min(100%, 420px);
+        height: min(560px, 72vh);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .favorites-toggle {
+        align-self: flex-end;
+      }
+
+      .bottom-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding-bottom: 36px;
+      }
+
+      .progress-area {
+        order: 3;
+      }
+
+      .bottom-hint {
+        order: 2;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top-row">
+      <div>
+        <div class="chapter-tabs" id="chapterTabs"></div>
+        <div class="top-row-subtitle">
+          Use ← / → or the buttons to navigate. Tap the image to open a full-screen, zoomable view.
+        </div>
+        <div class="mobile-swipe-hint" id="mobileSwipeHint">
+          Swipe left/right to navigate. Tap the image to zoom.
+        </div>
+      </div>
+      <button class="favorites-toggle" id="favoritesToggle" type="button">
+        <span class="icon">♥</span>
+        <span class="label">View Favorites</span>
+      </button>
+    </header>
+
+    <section class="card-area">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous image">&#8592;</button>
+
+      <div class="card-shell" id="cardShell">
+        <div class="card-stack-shadow"></div>
+
+        <article class="card" id="card">
+          <div class="card-section-tag" id="imageSection"></div>
+
+          <div class="card-header-row">
+            <h2 class="card-title" id="imageTitle"></h2>
+            <button class="favorite-btn inactive" id="favoriteBtn" type="button" aria-label="Toggle favorite">
+              <span>♥</span>
+            </button>
+          </div>
+
+          <div class="image-wrapper">
+            <div class="image-wrapper-inner">
+              <img id="imageElement" src="" alt="Infographic" />
+            </div>
+          </div>
+
+          <div class="card-description" id="imageDescription"></div>
+
+          <div class="card-footer-hint" id="cardFooterHint">
+            Tap the image to open a full-screen view. Swipe to move between infographics.
+          </div>
+        </article>
+      </div>
+
+      <button class="nav-btn" id="nextBtn" aria-label="Next image">&#8594;</button>
+    </section>
+
+    <footer class="bottom-bar">
+      <div class="favorites-count" id="favoritesCount">
+        Favorites: 0
+      </div>
+
+      <div class="progress-area">
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0 of 0 images</div>
+      </div>
+
+      <div class="bottom-hint">
+        Tip: Click an image on desktop or pinch on mobile to zoom.
+      </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-header-title" id="modalTitle"></div>
+          <button class="modal-close-btn" id="modalCloseBtn" type="button">
+            ✕ Close
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-image-wrapper">
+            <img id="modalImage" src="" alt="Infographic full view" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- CSV Parsing for Image Data ---
+    function parseImageCsv(text, chapterNumber) {
+      if (!text) return [];
+      // Remove BOM if present
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+
+      const rows = [];
+      let field = "";
+      let row = [];
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+
+        if (ch === '"') {
+          if (inQuotes && text[i + 1] === '"') {
+            field += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === "," && !inQuotes) {
+          row.push(field);
+          field = "";
+        } else if ((ch === "\n" || ch === "\r") && !inQuotes) {
+          if (field.length > 0 || row.length > 0) {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = "";
+          }
+        } else {
+          field += ch;
+        }
+      }
+
+      if (field.length > 0 || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+
+      if (rows.length <= 1) return [];
+
+      const header = rows[0];
+      const dataRows = rows.slice(1);
+
+      const idxImage = header.indexOf("ImageFileName");
+      const idxTitle = header.indexOf("Title");
+      const idxDesc = header.indexOf("Description");
+      const idxSection = header.indexOf("Section");
+
+      return dataRows
+        .map(r => {
+          const imageFileName = (r[idxImage] || "").trim();
+          const title = (r[idxTitle] || "").trim();
+          const description = (r[idxDesc] || "").trim();
+          const section = (r[idxSection] || "").trim();
+          if (!imageFileName) return null;
+
+          const id = `ch${chapterNumber}:${imageFileName}`;
+          return {
+            id,
+            chapter: chapterNumber,
+            imageFileName,
+            title,
+            description,
+            section,
+          };
+        })
+        .filter(Boolean);
+    }
+
+    const chapter1Csv = `ImageFileName,Title,Description,Section
+"Chapter 1 Introduction – Looking Under the Hood of Generative AI.png","Chapter 1 Introduction – Looking Under the Hood of Generative AI","The introduction reframes generative AI from mysterious magic into a probabilistic engine over latent space so you can see how prompts steer the system and which internal knobs you can adjust in professional work.","Chapter 1 Introduction – Looking Under the Hood of Generative AI"
+"1.1 Latent Space - The Model’s Map of Meaning.png","1.1 Latent Space - The Model’s Map of Meaning","Latent space is the model’s internal high-dimensional “map of meaning,” where similar concepts cluster together and different ideas live far apart.","1.1 Latent Space - The Model’s Map of Meaning"
+"1.2 Embeddings - Coordinates in that Space.png","1.2 Embeddings - Coordinates in that Space","Embeddings are numeric vectors that act like GPS coordinates in latent space, enabling contextual meaning, vector arithmetic such as king − man + woman ≈ queen, and semantic search over documents.","1.2 Embeddings - Coordinates in that Space"
+"1.3 Semantic Drift - When Meaning Slowly Slides Away.png","1.3 Semantic Drift - When Meaning Slowly Slides Away","Semantic drift is the gradual shift in meaning that happens when iterative rewrites or long conversations slowly move the model’s outputs away from your original intent unless you re-anchor them to the source.","1.3 Semantic Drift - When Meaning Slowly Slides Away"
+"2.1 Multi-Head Attention – Many “Views” on the Same Text.png","2.1 Multi-Head Attention – Many “Views” on the Same Text","Multi-head attention lets the Transformer view a sequence in parallel through multiple specialized heads that track grammar, entities, long-distance references, and discourse patterns, then combine them into a composite understanding.","2.1 Multi-Head Attention – Many “Views” on the Same Text"
+"2.2 Context Window - Big Memory, Selective Focus.png","2.2 Context Window - Big Memory, Selective Focus","The context window behaves like a spotlight rather than a hard drive: models technically see every token, but as inputs grow long they preferentially focus on the beginning and end while important details in the middle can be drowned out by noise.","2.2 Context Window - Big Memory, Selective Focus"
+"2.3 Information Compression and the Economics of Tokens.png","2.3 Information Compression and the Economics of Tokens","LLMs act as powerful compression engines whose runtime cost scales mainly with token count, making short, well-structured prompts and efficient chunking essential for controlling compute and expense.","2.3 Information Compression and the Economics of Tokens"
+"3.1 Temperature - The “Risk Dial”.png","3.1 Temperature - The “Risk Dial”","Temperature is the model’s “risk dial” on the next-token distribution, where low values yield stable, repeatable outputs and higher values encourage more varied, creative, and sometimes chaotic generations.","3.1 Temperature - The “Risk Dial”"
+"3.2 Sampling Strategies - Top-K and Top-P.png","3.2 Sampling Strategies - Top-K and Top-P","Top-K and Top-P sampling constrain which tokens the model may choose, with Top-K using a fixed-size candidate pool and Top-P selecting the smallest set whose cumulative probability passes a threshold for more adaptive, natural text.","3.2 Sampling Strategies - Top-K and Top-P"
+"3.3 Entropy - How “Sure” Is the Model.png","3.3 Entropy - How “Sure” Is the Model","Entropy measures how peaked or flat the next-token probability distribution is, distinguishing low-entropy certainty with a few dominant options from high-entropy diversity where many different tokens are similarly plausible.","3.3 Entropy - How “Sure” Is the Model"
+"4.1 System Messages - The Constitution of the Model.png","4.1 System Messages - The Constitution of the Model","System messages act as the conversation’s constitution, defining the highest-priority rules, roles, and constraints that all subsequent prompts must follow.","4.1 System Messages - The Constitution of the Model"
+"4.2 Chain-of-Thought and Anchor Thoughts.png","4.2 Chain-of-Thought and Anchor Thoughts","Chain-of-thought prompting asks the model to reason step by step, but anchoring that reasoning with a stable opening thought helps prevent it from building long explanations on top of early hallucinations.","4.2 Chain-of-Thought and Anchor Thoughts"
+"4.3 Controlling Output Format and Length.png","4.3 Controlling Output Format and Length","Rather than vaguely asking for shorter answers, you can define explicit output schemas so the model fills a fixed structure, which naturally limits length and makes responses machine readable.","4.3 Controlling Output Format and Length"
+"4.4 Complexity and Its Pitfalls.png","4.4 Complexity and Its Pitfalls","As prompts become more complex, they introduce failure modes such as hidden assumptions, conflicting instructions, higher token costs, and brittle behavior that is hard to debug or safely modify.","4.4 Complexity and Its Pitfalls"
+"5.1 RAG - Connecting the Model to Real Knowledge.png","5.1 RAG - Connecting the Model to Real Knowledge","Retrieval-augmented generation connects the model to your real documents so it grounds answers in retrieved evidence instead of guessing from memory alone, with retrieval quality often being the true bottleneck.","5.1 RAG - Connecting the Model to Real Knowledge"
+"5.2 Tools and Hybrid Intelligence.png","5.2 Tools and Hybrid Intelligence","Tool calling turns the model into an orchestrator that delegates precise work to calculators, APIs, or search engines, combining symbolic accuracy from tools with the model's flexible reasoning.","5.2 Tools and Hybrid Intelligence"
+"5.3 Multi-Agent Systems and Prompt Collisions.png","5.3 Multi-Agent Systems and Prompt Collisions","Multi agent systems coordinate several specialized models or agents on a workflow, but they also create prompt collisions and handoff risks that require careful interface design and governance.","5.3 Multi-Agent Systems and Prompt Collisions"
+"6.1 The Alignment Tax - Safety vs. Raw Capability.png","6.1 The Alignment Tax - Safety vs. Raw Capability","Safety alignment adds an apparent tax on raw capability by restricting certain behaviors, but in practice it trades a bit of flexibility for a large reduction in organizational risk and misuse.","6.1 The Alignment Tax - Safety vs. Raw Capability"
+"6.2 Evaluating Quality - Beyond Word Overlap.png","6.2 Evaluating Quality - Beyond Word Overlap","To evaluate modern models, you need scenario based benchmarks that probe truthfulness, reasoning, and safety, because simple word overlap scores miss whether the answer is actually correct or reliable.","6.2 Evaluating Quality - Beyond Word Overlap"
+"6.3 Security Perspective - Training vs. Inference.png","6.3 Security Perspective - Training vs. Inference","Most catastrophic security risks arise during model training rather than day to day inference, so practical defenses focus on how prompts and logs are stored, audited, and integrated with other systems.","6.3 Security Perspective - Training vs. Inference"
+"Chapter 1 Conclusion - From User to Engineer.png","Chapter 1 Conclusion - From User to Engineer","The conclusion shifts your identity from casual user to prompt engineer, summarizing how geometry, transformers, sampling, and safety patterns fit together so you can design, debug, and govern real world systems.","Chapter 1 Conclusion - From User to Engineer"
+`;
+
+
+    const chapter2Csv = `ImageFileName,Title,Description,Section
+"2.1-structured-output.png","Structured Output Schemas","Well-defined schemas transform free-form text responses into reliable, machine-readable structures.","2.1.1 Why Structure Matters"
+`;
+
+    const chapter3Csv = `ImageFileName,Title,Description,Section
+"3.1-temperature.png","Temperature as a Risk Dial","The temperature parameter controls randomness in token selection, trading off creativity and stability.","3.1 Temperature – The “Risk Dial”"
+`;
+
+    const chapter4Csv = `ImageFileName,Title,Description,Section
+"4.1-system-messages.png","System Messages as Constitution","System messages define the highest-priority rules and roles that guide the model’s behavior.","4.1 System Messages – The Constitution of the Model"
+`;
+
+    const FAVORITES_KEY = "infographicGalleryFavorites_v1";
+
+    let imagesByChapter = {
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+    };
+
+    let currentChapter = 1;
+    let currentIndex = 0;
+    let favorites = new Set();
+    let inFavoritesView = false;
+
+    const chapterTabsContainer = document.getElementById("chapterTabs");
+    const favoritesToggle = document.getElementById("favoritesToggle");
+    const favoritesToggleLabel = favoritesToggle.querySelector(".label");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const imageSection = document.getElementById("imageSection");
+    const imageTitle = document.getElementById("imageTitle");
+    const imageDescription = document.getElementById("imageDescription");
+    const imageElement = document.getElementById("imageElement");
+    const favoriteBtn = document.getElementById("favoriteBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressLabel = document.getElementById("progressLabel");
+    const favoritesCount = document.getElementById("favoritesCount");
+    const cardFooterHint = document.getElementById("cardFooterHint");
+    const toast = document.getElementById("toast");
+    const mobileSwipeHint = document.getElementById("mobileSwipeHint");
+    const cardShell = document.getElementById("cardShell");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalImage = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+
+    function saveFavorites() {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favorites)));
+    }
+
+    function loadFavorites() {
+      const raw = localStorage.getItem(FAVORITES_KEY);
+      if (!raw) return;
+      try {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr)) {
+          favorites = new Set(arr);
+        }
+      } catch (e) {
+        console.warn("Failed to parse favorites", e);
+      }
+    }
+
+    function getActiveList() {
+      if (!inFavoritesView) {
+        return imagesByChapter[currentChapter] || [];
+      }
+
+      const all = [];
+      for (const chapter of [1, 2, 3, 4]) {
+        const images = imagesByChapter[chapter] || [];
+        images.forEach(img => {
+          if (favorites.has(img.id)) {
+            all.push(img);
+          }
+        });
+      }
+      return all;
+    }
+
+    function updateChapterTabs() {
+      chapterTabsContainer.innerHTML = "";
+      const chapters = [
+        { id: 1, label: "Ch 1 Foundations" },
+        { id: 2, label: "Ch 2 Applications" },
+        { id: 3, label: "Ch 3 Patterns" },
+        { id: 4, label: "Ch 4 Advanced" },
+      ];
+
+      chapters.forEach(ch => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className =
+          "chapter-tab" + (ch.id === currentChapter && !inFavoritesView ? " active" : "");
+        const parts = ch.label.split(" ");
+        const mainLabel = document.createElement("span");
+        mainLabel.textContent = parts[0] + " " + parts[1];
+        const subLabel = document.createElement("span");
+        subLabel.textContent = parts.slice(2).join(" ");
+        btn.appendChild(mainLabel);
+        btn.appendChild(subLabel);
+
+        btn.addEventListener("click", () => {
+          if (inFavoritesView) {
+            inFavoritesView = false;
+            updateFavoritesToggleState();
+          }
+          currentChapter = ch.id;
+          currentIndex = 0;
+          render();
+        });
+
+        chapterTabsContainer.appendChild(btn);
+      });
+    }
+
+    function updateFavoritesToggleState() {
+      favoritesToggle.classList.toggle("active", inFavoritesView);
+      favoritesToggleLabel.textContent = inFavoritesView ? "Exit Favorites" : "View Favorites";
+    }
+
+    function updateFavoritesCount() {
+      favoritesCount.textContent = `Favorites: ${favorites.size}`;
+    }
+
+    function render() {
+      const list = getActiveList();
+      const total = list.length;
+
+      updateChapterTabs();
+      updateFavoritesToggleState();
+      updateFavoritesCount();
+
+      if (total === 0) {
+        imageSection.textContent = inFavoritesView
+          ? "No favorites yet"
+          : `No images defined for this view`;
+        imageTitle.textContent = inFavoritesView
+          ? "Add favorites from any chapter"
+          : "No infographics available";
+        imageDescription.textContent = inFavoritesView
+          ? "Tap the heart icon on any infographic card to save it as a favorite, then return here."
+          : "Once images are added to this chapter, they will appear in this gallery.";
+        imageElement.src = "";
+        imageElement.alt = "No infographic available";
+        favoriteBtn.classList.add("inactive");
+        favoriteBtn.disabled = true;
+        progressBar.style.width = "0%";
+        progressLabel.textContent = "0 of 0 images";
+        cardFooterHint.textContent = "";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      if (currentIndex < 0) currentIndex = 0;
+      if (currentIndex >= total) currentIndex = total - 1;
+
+      const item = list[currentIndex];
+
+      const chapterLabel = inFavoritesView
+        ? "Favorites view"
+        : `Ch ${currentChapter} • ${
+            currentChapter === 1
+              ? "Foundations"
+              : currentChapter === 2
+              ? "Applications"
+              : currentChapter === 3
+              ? "Patterns"
+              : "Advanced"
+          }`;
+
+      imageSection.textContent = chapterLabel;
+      imageTitle.textContent = item.title;
+      imageDescription.textContent = item.description;
+
+      const imageUrl = `chapter${item.chapter}/${item.imageFileName}`;
+      imageElement.src = imageUrl;
+      imageElement.alt = item.title;
+
+      const isFavorite = favorites.has(item.id);
+      favoriteBtn.classList.toggle("inactive", !isFavorite);
+      favoriteBtn.textContent = isFavorite ? "♥ In Favorites" : "♥ Add Favorite";
+      favoriteBtn.disabled = false;
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === total - 1;
+
+      const progressPercentage = total === 0 ? 0 : ((currentIndex + 1) / total) * 100;
+      progressBar.style.width = `${progressPercentage}%`;
+      progressLabel.textContent = `${currentIndex + 1} of ${total} images`;
+
+      cardFooterHint.textContent =
+        "Tap the image to open a full-screen view. Swipe to move between infographics.";
+    }
+
+    prevBtn.addEventListener("click", () => {
+      const list = getActiveList();
+      if (!list.length) return;
+      if (currentIndex > 0) {
+        currentIndex--;
+        render();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const list = getActiveList();
+      if (!list.length) return;
+      if (currentIndex < list.length - 1) {
+        currentIndex++;
+        render();
+      }
+    });
+
+    favoritesToggle.addEventListener("click", () => {
+      inFavoritesView = !inFavoritesView;
+      currentIndex = 0;
+      render();
+    });
+
+    favoriteBtn.addEventListener("click", () => {
+      const list = getActiveList();
+      if (!list.length) return;
+      const item = list[currentIndex];
+      if (favorites.has(item.id)) {
+        favorites.delete(item.id);
+        showToast("Removed from favorites");
+      } else {
+        favorites.add(item.id);
+        showToast("Added to favorites");
+      }
+      saveFavorites();
+      updateFavoritesCount();
+
+      if (inFavoritesView) {
+        const newList = getActiveList();
+        if (!newList.length) {
+          inFavoritesView = false;
+          currentIndex = 0;
+        } else if (currentIndex >= newList.length) {
+          currentIndex = newList.length - 1;
+        }
+      }
+
+      render();
+    });
+
+    function openModal() {
+      const list = getActiveList();
+      if (!list.length) return;
+      const item = list[currentIndex];
+      const imageUrl = `chapter${item.chapter}/${item.imageFileName}`;
+      modalImage.src = imageUrl;
+      modalTitle.textContent = item.title;
+      modalBackdrop.classList.add("active");
+    }
+
+    function closeModal() {
+      modalBackdrop.classList.remove("active");
+      modalImage.src = "";
+    }
+
+    imageElement.addEventListener("click", () => {
+      if (!imageElement.src) return;
+      openModal();
+    });
+
+    modalCloseBtn.addEventListener("click", closeModal);
+
+    modalBackdrop.addEventListener("click", (event) => {
+      if (event.target === modalBackdrop) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modalBackdrop.classList.contains("active")) {
+        closeModal();
+      } else if (event.key === "ArrowLeft") {
+        prevBtn.click();
+      } else if (event.key === "ArrowRight") {
+        nextBtn.click();
+      }
+    });
+
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      mobileSwipeHint.classList.add("hidden");
+    }
+
+    let touchStartX = null;
+    cardShell.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+        }
+      },
+      { passive: true }
+    );
+
+    cardShell.addEventListener(
+      "touchend",
+      (e) => {
+        if (touchStartX == null) return;
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = endX - touchStartX;
+        const threshold = 40;
+        if (deltaX > threshold) {
+          prevBtn.click();
+        } else if (deltaX < -threshold) {
+          nextBtn.click();
+        }
+        touchStartX = null;
+      },
+      { passive: true }
+    );
+
+    function init() {
+      imagesByChapter[1] = parseImageCsv(chapter1Csv, 1);
+      imagesByChapter[2] = parseImageCsv(chapter2Csv, 2);
+      imagesByChapter[3] = parseImageCsv(chapter3Csv, 3);
+      imagesByChapter[4] = parseImageCsv(chapter4Csv, 4);
+
+      loadFavorites();
+      render();
+    }
+
+    init();
+  </script>
+  
+  <!-- Contact / Feedback Button -->
+<button
+  id="contactBtn"
+  style="
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+  "
+>
+  💬 Feedback / Contact
+</button>
+
+<script>
+  // Update with your email + tweak subject per app if you’d like
+  const APP_NAME = "Gen AI Infographics app"; // change per app
+  const CONTACT_EMAIL = "agilityaiwork@gmail.com";
+
+  document.getElementById("contactBtn").addEventListener("click", () => {
+    const subject = encodeURIComponent(`[Feedback] ${APP_NAME}`);
+    const body = encodeURIComponent(
+`Hi Agility AI,
+
+I’m using the ${APP_NAME} and wanted to share:
+
+
+(Feel free to add screenshots.)
+
+Thanks!`
+    );
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+  
+</body>
+</html>

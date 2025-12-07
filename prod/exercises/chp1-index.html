@@ -1,0 +1,1718 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter 1 Exercise Lab — Foundational & Theoretical Mastery</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      background: #f4f5f7;
+      color: #111827;
+    }
+    aside {
+      width: 260px;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    main {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .brand .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+    }
+    .brand h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .brand p {
+      margin: 0;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      text-align: left;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .navbtn small {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn:hover {
+      background: #1f2937;
+    }
+    .navbtn.active {
+      background: #22c55e;
+      color: #022c22;
+    }
+    .navbtn.active small {
+      color: #022c22;
+    }
+    .hr {
+      height: 1px;
+      background: #374151;
+      margin: 8px 0;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .section {
+      display: none;
+      max-width: 960px;
+    }
+    .section.active {
+      display: block;
+    }
+    .title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #d1fae5;
+      color: #065f46;
+      white-space: nowrap;
+    }
+    .subtitle-main {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+    }
+    .card h3, .card h4 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .card p {
+      font-size: 13px;
+      color: #4b5563;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: #374151;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    select, textarea, input[type="range"], input[type="number"], input[type="text"] {
+      width: 100%;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f9fafb;
+      text-align: left;
+    }
+    .doc {
+      font-size: 12px;
+      color: #374151;
+    }
+    .muted {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: none;
+      background: #22c55e;
+      color: #022c22;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .primary:hover {
+      background: #16a34a;
+    }
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: 1px solid #9ca3af;
+      background: transparent;
+      color: #374151;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-left: 6px;
+    }
+    .ghost:hover {
+      background: #e5e7eb;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .chip {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid #9ca3af;
+      padding: 4px 8px;
+      background: #111827;
+      color: #e5e7eb;
+      cursor: pointer;
+    }
+    .chip:hover {
+      background: #1f2937;
+    }
+    .chip.active {
+      background: #22c55e;
+      color: #022c22;
+      border-color: #22c55e;
+    }
+    .latent-map {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .latent-box {
+      border-radius: 10px;
+      border: 1px dashed #d1d5db;
+      padding: 8px;
+      background: #f9fafb;
+      font-size: 11px;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .latent-box-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .latent-box.active {
+      border-style: solid;
+      border-color: #22c55e;
+      background: #ecfdf5;
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.5);
+    }
+    .list {
+      font-size: 12px;
+      color: #374151;
+    }
+    .list ul {
+      padding-left: 18px;
+      margin: 4px 0;
+    }
+    .drift-text span {
+      cursor: pointer;
+      padding: 1px 2px;
+      border-radius: 4px;
+      margin: 0 1px;
+      display: inline-block;
+    }
+    .drift-text span.selected {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .drift-text span.drift-true {
+      border-bottom: 2px solid #b91c1c;
+    }
+    .attention-text span {
+      cursor: pointer;
+      padding: 1px 2px;
+      border-radius: 4px;
+      margin: 0 1px;
+      display: inline-block;
+    }
+    .attention-text span.user-selected {
+      background: #e0f2fe;
+      color: #075985;
+    }
+    .attention-text span.attn-true {
+      border-bottom: 2px solid #1d4ed8;
+    }
+    .attention-text span.both {
+      background: #bbf7d0;
+      border-bottom: 2px solid #15803d;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #22c55e;
+      cursor: pointer;
+      border: 1px solid #065f46;
+    }
+    .n {
+      font-size: 12px;
+      font-weight: 600;
+      color: #111827;
+    }
+    .palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .canvas {
+      min-height: 60px;
+      border-radius: 10px;
+      border: 1px dashed #d1d5db;
+      padding: 8px;
+      background: #f9fafb;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .canvas-chip {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #e5e7eb;
+      color: #111827;
+      border: 1px solid #9ca3af;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .canvas-chip button {
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Chapter 1 Exercise Lab</h1>
+        <p>Foundational & theoretical mastery</p>
+      </div>
+    </div>
+
+    <button class="navbtn active" data-target="sec-ex1">
+      <span>Exercise 1 – Latent Neighborhood Studio</span>
+      <small>Where your prompt “lives”</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex2">
+      <span>Exercise 2 – Drift Detective</span>
+      <small>Find meaning drift</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex3">
+      <span>Exercise 3 – Attention Storyboard</span>
+      <small>What the model “looks at”</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex4">
+      <span>Exercise 4 – Risk Dial Console</span>
+      <small>Temperature & sampling</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex5">
+      <span>Exercise 5 – Architecture Matchmaker</span>
+      <small>RAG, tools, agents</small>
+    </button>
+
+    <div class="hr"></div>
+    <div class="subtitle">
+      These exercises are for knowledge workers. Use them to design, critique, and govern AI behavior—not to write code.
+    </div>
+  </aside>
+
+  <main>
+    <!-- Exercise 1: Latent Neighborhood Studio -->
+    <section id="sec-ex1" class="section active">
+      <div class="title">
+        <h2>Exercise 1 – Latent Neighborhood Studio</h2>
+        <div class="pill">Objective: See where your prompts sit in the model’s map of meaning</div>
+      </div>
+      <p class="subtitle-main">
+        Place realistic work prompts into conceptual neighborhoods (policy, marketing, risk, fiction, etc.) and see how small wording changes move them into safer, more useful regions of meaning.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            1. Start from a scenario. 2. Type or adapt a prompt you might actually use at work.
+            3. Add domain cues and constraints. 4. Place it in latent space and review its “neighbors.”
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex1-scenario">Start from a scenario</label>
+          <select id="ex1-scenario">
+            <option value="policy">Summarize a policy for managers</option>
+            <option value="marketing">Draft a short marketing blurb</option>
+            <option value="risk">Write a vendor risk note</option>
+            <option value="story">Write a short story opening</option>
+          </select>
+
+          <label for="ex1-prompt">Your prompt</label>
+          <textarea id="ex1-prompt"
+            placeholder="Type or adapt a real prompt you might use at work..."></textarea>
+
+          <div class="hr"></div>
+
+          <h3>Refine the prompt</h3>
+          <label>Domain cues</label>
+          <div class="row">
+            <button class="chip ex1-domain" data-domain="hr">HR / People</button>
+            <button class="chip ex1-domain" data-domain="finance">Finance / Risk</button>
+            <button class="chip ex1-domain" data-domain="marketing">Marketing / Brand</button>
+            <button class="chip ex1-domain" data-domain="legal">Legal / Compliance</button>
+          </div>
+
+          <label style="margin-top:8px;">Add constraints</label>
+          <div class="row">
+            <button class="chip ex1-constraint" data-constraint="no-fiction">No fiction or invented examples</button>
+            <button class="chip ex1-constraint" data-constraint="audience">Specify audience &amp; outcome</button>
+            <button class="chip ex1-constraint" data-constraint="grounded">Stay grounded in provided docs</button>
+          </div>
+
+          <div class="row" style="margin-top:10px;">
+            <button id="ex1-place" class="primary">Place in latent space</button>
+            <button id="ex1-reset" class="ghost">Reset</button>
+          </div>
+
+          <div class="hr"></div>
+          <label>Reflection prompt</label>
+          <div id="ex1-reflection" class="doc">
+            After you place and refine your prompt, note how its “neighborhood” changes.
+            What wording changes moved it into a safer or more useful region?
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Latent neighborhood view</h3>
+          <p class="muted">
+            This is a conceptual map showing which kinds of content your prompt is closest to.
+          </p>
+
+          <div id="ex1-map" class="latent-map">
+            <!-- JS fills boxes -->
+          </div>
+
+          <h4 style="margin-top:10px;">Neighbor prompts &amp; notes</h4>
+          <div id="ex1-neighbors" class="list">
+            Type or choose a prompt, then click <b>Place in latent space</b> to see its neighborhood.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 2: Drift Detective -->
+    <section id="sec-ex2" class="section">
+      <div class="title">
+        <h2>Exercise 2 – Drift Detective</h2>
+        <div class="pill">Objective: Spot and prevent semantic drift across rewrites</div>
+      </div>
+      <p class="subtitle-main">
+        Inspect a chain of rewrites for a work-related message, identify where meaning drifted, and compare a “no anchors” version with a version that keeps a core requirement front and center.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            You’ll act as a drift detective. Compare the original text to the final version and mark where meaning has slipped.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex2-scenario">Scenario</label>
+          <select id="ex2-scenario">
+            <option value="policy_email">Policy email to employees</option>
+            <option value="client_update">Client update memo</option>
+            <option value="incident_summary">Incident report summary</option>
+          </select>
+
+          <label for="ex2-mode" style="margin-top:8px;">Mode</label>
+          <select id="ex2-mode">
+            <option value="no_anchor">Mode A – No anchors</option>
+            <option value="with_anchor">Mode B – With anchors</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>Drift timeline</h3>
+          <div id="ex2-timeline" class="list">
+            <!-- JS: show original + steps textually -->
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex2-show-original" class="ghost">Show original only</button>
+            <button id="ex2-show-final" class="ghost">Show final only</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Mark meaning drift</h3>
+          <p class="doc">
+            Click the words in the final version that you think represent drift or weakened meaning.
+          </p>
+
+          <div id="ex2-final-text" class="doc drift-text">
+            <!-- JS: final text as clickable tokens -->
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex2-check" class="primary">Reveal drift analysis</button>
+            <button id="ex2-clear" class="ghost">Clear highlights</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Drift analysis</h3>
+          <div id="ex2-analysis" class="list">
+            Make your selections and click <b>Reveal drift analysis</b> to see feedback.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div id="ex2-reflection" class="doc">
+            Compare Mode A (no anchors) with Mode B (with anchors).
+            What simple anchor statement could you add to your real prompts to reduce drift?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 3: Attention Storyboard -->
+    <section id="sec-ex3" class="section">
+      <div class="title">
+        <h2>Exercise 3 – Attention Storyboard</h2>
+        <div class="pill">Objective: See how attention focuses on different parts of your text</div>
+      </div>
+      <p class="subtitle-main">
+        Explore simplified “attention heads” that focus on grammar, entities, pronouns, and cause-and-effect. Predict which parts of the text each head will highlight, then see what the model likely tracks.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            Pick a short paragraph and explore how different attention heads highlight different words.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex3-text">Mini-text</label>
+          <select id="ex3-text">
+            <option value="story">Short story-style paragraph</option>
+            <option value="policy">Policy explanation with conditions</option>
+            <option value="business">Business explanation with pronouns</option>
+          </select>
+
+          <div id="ex3-text-display" class="doc" style="margin-top:6px;">
+            <!-- JS: selected paragraph -->
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Attention heads</h3>
+          <div class="row">
+            <button class="chip ex3-head" data-head="grammar">Grammar head</button>
+            <button class="chip ex3-head" data-head="entities">Role &amp; entity head</button>
+            <button class="chip ex3-head" data-head="pronoun">Pronoun head</button>
+            <button class="chip ex3-head" data-head="cause">Cause-and-effect head</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Where will attention go?</h3>
+          <p class="doc">
+            Click the word you think this head will focus on most. Then reveal the head’s highlight.
+          </p>
+
+          <div id="ex3-prediction-text" class="doc attention-text">
+            <!-- JS: clickable tokens -->
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex3-reveal" class="primary">Reveal head highlight</button>
+            <button id="ex3-reset" class="ghost">Clear selection</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Head explanation</h3>
+          <div id="ex3-explanation" class="doc">
+            Choose a head and text, make your guess, then click <b>Reveal head highlight</b> to see what that head is “watching”.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div id="ex3-reflection" class="doc">
+            How could you rewrite your own prompts or inputs to make pronoun references and causal links clearer for the model?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 4: Risk Dial Console -->
+    <section id="sec-ex4" class="section">
+      <div class="title">
+        <h2>Exercise 4 – Risk Dial Console</h2>
+        <div class="pill">Objective: Match temperature & sampling to the task’s risk and creativity needs</div>
+      </div>
+      <p class="subtitle-main">
+        Tune temperature and sampling settings for realistic tasks and see qualitative summaries of how outputs will behave—steady and safe vs varied and risky.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            Adjust the “risk dials” for different tasks and see how they affect output behavior.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex4-scenario">Scenario</label>
+          <select id="ex4-scenario">
+            <option value="code">Generate code for an internal tool</option>
+            <option value="brainstorm">Brainstorm campaign ideas</option>
+            <option value="policy">Draft a customer-facing policy explanation</option>
+            <option value="analogies">Write creative analogies for explaining embeddings</option>
+          </select>
+
+          <label for="ex4-temp" style="margin-top:8px;">Temperature</label>
+          <input id="ex4-temp" type="range" min="0" max="150" value="50" />
+          <div class="row">
+            <span class="muted">Lower</span>
+            <span class="n" id="ex4-temp-label">0.5</span>
+            <span class="muted">Higher</span>
+          </div>
+
+          <label for="ex4-top-p" style="margin-top:8px;">Top-p</label>
+          <input id="ex4-top-p" type="range" min="10" max="100" value="80" />
+          <div class="row">
+            <span class="muted">Conservative</span>
+            <span class="n" id="ex4-top-p-label">0.80</span>
+            <span class="muted">Free-form</span>
+          </div>
+
+          <div class="hr"></div>
+
+          <button id="ex4-simulate" class="primary">Simulate output profile</button>
+          <button id="ex4-reset" class="ghost">Reset to suggested</button>
+        </div>
+
+        <div class="card">
+          <h3>Output profile</h3>
+          <div id="ex4-profile" class="list">
+            Choose a scenario, adjust the dials, and click <b>Simulate output profile</b> to see how the model will behave.
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Challenge target</h3>
+          <div id="ex4-challenge" class="doc">
+            <!-- JS: target description per scenario -->
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex4-check" class="primary">Check my settings</button>
+          </div>
+
+          <div id="ex4-feedback" class="doc" style="margin-top:8px;">
+            After you simulate, click <b>Check my settings</b> to see if your dials fit the task.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div id="ex4-reflection" class="doc">
+            For your own work, which tasks should default to low temperature and conservative sampling—and where are you comfortable turning the risk dial up?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 5: Architecture Matchmaker -->
+    <section id="sec-ex5" class="section">
+      <div class="title">
+        <h2>Exercise 5 – Architecture Matchmaker</h2>
+        <div class="pill">Objective: Choose and justify the right architecture for a task</div>
+      </div>
+      <p class="subtitle-main">
+        Assemble a simple workflow from building blocks (plain LLM, RAG, tools, agents) and get feedback on whether your design is grounded, safe, and appropriately simple.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            Pick a scenario and click building blocks to add them into a simple left-to-right flow.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex5-scenario">Scenario</label>
+          <select id="ex5-scenario">
+            <option value="policy_bot">Internal policy chatbot (needs grounding)</option>
+            <option value="marketing_assistant">Marketing copy generator</option>
+            <option value="compliance_qa">Compliance Q&amp;A assistant</option>
+            <option value="vendor_risk">Vendor risk review workflow</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>Architecture palette</h3>
+          <div id="ex5-palette" class="palette">
+            <button class="chip ex5-block" data-type="llm">Vanilla LLM</button>
+            <button class="chip ex5-block" data-type="rag">RAG layer</button>
+            <button class="chip ex5-block" data-type="tool-search">Tool – Search API</button>
+            <button class="chip ex5-block" data-type="tool-calc">Tool – Calculator / Data API</button>
+            <button class="chip ex5-block" data-type="agent-writer">Agent – Writer</button>
+            <button class="chip ex5-block" data-type="agent-reviewer">Agent – Reviewer</button>
+            <button class="chip ex5-block" data-type="agent-orchestrator">Agent – Orchestrator</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Workflow canvas</h3>
+          <p class="muted">
+            Click blocks in the palette to add them from left to right. You can remove blocks if you change your mind.
+          </p>
+
+          <div id="ex5-canvas" class="canvas">
+            <!-- JS: sequence of chosen blocks -->
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex5-analyze" class="primary">Analyze my design</button>
+            <button id="ex5-clear" class="ghost">Clear canvas</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Fit &amp; risk analysis</h3>
+          <div id="ex5-analysis" class="list">
+            Add blocks and click <b>Analyze my design</b> to see grounding quality, complexity, and safety hints.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div id="ex5-reflection" class="doc">
+            If you had to defend this architecture to a risk committee, how would you justify it in one paragraph?
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Shared nav
+    (function () {
+      var navBtns = Array.prototype.slice.call(document.querySelectorAll(".navbtn"));
+      var sections = Array.prototype.slice.call(document.querySelectorAll(".section"));
+      navBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          navBtns.forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          var target = btn.getAttribute("data-target");
+          sections.forEach(function (sec) {
+            sec.classList.toggle("active", sec.id === target);
+          });
+        });
+      });
+    })();
+
+    function clamp(num, min, max) {
+      return Math.max(min, Math.min(max, num));
+    }
+
+    // Exercise 1: Latent Neighborhood Studio
+    (function () {
+      var scenarioSel = document.getElementById("ex1-scenario");
+      if (!scenarioSel) return;
+
+      var promptEl = document.getElementById("ex1-prompt");
+      var mapEl = document.getElementById("ex1-map");
+      var neighborsEl = document.getElementById("ex1-neighbors");
+      var placeBtn = document.getElementById("ex1-place");
+      var resetBtn = document.getElementById("ex1-reset");
+      var domainChips = Array.prototype.slice.call(document.querySelectorAll(".ex1-domain"));
+      var constraintChips = Array.prototype.slice.call(document.querySelectorAll(".ex1-constraint"));
+
+      var scenarioPrompts = {
+        policy: "Summarize this HR policy into a one-page overview for frontline managers, highlighting what changes for them.",
+        marketing: "Write a short social post announcing our new product feature in a friendly, on-brand tone.",
+        risk: "Draft a concise vendor risk note for leadership, focusing on the biggest two risks and their impact.",
+        story: "Write the opening paragraph of a short story set in our industry, using a vivid but realistic tone."
+      };
+
+      var neighborhoods = [
+        { id: "policy", label: "Policy & Compliance", desc: "Policies, rules, handbooks, HR and legal guidance." },
+        { id: "marketing", label: "Marketing & Brand Voice", desc: "Social posts, campaigns, taglines, brand stories." },
+        { id: "technical", label: "Technical Explanation", desc: "How-it-works explanations, specs, tutorials." },
+        { id: "fiction", label: "Fiction & Storytelling", desc: "Stories, characters, fictional scenarios." },
+        { id: "speculation", label: "Speculation & Opinion", desc: "Hot takes, guesses, opinions, ungrounded claims." },
+        { id: "risk", label: "Risk & Controls", desc: "Risk notes, incident summaries, controls, mitigations." }
+      ];
+
+      var keywordMap = {
+        policy: ["policy", "compliance", "guideline", "hr", "benefit", "leave"],
+        marketing: ["campaign", "social", "brand", "launch", "customers", "audience"],
+        technical: ["api", "architecture", "system", "technical", "implementation", "model"],
+        fiction: ["story", "novel", "character", "fiction", "narrative", "scene"],
+        speculation: ["might", "could", "maybe", "opinion", "prediction", "trend"],
+        risk: ["risk", "incident", "impact", "mitigation", "exposure", "control"]
+      };
+
+      function renderMap(activeIds) {
+        while (mapEl.firstChild) mapEl.removeChild(mapEl.firstChild);
+        neighborhoods.forEach(function (n) {
+          var box = document.createElement("div");
+          box.className = "latent-box";
+          if (activeIds && activeIds.indexOf(n.id) !== -1) {
+            box.classList.add("active");
+          }
+          var title = document.createElement("div");
+          title.className = "latent-box-title";
+          title.textContent = n.label;
+          var desc = document.createElement("div");
+          desc.className = "doc";
+          desc.textContent = n.desc;
+          box.appendChild(title);
+          box.appendChild(desc);
+          mapEl.appendChild(box);
+        });
+      }
+
+      function setScenario() {
+        var value = scenarioSel.value || "policy";
+        promptEl.value = scenarioPrompts[value] || "";
+      }
+
+      function appendToPrompt(text) {
+        var current = promptEl.value || "";
+        if (current.indexOf(text) === -1) {
+          if (current && !/\s$/.test(current)) current += " ";
+          current += text;
+          promptEl.value = current;
+        }
+      }
+
+      domainChips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          domainChips.forEach(function (c) { c.classList.remove("active"); });
+          chip.classList.add("active");
+          var domain = chip.getAttribute("data-domain");
+          if (domain === "hr") appendToPrompt("Focus on HR / people implications.");
+          else if (domain === "finance") appendToPrompt("Highlight financial and risk implications.");
+          else if (domain === "marketing") appendToPrompt("Keep the tone on-brand and customer-friendly.");
+          else if (domain === "legal") appendToPrompt("Keep the answer aligned with legal and compliance rules.");
+        });
+      });
+
+      constraintChips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          var active = chip.classList.toggle("active");
+          var cons = chip.getAttribute("data-constraint");
+          if (active) {
+            if (cons === "no-fiction") appendToPrompt("Do not invent facts or fictional examples.");
+            else if (cons === "audience") appendToPrompt("Explicitly state what is expected from the target audience.");
+            else if (cons === "grounded") appendToPrompt("Cite and ground the answer strictly in the provided material.");
+          }
+        });
+      });
+
+      function analyzePromptNeighborhood(text) {
+        text = (text || "").toLowerCase();
+        var scores = {};
+        neighborhoods.forEach(function (n) { scores[n.id] = 0; });
+        Object.keys(keywordMap).forEach(function (nid) {
+          keywordMap[nid].forEach(function (kw) {
+            if (text.indexOf(kw) !== -1) {
+              scores[nid] += 1;
+            }
+          });
+        });
+
+        // scenario nudges
+        if (scenarioSel.value === "policy") scores.policy += 1;
+        if (scenarioSel.value === "marketing") scores.marketing += 1;
+        if (scenarioSel.value === "risk") scores.risk += 1;
+        if (scenarioSel.value === "story") scores.fiction += 1;
+
+        var sorted = Object.keys(scores).sort(function (a, b) { return scores[b] - scores[a]; });
+        var top = sorted[0];
+        var second = sorted[1];
+        var active = [];
+        if (scores[top] > 0) active.push(top);
+        if (scores[second] > 0 && scores[second] >= scores[top] - 1) active.push(second);
+        if (active.length === 0) active = ["policy"]; // default
+
+        return { active: active, scores: scores };
+      }
+
+      function renderNeighbors(analysis, text) {
+        while (neighborsEl.firstChild) neighborsEl.removeChild(neighborsEl.firstChild);
+
+        var p = document.createElement("p");
+        p.className = "doc";
+        p.innerHTML = "<b>Interpretation:</b>";
+        neighborsEl.appendChild(p);
+
+        var main = analysis.active[0];
+        var mainLabel = neighborhoods.find(function (n) { return n.id === main; }).label;
+
+        var expl = document.createElement("p");
+        expl.className = "doc";
+        expl.textContent =
+          "The prompt currently sits mostly in the '" + mainLabel + "' neighborhood. Small wording changes can move it closer to or away from this region.";
+        neighborsEl.appendChild(expl);
+
+        var list = document.createElement("ul");
+        list.className = "doc";
+
+        analysis.active.forEach(function (nid) {
+          var nLabel = neighborhoods.find(function (n) { return n.id === nid; }).label;
+          var li = document.createElement("li");
+          li.textContent = "Neighbor cluster: " + nLabel + ".";
+          list.appendChild(li);
+        });
+
+        // Ambiguity hint
+        if (analysis.active.length > 1) {
+          var li2 = document.createElement("li");
+          li2.textContent = "This prompt overlaps multiple neighborhoods, which may make the model unsure which style or content to prioritize.";
+          list.appendChild(li2);
+        }
+
+        neighborsEl.appendChild(list);
+
+        var p2 = document.createElement("p");
+        p2.className = "doc";
+        p2.innerHTML =
+          "<b>Neighbor prompts (examples)</b>";
+        neighborsEl.appendChild(p2);
+
+        var nbList = document.createElement("ul");
+        nbList.className = "doc";
+
+        if (analysis.active.indexOf("policy") !== -1) {
+          var n1 = document.createElement("li");
+          n1.textContent = "“Explain the remote work policy in 5 bullet points for people managers.”";
+          nbList.appendChild(n1);
+        }
+        if (analysis.active.indexOf("marketing") !== -1) {
+          var n2 = document.createElement("li");
+          n2.textContent = "“Write three LinkedIn post options announcing our new feature in a confident but humble tone.”";
+          nbList.appendChild(n2);
+        }
+        if (analysis.active.indexOf("risk") !== -1) {
+          var n3 = document.createElement("li");
+          n3.textContent = "“Summarize the top three operational risks from this incident log for the COO.”";
+          nbList.appendChild(n3);
+        }
+        if (analysis.active.indexOf("fiction") !== -1) {
+          var n4 = document.createElement("li");
+          n4.textContent = "“Write a short narrative about a future product launch in the style of a magazine article.”";
+          nbList.appendChild(n4);
+        }
+        if (analysis.active.indexOf("technical") !== -1) {
+          var n5 = document.createElement("li");
+          n5.textContent = "“Explain how our internal API gateway works to a new engineer.”";
+          nbList.appendChild(n5);
+        }
+        if (analysis.active.indexOf("speculation") !== -1) {
+          var n6 = document.createElement("li");
+          n6.textContent = "“Give three scenarios of how this market could evolve over the next 5 years.”";
+          nbList.appendChild(n6);
+        }
+
+        if (!nbList.firstChild) {
+          var n0 = document.createElement("li");
+          n0.textContent = "Try adding clearer domain cues (HR, finance, marketing, legal) so we can place this prompt more precisely.";
+          nbList.appendChild(n0);
+        }
+
+        neighborsEl.appendChild(nbList);
+      }
+
+      placeBtn.addEventListener("click", function () {
+        var text = promptEl.value.trim();
+        if (!text) {
+          neighborsEl.textContent = "Please type or choose a prompt before placing it in latent space.";
+          renderMap([]);
+          return;
+        }
+        var analysis = analyzePromptNeighborhood(text);
+        renderMap(analysis.active);
+        renderNeighbors(analysis, text);
+      });
+
+      resetBtn.addEventListener("click", function () {
+        domainChips.forEach(function (c) { c.classList.remove("active"); });
+        constraintChips.forEach(function (c) { c.classList.remove("active"); });
+        scenarioSel.value = "policy";
+        setScenario();
+        renderMap([]);
+        neighborsEl.textContent = "Type or choose a prompt, then click \"Place in latent space\" to see its neighborhood.";
+      });
+
+      scenarioSel.addEventListener("change", setScenario);
+
+      renderMap([]);
+      setScenario();
+    })();
+
+    // Exercise 2: Drift Detective
+    (function () {
+      var scenarioSel = document.getElementById("ex2-scenario");
+      if (!scenarioSel) return;
+
+      var modeSel = document.getElementById("ex2-mode");
+      var timelineEl = document.getElementById("ex2-timeline");
+      var finalTextEl = document.getElementById("ex2-final-text");
+      var showOriginalBtn = document.getElementById("ex2-show-original");
+      var showFinalBtn = document.getElementById("ex2-show-final");
+      var checkBtn = document.getElementById("ex2-check");
+      var clearBtn = document.getElementById("ex2-clear");
+      var analysisEl = document.getElementById("ex2-analysis");
+
+      var data = {
+        policy_email: {
+          no_anchor: {
+            original: "Reminder: No customer personal data should be copied into email or chat tools. Always use the secure CRM system.",
+            steps: [
+              "We want to reduce the amount of customer information in email and chat tools.",
+              "Try to avoid putting personal customer details into email or chat messages.",
+              "In general, it’s better to keep customer information in the CRM instead of email.",
+              "When possible, please use the CRM for customer details instead of email or chat."
+            ],
+            final: "To make things easier, try to keep most customer information in the CRM rather than in email or chat.",
+            driftWords: ["easier", "try", "most"]
+          },
+          with_anchor: {
+            original: "Reminder: No customer personal data should be copied into email or chat tools. Always use the secure CRM system.",
+            steps: [
+              "[Core rule: No personal data in email or chat.] We want to reduce the amount of customer information in email and chat tools.",
+              "[Core rule: No personal data in email or chat.] Avoid putting personal customer details into email or chat messages.",
+              "[Core rule: No personal data in email or chat.] Keep customer information only in the CRM system, not in email or chat.",
+              "[Core rule: No personal data in email or chat.] Always use the CRM to store customer data."
+            ],
+            final: "[Core rule: No personal data in email or chat.] Always use the CRM to store customer data instead of email or chat.",
+            driftWords: [] // anchor kept it tight
+          }
+        },
+        client_update: {
+          no_anchor: {
+            original: "We will not ship any features that have not passed security review.",
+            steps: [
+              "We aim to ship features that have passed security review.",
+              "The goal is for all shipped features to pass security review.",
+              "Features should normally go through security review before launch.",
+              "Typically, features go through security review before we ship."
+            ],
+            final: "Typically, features go through security review before we ship, but there may be exceptions.",
+            driftWords: ["typically", "may", "exceptions"]
+          },
+          with_anchor: {
+            original: "We will not ship any features that have not passed security review.",
+            steps: [
+              "[Core rule: No launch without security review.] We aim to ship features that have passed security review.",
+              "[Core rule: No launch without security review.] Features must pass security review before launch.",
+              "[Core rule: No launch without security review.] We will only ship features that have passed security review.",
+              "[Core rule: No launch without security review.] Any feature that has not passed security review will not be shipped."
+            ],
+            final: "[Core rule: No launch without security review.] Any feature that has not passed security review will not be shipped.",
+            driftWords: []
+          }
+        },
+        incident_summary: {
+          no_anchor: {
+            original: "Any safety incident involving injury must be reported to the safety team within 24 hours.",
+            steps: [
+              "Safety incidents with injuries should be reported to the safety team within 24 hours.",
+              "Try to report any safety incident with an injury to the safety team within a day.",
+              "It’s best to let the safety team know about injury incidents within a day.",
+              "Ideally, safety incidents involving injuries are reported to the safety team within about a day."
+            ],
+            final: "Ideally, safety incidents involving injuries are reported to the safety team within about a day.",
+            driftWords: ["ideally", "about"]
+          },
+          with_anchor: {
+            original: "Any safety incident involving injury must be reported to the safety team within 24 hours.",
+            steps: [
+              "[Core rule: Injury incidents reported within 24 hours.] Safety incidents with injuries must be reported within 24 hours.",
+              "[Core rule: Injury incidents reported within 24 hours.] Report any safety incident with an injury to the safety team within 24 hours.",
+              "[Core rule: Injury incidents reported within 24 hours.] The safety team must be notified within 24 hours for any injury incident.",
+              "[Core rule: Injury incidents reported within 24 hours.] Do not delay reporting safety incidents with injuries beyond 24 hours."
+            ],
+            final: "[Core rule: Injury incidents reported within 24 hours.] Report any safety incident with an injury to the safety team within 24 hours.",
+            driftWords: []
+          }
+        }
+      };
+
+      var currentTokens = [];
+      var driftWordsCurrent = [];
+
+      function renderTimeline(d) {
+        while (timelineEl.firstChild) timelineEl.removeChild(timelineEl.firstChild);
+        var origP = document.createElement("p");
+        origP.className = "doc";
+        origP.innerHTML = "<b>Original:</b> " + d.original;
+        timelineEl.appendChild(origP);
+
+        d.steps.forEach(function (t, i) {
+          var p = document.createElement("p");
+          p.className = "doc";
+          p.innerHTML = "<b>Rewrite " + (i + 1) + ":</b> " + t;
+          timelineEl.appendChild(p);
+        });
+
+        var finalP = document.createElement("p");
+        finalP.className = "doc";
+        finalP.innerHTML = "<b>Final:</b> " + d.final;
+        timelineEl.appendChild(finalP);
+      }
+
+      function renderFinalTokens(text) {
+        while (finalTextEl.firstChild) finalTextEl.removeChild(finalTextEl.firstChild);
+        currentTokens = [];
+        var words = text.split(/\s+/);
+        words.forEach(function (w, idx) {
+          var span = document.createElement("span");
+          span.textContent = w;
+          span.setAttribute("data-idx", idx);
+          span.addEventListener("click", function () {
+            span.classList.toggle("selected");
+          });
+          finalTextEl.appendChild(span);
+          finalTextEl.appendChild(document.createTextNode(" "));
+          currentTokens.push(span);
+        });
+      }
+
+      function loadScenario() {
+        var sc = scenarioSel.value || "policy_email";
+        var mode = modeSel.value || "no_anchor";
+        var d = data[sc][mode];
+        renderTimeline(d);
+        renderFinalTokens(d.final);
+        driftWordsCurrent = d.driftWords.slice();
+        analysisEl.textContent = "Make your selections and click \"Reveal drift analysis\" to see feedback.";
+      }
+
+      showOriginalBtn.addEventListener("click", function () {
+        var sc = scenarioSel.value || "policy_email";
+        var mode = modeSel.value || "no_anchor";
+        var d = data[sc][mode];
+        while (finalTextEl.firstChild) finalTextEl.removeChild(finalTextEl.firstChild);
+        var p = document.createElement("p");
+        p.className = "doc";
+        p.textContent = d.original;
+        finalTextEl.appendChild(p);
+      });
+
+      showFinalBtn.addEventListener("click", function () {
+        var sc = scenarioSel.value || "policy_email";
+        var mode = modeSel.value || "no_anchor";
+        var d = data[sc][mode];
+        renderFinalTokens(d.final);
+      });
+
+      clearBtn.addEventListener("click", function () {
+        currentTokens.forEach(function (span) {
+          span.classList.remove("selected", "drift-true");
+        });
+        analysisEl.textContent = "Selections cleared. Click words again to mark drift.";
+      });
+
+      checkBtn.addEventListener("click", function () {
+        if (!currentTokens.length) {
+          analysisEl.textContent = "Please ensure the final version is visible before checking drift.";
+          return;
+        }
+        var selectedWords = [];
+        currentTokens.forEach(function (span) {
+          span.classList.remove("drift-true");
+          if (span.classList.contains("selected")) {
+            selectedWords.push(span.textContent.replace(/[^\w]/g, "").toLowerCase());
+          }
+        });
+        var driftSet = {};
+        driftWordsCurrent.forEach(function (w) {
+          driftSet[w.toLowerCase()] = true;
+        });
+
+        var correct = 0;
+        var missed = 0;
+        var extra = 0;
+
+        // Mark true drift words in the text
+        currentTokens.forEach(function (span) {
+          var clean = span.textContent.replace(/[^\w]/g, "").toLowerCase();
+          if (driftSet[clean]) {
+            span.classList.add("drift-true");
+          }
+        });
+
+        // Count matches
+        selectedWords.forEach(function (w) {
+          if (driftSet[w]) correct++;
+          else extra++;
+        });
+        driftWordsCurrent.forEach(function (w) {
+          if (selectedWords.indexOf(w.toLowerCase()) === -1) missed++;
+        });
+
+        var msg;
+        if (!driftWordsCurrent.length) {
+          msg = "This version kept the core requirement intact. If you selected drift, notice how the anchor phrase kept the meaning stable.";
+        } else {
+          msg = "You correctly flagged about " + correct + " drift-related word(s). ";
+          if (missed > 0) msg += "You missed " + missed + " important drift cue(s). ";
+          if (extra > 0) msg += "You also flagged " + extra + " word(s) that are less central to the drift.";
+        }
+        analysisEl.textContent = msg;
+      });
+
+      scenarioSel.addEventListener("change", loadScenario);
+      modeSel.addEventListener("change", loadScenario);
+
+      loadScenario();
+    })();
+
+    // Exercise 3: Attention Storyboard
+    (function () {
+      var textSel = document.getElementById("ex3-text");
+      if (!textSel) return;
+
+      var textDisplay = document.getElementById("ex3-text-display");
+      var predictionText = document.getElementById("ex3-prediction-text");
+      var headButtons = Array.prototype.slice.call(document.querySelectorAll(".ex3-head"));
+      var revealBtn = document.getElementById("ex3-reveal");
+      var resetBtn = document.getElementById("ex3-reset");
+      var explEl = document.getElementById("ex3-explanation");
+
+      var currentHead = null;
+      var tokenSpans = [];
+
+      var paragraphs = {
+        story: "The analyst walked into the briefing room, reviewed the latest numbers, and quietly changed the forecast before anyone arrived.",
+        policy: "Employees who handle customer data must store it only in approved systems, and they must report any suspected breach to the security team immediately.",
+        business: "The vendor said they would deliver the update by Friday, but they also mentioned they might need extra time if the testing phase revealed issues."
+      };
+
+      // For simplicity, define "true focus" words per text & head
+      var focus = {
+        story: {
+          grammar: ["walked", "reviewed", "changed"],
+          entities: ["analyst", "briefing", "forecast"],
+          pronoun: [],
+          cause: ["reviewed", "numbers", "changed", "forecast"]
+        },
+        policy: {
+          grammar: ["must", "store", "report"],
+          entities: ["employees", "customer", "data", "systems", "breach", "security"],
+          pronoun: [],
+          cause: ["store", "only", "approved", "report", "breach"]
+        },
+        business: {
+          grammar: ["said", "would", "deliver", "mentioned", "might", "need"],
+          entities: ["vendor", "update", "Friday", "testing"],
+          pronoun: ["they", "they"],
+          cause: ["might", "need", "extra", "time", "testing", "issues"]
+        }
+      };
+
+      function renderParagraph() {
+        var key = textSel.value || "story";
+        var text = paragraphs[key];
+        textDisplay.textContent = text;
+
+        while (predictionText.firstChild) predictionText.removeChild(predictionText.firstChild);
+        tokenSpans = [];
+        text.split(/\s+/).forEach(function (w, idx) {
+          var span = document.createElement("span");
+          span.textContent = w;
+          span.setAttribute("data-idx", idx);
+          span.addEventListener("click", function () {
+            span.classList.toggle("user-selected");
+          });
+          tokenSpans.push(span);
+          predictionText.appendChild(span);
+          predictionText.appendChild(document.createTextNode(" "));
+        });
+
+        explEl.textContent = "Choose an attention head, click the words you think it will focus on, then click \"Reveal head highlight\".";
+      }
+
+      function setHead(btn) {
+        headButtons.forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        currentHead = btn.getAttribute("data-head");
+        // Clear previous marks
+        tokenSpans.forEach(function (span) {
+          span.classList.remove("attn-true", "both");
+        });
+        explEl.textContent = "You selected the " + btn.textContent + ". Now click the words you think it will focus on and reveal.";
+      }
+
+      textSel.addEventListener("change", renderParagraph);
+      headButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setHead(btn);
+        });
+      });
+
+      resetBtn.addEventListener("click", function () {
+        tokenSpans.forEach(function (span) {
+          span.classList.remove("user-selected", "attn-true", "both");
+        });
+        explEl.textContent = "Selection cleared. Choose a head, select words, then reveal.";
+      });
+
+      revealBtn.addEventListener("click", function () {
+        if (!currentHead) {
+          explEl.textContent = "Please choose an attention head first.";
+          return;
+        }
+        var key = textSel.value || "story";
+        var text = paragraphs[key];
+        var words = text.split(/\s+/);
+        var trueFocus = (focus[key] && focus[key][currentHead]) ? focus[key][currentHead] : [];
+        var trueSet = {};
+        trueFocus.forEach(function (w) { trueSet[w.toLowerCase()] = true; });
+
+        var correct = 0;
+        var totalTrue = 0;
+        var extra = 0;
+
+        tokenSpans.forEach(function (span, idx) {
+          var clean = words[idx].replace(/[^\w]/g, "").toLowerCase();
+          var isTrue = !!trueSet[clean];
+          var isUser = span.classList.contains("user-selected");
+          span.classList.remove("attn-true", "both");
+          if (isTrue) {
+            totalTrue++;
+            if (isUser) {
+              span.classList.add("both");
+              correct++;
+            } else {
+              span.classList.add("attn-true");
+            }
+          } else if (isUser) {
+            extra++;
+          }
+        });
+
+        var msg = "This head is especially watching certain words or phrases that fit its role.";
+        msg += " You matched " + correct + " of about " + totalTrue + " key focus words.";
+        if (extra > 0) msg += " You also selected " + extra + " word(s) that this head is less focused on.";
+        msg += " Notice how entity heads focus on roles and objects, pronoun heads link back to earlier nouns, and cause-and-effect heads track reasons and consequences.";
+        explEl.textContent = msg;
+      });
+
+      renderParagraph();
+    })();
+
+    // Exercise 4: Risk Dial Console
+    (function () {
+      var scenarioSel = document.getElementById("ex4-scenario");
+      if (!scenarioSel) return;
+
+      var tempSlider = document.getElementById("ex4-temp");
+      var tempLabel = document.getElementById("ex4-temp-label");
+      var topPSlider = document.getElementById("ex4-top-p");
+      var topPLabel = document.getElementById("ex4-top-p-label");
+      var simulateBtn = document.getElementById("ex4-simulate");
+      var resetBtn = document.getElementById("ex4-reset");
+      var profileEl = document.getElementById("ex4-profile");
+      var challengeEl = document.getElementById("ex4-challenge");
+      var checkBtn = document.getElementById("ex4-check");
+      var feedbackEl = document.getElementById("ex4-feedback");
+
+      var challenges = {
+        code: "Goal: very high consistency, very low hallucination risk, minimal creativity. Outputs should be predictable and stable.",
+        brainstorm: "Goal: high variety and creativity, but still coherent and on-topic ideas.",
+        policy: "Goal: clear, restrained language with low hallucination risk. Some flexibility in phrasing is okay, but rules must stay intact.",
+        analogies: "Goal: creative and varied analogies, but they must remain truthful to the underlying concept."
+      };
+
+      function updateLabels() {
+        var t = (parseInt(tempSlider.value, 10) || 0) / 100;
+        var p = (parseInt(topPSlider.value, 10) || 0) / 100;
+        tempLabel.textContent = t.toFixed(2);
+        topPLabel.textContent = p.toFixed(2);
+      }
+
+      function setScenarioDefaults() {
+        var sc = scenarioSel.value || "code";
+        if (sc === "code") {
+          tempSlider.value = 10;
+          topPSlider.value = 30;
+        } else if (sc === "brainstorm") {
+          tempSlider.value = 100;
+          topPSlider.value = 90;
+        } else if (sc === "policy") {
+          tempSlider.value = 30;
+          topPSlider.value = 40;
+        } else if (sc === "analogies") {
+          tempSlider.value = 80;
+          topPSlider.value = 80;
+        }
+        updateLabels();
+        challengeEl.textContent = challenges[sc];
+        profileEl.textContent = "Adjust the dials and click \"Simulate output profile\" to see how this configuration behaves.";
+        feedbackEl.textContent = "After you simulate, click \"Check my settings\" to see if your dials fit the task.";
+      }
+
+      function simulateProfile() {
+        var sc = scenarioSel.value || "code";
+        var t = (parseInt(tempSlider.value, 10) || 0) / 100;
+        var p = (parseInt(topPSlider.value, 10) || 0) / 100;
+
+        var variety, risk, snippet;
+        if (t < 0.2 && p < 0.4) {
+          variety = "very repetitive and highly consistent";
+          risk = "minimal hallucination risk, but may sound stiff or repetitive";
+        } else if (t < 0.5 && p <= 0.7) {
+          variety = "moderately varied but controlled";
+          risk = "low hallucination risk, generally safe for factual tasks";
+        } else if (t < 0.9 || p <= 0.9) {
+          variety = "quite varied and expressive";
+          risk = "moderate risk of off-brand phrasing or minor hallucinations";
+        } else {
+          variety = "highly varied and unpredictable";
+          risk = "significant risk of off-topic, inventive, or speculative content";
+        }
+
+        if (sc === "code") {
+          snippet = "The model tends to produce code with consistent patterns. Higher temperatures may introduce unusual or broken patterns.";
+        } else if (sc === "brainstorm") {
+          snippet = "The model offers a wide range of campaign ideas, some conventional, some surprising and unusual.";
+        } else if (sc === "policy") {
+          snippet = "The model explains rules in plain language. Higher risk settings might paraphrase too loosely or introduce assumptions.";
+        } else {
+          snippet = "The model generates analogies. Lower settings keep them close to the literal explanation; higher settings produce more vivid but sometimes strained comparisons.";
+        }
+
+        profileEl.innerHTML =
+          "<p class=\"doc\"><b>Variety:</b> Outputs are " + variety + ".</p>" +
+          "<p class=\"doc\"><b>Risk:</b> There is " + risk + ".</p>" +
+          "<p class=\"doc\"><b>Example behavior:</b> " + snippet + "</p>";
+      }
+
+      function checkSettings() {
+        var sc = scenarioSel.value || "code";
+        var t = (parseInt(tempSlider.value, 10) || 0) / 100;
+        var p = (parseInt(topPSlider.value, 10) || 0) / 100;
+        var msg = "";
+
+        function within(x, low, high) {
+          return x >= low && x <= high;
+        }
+
+        if (sc === "code") {
+          if (within(t, 0.0, 0.25) && within(p, 0.1, 0.5)) {
+            msg = "Good fit: Your settings keep the model conservative and predictable for code generation.";
+          } else {
+            msg = "These settings may be too adventurous for code. Try lowering temperature (≤ 0.25) and keeping Top-p more conservative (0.1–0.5).";
+          }
+        } else if (sc === "brainstorm") {
+          if (t >= 0.7 && p >= 0.8) {
+            msg = "Nice: You’re giving the model room to explore ideas. This is usually appropriate for brainstorming.";
+          } else {
+            msg = "You can safely increase creativity for brainstorming. Consider raising temperature (≥ 0.7) and Top-p (≥ 0.8).";
+          }
+        } else if (sc === "policy") {
+          if (within(t, 0.1, 0.4) && within(p, 0.2, 0.6)) {
+            msg = "Good fit: Solid balance of clarity and safety for policy explanations.";
+          } else {
+            msg = "For policy content, lean toward lower temperature (0.1–0.4) and moderate Top-p (0.2–0.6) to avoid loose paraphrases or speculative language.";
+          }
+        } else if (sc === "analogies") {
+          if (within(t, 0.5, 0.9) && within(p, 0.6, 0.9)) {
+            msg = "Good fit: You’re allowing creative analogies while keeping things mostly grounded.";
+          } else {
+            msg = "For analogies, you can use medium–high creativity (temperature 0.5–0.9, Top-p 0.6–0.9) so the model can find interesting comparisons.";
+          }
+        }
+
+        feedbackEl.textContent = msg;
+      }
+
+      tempSlider.addEventListener("input", updateLabels);
+      topPSlider.addEventListener("input", updateLabels);
+      simulateBtn.addEventListener("click", simulateProfile);
+      resetBtn.addEventListener("click", setScenarioDefaults);
+      scenarioSel.addEventListener("change", setScenarioDefaults);
+      checkBtn.addEventListener("click", checkSettings);
+
+      setScenarioDefaults();
+    })();
+
+    // Exercise 5: Architecture Matchmaker
+    (function () {
+      var palette = document.getElementById("ex5-palette");
+      if (!palette) return;
+      var canvas = document.getElementById("ex5-canvas");
+      var analyzeBtn = document.getElementById("ex5-analyze");
+      var clearBtn = document.getElementById("ex5-clear");
+      var scenarioSel = document.getElementById("ex5-scenario");
+      var analysisEl = document.getElementById("ex5-analysis");
+
+      var labelMap = {
+        "llm": "Vanilla LLM",
+        "rag": "RAG layer",
+        "tool-search": "Tool – Search API",
+        "tool-calc": "Tool – Calculator / Data API",
+        "agent-writer": "Agent – Writer",
+        "agent-reviewer": "Agent – Reviewer",
+        "agent-orchestrator": "Agent – Orchestrator"
+      };
+
+      function addBlock(type) {
+        var chip = document.createElement("div");
+        chip.className = "canvas-chip";
+        chip.setAttribute("data-type", type);
+        chip.textContent = labelMap[type] || type;
+        var removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
+        removeBtn.title = "Remove this block";
+        removeBtn.addEventListener("click", function () {
+          canvas.removeChild(chip);
+        });
+        chip.appendChild(removeBtn);
+        canvas.appendChild(chip);
+      }
+
+      palette.addEventListener("click", function (e) {
+        var btn = e.target.closest(".ex5-block");
+        if (!btn) return;
+        var type = btn.getAttribute("data-type");
+        if (!type) return;
+        addBlock(type);
+      });
+
+      clearBtn.addEventListener("click", function () {
+        while (canvas.firstChild) canvas.removeChild(canvas.firstChild);
+        analysisEl.textContent = "Canvas cleared. Add blocks and click \"Analyze my design\".";
+      });
+
+      analyzeBtn.addEventListener("click", function () {
+        var blocks = Array.prototype.slice.call(canvas.querySelectorAll(".canvas-chip"));
+        if (!blocks.length) {
+          analysisEl.textContent = "Add at least one block to the canvas before analyzing.";
+          return;
+        }
+
+        var types = blocks.map(function (b) { return b.getAttribute("data-type"); });
+        var sc = scenarioSel.value || "policy_bot";
+
+        var hasRag = types.indexOf("rag") !== -1;
+        var hasWriter = types.indexOf("agent-writer") !== -1;
+        var hasReviewer = types.indexOf("agent-reviewer") !== -1;
+        var hasOrchestrator = types.indexOf("agent-orchestrator") !== -1;
+        var hasSearch = types.indexOf("tool-search") !== -1;
+        var hasCalc = types.indexOf("tool-calc") !== -1;
+        var hasPlainLLM = types.indexOf("llm") !== -1;
+
+        var bullets = [];
+
+        // Grounding expectations
+        if (sc === "policy_bot" || sc === "compliance_qa") {
+          if (hasRag) bullets.push("✅ Good: You included a RAG layer for a high-grounding scenario.");
+          else bullets.push("⚠️ For this scenario, consider adding a RAG layer so answers are grounded in real policy or compliance documents.");
+        }
+
+        if (sc === "vendor_risk") {
+          if (!hasRag && !hasSearch) {
+            bullets.push("⚠️ Vendor risk analysis usually benefits from external or internal data. Consider adding a RAG layer or Search API tool.");
+          } else {
+            bullets.push("✅ Good: You provided at least one way to bring real data into the vendor risk workflow.");
+          }
+        }
+
+        if (sc === "marketing_assistant") {
+          if (hasRag || hasSearch) {
+            bullets.push("ℹ️ Including RAG/search can help keep messaging consistent with product facts and brand guidelines.");
+          } else {
+            bullets.push("ℹ️ A pure LLM design can work for brainstorming, but consider adding RAG/search if you need accurate product facts.");
+          }
+        }
+
+        // Agent complexity
+        var agentCount = 0;
+        ["agent-writer", "agent-reviewer", "agent-orchestrator"].forEach(function (t) {
+          if (types.indexOf(t) !== -1) agentCount++;
+        });
+
+        if (agentCount === 0) {
+          bullets.push("ℹ️ No agents defined. That can be fine for simple use cases, but you might miss opportunities to separate generation and checking.");
+        } else if (agentCount === 1) {
+          bullets.push("✅ Clear: A single agent keeps the system simple and easy to reason about.");
+        } else if (agentCount === 2) {
+          bullets.push("✅ Balanced: Two agents (e.g., writer + reviewer) can separate creativity from checking, if their roles are clear.");
+        } else {
+          bullets.push("⚠️ You have several agents. Make sure each one has a distinct role to avoid prompt collisions and confusion.");
+        }
+
+        if (hasWriter && hasReviewer) {
+          bullets.push("✅ Nice separation: A writer agent generates content while a reviewer agent checks or edits it.");
+        }
+
+        if (hasPlainLLM && !hasRag && !hasSearch && (sc === "policy_bot" || sc === "compliance_qa")) {
+          bullets.push("🚩 A plain LLM with no retrieval is risky for policy/compliance Q&A. It may hallucinate rules that don’t exist.");
+        }
+
+        if (hasCalc && sc !== "code") {
+          bullets.push("ℹ️ Calculator/Data API tools are most valuable when numeric accuracy, pricing, or KPI calculations matter.");
+        }
+
+        if (blocks.length > 5) {
+          bullets.push("⚠️ This design may be more complex than necessary. Consider whether all blocks are truly needed for your first version.");
+        } else {
+          bullets.push("✅ Overall complexity looks manageable for a first version.");
+        }
+
+        // Render
+        while (analysisEl.firstChild) analysisEl.removeChild(analysisEl.firstChild);
+        var ul = document.createElement("ul");
+        ul.className = "doc";
+        bullets.forEach(function (b) {
+          var li = document.createElement("li");
+          li.textContent = b;
+          ul.appendChild(li);
+        });
+        analysisEl.appendChild(ul);
+      });
+    })();
+  </script>
+  
+  <!-- Contact / Feedback Button -->
+<button
+  id="contactBtn"
+  style="
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+  "
+>
+  💬 Feedback / Contact
+</button>
+
+<script>
+  // Update with your email + tweak subject per app if you’d like
+  const APP_NAME = "Gen AI Exercises Hub"; // change per app
+  const CONTACT_EMAIL = "agilityaiwork@gmail.com";
+
+  document.getElementById("contactBtn").addEventListener("click", () => {
+    const subject = encodeURIComponent(`[Feedback] ${APP_NAME}`);
+    const body = encodeURIComponent(
+`Hi George,
+
+I’m using the ${APP_NAME} and wanted to share:
+
+
+(Feel free to add screenshots.)
+
+Thanks!`
+    );
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+  
+</body>
+</html>

@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter 1 Interactive Labs — Latent Space • Embeddings • Drift • Attention • Sampling</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --blue:#2563eb;
+      --orange:#f59e0b;
+      --green:#10b981;
+      --yellow:#eab308;
+      --card:#f8fafc;
+      --card2:#ffffff;
+      --danger:#ef4444;
+      --radius:16px;
+      --shadow: 0 8px 24px rgba(15,23,42,0.06);
+      font-synthesis: style;
+      color-scheme: light;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--ink);
+      display:flex; min-height:100vh;
+    }
+    aside{
+      width:270px; border-right:1px solid var(--line);
+      padding:18px 14px; background:#fbfdff;
+      position:sticky; top:0; height:100vh; overflow:auto;
+    }
+    main{flex:1; padding:18px 18px 60px;}
+    .brand{
+      display:flex; align-items:center; gap:10px; margin:2px 8px 16px;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:12px;
+      background:
+        radial-gradient(circle at 20% 20%, var(--yellow), transparent 60%),
+        radial-gradient(circle at 80% 30%, var(--green), transparent 60%),
+        radial-gradient(circle at 30% 80%, var(--orange), transparent 60%),
+        radial-gradient(circle at 80% 80%, var(--blue), transparent 60%);
+      border:1px solid #e6eefc;
+    }
+    .brand h1{font-size:16px; margin:0; letter-spacing:.3px}
+    .brand p{font-size:12px; margin:2px 0 0; color:var(--muted)}
+    .navbtn{
+      width:100%; text-align:left; padding:10px 12px; border-radius:12px;
+      border:1px solid transparent; background:transparent; cursor:pointer;
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:14px; color:var(--ink);
+    }
+    .navbtn small{color:var(--muted); font-weight:500}
+    .navbtn.active{
+      background:#eef2ff; border-color:#dbe3ff; color:#111827;
+      box-shadow: inset 0 0 0 1px #dbe3ff;
+    }
+    .navbtn:hover{background:#f1f5f9}
+    .section{
+      display:none; animation:fade .18s ease-out;
+    }
+    .section.active{display:block}
+    @keyframes fade{from{opacity:.5; transform:translateY(3px)} to{opacity:1; transform:none}}
+    .title{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;
+    }
+    .title h2{margin:0; font-size:20px}
+    .title .pill{
+      font-size:12px; color:#0b3a2e; background:#ecfdf5; border:1px solid #d1fae5;
+      padding:4px 8px; border-radius:999px;
+    }
+    .grid{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:14px;
+    }
+    .card{
+      background:var(--card2); border:1px solid var(--line);
+      border-radius: var(--radius); padding:14px; box-shadow:var(--shadow);
+    }
+    .card h3{margin:0 0 8px; font-size:15px}
+    .sub{font-size:13px; color:var(--muted); margin-top:2px}
+    .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    label{font-size:12px; color:var(--muted); font-weight:600}
+    input[type="text"], select, textarea{
+      width:100%; padding:8px 10px; border-radius:10px; border:1px solid var(--line);
+      font-size:14px; outline:none; background:#fff;
+    }
+    textarea{min-height:88px; resize:vertical}
+    button{
+      padding:8px 10px; border-radius:10px; border:1px solid var(--line);
+      background:#fff; cursor:pointer; font-size:14px;
+      transition:.12s ease;
+    }
+    button:hover{transform:translateY(-1px)}
+    button.primary{
+      background:linear-gradient(180deg, #ffffff, #f8fafc);
+      border-color:#c7d2fe; box-shadow:0 4px 10px rgba(37,99,235,.10);
+    }
+    button.blue{border-color:#c7d2fe}
+    button.orange{border-color:#fde68a}
+    button.green{border-color:#bbf7d0}
+    button.yellow{border-color:#fde68a}
+    button.ghost{background:transparent}
+    .canvas-wrap{
+      border:1px dashed var(--line); border-radius:12px; padding:8px; background:#fff;
+    }
+    canvas{width:100%; height:420px; display:block; background:#fff; border-radius:8px}
+    .small canvas{height:250px}
+    .legend{font-size:12px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap}
+    .legend span{display:inline-flex; align-items:center; gap:6px}
+    .dot{width:9px; height:9px; border-radius:999px; display:inline-block}
+    .list{
+      display:flex; flex-direction:column; gap:8px; margin-top:8px; font-size:14px;
+    }
+    .list .item{
+      border:1px solid var(--line); background:var(--card);
+      padding:8px 10px; border-radius:10px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .item .tag{
+      font-size:11px; color:#0b3a2e; background:#ecfdf5; border:1px solid #d1fae5; padding:2px 6px; border-radius:999px;
+    }
+    .kpi{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; margin-top:8px;
+    }
+    .kpi .box{
+      border:1px solid var(--line); border-radius:12px; padding:8px; background:#fff;
+    }
+    .kpi .box .n{font-size:18px; font-weight:700}
+    .muted{color:var(--muted)}
+    .hr{height:1px; background:var(--line); margin:10px 0}
+    .badge{
+      font-size:12px; font-weight:600; padding:3px 6px; border-radius:999px; border:1px solid var(--line); background:#fff;
+    }
+    .two-col{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .tok{
+      display:inline-block; padding:3px 6px; margin:2px; border-radius:7px; border:1px solid var(--line);
+      background:#fff; font-size:13px; cursor:pointer;
+    }
+    .tok.selected{background:#eff6ff; border-color:#bfdbfe}
+    .heads{display:flex; gap:6px; flex-wrap:wrap; margin:8px 0}
+    .headbtn.active{background:#ecfeff; border-color:#a5f3fc}
+    .heatgrid{
+      overflow:auto; max-height:360px; border:1px solid var(--line); border-radius:10px;
+    }
+    .heatgrid table{border-collapse:collapse; font-size:12px; width:max-content; min-width:100%}
+    .heatgrid th, .heatgrid td{border:1px solid var(--line); padding:4px 6px; text-align:center}
+    .doc{border:1px solid var(--line); background:#fff; padding:8px 10px; border-radius:10px}
+    .doc.active{outline:2px solid #c7d2fe}
+    .footer-note{font-size:12px; color:var(--muted); margin-top:8px}
+    @media (max-width: 1060px){
+      aside{display:none}
+      .grid{grid-template-columns:1fr}
+      canvas{height:360px}
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Chapter 1 Interactive Labs</h1>
+        <p>Latent Space • Embeddings • Drift • Attention • Sampling</p>
+      </div>
+    </div>
+
+    <button class="navbtn active" data-target="sec-latent">
+      <span>1. Latent Space Explorer</span><small>§1.1</small>
+    </button>
+    <button class="navbtn" data-target="sec-embed">
+      <span>2. Embedding Arithmetic + Search</span><small>§1.2</small>
+    </button>
+    <button class="navbtn" data-target="sec-drift">
+      <span>3. Semantic Drift Simulator</span><small>§1.3</small>
+    </button>
+    <button class="navbtn" data-target="sec-attn">
+      <span>4. Multi-Head Attention Lab</span><small>§2.1</small>
+    </button>
+    <button class="navbtn" data-target="sec-sampling">
+      <span>5. Temperature + Top-K/Top-P</span><small>§3.1–3.3</small>
+    </button>
+
+    <div class="hr"></div>
+    <div style="padding:0 8px" class="muted">
+      <div style="font-size:12px; line-height:1.4">
+        All visuals use <b>toy embeddings</b> (small 2D vectors) to teach the geometry
+        described in the chapter. The goal is intuition, not model reproduction.
+      </div>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- 1) Latent Space Explorer -->
+    <section id="sec-latent" class="section active">
+      <div class="title">
+        <h2>Latent Space Explorer</h2>
+        <div class="pill">Map of Meaning (toy embeddings)</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Semantic Neighborhood Map</h3>
+          <div class="sub">Drag points, select anchors, and see nearest neighbors.</div>
+          <div class="canvas-wrap">
+            <canvas id="latentCanvas" width="900" height="520"></canvas>
+          </div>
+          <div class="legend" id="latentLegend"></div>
+        </div>
+
+        <div class="card">
+          <h3>Controls</h3>
+          <div class="row">
+            <div style="flex:1">
+              <label>Find / Add term to map</label>
+              <input type="text" id="latentSearch" placeholder="Type: apple, hospital, python, orchard, etc.">
+            </div>
+            <div style="display:flex; align-items:flex-end">
+              <button id="latentAddBtn" class="primary blue">Add term</button>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:8px">
+            <div style="flex:1">
+              <label>Anchor term (measure similarity from)</label>
+              <select id="latentAnchor"></select>
+            </div>
+            <div style="flex:1">
+              <label>Show nearest neighbors</label>
+              <select id="latentK">
+                <option value="3">3 nearest</option>
+                <option value="5" selected>5 nearest</option>
+                <option value="8">8 nearest</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Nearest Neighbors</h3>
+          <div id="latentNeighbors" class="list"></div>
+
+          <div class="footer-note">
+            Polysemy example: “apple” appears in two regions (fruit vs company).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) Embedding arithmetic & semantic search -->
+    <section id="sec-embed" class="section">
+      <div class="title">
+        <h2>Embedding Arithmetic + Semantic Search Sandbox</h2>
+        <div class="pill">Embeddings as GPS Coordinates</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Vector Arithmetic: A − B + C</h3>
+          <div class="two-col">
+            <div>
+              <label>A (start)</label>
+              <select id="arithA"></select>
+            </div>
+            <div>
+              <label>B (subtract)</label>
+              <select id="arithB"></select>
+            </div>
+          </div>
+          <div class="two-col" style="margin-top:8px">
+            <div>
+              <label>C (add)</label>
+              <select id="arithC"></select>
+            </div>
+            <div style="display:flex; align-items:flex-end; gap:6px">
+              <button id="arithCompute" class="primary blue" style="flex:1">Compute</button>
+              <button id="arithReset" class="ghost" title="Reset result">Reset</button>
+            </div>
+          </div>
+
+          <div class="canvas-wrap small" style="margin-top:10px">
+            <canvas id="arithCanvas" width="900" height="350"></canvas>
+          </div>
+          <div class="legend muted" id="arithLegend"></div>
+
+          <div class="hr"></div>
+          <h3>Nearest words to result</h3>
+          <div id="arithNeighbors" class="list"></div>
+        </div>
+
+        <div class="card">
+          <h3>Semantic Search (toy RAG intuition)</h3>
+          <div class="sub">Query → embedding → closest docs in latent space.</div>
+
+          <label style="margin-top:6px; display:block">Query</label>
+          <input type="text" id="searchQuery" placeholder="Try: apple pie recipe, REST API in python, patient hospital, etc.">
+
+          <div class="row" style="margin-top:8px">
+            <button id="searchBtn" class="primary blue">Search</button>
+            <label class="muted" style="margin-left:auto">Similarity threshold</label>
+            <input type="range" id="searchThresh" min="0" max="1" step="0.01" value="0.30">
+            <span id="searchThreshVal" class="badge">0.30</span>
+          </div>
+
+          <div class="hr"></div>
+          <h3>Documents ranked by similarity</h3>
+          <div id="docList" class="list"></div>
+
+          <div class="footer-note">
+            This mirrors the chapter’s explanation that search uses distance in embedding space.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) Semantic Drift -->
+    <section id="sec-drift" class="section">
+      <div class="title">
+        <h2>Semantic Drift Trajectory Simulator</h2>
+        <div class="pill">Anchors prevent drift</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Prompt Chain Lab</h3>
+
+          <label>Original text (anchor)</label>
+          <textarea id="driftOriginal">Rewrite this paragraph more clearly.</textarea>
+
+          <div class="row" style="margin-top:8px">
+            <label>Transformation step</label>
+            <select id="driftStep">
+              <option value="clarify">Rewrite more clearly</option>
+              <option value="formal">Rewrite more formally</option>
+              <option value="concise">Make it more concise</option>
+              <option value="expand">Expand with more detail</option>
+              <option value="creative">Make it more creative</option>
+              <option value="tone">Change tone (friendlier)</option>
+            </select>
+            <button id="driftAddStep" class="primary orange">Add step</button>
+            <button id="driftAddAnchor" class="green">Insert anchor</button>
+            <button id="driftReset" class="ghost">Reset chain</button>
+          </div>
+
+          <div class="hr"></div>
+          <h3>Chain</h3>
+          <div id="driftChain" class="list"></div>
+        </div>
+
+        <div class="card">
+          <h3>Latent Trajectory</h3>
+          <div class="sub">Each step nudges the embedding. Anchors pull it back.</div>
+          <div class="canvas-wrap">
+            <canvas id="driftCanvas" width="900" height="520"></canvas>
+          </div>
+
+          <div class="kpi">
+            <div class="box">
+              <div class="muted" style="font-size:12px">Steps</div>
+              <div id="driftStepsN" class="n">0</div>
+            </div>
+            <div class="box">
+              <div class="muted" style="font-size:12px">Drift distance</div>
+              <div id="driftDist" class="n">0.00</div>
+            </div>
+            <div class="box">
+              <div class="muted" style="font-size:12px">Anchors used</div>
+              <div id="driftAnchN" class="n">0</div>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            Matches the chapter’s “slow walk away from your starting point” description.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) Multi-Head Attention -->
+    <section id="sec-attn" class="section">
+      <div class="title">
+        <h2>Multi-Head Attention Lab</h2>
+        <div class="pill">Panel of specialists</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Text input</h3>
+          <textarea id="attnText">The doctor said she would call the hospital because the patient was stable.</textarea>
+          <div class="row" style="margin-top:8px">
+            <button id="attnTokenize" class="primary blue">Tokenize & view heads</button>
+            <button id="attnExample1" class="ghost">Example 1</button>
+            <button id="attnExample2" class="ghost">Example 2</button>
+          </div>
+
+          <div class="hr"></div>
+          <h3>Tokens (click one as query)</h3>
+          <div id="tokenRow"></div>
+
+          <div class="hr"></div>
+          <h3>Attention heads</h3>
+          <div class="heads" id="headRow"></div>
+
+          <div class="footer-note">
+            Heads are simulated to teach *different relational focuses*.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Attention heatmap</h3>
+          <div class="sub">Click a head to see which tokens it emphasizes.</div>
+          <div class="heatgrid" id="heatGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) Sampling + Temperature -->
+    <section id="sec-sampling" class="section">
+      <div class="title">
+        <h2>Temperature + Top-K / Top-P + Entropy Control Lab</h2>
+        <div class="pill">Risk dial & determinism</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Controls</h3>
+          <label>Prompt prefix (toy next-token model)</label>
+          <input type="text" id="samplePrompt" value="The best way to learn AI is to">
+
+          <div class="row" style="margin-top:10px">
+            <div style="flex:1">
+              <label>Temperature</label>
+              <input type="range" id="tempSlider" min="0.1" max="2.0" step="0.05" value="0.8">
+              <div class="row"><span class="badge" id="tempVal">0.80</span><span class="muted">lower = more deterministic</span></div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:8px">
+            <div style="flex:1">
+              <label>Top-K</label>
+              <input type="range" id="topKSlider" min="0" max="10" step="1" value="0">
+              <div class="row"><span class="badge" id="topKVal">Off</span><span class="muted">0 = off</span></div>
+            </div>
+
+            <div style="flex:1">
+              <label>Top-P (nucleus)</label>
+              <input type="range" id="topPSlider" min="0.05" max="1.0" step="0.05" value="0.9">
+              <div class="row"><span class="badge" id="topPVal">0.90</span><span class="muted">probability mass</span></div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="row">
+            <button id="recalcBtn" class="primary blue">Recalculate distribution</button>
+            <button id="gen1" class="green">Generate 1×</button>
+            <button id="gen5" class="primary yellow">Generate 5×</button>
+            <button id="clearGen" class="ghost">Clear outputs</button>
+          </div>
+
+          <div class="hr"></div>
+          <h3>Entropy (model “certainty”)</h3>
+          <div class="kpi">
+            <div class="box">
+              <div class="muted" style="font-size:12px">Entropy</div>
+              <div id="entropyVal" class="n">0.00</div>
+            </div>
+            <div class="box">
+              <div class="muted" style="font-size:12px">Effective vocab</div>
+              <div id="effVocab" class="n">0</div>
+            </div>
+            <div class="box">
+              <div class="muted" style="font-size:12px">Determinism</div>
+              <div id="detLvl" class="n">—</div>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            Entropy rises as the distribution flattens.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Next-token distribution</h3>
+          <div class="canvas-wrap small">
+            <canvas id="distCanvas" width="900" height="350"></canvas>
+          </div>
+          <div id="distList" class="list"></div>
+
+          <div class="hr"></div>
+          <h3>Generated continuations</h3>
+          <div id="genOut" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+<script>
+/* ============================================================
+   Shared toy embeddings for intuition: small 2D vectors.
+   ============================================================ */
+
+const toyWords = [
+  // cooking region
+  {w:"apple (fruit)", v:[-2.6,  1.8], g:"Cooking/Food"},
+  {w:"apple pie",    v:[-2.2,  2.1], g:"Cooking/Food"},
+  {w:"orchard",      v:[-3.0,  1.4], g:"Cooking/Food"},
+  {w:"recipe",       v:[-1.8,  1.6], g:"Cooking/Food"},
+  {w:"bake",         v:[-2.0,  2.6], g:"Cooking/Food"},
+  {w:"cinnamon",     v:[-2.7,  2.6], g:"Cooking/Food"},
+  {w:"kitchen",      v:[-1.6,  2.2], g:"Cooking/Food"},
+
+  // tech region
+  {w:"Apple Inc.",   v:[ 2.5, -0.8], g:"Tech/Business"},
+  {w:"iPhone",       v:[ 2.9, -1.4], g:"Tech/Business"},
+  {w:"startup",      v:[ 2.0, -0.3], g:"Tech/Business"},
+  {w:"software",     v:[ 1.6, -1.0], g:"Tech/Business"},
+  {w:"python",       v:[ 1.2, -1.6], g:"Tech/Business"},
+  {w:"REST API",     v:[ 1.9, -1.8], g:"Tech/Business"},
+  {w:"cloud",        v:[ 2.6, -2.1], g:"Tech/Business"},
+
+  // medicine region
+  {w:"doctor",       v:[-0.4, -2.4], g:"Medicine"},
+  {w:"hospital",     v:[ 0.0, -2.8], g:"Medicine"},
+  {w:"patient",      v:[-0.9, -2.9], g:"Medicine"},
+  {w:"diagnosis",    v:[-0.6, -2.0], g:"Medicine"},
+  {w:"treatment",    v:[ 0.4, -2.2], g:"Medicine"},
+  {w:"medicine",     v:[ 0.2, -3.1], g:"Medicine"},
+
+  // politics / civics region
+  {w:"election",     v:[-0.5,  0.3], g:"Civics"},
+  {w:"policy",       v:[-0.1,  0.0], g:"Civics"},
+  {w:"congress",     v:[ 0.3,  0.2], g:"Civics"},
+  {w:"law",          v:[ 0.6,  0.0], g:"Civics"},
+
+  // general/common
+  {w:"king",         v:[ 0.9,  1.4], g:"General"},
+  {w:"queen",        v:[ 1.2,  1.0], g:"General"},
+  {w:"man",          v:[ 0.4,  1.0], g:"General"},
+  {w:"woman",        v:[ 0.7,  0.6], g:"General"},
+  {w:"child",        v:[ 0.1,  0.6], g:"General"},
+  {w:"family",       v:[ 0.3,  0.3], g:"General"},
+];
+
+const groupColors = {
+  "Cooking/Food": "#f59e0b",
+  "Tech/Business": "#2563eb",
+  "Medicine": "#10b981",
+  "Civics": "#eab308",
+  "General": "#64748b",
+};
+
+const wordMap = new Map(toyWords.map(x => [x.w.toLowerCase(), x]));
+
+// vector helpers
+const add = (a,b)=>[a[0]+b[0], a[1]+b[1]];
+const sub = (a,b)=>[a[0]-b[0], a[1]-b[1]];
+const scale = (a,s)=>[a[0]*s, a[1]*s];
+const dot = (a,b)=>a[0]*b[0]+a[1]*b[1];
+const norm = (a)=>Math.sqrt(dot(a,a));
+const cosSim = (a,b)=>dot(a,b)/(norm(a)*norm(b)+1e-9);
+const dist = (a,b)=>Math.hypot(a[0]-b[0], a[1]-b[1]);
+
+// compute nearest words to vector
+function nearest(vec, k=5, exclude=[]) {
+  const ex = new Set(exclude.map(e=>e.toLowerCase()));
+  const scored = toyWords
+    .filter(t=>!ex.has(t.w.toLowerCase()))
+    .map(t=>({w:t.w, g:t.g, sim:cosSim(vec,t.v), d:dist(vec,t.v)}))
+    .sort((a,b)=>b.sim-a.sim);
+  return scored.slice(0,k);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const navBtns = [...document.querySelectorAll(".navbtn")];
+const sections = [...document.querySelectorAll(".section")];
+navBtns.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    navBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const id = btn.dataset.target;
+    sections.forEach(s=>s.classList.toggle("active", s.id===id));
+  });
+});
+
+/* ============================================================
+   1) LATENT SPACE EXPLORER
+   ============================================================ */
+const latentCanvas = document.getElementById("latentCanvas");
+const lctx = latentCanvas.getContext("2d");
+const latentLegend = document.getElementById("latentLegend");
+const latentNeighborsDiv = document.getElementById("latentNeighbors");
+const latentAnchorSel = document.getElementById("latentAnchor");
+const latentKSel = document.getElementById("latentK");
+const latentSearch = document.getElementById("latentSearch");
+const latentAddBtn = document.getElementById("latentAddBtn");
+
+let visibleWords = toyWords.slice(); // start with all
+let selectedAnchor = "apple (fruit)";
+let dragging = null;
+
+function populateAnchors() {
+  latentAnchorSel.innerHTML = "";
+  visibleWords.forEach(t=>{
+    const opt = document.createElement("option");
+    opt.value = t.w;
+    opt.textContent = t.w;
+    latentAnchorSel.appendChild(opt);
+  });
+  latentAnchorSel.value = selectedAnchor;
+}
+
+function drawLegend() {
+  latentLegend.innerHTML = "";
+  Object.keys(groupColors).forEach(g=>{
+    const span = document.createElement("span");
+    span.innerHTML = `<i class="dot" style="background:${groupColors[g]}"></i>${g}`;
+    latentLegend.appendChild(span);
+  });
+}
+
+function worldToCanvas(v) {
+  // map [-4..4] to canvas
+  const pad = 40;
+  const x = (v[0] + 4) / 8 * (latentCanvas.width - pad*2) + pad;
+  const y = (4 - (v[1] + 4)) / 8 * (latentCanvas.height - pad*2) + pad;
+  return [x,y];
+}
+function canvasToWorld(x,y) {
+  const pad = 40;
+  const wx = ((x - pad) / (latentCanvas.width - pad*2)) * 8 - 4;
+  const wy = (4 - ((y - pad) / (latentCanvas.height - pad*2))*8) - 4;
+  return [wx,wy];
+}
+
+function renderLatent() {
+  lctx.clearRect(0,0,latentCanvas.width, latentCanvas.height);
+
+  // axes
+  lctx.save();
+  lctx.strokeStyle="#e2e8f0";
+  lctx.lineWidth=1;
+  lctx.beginPath();
+  lctx.moveTo(latentCanvas.width/2, 0);
+  lctx.lineTo(latentCanvas.width/2, latentCanvas.height);
+  lctx.moveTo(0, latentCanvas.height/2);
+  lctx.lineTo(latentCanvas.width, latentCanvas.height/2);
+  lctx.stroke();
+  lctx.restore();
+
+  visibleWords.forEach(t=>{
+    const [x,y]=worldToCanvas(t.v);
+    const isAnchor = t.w===selectedAnchor;
+    lctx.beginPath();
+    lctx.fillStyle=groupColors[t.g]||"#64748b";
+    lctx.arc(x,y, isAnchor?8:6, 0, Math.PI*2);
+    lctx.fill();
+    if(isAnchor){
+      lctx.lineWidth=2;
+      lctx.strokeStyle="#111827";
+      lctx.stroke();
+    }
+    lctx.font="12px system-ui";
+    lctx.fillStyle="#0f172a";
+    lctx.fillText(t.w, x+8, y-8);
+  });
+
+  updateNeighbors();
+}
+
+function findHit(mx,my) {
+  for (let i=visibleWords.length-1;i>=0;i--){
+    const t=visibleWords[i];
+    const [x,y]=worldToCanvas(t.v);
+    if(Math.hypot(mx-x,my-y)<10) return t;
+  }
+  return null;
+}
+
+latentCanvas.addEventListener("mousedown", (e)=>{
+  const r = latentCanvas.getBoundingClientRect();
+  const mx = (e.clientX-r.left)*(latentCanvas.width/r.width);
+  const my = (e.clientY-r.top)*(latentCanvas.height/r.height);
+  const hit = findHit(mx,my);
+  if(hit){
+    dragging = hit;
+    selectedAnchor = hit.w;
+    latentAnchorSel.value = selectedAnchor;
+    renderLatent();
+  }
+});
+window.addEventListener("mousemove", (e)=>{
+  if(!dragging) return;
+  const r = latentCanvas.getBoundingClientRect();
+  const mx = (e.clientX-r.left)*(latentCanvas.width/r.width);
+  const my = (e.clientY-r.top)*(latentCanvas.height/r.height);
+  dragging.v = canvasToWorld(mx,my);
+  renderLatent();
+});
+window.addEventListener("mouseup", ()=>dragging=null);
+
+latentAnchorSel.addEventListener("change", ()=>{
+  selectedAnchor = latentAnchorSel.value;
+  renderLatent();
+});
+latentKSel.addEventListener("change", renderLatent);
+
+latentAddBtn.addEventListener("click", ()=>{
+  const q = latentSearch.value.trim().toLowerCase();
+  if(!q) return;
+  const found = wordMap.get(q);
+  if(!found){
+    alert("That term isn't in the toy vocabulary yet. Try: apple pie, python, hospital, iPhone, etc.");
+    return;
+  }
+  if(!visibleWords.find(v=>v.w===found.w)){
+    visibleWords.push({...found});
+    populateAnchors();
+  }
+  selectedAnchor = found.w;
+  latentAnchorSel.value = selectedAnchor;
+  renderLatent();
+});
+
+function updateNeighbors() {
+  const anchor = visibleWords.find(v=>v.w===selectedAnchor);
+  if(!anchor) return;
+  const k = parseInt(latentKSel.value,10);
+  const near = nearest(anchor.v, k, [anchor.w]);
+  latentNeighborsDiv.innerHTML = "";
+  near.forEach(n=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML = `<div><b>${n.w}</b> <span class="muted">(${n.g})</span></div>
+                     <div class="tag">cos ${n.sim.toFixed(2)}</div>`;
+    latentNeighborsDiv.appendChild(div);
+  });
+}
+
+// init latent
+populateAnchors();
+drawLegend();
+renderLatent();
+
+/* ============================================================
+   2) EMBEDDING ARITHMETIC + SEMANTIC SEARCH
+   ============================================================ */
+const arithA = document.getElementById("arithA");
+const arithB = document.getElementById("arithB");
+const arithC = document.getElementById("arithC");
+const arithCompute = document.getElementById("arithCompute");
+const arithReset = document.getElementById("arithReset");
+const arithCanvas = document.getElementById("arithCanvas");
+const arctx = arithCanvas.getContext("2d");
+const arithLegend = document.getElementById("arithLegend");
+const arithNeighborsDiv = document.getElementById("arithNeighbors");
+
+let arithResult = null;
+
+function populateArithSelects(){
+  [arithA, arithB, arithC].forEach(sel=>{
+    sel.innerHTML="";
+    toyWords.forEach(t=>{
+      const opt=document.createElement("option");
+      opt.value=t.w; opt.textContent=t.w;
+      sel.appendChild(opt);
+    });
+  });
+  arithA.value="king"; arithB.value="man"; arithC.value="woman";
+}
+
+function worldToAr(v) {
+  const pad = 36;
+  const x = (v[0] + 4) / 8 * (arithCanvas.width - pad*2) + pad;
+  const y = (4 - (v[1] + 4)) / 8 * (arithCanvas.height - pad*2) + pad;
+  return [x,y];
+}
+
+function renderArith(){
+  arctx.clearRect(0,0,arithCanvas.width, arithCanvas.height);
+
+  // plot all points faint
+  toyWords.forEach(t=>{
+    const [x,y]=worldToAr(t.v);
+    arctx.beginPath();
+    arctx.fillStyle="#cbd5e1";
+    arctx.arc(x,y,3.4,0,Math.PI*2);
+    arctx.fill();
+  });
+
+  const A = wordMap.get(arithA.value.toLowerCase());
+  const B = wordMap.get(arithB.value.toLowerCase());
+  const C = wordMap.get(arithC.value.toLowerCase());
+  if(!A||!B||!C) return;
+
+  const origin=[0,0];
+  const vecA=A.v, vecB=B.v, vecC=C.v;
+
+  // draw vectors
+  const drawArrow=(from,to,color,label)=>{
+    const [fx,fy]=worldToAr(from);
+    const [tx,ty]=worldToAr(to);
+    arctx.save();
+    arctx.strokeStyle=color; arctx.lineWidth=2;
+    arctx.beginPath(); arctx.moveTo(fx,fy); arctx.lineTo(tx,ty); arctx.stroke();
+    // arrow head
+    const ang=Math.atan2(ty-fy,tx-fx);
+    arctx.beginPath();
+    arctx.moveTo(tx,ty);
+    arctx.lineTo(tx-10*Math.cos(ang-0.4), ty-10*Math.sin(ang-0.4));
+    arctx.lineTo(tx-10*Math.cos(ang+0.4), ty-10*Math.sin(ang+0.4));
+    arctx.closePath(); arctx.fillStyle=color; arctx.fill();
+    arctx.font="12px system-ui"; arctx.fillStyle=color;
+    arctx.fillText(label, tx+6, ty+6);
+    arctx.restore();
+  };
+
+  drawArrow(origin, vecA, "#2563eb", "A");
+  drawArrow(origin, vecB, "#ef4444", "B");
+  drawArrow(origin, vecC, "#10b981", "C");
+
+  if(arithResult){
+    drawArrow(origin, arithResult, "#111827", "Result");
+    // result point
+    const [rx,ry]=worldToAr(arithResult);
+    arctx.beginPath();
+    arctx.fillStyle="#111827";
+    arctx.arc(rx,ry,6,0,Math.PI*2);
+    arctx.fill();
+  }
+
+  arithLegend.innerHTML =
+    `<span class="dot" style="background:#2563eb"></span>A=${A.w} &nbsp;&nbsp;
+     <span class="dot" style="background:#ef4444"></span>B=${B.w} &nbsp;&nbsp;
+     <span class="dot" style="background:#10b981"></span>C=${C.w} &nbsp;&nbsp;
+     <span class="dot" style="background:#111827"></span>Result`;
+
+  updateArithNeighbors();
+}
+
+function updateArithNeighbors(){
+  arithNeighborsDiv.innerHTML="";
+  if(!arithResult){
+    arithNeighborsDiv.innerHTML="<div class='muted'>Compute to see neighbors.</div>";
+    return;
+  }
+  const near=nearest(arithResult,6);
+  near.forEach(n=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div><b>${n.w}</b> <span class="muted">(${n.g})</span></div>
+                   <div class="tag">cos ${n.sim.toFixed(2)}</div>`;
+    arithNeighborsDiv.appendChild(div);
+  });
+}
+
+arithCompute.addEventListener("click", ()=>{
+  const A = wordMap.get(arithA.value.toLowerCase()).v;
+  const B = wordMap.get(arithB.value.toLowerCase()).v;
+  const C = wordMap.get(arithC.value.toLowerCase()).v;
+  arithResult = add(sub(A,B), C);
+  renderArith();
+});
+arithReset.addEventListener("click", ()=>{
+  arithResult=null;
+  renderArith();
+});
+
+populateArithSelects();
+renderArith();
+
+/* ---------- Semantic search sandbox ---------- */
+const docs = [
+  {id:1, title:"Apple pie basics", text:"A simple apple pie recipe with cinnamon, baking tips, and kitchen prep."},
+  {id:2, title:"REST APIs in Python", text:"How to build a REST API using Python and deploy it to the cloud."},
+  {id:3, title:"Hospital workflow", text:"The patient arrives at the hospital and the doctor performs diagnosis."},
+  {id:4, title:"Startup product strategy", text:"A tech startup builds software on a cloud platform to scale."},
+  {id:5, title:"Orchard care", text:"How to manage an orchard and harvest apples for cooking."},
+  {id:6, title:"Civics primer", text:"Congress debates a policy that becomes law after an election."},
+];
+
+function embedTextToy(text){
+  const toks=text.toLowerCase().match(/[a-z']+|api|iphone|inc\./g)||[];
+  let vec=[0,0], n=0;
+  toks.forEach(t=>{
+    // map tokens to nearest toy words if possible
+    let key=t;
+    if(t==="api") key="rest api";
+    if(t==="iphone") key="iphone";
+    if(t==="apple") {
+      // ambiguous word: average both senses
+      const a1=wordMap.get("apple (fruit)");
+      const a2=wordMap.get("apple inc.");
+      vec=add(vec, add(a1.v,a2.v)); n+=2; return;
+    }
+    const found = wordMap.get(key);
+    if(found){ vec=add(vec, found.v); n++; }
+  });
+  return n? scale(vec, 1/n) : [0,0];
+}
+
+const docEmb = docs.map(d=>({...d, v:embedTextToy(d.title+" "+d.text)}));
+
+const searchQuery = document.getElementById("searchQuery");
+const searchBtn = document.getElementById("searchBtn");
+const docList = document.getElementById("docList");
+const searchThresh = document.getElementById("searchThresh");
+const searchThreshVal = document.getElementById("searchThreshVal");
+
+searchThresh.addEventListener("input", ()=>{
+  searchThreshVal.textContent = Number(searchThresh.value).toFixed(2);
+});
+
+function renderDocsRanked(queryVec){
+  const thresh=Number(searchThresh.value);
+  const ranked = docEmb
+    .map(d=>({...d, sim:cosSim(queryVec, d.v)}))
+    .sort((a,b)=>b.sim-a.sim);
+
+  docList.innerHTML="";
+  ranked.forEach(d=>{
+    const div=document.createElement("div");
+    div.className="doc"+(d.sim>=thresh?" active":"");
+    div.innerHTML=`<b>${d.title}</b>
+                   <div class="muted" style="font-size:12px; margin:4px 0">${d.text}</div>
+                   <span class="tag">cos ${d.sim.toFixed(2)}</span>`;
+    docList.appendChild(div);
+  });
+}
+searchBtn.addEventListener("click", ()=>{
+  const q=searchQuery.value.trim();
+  const v=embedTextToy(q);
+  renderDocsRanked(v);
+});
+renderDocsRanked(embedTextToy("apple pie"));
+
+/* ============================================================
+   3) SEMANTIC DRIFT SIMULATOR
+   ============================================================ */
+const driftOriginal = document.getElementById("driftOriginal");
+const driftStepSel = document.getElementById("driftStep");
+const driftAddStepBtn = document.getElementById("driftAddStep");
+const driftAddAnchorBtn = document.getElementById("driftAddAnchor");
+const driftResetBtn = document.getElementById("driftReset");
+const driftChainDiv = document.getElementById("driftChain");
+const driftCanvas = document.getElementById("driftCanvas");
+const dctx = driftCanvas.getContext("2d");
+const driftStepsN = document.getElementById("driftStepsN");
+const driftDist = document.getElementById("driftDist");
+const driftAnchN = document.getElementById("driftAnchN");
+
+let driftState = {
+  originVec: embedTextToy(driftOriginal.value),
+  currentVec: null,
+  points: [],
+  steps: [],
+  anchors: 0
+};
+driftState.currentVec = driftState.originVec;
+driftState.points.push(driftState.originVec);
+
+const stepDelta = {
+  clarify: [0.12, 0.05],
+  formal:  [0.08,-0.10],
+  concise: [0.10, 0.12],
+  expand:  [-0.08, 0.10],
+  creative:[-0.14,-0.02],
+  tone:    [0.06, 0.08]
+};
+
+function driftWorldToCanvas(v){
+  const pad=40;
+  const x = (v[0]+4)/8*(driftCanvas.width-pad*2)+pad;
+  const y = (4-(v[1]+4))/8*(driftCanvas.height-pad*2)+pad;
+  return [x,y];
+}
+
+function drawDrift(){
+  dctx.clearRect(0,0,driftCanvas.width, driftCanvas.height);
+
+  // axes
+  dctx.save();
+  dctx.strokeStyle="#e2e8f0"; dctx.lineWidth=1;
+  dctx.beginPath();
+  dctx.moveTo(driftCanvas.width/2, 0);
+  dctx.lineTo(driftCanvas.width/2, driftCanvas.height);
+  dctx.moveTo(0, driftCanvas.height/2);
+  dctx.lineTo(driftCanvas.width, driftCanvas.height/2);
+  dctx.stroke();
+  dctx.restore();
+
+  // trajectory
+  const pts = driftState.points.map(driftWorldToCanvas);
+  if(pts.length>1){
+    dctx.save();
+    dctx.strokeStyle="#2563eb"; dctx.lineWidth=2;
+    dctx.beginPath();
+    dctx.moveTo(pts[0][0], pts[0][1]);
+    for(let i=1;i<pts.length;i++) dctx.lineTo(pts[i][0], pts[i][1]);
+    dctx.stroke();
+    dctx.restore();
+  }
+
+  // points
+  pts.forEach((p,i)=>{
+    const isOrigin=i===0;
+    const isAnchor=driftState.steps[i-1]?.type==="anchor";
+    dctx.beginPath();
+    dctx.fillStyle = isOrigin? "#10b981" : (isAnchor? "#f59e0b" : "#2563eb");
+    dctx.arc(p[0], p[1], isOrigin?7:(isAnchor?7:5), 0, Math.PI*2);
+    dctx.fill();
+    dctx.font="12px system-ui";
+    dctx.fillStyle="#0f172a";
+    dctx.fillText(isOrigin?"Origin":(isAnchor?"Anchor":`Step ${i}`), p[0]+8, p[1]-8);
+  });
+
+  // KPIs
+  driftStepsN.textContent = driftState.steps.length;
+  driftAnchN.textContent = driftState.anchors;
+  driftDist.textContent = dist(driftState.originVec, driftState.currentVec).toFixed(2);
+}
+
+function renderChain(){
+  driftChainDiv.innerHTML="";
+  if(driftState.steps.length===0){
+    driftChainDiv.innerHTML="<div class='muted'>Add transformations to see drift.</div>";
+    return;
+  }
+  driftState.steps.forEach((s,idx)=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div><b>${idx+1}. ${s.label}</b></div><div class="tag">${s.type}</div>`;
+    driftChainDiv.appendChild(div);
+  });
+}
+
+function addDriftStep(type){
+  const delta = stepDelta[type] || [0.1,0.1];
+  // little randomness for realism
+  const jitter=[(Math.random()-0.5)*0.06, (Math.random()-0.5)*0.06];
+  driftState.currentVec = add(driftState.currentVec, add(delta,jitter));
+  driftState.points.push(driftState.currentVec);
+  driftState.steps.push({type, label: driftStepSel.options[driftStepSel.selectedIndex].text});
+  renderChain(); drawDrift();
+}
+
+function addAnchor(){
+  // pull current vector 70% back toward origin
+  const pull = sub(driftState.originVec, driftState.currentVec);
+  driftState.currentVec = add(driftState.currentVec, scale(pull, 0.7));
+  driftState.points.push(driftState.currentVec);
+  driftState.steps.push({type:"anchor", label:"Re-state original constraints"});
+  driftState.anchors++;
+  renderChain(); drawDrift();
+}
+
+driftAddStepBtn.addEventListener("click", ()=> addDriftStep(driftStepSel.value));
+driftAddAnchorBtn.addEventListener("click", addAnchor);
+driftResetBtn.addEventListener("click", ()=>{
+  driftState.originVec = embedTextToy(driftOriginal.value);
+  driftState.currentVec = driftState.originVec;
+  driftState.points=[driftState.originVec];
+  driftState.steps=[];
+  driftState.anchors=0;
+  renderChain(); drawDrift();
+});
+
+renderChain(); drawDrift();
+
+/* ============================================================
+   4) MULTI-HEAD ATTENTION LAB (simulated)
+   ============================================================ */
+const attnText = document.getElementById("attnText");
+const attnTokenizeBtn = document.getElementById("attnTokenize");
+const tokenRow = document.getElementById("tokenRow");
+const headRow = document.getElementById("headRow");
+const heatGrid = document.getElementById("heatGrid");
+const attnExample1 = document.getElementById("attnExample1");
+const attnExample2 = document.getElementById("attnExample2");
+
+let tokens = [];
+let selectedTokenIdx = 0;
+let selectedHead = 0;
+
+const heads = [
+  {name:"Head 1: Grammar", desc:"likes nearby words & bigrams"},
+  {name:"Head 2: Coreference", desc:"links pronouns to prior nouns"},
+  {name:"Head 3: Semantics", desc:"connects related concepts"},
+  {name:"Head 4: Position", desc:"attends to beginnings/endings"}
+];
+
+function tokenizeText(text){
+  return (text.match(/[A-Za-z']+|[.,!?;]/g)||[]);
+}
+
+function computeAttention(headId){
+  const n=tokens.length;
+  const A=[...Array(n)].map(()=>Array(n).fill(0));
+
+  for(let i=0;i<n;i++){
+    for(let j=0;j<n;j++){
+      let score=0;
+
+      if(headId===0){
+        // grammar: nearby focus
+        const d=Math.abs(i-j);
+        score = Math.exp(-(d*d)/6);
+      } else if(headId===1){
+        // coreference: pronouns attend to previous nouns-ish
+        const tok=tokens[i].toLowerCase();
+        const pronouns=new Set(["he","she","they","him","her","them","his","hers","their"]);
+        if(pronouns.has(tok)){
+          // attend to earlier content words
+          score = j<i ? (/[A-Za-z']+/.test(tokens[j]) ? (1/(i-j)) : 0) : 0;
+        } else {
+          score = (i===j)?0.7:0.1;
+        }
+      } else if(headId===2){
+        // semantics: use toy embeddings if possible
+        const wi = wordMap.get(tokens[i].toLowerCase());
+        const wj = wordMap.get(tokens[j].toLowerCase());
+        if(wi && wj){
+          score = Math.max(0, cosSim(wi.v, wj.v));
+        } else {
+          score = (i===j)?0.6:0.05;
+        }
+      } else {
+        // position head: beginning & end emphasis
+        const pos=Math.min(j, n-1-j);
+        score = 1/(pos+1);
+      }
+
+      A[i][j]=score;
+    }
+    // normalize row to probabilities
+    const sum=A[i].reduce((a,b)=>a+b,0)+1e-9;
+    for(let j=0;j<n;j++) A[i][j]/=sum;
+  }
+
+  return A;
+}
+
+function renderTokens(){
+  tokenRow.innerHTML="";
+  tokens.forEach((t,idx)=>{
+    const span=document.createElement("span");
+    span.className="tok"+(idx===selectedTokenIdx?" selected":"");
+    span.textContent=t;
+    span.addEventListener("click", ()=>{
+      selectedTokenIdx=idx;
+      renderTokens();
+      renderHeatmap();
+    });
+    tokenRow.appendChild(span);
+  });
+}
+
+function renderHeads(){
+  headRow.innerHTML="";
+  heads.forEach((h,idx)=>{
+    const btn=document.createElement("button");
+    btn.textContent=h.name;
+    btn.className="headbtn"+(idx===selectedHead?" active":"");
+    btn.title=h.desc;
+    btn.addEventListener("click", ()=>{
+      selectedHead=idx;
+      renderHeads();
+      renderHeatmap();
+    });
+    headRow.appendChild(btn);
+  });
+}
+
+function renderHeatmap(){
+  if(tokens.length===0) return;
+  const A=computeAttention(selectedHead);
+  const n=tokens.length;
+
+  const table=document.createElement("table");
+  const thead=document.createElement("thead");
+  const hrow=document.createElement("tr");
+  hrow.appendChild(document.createElement("th")); // corner
+  tokens.forEach(t=>{
+    const th=document.createElement("th"); th.textContent=t; hrow.appendChild(th);
+  });
+  thead.appendChild(hrow);
+  table.appendChild(thead);
+
+  const tbody=document.createElement("tbody");
+  for(let i=0;i<n;i++){
+    const tr=document.createElement("tr");
+    const th=document.createElement("th");
+    th.textContent=tokens[i];
+    tr.appendChild(th);
+
+    for(let j=0;j<n;j++){
+      const td=document.createElement("td");
+      const p=A[i][j];
+      const intensity=Math.round(p*255);
+      td.style.background=`rgb(${255-intensity}, ${255-intensity}, 255)`;
+      td.textContent=p.toFixed(2);
+      if(i===selectedTokenIdx){
+        td.style.outline="2px solid #93c5fd";
+      }
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+
+  heatGrid.innerHTML="";
+  heatGrid.appendChild(table);
+}
+
+function initAttention(){
+  tokens=tokenizeText(attnText.value);
+  selectedTokenIdx=0; selectedHead=0;
+  renderTokens(); renderHeads(); renderHeatmap();
+}
+
+attnTokenizeBtn.addEventListener("click", initAttention);
+attnExample1.addEventListener("click", ()=>{
+  attnText.value="The engineer explained the API, and she said it was easy to use.";
+  initAttention();
+});
+attnExample2.addEventListener("click", ()=>{
+  attnText.value="Apple released a new iPhone, but apples are also great for pie.";
+  initAttention();
+});
+
+initAttention();
+
+/* ============================================================
+   5) TEMPERATURE / TOP-K / TOP-P / ENTROPY LAB
+   ============================================================ */
+const distCanvas = document.getElementById("distCanvas");
+const sctx = distCanvas.getContext("2d");
+const distList = document.getElementById("distList");
+
+const tempSlider=document.getElementById("tempSlider");
+const topKSlider=document.getElementById("topKSlider");
+const topPSlider=document.getElementById("topPSlider");
+const tempVal=document.getElementById("tempVal");
+const topKVal=document.getElementById("topKVal");
+const topPVal=document.getElementById("topPVal");
+const entropyVal=document.getElementById("entropyVal");
+const effVocab=document.getElementById("effVocab");
+const detLvl=document.getElementById("detLvl");
+const recalcBtn=document.getElementById("recalcBtn");
+const gen1=document.getElementById("gen1");
+const gen5=document.getElementById("gen5");
+const clearGen=document.getElementById("clearGen");
+const genOut=document.getElementById("genOut");
+
+// toy logits for next tokens
+let baseVocab = [
+  {tok:"practice", logit:2.2},
+  {tok:"build", logit:1.7},
+  {tok:"read", logit:1.4},
+  {tok:"experiment", logit:1.2},
+  {tok:"ask", logit:0.9},
+  {tok:"collaborate", logit:0.6},
+  {tok:"watch", logit:0.4},
+  {tok:"memorize", logit:0.2},
+  {tok:"copy", logit:-0.1},
+  {tok:"guess", logit:-0.3},
+  {tok:"sleep", logit:-0.6},
+];
+
+let currentDist=[];
+
+function softmax(logits){
+  const m=Math.max(...logits);
+  const ex=logits.map(x=>Math.exp(x-m));
+  const s=ex.reduce((a,b)=>a+b,0);
+  return ex.map(x=>x/s);
+}
+
+function applyTemperature(vocab, T){
+  const scaled=vocab.map(x=>({...x, logit:x.logit/T}));
+  return scaled;
+}
+
+function applyTopK(vocab, k){
+  if(k<=0) return vocab;
+  const sorted=[...vocab].sort((a,b)=>b.logit-a.logit);
+  return sorted.slice(0,k);
+}
+
+function applyTopP(vocab, p){
+  const probs=softmax(vocab.map(x=>x.logit));
+  const paired=vocab.map((x,i)=>({...x, prob:probs[i]}))
+                    .sort((a,b)=>b.prob-a.prob);
+  let cum=0;
+  const out=[];
+  for(const item of paired){
+    out.push(item);
+    cum+=item.prob;
+    if(cum>=p) break;
+  }
+  // renorm probs
+  const ren=softmax(out.map(x=>x.logit));
+  return out.map((x,i)=>({...x, prob:ren[i]}));
+}
+
+function entropy(probs){
+  let h=0;
+  probs.forEach(p=>{ if(p>0) h += -p*Math.log2(p); });
+  return h;
+}
+
+function recalcDist(){
+  const T=Number(tempSlider.value);
+  const K=Number(topKSlider.value);
+  const P=Number(topPSlider.value);
+
+  tempVal.textContent=T.toFixed(2);
+  topKVal.textContent=K<=0?"Off":String(K);
+  topPVal.textContent=P.toFixed(2);
+
+  let vocab=applyTemperature(baseVocab, T);
+
+  // apply top-k BEFORE top-p (common in many stacks)
+  vocab=applyTopK(vocab, K);
+  vocab=applyTopP(vocab, P);
+
+  currentDist=vocab;
+
+  const probs=currentDist.map(x=>x.prob);
+  const H=entropy(probs);
+
+  entropyVal.textContent=H.toFixed(2);
+  effVocab.textContent=currentDist.length;
+
+  if(T<0.6 && (K<=2 || P<0.5)) detLvl.textContent="High";
+  else if(T<1.0) detLvl.textContent="Medium";
+  else detLvl.textContent="Low";
+
+  renderDist();
+}
+
+function renderDist(){
+  sctx.clearRect(0,0,distCanvas.width, distCanvas.height);
+
+  const pad=36;
+  const w=distCanvas.width-pad*2;
+  const h=distCanvas.height-pad*2;
+
+  // axes
+  sctx.strokeStyle="#e2e8f0"; sctx.lineWidth=1;
+  sctx.beginPath();
+  sctx.moveTo(pad, pad);
+  sctx.lineTo(pad, pad+h);
+  sctx.lineTo(pad+w, pad+h);
+  sctx.stroke();
+
+  const n=currentDist.length;
+  if(!n) return;
+
+  const maxP=Math.max(...currentDist.map(x=>x.prob));
+  const barW=w/n;
+
+  currentDist.forEach((x,i)=>{
+    const bh=(x.prob/maxP)*(h*0.9);
+    const bx=pad+i*barW+barW*0.12;
+    const by=pad+h-bh;
+
+    sctx.fillStyle="#93c5fd";
+    sctx.fillRect(bx, by, barW*0.76, bh);
+
+    sctx.fillStyle="#0f172a";
+    sctx.font="12px system-ui";
+    sctx.fillText(x.tok, bx, pad+h+14);
+    sctx.fillText(x.prob.toFixed(2), bx, by-4);
+  });
+
+  distList.innerHTML="";
+  currentDist.forEach(x=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div><b>${x.tok}</b></div><div class="tag">${(x.prob*100).toFixed(1)}%</div>`;
+    distList.appendChild(div);
+  });
+}
+
+function sampleOne(){
+  const r=Math.random();
+  let cum=0;
+  for(const x of currentDist){
+    cum+=x.prob;
+    if(r<=cum) return x.tok;
+  }
+  return currentDist[currentDist.length-1].tok;
+}
+
+function generateTimes(times){
+  for(let i=0;i<times;i++){
+    const tok=sampleOne();
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div>${document.getElementById("samplePrompt").value} <b>${tok}</b> …</div>`;
+    genOut.appendChild(div);
+  }
+  genOut.scrollTop=genOut.scrollHeight;
+}
+
+recalcBtn.addEventListener("click", recalcDist);
+tempSlider.addEventListener("input", recalcDist);
+topKSlider.addEventListener("input", recalcDist);
+topPSlider.addEventListener("input", recalcDist);
+
+gen1.addEventListener("click", ()=>generateTimes(1));
+gen5.addEventListener("click", ()=>generateTimes(5));
+clearGen.addEventListener("click", ()=>genOut.innerHTML="");
+
+recalcDist();
+</script>
+
+<!-- Contact / Feedback Button -->
+<button
+  id="contactBtn"
+  style="
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+  "
+>
+  💬 Feedback / Contact
+</button>
+
+<script>
+  // Update with your email + tweak subject per app if you’d like
+  const APP_NAME = "Gen AI Experiments Hub"; // change per app
+  const CONTACT_EMAIL = "agilityaiwork@gmail.com";
+
+  document.getElementById("contactBtn").addEventListener("click", () => {
+    const subject = encodeURIComponent(`[Feedback] ${APP_NAME}`);
+    const body = encodeURIComponent(
+`Hi George,
+
+I’m using the ${APP_NAME} and wanted to share:
+
+
+(Feel free to add screenshots.)
+
+Thanks!`
+    );
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+
+</body>
+</html>
