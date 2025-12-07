@@ -392,16 +392,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none; /* changed: allow native controls when overlay hidden */
+      pointer-events: none; /* Allow native video controls to receive taps */
       cursor: pointer;
       transition: opacity 0.2s ease;
     }
 
-/* overlay only intercepts clicks when visible */
     .video-overlay-play:not(.hidden) {
-      pointer-events: auto;
-}
-
+      pointer-events: auto; /* Only intercept taps when the overlay is visible */
+    }
 
     .video-overlay-play.hidden {
       opacity: 0;
@@ -418,6 +416,32 @@
       color: #f9fafb;
       font-size: 1.8rem;
       box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .video-fullscreen-btn {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.86);
+      color: #e5e7eb;
+      padding: 4px 9px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.65);
+    }
+
+    .video-fullscreen-btn:hover {
+      background: #0b1120;
+    }
+
+    .video-fullscreen-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.8);
     }
 
     .card-description {
@@ -1207,6 +1231,14 @@
               <div class="video-overlay-play" id="videoOverlayPlay">
                 <div class="play-circle">▶</div>
               </div>
+              <button
+                class="video-fullscreen-btn"
+                id="videoFullscreenBtn"
+                type="button"
+                aria-label="Full screen video"
+              >
+                ⤢
+              </button>
             </div>
           </div>
 
@@ -1497,6 +1529,7 @@
     const mobileSwipeHint = document.getElementById("mobileSwipeHint");
     const cardShell = document.getElementById("cardShell");
     const videoOverlayPlay = document.getElementById("videoOverlayPlay");
+    const videoFullscreenBtn = document.getElementById("videoFullscreenBtn");
     const captionTrack = document.getElementById("captionTrack");
     const transcriptBadge = document.getElementById("transcriptBadge");
 
@@ -2623,6 +2656,28 @@ updateReviewButtonState(item.id);
     videoElement.pause();
   }
 });
+
+    if (videoFullscreenBtn) {
+      videoFullscreenBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (!videoElement) return;
+
+        try {
+          if (videoElement.requestFullscreen) {
+            videoElement.requestFullscreen();
+          } else if (videoElement.webkitEnterFullscreen) {
+            videoElement.webkitEnterFullscreen();
+          } else if (videoElement.msRequestFullscreen) {
+            videoElement.msRequestFullscreen();
+          } else {
+            openModal();
+          }
+        } catch (err) {
+          openModal();
+        }
+      });
+    }
+
 
 
     videoElement.addEventListener("play", () => {
