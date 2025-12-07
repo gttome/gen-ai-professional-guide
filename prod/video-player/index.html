@@ -112,49 +112,6 @@
       pointer-events: none;
     }
 
-
-    .rotate-banner {
-      margin-top: 4px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 0.78rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      box-shadow: 0 8px 16px rgba(251, 191, 36, 0.4);
-    }
-
-    .rotate-banner.hidden {
-      display: none;
-    }
-
-    .rotate-banner-message {
-      flex: 1;
-      min-width: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .rotate-banner-close {
-      border: none;
-      background: transparent;
-      color: #92400e;
-      font-size: 0.9rem;
-      cursor: pointer;
-      padding: 0 4px;
-      line-height: 1;
-    }
-
-    @media (min-width: 769px) {
-      .rotate-banner {
-        display: none !important;
-      }
-    }
-
     .top-actions {
       display: flex;
       flex-wrap: wrap;
@@ -435,11 +392,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: auto;
+      pointer-events: none; /* Allow native video controls to receive taps */
       cursor: pointer;
       transition: opacity 0.2s ease;
-}
+    }
 
+    .video-overlay-play:not(.hidden) {
+      pointer-events: auto; /* Only intercept taps when the overlay is visible */
+    }
 
     .video-overlay-play.hidden {
       opacity: 0;
@@ -456,6 +416,32 @@
       color: #f9fafb;
       font-size: 1.8rem;
       box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .video-fullscreen-btn {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.86);
+      color: #e5e7eb;
+      padding: 4px 9px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.65);
+    }
+
+    .video-fullscreen-btn:hover {
+      background: #0b1120;
+    }
+
+    .video-fullscreen-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.8);
     }
 
     .card-description {
@@ -1163,10 +1149,10 @@
       <div>
         <div class="chapter-tabs" id="chapterTabs"></div>
         <div class="top-row-subtitle">
-          Use ← / → to navigate. Tap the video to play / pause, or open in theater mode.
+          Use ← / → or the buttons to navigate. Tap the video to play / pause, or open in theater mode.
         </div>
         <div class="mobile-swipe-hint" id="mobileSwipeHint">
-          Swipe left/right to navigate. Tap the video to play or pause. Rotate for theater mode.
+          Swipe left/right to navigate. Tap the video to play or pause.
         </div>
       </div>
 
@@ -1185,13 +1171,6 @@
         </button>
       </div>
     </header>
-
-    <div class="rotate-banner hidden" id="rotateHintBanner">
-      <div class="rotate-banner-message">
-        Rotate your phone to landscape and use full screen for the best view.
-      </div>
-      <button type="button" class="rotate-banner-close" id="rotateHintClose" aria-label="Dismiss rotate tip">✕</button>
-    </div>
 
     <section class="card-area">
       <button class="nav-btn" id="prevBtn" aria-label="Previous video">&#8592;</button>
@@ -1252,6 +1231,14 @@
               <div class="video-overlay-play" id="videoOverlayPlay">
                 <div class="play-circle">▶</div>
               </div>
+              <button
+                class="video-fullscreen-btn"
+                id="videoFullscreenBtn"
+                type="button"
+                aria-label="Full screen video"
+              >
+                ⤢
+              </button>
             </div>
           </div>
 
@@ -1540,10 +1527,9 @@
     const cardFooterHint = document.getElementById("cardFooterHint");
     const toast = document.getElementById("toast");
     const mobileSwipeHint = document.getElementById("mobileSwipeHint");
-    const rotateHintBanner = document.getElementById("rotateHintBanner");
-    const rotateHintClose = document.getElementById("rotateHintClose");
     const cardShell = document.getElementById("cardShell");
     const videoOverlayPlay = document.getElementById("videoOverlayPlay");
+    const videoFullscreenBtn = document.getElementById("videoFullscreenBtn");
     const captionTrack = document.getElementById("captionTrack");
     const transcriptBadge = document.getElementById("transcriptBadge");
 
@@ -2671,6 +2657,28 @@ updateReviewButtonState(item.id);
   }
 });
 
+    if (videoFullscreenBtn) {
+      videoFullscreenBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (!videoElement) return;
+
+        try {
+          if (videoElement.requestFullscreen) {
+            videoElement.requestFullscreen();
+          } else if (videoElement.webkitEnterFullscreen) {
+            videoElement.webkitEnterFullscreen();
+          } else if (videoElement.msRequestFullscreen) {
+            videoElement.msRequestFullscreen();
+          } else {
+            openModal();
+          }
+        } catch (err) {
+          openModal();
+        }
+      });
+    }
+
+
 
     videoElement.addEventListener("play", () => {
       videoOverlayPlay.classList.add("hidden");
@@ -2716,31 +2724,8 @@ updateReviewButtonState(item.id);
     });
 
     const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    const isSmallScreen = window.innerWidth <= 768;
-
     if (!isTouchDevice) {
       mobileSwipeHint.classList.add("hidden");
-    }
-
-    if (rotateHintBanner) {
-      const rotateHintStorageKey = "rotateHintDismissed_v1";
-      const shouldShowRotateHint =
-        isTouchDevice && isSmallScreen && !localStorage.getItem(rotateHintStorageKey);
-
-      if (shouldShowRotateHint) {
-        rotateHintBanner.classList.remove("hidden");
-      }
-
-      if (rotateHintClose) {
-        rotateHintClose.addEventListener("click", () => {
-          rotateHintBanner.classList.add("hidden");
-          try {
-            localStorage.setItem(rotateHintStorageKey, "1");
-          } catch (e) {
-            // ignore storage failures
-          }
-        });
-      }
     }
 
     let touchStartX = null;
