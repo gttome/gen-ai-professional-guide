@@ -392,9 +392,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: auto;
+      pointer-events: none; /* changed: allow native controls when overlay hidden */
       cursor: pointer;
       transition: opacity 0.2s ease;
+    }
+
+/* overlay only intercepts clicks when visible */
+    .video-overlay-play:not(.hidden) {
+      pointer-events: auto;
 }
 
 
