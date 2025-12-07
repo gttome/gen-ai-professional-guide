@@ -112,6 +112,49 @@
       pointer-events: none;
     }
 
+
+    .rotate-banner {
+      margin-top: 4px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      box-shadow: 0 8px 16px rgba(251, 191, 36, 0.4);
+    }
+
+    .rotate-banner.hidden {
+      display: none;
+    }
+
+    .rotate-banner-message {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rotate-banner-close {
+      border: none;
+      background: transparent;
+      color: #92400e;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    @media (min-width: 769px) {
+      .rotate-banner {
+        display: none !important;
+      }
+    }
+
     .top-actions {
       display: flex;
       flex-wrap: wrap;
@@ -392,14 +435,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none; /* changed: allow native controls when overlay hidden */
+      pointer-events: auto;
       cursor: pointer;
       transition: opacity 0.2s ease;
-    }
-
-/* overlay only intercepts clicks when visible */
-    .video-overlay-play:not(.hidden) {
-      pointer-events: auto;
 }
 
 
@@ -1148,6 +1186,13 @@
       </div>
     </header>
 
+    <div class="rotate-banner hidden" id="rotateHintBanner">
+      <div class="rotate-banner-message">
+        Rotate your phone to landscape and use full screen for the best view.
+      </div>
+      <button type="button" class="rotate-banner-close" id="rotateHintClose" aria-label="Dismiss rotate tip">✕</button>
+    </div>
+
     <section class="card-area">
       <button class="nav-btn" id="prevBtn" aria-label="Previous video">&#8592;</button>
 
@@ -1495,6 +1540,8 @@
     const cardFooterHint = document.getElementById("cardFooterHint");
     const toast = document.getElementById("toast");
     const mobileSwipeHint = document.getElementById("mobileSwipeHint");
+    const rotateHintBanner = document.getElementById("rotateHintBanner");
+    const rotateHintClose = document.getElementById("rotateHintClose");
     const cardShell = document.getElementById("cardShell");
     const videoOverlayPlay = document.getElementById("videoOverlayPlay");
     const captionTrack = document.getElementById("captionTrack");
@@ -2669,8 +2716,31 @@ updateReviewButtonState(item.id);
     });
 
     const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const isSmallScreen = window.innerWidth <= 768;
+
     if (!isTouchDevice) {
       mobileSwipeHint.classList.add("hidden");
+    }
+
+    if (rotateHintBanner) {
+      const rotateHintStorageKey = "rotateHintDismissed_v1";
+      const shouldShowRotateHint =
+        isTouchDevice && isSmallScreen && !localStorage.getItem(rotateHintStorageKey);
+
+      if (shouldShowRotateHint) {
+        rotateHintBanner.classList.remove("hidden");
+      }
+
+      if (rotateHintClose) {
+        rotateHintClose.addEventListener("click", () => {
+          rotateHintBanner.classList.add("hidden");
+          try {
+            localStorage.setItem(rotateHintStorageKey, "1");
+          } catch (e) {
+            // ignore storage failures
+          }
+        });
+      }
     }
 
     let touchStartX = null;
