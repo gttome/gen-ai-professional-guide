@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Chapter 3 Interactive Labs — Retrieval • Chunking • Golden Path • Tools • Orchestration</title>
+  <style>
+    :root{
+      --bg:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+      --blue:#2563eb; --orange:#f59e0b; --green:#10b981; --yellow:#eab308;
+      --card:#f8fafc; --card2:#ffffff; --danger:#ef4444;
+      --radius:16px; --shadow:0 8px 24px rgba(15,23,42,0.06);
+      color-scheme: light;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
+    aside{width:300px;border-right:1px solid var(--line);padding:18px 14px;background:#fbfdff;position:sticky;top:0;height:100vh;overflow:auto}
+    main{flex:1;padding:18px 18px 60px}
+    .brand{display:flex;align-items:center;gap:10px;margin:2px 8px 16px}
+    .logo{width:40px;height:40px;border-radius:12px;background:
+      radial-gradient(circle at 20% 20%, var(--yellow), transparent 60%),
+      radial-gradient(circle at 80% 30%, var(--green), transparent 60%),
+      radial-gradient(circle at 30% 80%, var(--orange), transparent 60%),
+      radial-gradient(circle at 80% 80%, var(--blue), transparent 60%);
+      border:1px solid #e6eefc}
+    .brand h1{font-size:16px;margin:0;letter-spacing:.3px}
+    .brand p{font-size:12px;margin:2px 0 0;color:var(--muted)}
+    .navbtn{width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid transparent;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--ink)}
+    .navbtn small{color:var(--muted);font-weight:500}
+    .navbtn.active{background:#eef2ff;border-color:#dbe3ff;box-shadow:inset 0 0 0 1px #dbe3ff}
+    .navbtn:hover{background:#f1f5f9}
+    .section{display:none;animation:fade .18s ease-out}
+    .section.active{display:block}
+    @keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}
+    .title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .title h2{margin:0;font-size:20px}
+    .pill{font-size:12px;color:#0b3a2e;background:#ecfdf5;border:1px solid #d1fae5;padding:4px 8px;border-radius:999px}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+    .card{background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px;font-size:15px}
+    .sub{font-size:13px;color:var(--muted);margin-top:2px}
+    label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin:6px 0 4px}
+    input[type="text"], input[type="number"], select, textarea{
+      width:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--line);
+      font-size:14px;outline:none;background:#fff
+    }
+    textarea{min-height:90px;resize:vertical}
+    button{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:14px;transition:.12s ease}
+    button:hover{transform:translateY(-1px)}
+    button.primary{background:linear-gradient(180deg,#ffffff,#f8fafc);border-color:#c7d2fe;box-shadow:0 4px 10px rgba(37,99,235,.10)}
+    button.ghost{background:transparent}
+    button.blue{border-color:#c7d2fe} button.orange{border-color:#fde68a}
+    button.green{border-color:#bbf7d0} button.yellow{border-color:#fde68a}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .hr{height:1px;background:var(--line);margin:10px 0}
+    .list{display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:14px;max-height:360px;overflow:auto}
+    .item{border:1px solid var(--line);background:var(--card);padding:8px 10px;border-radius:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .tag{font-size:11px;color:#0b3a2e;background:#ecfdf5;border:1px solid #d1fae5;padding:2px 6px;border-radius:999px;white-space:nowrap}
+    .bad{color:#7f1d1d;background:#fef2f2;border-color:#fecaca}
+    .ok{color:#0b3a2e;background:#ecfdf5;border-color:#d1fae5}
+    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+    .kpi .box{border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}
+    .kpi .box .n{font-size:18px;font-weight:700}
+    .badge{font-size:12px;font-weight:600;padding:3px 6px;border-radius:999px;border:1px solid var(--line);background:#fff}
+    .muted{color:var(--muted)}
+    canvas{width:100%;height:300px;display:block;background:#fff;border-radius:8px}
+    .small canvas{height:240px}
+    .doc{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:10px;white-space:pre-wrap}
+    .twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .footer-note{font-size:12px;color:var(--muted);margin-top:8px}
+    @media (max-width: 1100px){
+      aside{display:none}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<aside>
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1>Chapter 3 Interactive Labs</h1>
+      <p>Retrieval • Chunking • Golden Path • Tools • Orchestration</p>
+    </div>
+  </div>
+  <button class="navbtn active" data-target="sec-hybrid"><span>1. Semantic GPS + Hybrid Search</span><small>§3.1.1 & §3.1.3</small></button>
+  <button class="navbtn" data-target="sec-chunk"><span>2. Chunking Tradeoff Simulator</span><small>§3.1.2</small></button>
+  <button class="navbtn" data-target="sec-golden"><span>3. RAG Golden Path Lab</span><small>§3.1.4 & §3.4</small></button>
+  <button class="navbtn" data-target="sec-tools"><span>4. Tool‑Calling Reliability</span><small>§3.2</small></button>
+  <button class="navbtn" data-target="sec-orch"><span>5. Multi‑Agent Orchestration Builder</span><small>§3.3</small></button>
+  <div class="hr"></div>
+  <div class="muted" style="padding:0 8px;font-size:12px;line-height:1.4">
+    Offline, toy‑faithful sims aligned to Chapter 3 production patterns.
+  </div>
+</aside>
+
+<main>
+  <!-- 1) Semantic GPS + Hybrid Search -->
+  <section id="sec-hybrid" class="section active">
+    <div class="title"><h2>Semantic GPS + Hybrid Search Visualizer</h2><div class="pill">Why hybrid beats semantic‑only</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Semantic map</h3>
+        <div class="sub">Blue dots are documents. Orange dot is your query. Distance ≈ semantic similarity.</div>
+        <div class="small"><canvas id="hybridCanvas" width="900" height="360"></canvas></div>
+        <div class="row" style="margin-top:8px">
+          <label class="muted">Query preset</label>
+          <select id="hybridPreset" style="min-width:220px">
+            <option value="engine_noise">“engine makes knocking noise”</option>
+            <option value="billing_id">“invoice 48392 duplicate charge”</option>
+            <option value="part_id">“Part #AX‑992 gasket spec”</option>
+            <option value="safety">“annual safety training due date”</option>
+          </select>
+          <button id="hybridRun" class="primary blue">Place query</button>
+        </div>
+        <label style="margin-top:8px">Search mode</label>
+        <div class="row">
+          <select id="hybridMode" style="min-width:180px">
+            <option value="semantic">Semantic only</option>
+            <option value="keyword">Keyword only</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
+          <label class="muted">Fusion weight (semantic)</label>
+          <input id="fusion" type="range" min="0" max="100" value="70">
+          <span id="fusionVal" class="badge">70%</span>
+          <label class="muted">Top‑K</label>
+          <input id="hybridTopK" type="number" min="1" max="8" value="4" style="width:70px">
+          <button id="hybridRetrieve" class="primary green">Retrieve</button>
+        </div>
+        <div class="hr"></div>
+        <h3>Ranked results</h3>
+        <div id="hybridResults" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h3>What to notice</h3>
+        <div class="list" style="max-height:none">
+          <div class="item"><div>
+            Semantic search finds meaning neighbors — great for fuzzy questions.
+            <div class="muted" style="font-size:12px;margin-top:4px">§3.1.1 “Semantic GPS.”</div>
+          </div></div>
+          <div class="item"><div>
+            Keyword search wins on exact IDs / part numbers.
+            <div class="muted" style="font-size:12px;margin-top:4px">§3.1.3 hybrid best of both.</div>
+          </div></div>
+          <div class="item"><div>
+            Tune fusion weight to see precision vs recall tradeoff.
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) Chunking -->
+  <section id="sec-chunk" class="section">
+    <div class="title"><h2>Chunking Tradeoff Simulator</h2><div class="pill">Precision ↔ Context</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Document set</h3>
+        <label>Choose doc type</label>
+        <select id="docType">
+          <option value="policy">Policy / Handbook</option>
+          <option value="contract">Contract / Legal filing</option>
+          <option value="tickets">Support tickets</option>
+          <option value="manual">Technical manual</option>
+        </select>
+
+        <label style="margin-top:8px">Search query</label>
+        <input id="chunkQuery" type="text" value="due date for safety training">
+
+        <div class="twocol" style="margin-top:8px">
+          <div>
+            <label>Chunk size (words)</label>
+            <input id="chunkSize3" type="range" min="60" max="520" step="20" value="160">
+            <div class="row"><span id="chunkSize3Val" class="badge">160</span></div>
+          </div>
+          <div>
+            <label>Overlap</label>
+            <select id="overlap3">
+              <option value="0">0%</option>
+              <option value="10">10%</option>
+              <option value="25">25%</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top:6px">
+          <label class="muted">Top‑K</label>
+          <input id="chunkTopK" type="number" min="1" max="6" value="3" style="width:70px">
+          <button id="chunkRun" class="primary blue">Chunk + retrieve</button>
+          <button id="chunkReset" class="ghost">Reset</button>
+        </div>
+
+        <div class="hr"></div>
+        <div class="kpi">
+          <div class="box"><div class="muted" style="font-size:12px">Precision</div><div id="kpiPrec" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Recall</div><div id="kpiRec" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Context sufficiency</div><div id="kpiCtx" class="n">—</div></div>
+        </div>
+
+        <h3 style="margin-top:10px">Retrieved chunks</h3>
+        <div id="chunkResults3" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h3>Source document (highlighted)</h3>
+        <div id="sourceDoc3" class="doc"></div>
+        <div class="footer-note">§3.1.2: smaller chunks ↑precision; larger chunks ↑context but add noise.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) Golden Path Lab -->
+  <section id="sec-golden" class="section">
+    <div class="title"><h2>RAG Hallucination Cause‑and‑Effect Lab (“Golden Path”)</h2><div class="pill">Retrieve → Answer → Verify</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Failure mode dials</h3>
+        <label>Over‑retrieval noise</label>
+        <input id="noise3" type="range" min="0" max="1" step="0.05" value="0.25">
+        <div class="row"><span id="noise3Val" class="badge">0.25</span><span class="muted">irrelevant chunks dilute truth</span></div>
+
+        <label style="margin-top:6px">Model override bias</label>
+        <input id="bias3" type="range" min="0" max="1" step="0.05" value="0.30">
+        <div class="row"><span id="bias3Val" class="badge">0.30</span><span class="muted">prefers pretraining vs docs</span></div>
+
+        <label style="margin-top:6px">Retrieval miss rate</label>
+        <input id="miss3" type="range" min="0" max="1" step="0.05" value="0.20">
+        <div class="row"><span id="miss3Val" class="badge">0.20</span><span class="muted">fails to fetch key evidence</span></div>
+
+        <div class="row" style="margin-top:8px">
+          <button id="goldenRun" class="primary blue">Run Golden Path</button>
+          <button id="goldenReset" class="ghost">Reset</button>
+        </div>
+
+        <div class="hr"></div>
+        <div class="kpi">
+          <div class="box"><div class="muted" style="font-size:12px">Grounding %</div><div id="kpiGround" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Unsupported claims</div><div id="kpiUnsup" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Verifier action</div><div id="kpiVer" class="n">—</div></div>
+        </div>
+
+        <h3 style="margin-top:10px">Generated answer</h3>
+        <div id="goldenAns" class="doc"></div>
+      </div>
+
+      <div class="card">
+        <h3>Retrieved evidence</h3>
+        <div id="goldenEvidence" class="list"></div>
+        <div class="hr"></div>
+        <h3>Sentence‑level support check</h3>
+        <div id="goldenCheck" class="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) Tool calling reliability -->
+  <section id="sec-tools" class="section">
+    <div class="title"><h2>Tool‑Calling Reliability & Failure Handling Simulator</h2><div class="pill">Tools as strict APIs</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Create tools</h3>
+        <div class="sub">Define signatures and reliability parameters.</div>
+        <label>Tool name</label>
+        <input id="toolName" placeholder="e.g., search_docs, calc, email_lookup">
+
+        <label>Signature (JSON schema)</label>
+        <textarea id="toolSig" spellcheck="false">{ "query":"string", "top_k":"number" }</textarea>
+
+        <div class="twocol">
+          <div>
+            <label>Failure rate</label>
+            <input id="toolFail" type="range" min="0" max="0.8" step="0.05" value="0.15">
+            <div class="row"><span id="toolFailVal" class="badge">0.15</span></div>
+          </div>
+          <div>
+            <label>Latency (ms)</label>
+            <input id="toolLat" type="number" min="50" max="3000" value="500">
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:6px">
+          <button id="toolAdd" class="primary green">Add tool</button>
+          <button id="toolClear" class="ghost">Clear tools</button>
+        </div>
+
+        <div class="hr"></div>
+        <h3>Priority order (drag to reorder)</h3>
+        <div id="toolList" class="list"></div>
+
+        <div class="hr"></div>
+        <h3>Agent query</h3>
+        <input id="toolQuery" value="Find warranty policy for Part AX‑992">
+        <div class="row" style="margin-top:6px">
+          <label class="muted">Max retries</label>
+          <input id="toolRetries" type="number" min="0" max="5" value="2" style="width:70px">
+          <button id="toolRun" class="primary blue">Select tool + emit call</button>
+        </div>
+        <div class="hr"></div>
+        <h3>Run log</h3>
+        <div id="toolLog" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h3>Interpretation</h3>
+        <div class="list" style="max-height:none">
+          <div class="item"><div>
+            The selector chooses the highest‑priority tool whose signature matches the query.
+          </div></div>
+          <div class="item"><div>
+            Failures trigger retries with exponential backoff.
+          </div></div>
+          <div class="item"><div>
+            In production, tool calling must be deterministic and inspectable.
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5) Orchestration builder -->
+  <section id="sec-orch" class="section">
+    <div class="title"><h2>Multi‑Agent Orchestration + Contracts + Verifier Gate Builder</h2><div class="pill">Teams, not monoliths</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Add agents</h3>
+        <label>Agent role</label>
+        <select id="agentRole3">
+          <option value="Retriever">Retriever</option>
+          <option value="Writer">Writer</option>
+          <option value="Critic">Critic</option>
+          <option value="Verifier">Verifier</option>
+          <option value="Guardrail">Guardrail</option>
+        </select>
+
+        <label>Contract (required output JSON)</label>
+        <textarea id="agentContract3" spellcheck="false">{ "text":"string" }</textarea>
+
+        <label>Behavior notes</label>
+        <input id="agentNotes3" placeholder="e.g., must cite doc_ids; no extra text">
+
+        <div class="row" style="margin-top:6px">
+          <button id="agentAdd3" class="primary green">Add to workflow</button>
+          <button id="agentClear3" class="ghost">Clear workflow</button>
+        </div>
+
+        <div class="hr"></div>
+        <h3>Workflow order (drag to schedule)</h3>
+        <div id="workflowList3" class="list"></div>
+
+        <div class="row" style="margin-top:8px">
+          <label class="muted">Inject upstream error</label>
+          <input id="injectErr3" type="checkbox">
+          <button id="runWorkflow3" class="primary blue">Run workflow</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Execution trace</h3>
+        <div id="trace3" class="list"></div>
+        <div class="footer-note">§3.3: enforce message contracts; verifier last; send back on failure.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ========================= NAV ========================= */
+const navBtns=[...document.querySelectorAll(".navbtn")];
+const sections=[...document.querySelectorAll(".section")];
+navBtns.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    navBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const id=btn.dataset.target;
+    sections.forEach(s=>s.classList.toggle("active", s.id===id));
+  });
+});
+
+/* ==================== UTIL: tokenize, vectors ==================== */
+function tokenize(s){ return (s.toLowerCase().match(/[a-z0-9#\-]+/g)||[]).filter(t=>t.length>1); }
+function vecize(tokens){
+  const m=new Map(); tokens.forEach(t=>m.set(t,(m.get(t)||0)+1)); return m;
+}
+function cosine(a,b){
+  let dot=0, na=0, nb=0;
+  for(const [k,v] of a){ na+=v*v; if(b.has(k)) dot+=v*b.get(k); }
+  for(const v of b.values()) nb+=v*v;
+  return dot/(Math.sqrt(na)*Math.sqrt(nb)+1e-9);
+}
+
+/* ======================================================
+   1) SEMANTIC GPS + HYBRID SEARCH
+   ====================================================== */
+const hybridCanvas=document.getElementById("hybridCanvas");
+const hctx=hybridCanvas.getContext("2d");
+const hybridPreset=document.getElementById("hybridPreset");
+const hybridRun=document.getElementById("hybridRun");
+const hybridMode=document.getElementById("hybridMode");
+const fusion=document.getElementById("fusion");
+const fusionVal=document.getElementById("fusionVal");
+const hybridTopK=document.getElementById("hybridTopK");
+const hybridRetrieve=document.getElementById("hybridRetrieve");
+const hybridResults=document.getElementById("hybridResults");
+
+fusion.addEventListener("input", ()=>fusionVal.textContent=fusion.value+"%");
+
+const docsHybrid=[
+ {id:"D1", title:"Engine knock diagnostics", text:"knocking noise under load, check rod bearing and fuel timing", x:120, y:120, kw:["engine","knock","noise"]},
+ {id:"D2", title:"Hydraulic leak guide", text:"oil leak at seal, inspect gasket and pressure relief", x:170, y:210, kw:["leak","oil","gasket"]},
+ {id:"D3", title:"Billing duplicate invoice", text:"duplicate charge dispute process for invoice numbers", x:620, y:150, kw:["invoice","duplicate","charge","billing"]},
+ {id:"D4", title:"Invoice #48392 record", text:"invoice 48392 paid twice, refund timeline 5-7 days", x:690, y:110, kw:["invoice","48392","refund"]},
+ {id:"D5", title:"Part AX-992 gasket spec", text:"AX-992 gasket, torque spec 10Nm, material nitrile", x:760, y:250, kw:["ax-992","part","gasket","spec"]},
+ {id:"D6", title:"Annual safety training policy", text:"complete annual safety training by Dec 15", x:410, y:240, kw:["safety","training","due","december"]},
+ {id:"D7", title:"Remote work policy", text:"remote work up to three days per week", x:360, y:120, kw:["remote","policy"]},
+ {id:"D8", title:"Parts catalog index", text:"lookup part number by exact match", x:820, y:180, kw:["part","number","catalog"]},
+];
+
+const presetQueries={
+ engine_noise:{q:"engine makes knocking noise", x:140, y:150, kw:["engine","knocking","noise"]},
+ billing_id:{q:"invoice 48392 duplicate charge", x:665, y:130, kw:["invoice","48392","duplicate"]},
+ part_id:{q:"Part #AX-992 gasket spec", x:770, y:230, kw:["ax-992","part","gasket"]},
+ safety:{q:"annual safety training due date", x:430, y:230, kw:["safety","training","due"]}
+};
+let currentQuery=presetQueries.engine_noise;
+
+function drawHybrid(){
+  hctx.clearRect(0,0,hybridCanvas.width,hybridCanvas.height);
+  // axes faint
+  hctx.strokeStyle="#eef2f7"; hctx.lineWidth=1;
+  hctx.strokeRect(20,20,hybridCanvas.width-40,hybridCanvas.height-40);
+
+  // docs
+  docsHybrid.forEach(d=>{
+    hctx.beginPath();
+    hctx.fillStyle="#1d4ed8";
+    hctx.globalAlpha=0.85;
+    hctx.arc(d.x,d.y,7,0,Math.PI*2);
+    hctx.fill();
+    hctx.globalAlpha=1;
+    hctx.fillStyle="#0f172a"; hctx.font="11px system-ui";
+    hctx.fillText(d.id, d.x+9, d.y+3);
+  });
+  // query
+  hctx.beginPath(); hctx.fillStyle="#f59e0b";
+  hctx.arc(currentQuery.x,currentQuery.y,8,0,Math.PI*2); hctx.fill();
+  hctx.fillStyle="#0f172a"; hctx.font="12px system-ui";
+  hctx.fillText("Q", currentQuery.x+10, currentQuery.y+4);
+}
+drawHybrid();
+
+hybridRun.addEventListener("click", ()=>{
+  currentQuery=presetQueries[hybridPreset.value];
+  drawHybrid();
+});
+
+function semanticScore(d){
+  const dx=d.x-currentQuery.x, dy=d.y-currentQuery.y;
+  const dist=Math.sqrt(dx*dx+dy*dy);
+  return 1/(1+dist/120);
+}
+function keywordScore(d){
+  const qset=new Set(currentQuery.kw.map(k=>k.toLowerCase()));
+  let hit=0;
+  d.kw.forEach(k=>{ if(qset.has(k.toLowerCase())) hit++; });
+  // bonus for exact IDs / part numbers
+  if(currentQuery.q.toLowerCase().includes("ax-992") && d.text.toLowerCase().includes("ax-992")) hit+=3;
+  if(currentQuery.q.toLowerCase().includes("48392") && d.text.toLowerCase().includes("48392")) hit+=3;
+  return hit/(qset.size+3);
+}
+function retrieveHybrid(){
+  const mode=hybridMode.value;
+  const w=Number(fusion.value)/100;
+  const k=Math.max(1, Math.min(8, Number(hybridTopK.value||4)));
+  const ranked=docsHybrid.map(d=>{
+    const sem=semanticScore(d), key=keywordScore(d);
+    let score=sem;
+    if(mode==="keyword") score=key;
+    if(mode==="hybrid") score=w*sem+(1-w)*key;
+    return {...d, sem, key, score};
+  }).sort((a,b)=>b.score-a.score).slice(0,k);
+
+  // highlight topK
+  drawHybrid();
+  ranked.forEach((d,i)=>{
+    hctx.beginPath();
+    hctx.strokeStyle=i===0?"#10b981":"#94a3b8";
+    hctx.lineWidth=i===0?3:2;
+    hctx.arc(d.x,d.y,12,0,Math.PI*2);
+    hctx.stroke();
+  });
+
+  hybridResults.innerHTML="";
+  ranked.forEach((d,i)=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <div style="flex:1">
+        <b>${i+1}. ${d.title}</b> <span class="muted">(${d.id})</span>
+        <div class="muted" style="font-size:12px;margin-top:4px">${d.text}</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">semantic ${(d.sem*100).toFixed(0)}% • keyword ${(d.key*100).toFixed(0)}% • final ${(d.score*100).toFixed(0)}%</div>
+      </div>
+      <div class="tag">score {(d.score).toFixed(2)}</div>
+    `;
+    hybridResults.appendChild(div);
+  });
+}
+hybridRetrieve.addEventListener("click", retrieveHybrid);
+
+/* ======================================================
+   2) CHUNKING TRADEOFF SIMULATOR
+   ====================================================== */
+const docType=document.getElementById("docType");
+const chunkQuery=document.getElementById("chunkQuery");
+const chunkSize3=document.getElementById("chunkSize3");
+const chunkSize3Val=document.getElementById("chunkSize3Val");
+const overlap3=document.getElementById("overlap3");
+const chunkTopK=document.getElementById("chunkTopK");
+const chunkRun=document.getElementById("chunkRun");
+const chunkReset=document.getElementById("chunkReset");
+const kpiPrec=document.getElementById("kpiPrec");
+const kpiRec=document.getElementById("kpiRec");
+const kpiCtx=document.getElementById("kpiCtx");
+const chunkResults3=document.getElementById("chunkResults3");
+const sourceDoc3=document.getElementById("sourceDoc3");
+
+chunkSize3.addEventListener("input", ()=>chunkSize3Val.textContent=chunkSize3.value);
+chunkSize3Val.textContent=chunkSize3.value;
+
+const docSets={
+  policy:`All employees must complete annual safety training by December 15. Training includes hazard recognition, lockout-tagout, and emergency response. Non-completion triggers a compliance review. Remote work is allowed up to three days per week with manager approval.`,
+  contract:`This agreement governs maintenance services. Warranty claims for Part AX-992 must be filed within 30 days of purchase. The supplier is not liable for incidental damages. Payment disputes must reference invoice IDs and be submitted in writing.`,
+  tickets:`Ticket 48392: Customer reports duplicate charge on invoice 48392. Ticket 48910: Tractor engine makes knocking noise during startup. Ticket 49011: Hydraulic oil leak at rear seal; gasket may be worn.`,
+  manual:`Section 7: Engine knock diagnostics. If knocking noise occurs under load, inspect rod bearings and verify fuel timing. Section 9: Gasket specs. Part AX-992 gasket torque spec is 10Nm. Material: nitrile rubber.`
+};
+
+function chunkText(text, size, overlapPct){
+  const words=text.split(/\s+/).filter(Boolean);
+  const step=Math.max(1, Math.floor(size*(1-overlapPct/100)));
+  const out=[];
+  for(let i=0;i<words.length;i+=step){
+    out.push(words.slice(i,i+size).join(" "));
+    if(i+size>=words.length) break;
+  }
+  return out;
+}
+function retrieveChunks(chunks, q, k){
+  const qv=vecize(tokenize(q));
+  return chunks.map((c,i)=>{
+    const cv=vecize(tokenize(c));
+    const sim=cosine(qv,cv);
+    return {i, c, sim};
+  }).sort((a,b)=>b.sim-a.sim).slice(0,k);
+}
+function runChunking(){
+  const text=docSets[docType.value];
+  const size=Number(chunkSize3.value);
+  const ov=Number(overlap3.value);
+  const k=Math.max(1, Math.min(6, Number(chunkTopK.value||3)));
+  const chunks=chunkText(text,size,ov);
+  const retrieved=retrieveChunks(chunks, chunkQuery.value, k);
+
+  // highlight retrieved spans in source by approximate string match
+  let highlighted=text;
+  retrieved.forEach(r=>{
+    const snippet=r.c.split(/\s+/).slice(0,8).join(" ");
+    highlighted=highlighted.replace(snippet, `[[HIT]]${snippet}[[/HIT]]`);
+  });
+  highlighted=highlighted.replace(/\[\[HIT\]\]/g, "<mark>").replace(/\[\[\/HIT\]\]/g, "</mark>");
+  sourceDoc3.innerHTML=highlighted;
+
+  // simulated KPIs: smaller size => higher precision, lower recall/context
+  const prec=Math.min(0.95, 0.55 + (220/size)*0.25);
+  const rec=Math.min(0.95, 0.40 + (size/520)*0.45);
+  const ctx=Math.min(0.98, 0.35 + (size/520)*0.55 + (ov/100)*0.10);
+
+  kpiPrec.textContent=(prec*100).toFixed(0)+"%";
+  kpiRec.textContent=(rec*100).toFixed(0)+"%";
+  kpiCtx.textContent=(ctx*100).toFixed(0)+"%";
+
+  chunkResults3.innerHTML="";
+  retrieved.forEach((r,rank)=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <div style="flex:1">
+        <b>${rank+1}. Chunk ${r.i+1}</b>
+        <div class="muted" style="font-size:12px;margin-top:4px">${r.c}</div>
+      </div>
+      <div class="tag">cos ${r.sim.toFixed(2)}</div>
+    `;
+    chunkResults3.appendChild(div);
+  });
+}
+chunkRun.addEventListener("click", runChunking);
+chunkReset.addEventListener("click", ()=>{
+  docType.value="policy"; chunkQuery.value="due date for safety training";
+  chunkSize3.value=160; chunkSize3Val.textContent="160";
+  overlap3.value="0"; chunkTopK.value=3;
+  kpiPrec.textContent="—"; kpiRec.textContent="—"; kpiCtx.textContent="—";
+  chunkResults3.innerHTML=""; sourceDoc3.textContent=docSets.policy;
+});
+sourceDoc3.textContent=docSets.policy;
+
+/* ======================================================
+   3) GOLDEN PATH LAB
+   ====================================================== */
+const noise3=document.getElementById("noise3");
+const bias3=document.getElementById("bias3");
+const miss3=document.getElementById("miss3");
+const noise3Val=document.getElementById("noise3Val");
+const bias3Val=document.getElementById("bias3Val");
+const miss3Val=document.getElementById("miss3Val");
+const goldenRun=document.getElementById("goldenRun");
+const goldenReset=document.getElementById("goldenReset");
+const kpiGround=document.getElementById("kpiGround");
+const kpiUnsup=document.getElementById("kpiUnsup");
+const kpiVer=document.getElementById("kpiVer");
+const goldenAns=document.getElementById("goldenAns");
+const goldenEvidence=document.getElementById("goldenEvidence");
+const goldenCheck=document.getElementById("goldenCheck");
+
+[noise3,bias3,miss3].forEach(inp=>{
+  inp.addEventListener("input", ()=>{
+    noise3Val.textContent=noise3.value;
+    bias3Val.textContent=bias3.value;
+    miss3Val.textContent=miss3.value;
+  });
+});
+noise3Val.textContent=noise3.value; bias3Val.textContent=bias3.value; miss3Val.textContent=miss3.value;
+
+const evidencePool=[
+  {id:"E1", text:"All employees must complete annual safety training by December 15."},
+  {id:"E2", text:"Warranty claims for Part AX-992 must be filed within 30 days of purchase."},
+  {id:"E3", text:"Invoice 48392 was charged twice; refund within 5-7 business days."},
+  {id:"E4", text:"If knocking noise occurs under load, inspect rod bearings and verify fuel timing."},
+  {id:"E5", text:"Remote work allowed up to three days per week with manager approval."}
+];
+
+function runGolden(){
+  const noise=Number(noise3.value), bias=Number(bias3.value), miss=Number(miss3.value);
+  // retrieve stage
+  let retrieved=evidencePool.filter(()=>Math.random()>miss);
+  // add noisy irrelevant chunks
+  const noisyCount=Math.floor(noise*4);
+  for(let i=0;i<noisyCount;i++){
+    retrieved.push({id:"N"+(i+1), text:"Irrelevant passage about cafeteria hours and parking rules."});
+  }
+  retrieved=retrieved.slice(0,6);
+  goldenEvidence.innerHTML="";
+  retrieved.forEach(r=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div style="flex:1"><b>${r.id}</b><div class="muted" style="font-size:12px;margin-top:4px">${r.text}</div></div>`;
+    goldenEvidence.appendChild(div);
+  });
+
+  // answer stage: may override docs
+  const question="When is annual safety training due and what if I miss it?";
+  const hasDue=retrieved.some(r=>/December 15/i.test(r.text));
+  let ansSents=[];
+  if(hasDue && Math.random()>bias){
+    ansSents.push("Annual safety training is due by December 15.");
+    ansSents.push("Missing it triggers a compliance review.");
+  }else{
+    ansSents.push("Annual safety training is due by the end of the year.");
+    ansSents.push("Late completion may result in disciplinary action.");
+  }
+  // add a hallucinated extra claim when noise high
+  if(noise>0.45){
+    ansSents.push("Training also includes a mandatory forklift certification for all staff.");
+  }
+  const answer=ansSents.join(" ");
+  goldenAns.textContent=answer;
+
+  // verify stage
+  const itemTokens=retrieved.map(r=>new Set(tokenize(r.text)));
+  const sents=answer.split(/(?<=[.?!])\s+/).filter(Boolean);
+  goldenCheck.innerHTML="";
+  let supported=0, unsupported=0;
+  sents.forEach(sent=>{
+    const toks=tokenize(sent);
+    let ok=false;
+    for(const set of itemTokens){
+      const overlap=toks.filter(t=>set.has(t)).length;
+      if(overlap>=2){ ok=true; break; }
+    }
+    ok?supported++:unsupported++;
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div style="flex:1">${sent}</div><div class="tag ${ok?'ok':'bad'}">${ok?'Supported':'Unsupported'}</div>`;
+    goldenCheck.appendChild(div);
+  });
+
+  const groundPct=supported/(supported+unsupported+1e-9);
+  kpiGround.textContent=(groundPct*100).toFixed(0)+"%";
+  kpiUnsup.textContent=unsupported;
+  kpiVer.textContent=unsupported>0?"Send back / Flag":"Approve";
+}
+goldenRun.addEventListener("click", runGolden);
+goldenReset.addEventListener("click", ()=>{
+  noise3.value=0.25; bias3.value=0.30; miss3.value=0.20;
+  noise3Val.textContent="0.25"; bias3Val.textContent="0.30"; miss3Val.textContent="0.20";
+  goldenEvidence.innerHTML=""; goldenAns.textContent=""; goldenCheck.innerHTML="";
+  kpiGround.textContent="—"; kpiUnsup.textContent="—"; kpiVer.textContent="—";
+});
+
+/* ======================================================
+   4) TOOL CALLING RELIABILITY
+   ====================================================== */
+const toolName=document.getElementById("toolName");
+const toolSig=document.getElementById("toolSig");
+const toolFail=document.getElementById("toolFail");
+const toolFailVal=document.getElementById("toolFailVal");
+const toolLat=document.getElementById("toolLat");
+const toolAdd=document.getElementById("toolAdd");
+const toolClear=document.getElementById("toolClear");
+const toolList=document.getElementById("toolList");
+const toolQuery=document.getElementById("toolQuery");
+const toolRetries=document.getElementById("toolRetries");
+const toolRun=document.getElementById("toolRun");
+const toolLog=document.getElementById("toolLog");
+
+toolFail.addEventListener("input", ()=>toolFailVal.textContent=toolFail.value);
+toolFailVal.textContent=toolFail.value;
+
+let tools=[
+  {name:"search_docs", sig:{query:"string", top_k:"number"}, fail:0.15, lat:500},
+  {name:"lookup_part", sig:{part_id:"string"}, fail:0.10, lat:300},
+  {name:"billing_db", sig:{invoice_id:"string"}, fail:0.22, lat:700},
+];
+
+function renderTools(){
+  toolList.innerHTML="";
+  if(!tools.length){
+    toolList.innerHTML="<div class='muted'>No tools yet.</div>"; return;
+  }
+  tools.forEach((t,idx)=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.draggable=true;
+    div.dataset.idx=idx;
+    div.innerHTML=`
+      <div style="flex:1">
+        <b>${idx+1}. ${t.name}</b>
+        <div class="muted" style="font-size:12px;margin-top:4px">sig: ${JSON.stringify(t.sig)}</div>
+        <div class="muted" style="font-size:12px;margin-top:2px">fail ${(t.fail*100).toFixed(0)}% • lat ${t.lat}ms</div>
+      </div>
+      <button class="ghost" data-del="${idx}">Delete</button>
+    `;
+    toolList.appendChild(div);
+  });
+  toolList.querySelectorAll("button[data-del]").forEach(b=>{
+    b.addEventListener("click", ()=>{ tools.splice(Number(b.dataset.del),1); renderTools(); });
+  });
+
+  // drag reorder
+  let dragIdx=null;
+  toolList.querySelectorAll(".item").forEach(el=>{
+    el.addEventListener("dragstart", e=>{ dragIdx=Number(el.dataset.idx); e.dataTransfer.effectAllowed="move"; });
+    el.addEventListener("dragover", e=>e.preventDefault());
+    el.addEventListener("drop", e=>{
+      e.preventDefault();
+      const dropIdx=Number(el.dataset.idx);
+      if(dragIdx===null||dropIdx===dragIdx) return;
+      const [m]=tools.splice(dragIdx,1);
+      tools.splice(dropIdx,0,m);
+      renderTools();
+    });
+  });
+}
+renderTools();
+
+toolAdd.addEventListener("click", ()=>{
+  const name=toolName.value.trim(); if(!name){alert("Tool needs a name.");return;}
+  let sigObj=null;
+  try{ sigObj=JSON.parse(toolSig.value); }catch(e){ alert("Signature must be valid JSON."); return; }
+  tools.push({name, sig:sigObj, fail:Number(toolFail.value), lat:Number(toolLat.value)});
+  toolName.value=""; toolSig.value='{ "query":"string" }'; toolFail.value=0.15; toolFailVal.textContent="0.15"; toolLat.value=500;
+  renderTools();
+});
+toolClear.addEventListener("click", ()=>{ tools=[]; renderTools(); toolLog.innerHTML=""; });
+
+function matchToolToQuery(t, q){
+  const toks=tokenize(q);
+  const keys=Object.keys(t.sig);
+  // very simple heuristic: any signature key appears in query => match
+  return keys.some(k=>toks.includes(k.replace("_","-")) || toks.includes(k.replace("_","")));
+}
+function emitArgs(t, q){
+  const args={};
+  for(const k of Object.keys(t.sig)){
+    if(k.includes("part")) args[k]= (q.match(/AX-?\d+/i)||["AX-992"])[0].toUpperCase();
+    else if(k.includes("invoice")) args[k]= (q.match(/\d{4,6}/)||["48392"])[0];
+    else args[k]= q;
+  }
+  return args;
+}
+function runToolCall(){
+  if(!tools.length){ alert("Add tools first."); return; }
+  const q=toolQuery.value.trim();
+  const maxR=Math.max(0, Math.min(5, Number(toolRetries.value||2)));
+
+  // choose first matching tool by priority, else fallback to first tool
+  let chosen=tools.find(t=>matchToolToQuery(t,q)) || tools[0];
+  const args=emitArgs(chosen,q);
+
+  toolLog.innerHTML="";
+  let attempt=0; let delay=chosen.lat;
+
+  while(true){
+    const failed=Math.random()<chosen.fail;
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <div style="flex:1">
+        <b>Attempt ${attempt+1} → ${chosen.name}</b>
+        <div class="muted" style="font-size:12px;margin-top:4px">args: ${JSON.stringify(args)}</div>
+        <div class="muted" style="font-size:12px;margin-top:2px">latency ${delay}ms</div>
+      </div>
+      <div class="tag ${failed?'bad':'ok'}">${failed?'FAIL':'OK'}</div>
+    `;
+    toolLog.appendChild(div);
+
+    if(!failed) break;
+    attempt++;
+    if(attempt>maxR){
+      const end=document.createElement("div");
+      end.className="item";
+      end.innerHTML=`<div style="flex:1"><b>Stop:</b> retries exhausted. Escalate or choose backup tool.</div><div class="tag bad">Abort</div>`;
+      toolLog.appendChild(end);
+      break;
+    }
+    delay=Math.min(4000, Math.round(delay*1.8));
+  }
+}
+toolRun.addEventListener("click", runToolCall);
+
+/* ======================================================
+   5) ORCHESTRATION BUILDER
+   ====================================================== */
+const agentRole3=document.getElementById("agentRole3");
+const agentContract3=document.getElementById("agentContract3");
+const agentNotes3=document.getElementById("agentNotes3");
+const agentAdd3=document.getElementById("agentAdd3");
+const agentClear3=document.getElementById("agentClear3");
+const workflowList3=document.getElementById("workflowList3");
+const injectErr3=document.getElementById("injectErr3");
+const runWorkflow3=document.getElementById("runWorkflow3");
+const trace3=document.getElementById("trace3");
+
+let workflow=[];
+
+function renderWorkflow(){
+  workflowList3.innerHTML="";
+  if(!workflow.length){ workflowList3.innerHTML="<div class='muted'>No agents yet.</div>"; return; }
+  workflow.forEach((a,i)=>{
+    const div=document.createElement("div");
+    div.className="item"; div.draggable=true; div.dataset.idx=i;
+    div.innerHTML=`
+      <div style="flex:1">
+        <b>${i+1}. ${a.role}</b>
+        <div class="muted" style="font-size:12px;margin-top:4px">contract: ${a.contract}</div>
+        <div class="muted" style="font-size:12px;margin-top:2px">${a.notes||""}</div>
+      </div>
+      <button class="ghost" data-del="${i}">Delete</button>
+    `;
+    workflowList3.appendChild(div);
+  });
+  workflowList3.querySelectorAll("button[data-del]").forEach(b=>{
+    b.addEventListener("click", ()=>{ workflow.splice(Number(b.dataset.del),1); renderWorkflow(); });
+  });
+  // drag reorder
+  let dragIdx=null;
+  workflowList3.querySelectorAll(".item").forEach(el=>{
+    el.addEventListener("dragstart", e=>{ dragIdx=Number(el.dataset.idx); e.dataTransfer.effectAllowed="move"; });
+    el.addEventListener("dragover", e=>e.preventDefault());
+    el.addEventListener("drop", e=>{
+      e.preventDefault();
+      const dropIdx=Number(el.dataset.idx);
+      if(dragIdx===null||dropIdx===dragIdx) return;
+      const [m]=workflow.splice(dragIdx,1);
+      workflow.splice(dropIdx,0,m);
+      renderWorkflow();
+    });
+  });
+}
+renderWorkflow();
+
+agentAdd3.addEventListener("click", ()=>{
+  const role=agentRole3.value;
+  const contract=agentContract3.value.trim();
+  workflow.push({role, contract, notes:agentNotes3.value.trim()});
+  agentNotes3.value="";
+  renderWorkflow();
+});
+agentClear3.addEventListener("click", ()=>{ workflow=[]; renderWorkflow(); trace3.innerHTML=""; });
+
+function validateContract(contract, obj){
+  try{
+    const schema=JSON.parse(contract);
+    // required keys are schema keys
+    for(const k of Object.keys(schema)){
+      if(!(k in obj)) return "Missing "+k;
+      if(schema[k]==="string" && typeof obj[k]!=="string") return "Type "+k;
+      if(schema[k]==="number" && typeof obj[k]!=="number") return "Type "+k;
+      if(schema[k]==="array" && !Array.isArray(obj[k])) return "Type "+k;
+    }
+    return null;
+  }catch(e){
+    return "Bad contract JSON";
+  }
+}
+
+function runWorkflow(){
+  if(!workflow.length){ alert("Add at least one agent."); return; }
+  trace3.innerHTML="";
+  let state={text:"User question: What is the warranty for Part AX‑992?"};
+  let upstreamError=injectErr3.checked;
+
+  workflow.forEach((a,i)=>{
+    // simulate output by role
+    let out={};
+    if(a.role==="Retriever"){
+      out={text:"Evidence: Warranty claims for Part AX‑992 must be filed within 30 days.", doc_ids:["E2"]};
+    }else if(a.role==="Writer"){
+      out={text: upstreamError ? "Warranty is 2 years." : "Warranty claims for Part AX‑992 must be filed within 30 days of purchase."};
+    }else if(a.role==="Critic"){
+      out={text: upstreamError ? "Looks ok." : "Claim aligns with evidence. No unsupported statements."};
+    }else if(a.role==="Verifier"){
+      // verifier rejects if upstreamError
+      out={text: upstreamError ? "FLAG: Unsupported claim detected. Send back to Writer." : "APPROVE: All claims grounded." , ok: !upstreamError};
+    }else if(a.role==="Guardrail"){
+      out={text:"Safety scan passed. No prompt injection patterns detected."};
+    }else{
+      out={text:"Agent output."};
+    }
+
+    const err=validateContract(a.contract, out);
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <div style="flex:1">
+        <b>Step ${i+1}: ${a.role}</b>
+        <div class="muted" style="font-size:12px;margin-top:4px">input: ${JSON.stringify(state)}</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">output: ${JSON.stringify(out)}</div>
+        ${err? `<div class="muted" style="font-size:12px;margin-top:4px"><b>Contract error:</b> ${err}</div>`:""}
+      </div>
+      <div class="tag ${err?'bad':'ok'}">${err?'Reject':'Accept'}</div>
+    `;
+    trace3.appendChild(div);
+
+    if(err){
+      // stop chain on contract failure
+      const stop=document.createElement("div");
+      stop.className="item";
+      stop.innerHTML=`<div style="flex:1"><b>Workflow stopped:</b> Fix the contract or output.</div><div class="tag bad">STOP</div>`;
+      trace3.appendChild(stop);
+      return;
+    }
+
+    state=out;
+    if(a.role==="Verifier" && out.ok===False) return;
+  });
+}
+runWorkflow3.addEventListener("click", runWorkflow);
+
+</script>
+</body>
+</html>
