@@ -1,0 +1,1726 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter 4 Exercise Lab — Ethics, Safety & Governance</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      background: #f4f5f7;
+      color: #111827;
+    }
+    aside {
+      width: 260px;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    main {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .brand .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+    }
+    .brand h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .brand p {
+      margin: 0;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      text-align: left;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .navbtn small {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn:hover {
+      background: #1f2937;
+    }
+    .navbtn.active {
+      background: #22c55e;
+      color: #022c22;
+    }
+    .navbtn.active small {
+      color: #022c22;
+    }
+    .hr {
+      height: 1px;
+      background: #374151;
+      margin: 8px 0;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .section {
+      display: none;
+      max-width: 960px;
+    }
+    .section.active {
+      display: block;
+    }
+    .title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #d1fae5;
+      color: #065f46;
+      white-space: nowrap;
+    }
+    .subtitle-main {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+    }
+    .card h3, .card h4 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .card p {
+      font-size: 13px;
+      color: #4b5563;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: #374151;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    select, textarea, input[type="range"], input[type="number"], input[type="text"] {
+      width: 100%;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .doc {
+      font-size: 12px;
+      color: #374151;
+    }
+    .muted {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: none;
+      background: #22c55e;
+      color: #022c22;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .primary:hover {
+      background: #16a34a;
+    }
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: 1px solid #9ca3af;
+      background: transparent;
+      color: #374151;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-left: 6px;
+    }
+    .ghost:hover {
+      background: #e5e7eb;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .list {
+      font-size: 12px;
+      color: #374151;
+    }
+    .list ul {
+      padding-left: 18px;
+      margin: 4px 0;
+    }
+    .n {
+      font-size: 12px;
+      font-weight: 600;
+      color: #111827;
+    }
+    .palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .canvas {
+      min-height: 60px;
+      border-radius: 10px;
+      border: 1px dashed #d1d5db;
+      padding: 8px;
+      background: #f9fafb;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .canvas-chip {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #e5e7eb;
+      color: #111827;
+      border: 1px solid #9ca3af;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .canvas-chip button {
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      color: #6b7280;
+    }
+    .chip {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid #9ca3af;
+      padding: 4px 8px;
+      background: #111827;
+      color: #e5e7eb;
+      cursor: pointer;
+    }
+    .chip:hover {
+      background: #1f2937;
+    }
+    .chip.active {
+      background: #22c55e;
+      color: #022c22;
+      border-color: #22c55e;
+    }
+    .answer-card {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 8px;
+      margin-bottom: 6px;
+      background: #f9fafb;
+      cursor: pointer;
+    }
+    .answer-card.active {
+      border-color: #22c55e;
+      background: #ecfdf5;
+    }
+    .answer-title {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .answer-body {
+      font-size: 12px;
+      color: #4b5563;
+      margin-top: 4px;
+    }
+    .gov-card {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #9ca3af;
+      background: #111827;
+      color: #e5e7eb;
+      cursor: pointer;
+      margin: 2px;
+      display: inline-block;
+    }
+    .gov-card[data-slot="risk"] {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border-color: #fecaca;
+    }
+    .gov-card[data-slot="account"] {
+      background: #dbeafe;
+      color: #1e3a8a;
+      border-color: #bfdbfe;
+    }
+    .gov-card[data-slot="trans"] {
+      background: #dcfce7;
+      color: #14532d;
+      border-color: #bbf7d0;
+    }
+    .heat-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      margin-right: 4px;
+    }
+    .heat-low {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .heat-med {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+    .heat-high {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Chapter 4 Exercise Lab</h1>
+        <p>Ethics, safety &amp; governance</p>
+      </div>
+    </div>
+
+    <button class="navbtn active" data-target="sec-ex1">
+      <span>Exercise 1 – Trust Calibration Flight Deck</span>
+      <small>Illusion of confidence &amp; trust</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex2">
+      <span>Exercise 2 – Governance Triage Board</span>
+      <small>Risk, accountability, transparency</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex3">
+      <span>Exercise 3 – Logging &amp; Privacy Paradox</span>
+      <small>Audit vs privacy</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex4">
+      <span>Exercise 4 – Alignment &amp; Fairness Testbed</span>
+      <small>HHH, bias, refusals, determinism</small>
+    </button>
+    <button class="navbtn" data-target="sec-ex5">
+      <span>Exercise 5 – High-Stakes Architecture Risk Lab</span>
+      <small>RAG leaks, legal/medical, multi-agent</small>
+    </button>
+
+    <div class="hr"></div>
+    <div class="subtitle">
+      These exercises are for knowledge workers. Use them to design, critique, and govern AI behavior — not to write code.
+    </div>
+  </aside>
+
+  <main>
+    <!-- Exercise 1 -->
+    <section id="sec-ex1" class="section active">
+      <div class="title">
+        <h2>Exercise 1 – Trust Calibration Flight Deck</h2>
+        <div class="pill">Objective: Calibrate your trust in fluent but fallible AI answers</div>
+      </div>
+      <p class="subtitle-main">
+        Compare multiple AI answers that all sound confident but differ in accuracy and completeness.
+        Decide which you would send, which you would edit, and where you need verification.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            1. Pick a scenario. 2. Read three AI answers that all sound confident.
+            3. For each, set how much you’d trust it in real life and what you’d do with it.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex1-scenario">Scenario</label>
+          <select id="ex1-scenario">
+            <option value="policy">Customer policy question</option>
+            <option value="finance">Internal financial summary</option>
+            <option value="health">Health &amp; wellness FAQ</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>AI answers (A, B, C)</h3>
+          <p class="muted">Click an answer to expand and read it carefully.</p>
+
+          <div id="ex1-answers" class="list">
+            <!-- JS will insert answer cards -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Trust dials &amp; actions</h3>
+          <p class="doc">
+            For each answer, set your trust level and what you’d do with it.
+          </p>
+
+          <label for="ex1-active-answer">Active answer</label>
+          <select id="ex1-active-answer">
+            <option value="A">Answer A</option>
+            <option value="B">Answer B</option>
+            <option value="C">Answer C</option>
+          </select>
+
+          <label for="ex1-trust">Trust level</label>
+          <input id="ex1-trust" type="range" min="0" max="100" value="50" />
+          <div class="row">
+            <span class="muted">Low trust</span>
+            <span class="n" id="ex1-trust-label">Medium</span>
+            <span class="muted">High trust</span>
+          </div>
+
+          <label>Planned action</label>
+          <div class="row">
+            <label class="muted"><input type="radio" name="ex1-action" value="send" /> Send as-is</label>
+            <label class="muted"><input type="radio" name="ex1-action" value="light_edit" /> Light edit</label>
+            <label class="muted"><input type="radio" name="ex1-action" value="verify" /> Deep verification</label>
+            <label class="muted"><input type="radio" name="ex1-action" value="escalate" /> Escalate to expert</label>
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex1-save-rating" class="primary">Save decision for this answer</button>
+            <button id="ex1-clear" class="ghost">Clear all decisions</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Reveal reality</h3>
+          <p class="doc">
+            When you’ve rated all answers, click reveal to see which were hallucinated, incomplete, or responsible.
+          </p>
+          <button id="ex1-reveal" class="primary">Reveal answer quality</button>
+
+          <div id="ex1-feedback" class="list" style="margin-top:8px;">
+            Read each answer, record your decisions, then reveal how they compare to the underlying facts.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div class="doc">
+            Which answer would you have sent before doing this exercise, and what will you change about how you treat confident AI answers?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 2 -->
+    <section id="sec-ex2" class="section">
+      <div class="title">
+        <h2>Exercise 2 – Governance Triage Board</h2>
+        <div class="pill">Objective: Map real use cases to the three pillars of AI governance</div>
+      </div>
+      <p class="subtitle-main">
+        Drag (or click-cycle) governance cards into Risk, Accountability, and Transparency columns for different AI scenarios.
+        Learn what must be in place before you deploy or approve a system.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            1. Pick a scenario. 2. Click governance cards to move them into the appropriate column.
+            3. Check whether you’ve covered the key risks and responsibilities.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex2-scenario">Scenario</label>
+          <select id="ex2-scenario">
+            <option value="hr_policy">AI drafting HR policies</option>
+            <option value="pricing">Customer-facing pricing assistant</option>
+            <option value="legal_research">Internal legal research bot</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>Governance cards</h3>
+          <p class="muted">Click a card to cycle it through: Palette → Risk → Accountability → Transparency → Palette.</p>
+
+          <div id="ex2-palette" class="list">
+            <!-- JS will insert gov cards -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Governance triage board</h3>
+          <div class="grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); gap:8px;">
+            <div>
+              <h4>Risk</h4>
+              <div id="ex2-risk-col" class="canvas"></div>
+            </div>
+            <div>
+              <h4>Accountability</h4>
+              <div id="ex2-account-col" class="canvas"></div>
+            </div>
+            <div>
+              <h4>Transparency &amp; evidence</h4>
+              <div id="ex2-trans-col" class="canvas"></div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex2-analyze" class="primary">Check governance plan</button>
+            <button id="ex2-clear" class="ghost">Clear board</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Feedback</h3>
+          <div id="ex2-feedback" class="list">
+            Add cards to each column and click <b>Check governance plan</b> to see what you covered and what’s missing.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div class="doc">
+            Which specific controls from this exercise would you insist on before approving a similar AI system in your own organization?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 3 -->
+    <section id="sec-ex3" class="section">
+      <div class="title">
+        <h2>Exercise 3 – Logging &amp; Privacy Paradox Simulator</h2>
+        <div class="pill">Objective: Balance audit trails with privacy and compliance</div>
+      </div>
+      <p class="subtitle-main">
+        Tune what gets logged for different AI assistants and see the trade-offs between auditability and privacy risk.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            1. Choose an AI assistant. 2. Turn logging options on or off.
+            3. See how audit strength and privacy risk move in response.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex3-scenario">Assistant type</label>
+          <select id="ex3-scenario">
+            <option value="support">Customer support bot</option>
+            <option value="hr_assistant">Internal HR assistant</option>
+            <option value="medical">Medical triage support</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>Logging settings</h3>
+
+          <label class="muted"><input type="checkbox" id="ex3-log-prompts" /> Store full prompt text</label>
+          <label class="muted"><input type="checkbox" id="ex3-mask-pii" /> Mask PII (names, emails, IDs)</label>
+          <label class="muted"><input type="checkbox" id="ex3-log-doc-ids" /> Store only document IDs (no raw content)</label>
+          <label class="muted"><input type="checkbox" id="ex3-log-outputs" /> Store full model outputs</label>
+          <label class="muted"><input type="checkbox" id="ex3-hash-user" /> Hash user ID instead of storing it directly</label>
+          <label class="muted"><input type="checkbox" id="ex3-restrict-access" /> Restrict log access to compliance / security</label>
+        </div>
+
+        <div class="card">
+          <h3>Audit &amp; privacy scores</h3>
+          <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap:8px;">
+            <div>
+              <h4>Audit &amp; safety</h4>
+              <p id="ex3-audit-score" class="n">Medium</p>
+              <p id="ex3-audit-expl" class="doc">
+                Adjust logging options to see how easy it would be to investigate an incident.
+              </p>
+            </div>
+            <div>
+              <h4>Privacy &amp; compliance risk</h4>
+              <p id="ex3-privacy-score" class="n">Medium</p>
+              <p id="ex3-privacy-expl" class="doc">
+                High scores here mean greater regulatory and privacy exposure.
+              </p>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex3-recalc" class="primary">Recalculate scores</button>
+            <button id="ex3-balanced" class="ghost">Suggest balanced settings</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Sample log snippet</h3>
+          <div id="ex3-log-snippet" class="doc">
+            Toggle settings and click <b>Recalculate scores</b> to see an example of what an actual log entry might look like under your choices.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div class="doc">
+            If you had to defend this logging configuration to a regulator, what would you emphasize as your rationale?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 4 -->
+    <section id="sec-ex4" class="section">
+      <div class="title">
+        <h2>Exercise 4 – Alignment &amp; Fairness Testbed</h2>
+        <div class="pill">Objective: Design simple alignment tests for real-world scenarios</div>
+      </div>
+      <p class="subtitle-main">
+        Build a small evaluation plan, run hypothetical results, and judge whether model behavior is acceptable,
+        needs mitigation, or is unacceptable.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            1. Choose a scenario and alignment focus. 2. Build a small test set.
+            3. Run a simulated evaluation and judge the outcomes.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex4-scenario">Scenario</label>
+          <select id="ex4-scenario">
+            <option value="loan">Loan pre-qualification email</option>
+            <option value="promotion">Internal promotion justification</option>
+            <option value="security">Cybersecurity awareness message</option>
+          </select>
+
+          <label for="ex4-focus" style="margin-top:8px;">Alignment focus</label>
+          <select id="ex4-focus">
+            <option value="fairness">Fairness across demographic variants</option>
+            <option value="refusal">Excessive refusals vs legitimate requests</option>
+            <option value="determinism">Deterministic vs varied outputs</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>Test cases</h3>
+          <p class="muted">
+            Toggle pre-defined test cases to include them in your evaluation.
+          </p>
+          <div id="ex4-testcases" class="list">
+            <!-- JS will insert testcases -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Simulated model behavior</h3>
+          <p class="doc">
+            Run the test and decide if each outcome is acceptable, needs mitigation, or unacceptable.
+          </p>
+
+          <button id="ex4-run" class="primary">Run simulation</button>
+
+          <div id="ex4-results" class="list" style="margin-top:8px;">
+            <!-- JS: results per test case -->
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Mitigation choices</h3>
+          <p class="doc">
+            Click mitigations to add them to your plan.
+          </p>
+          <div id="ex4-mitigations" class="palette">
+            <button class="chip ex4-mit" data-id="fairness-prompt">Add fairness constraints to prompt</button>
+            <button class="chip ex4-mit" data-id="human-review">Add human review for borderline cases</button>
+            <button class="chip ex4-mit" data-id="lower-temp">Lower temperature / narrow sampling</button>
+            <button class="chip ex4-mit" data-id="expand-data">Expand and balance training examples</button>
+            <button class="chip ex4-mit" data-id="logging">Log flagged decisions for audit</button>
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex4-evaluate" class="primary">Evaluate my plan</button>
+            <button id="ex4-clear" class="ghost">Clear plan</button>
+          </div>
+
+          <div id="ex4-feedback" class="doc" style="margin-top:8px;">
+            Build a test plan and mitigation set, then click <b>Evaluate my plan</b> to see feedback using the Helpful, Honest, Harmless (HHH) lens.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 5 -->
+    <section id="sec-ex5" class="section">
+      <div class="title">
+        <h2>Exercise 5 – High-Stakes Architecture Risk Lab</h2>
+        <div class="pill">Objective: Design and critique architectures for sensitive use cases</div>
+      </div>
+      <p class="subtitle-main">
+        Start from flawed baseline architectures, fix them by rearranging blocks, and scan for privacy, legal, and multi-agent risks.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Instructions</h3>
+          <p class="doc">
+            1. Choose a high-stakes scenario. 2. Start from a baseline design.
+            3. Add, remove, or reorder blocks to create a safer architecture.
+          </p>
+
+          <div class="hr"></div>
+
+          <label for="ex5-scenario">Scenario</label>
+          <select id="ex5-scenario">
+            <option value="exec_comp">Executive compensation Q&amp;A bot</option>
+            <option value="legal_assistant">Internal legal research assistant</option>
+            <option value="patient_ed">Patient education material generator</option>
+            <option value="multi_agent_sales">Multi-agent sales &amp; discounting engine</option>
+          </select>
+
+          <div class="hr"></div>
+
+          <h3>Architecture blocks</h3>
+          <div id="ex5-palette" class="palette">
+            <!-- blocks inserted by JS -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Architecture canvas</h3>
+          <p class="muted">
+            Baseline design (often flawed) is shown first. Add or remove blocks to improve it.
+          </p>
+
+          <div id="ex5-baseline" class="doc" style="margin-bottom:6px;">
+            <!-- baseline description -->
+          </div>
+
+          <div id="ex5-canvas" class="canvas">
+            <!-- current architecture blocks -->
+          </div>
+
+          <div class="row" style="margin-top:8px;">
+            <button id="ex5-scan" class="primary">Scan architecture</button>
+            <button id="ex5-reset" class="ghost">Reset to baseline</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <h3>Risk heatmap</h3>
+          <div id="ex5-heatmap" class="list">
+            Choose a scenario and scan the baseline architecture to see key risks.
+          </div>
+
+          <label style="margin-top:8px;">Reflection prompt</label>
+          <div class="doc">
+            If you had to explain this architecture to a regulator or risk committee, what would you highlight as your key safeguards?
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Shared nav
+    (function () {
+      var navBtns = Array.prototype.slice.call(document.querySelectorAll(".navbtn"));
+      var sections = Array.prototype.slice.call(document.querySelectorAll(".section"));
+      navBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          navBtns.forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          var target = btn.getAttribute("data-target");
+          sections.forEach(function (sec) {
+            sec.classList.toggle("active", sec.id === target);
+          });
+        });
+      });
+    })();
+
+    function clamp(num, min, max) {
+      return Math.max(min, Math.min(max, num));
+    }
+
+    // -------------------------
+    // Exercise 1 – Trust Calibration Flight Deck
+    // -------------------------
+    (function () {
+      var scenarioSel = document.getElementById("ex1-scenario");
+      if (!scenarioSel) return;
+
+      var answersContainer = document.getElementById("ex1-answers");
+      var activeAnswerSel = document.getElementById("ex1-active-answer");
+      var trustSlider = document.getElementById("ex1-trust");
+      var trustLabel = document.getElementById("ex1-trust-label");
+      var saveBtn = document.getElementById("ex1-save-rating");
+      var clearBtn = document.getElementById("ex1-clear");
+      var revealBtn = document.getElementById("ex1-reveal");
+      var feedbackEl = document.getElementById("ex1-feedback");
+
+      var data = {
+        policy: {
+          A: {
+            title: "Answer A",
+            text: "Our refund policy guarantees a full refund within 60 days for any reason, no questions asked, across all regions.",
+            quality: "dangerous",
+            explanation: "Over-confident and incorrect (policy is 30 days, varies by region)."
+          },
+          B: {
+            title: "Answer B",
+            text: "Our refund policy may allow refunds in some situations, but it depends on local laws and internal approvals.",
+            quality: "cautious",
+            explanation: "Cautious but vague and unhelpful; lacks concrete guidance."
+          },
+          C: {
+            title: "Answer C",
+            text: "In most regions, customers can request a refund within 30 days of purchase when the product is unused and in good condition. Some countries have different statutory rules, so please confirm with your regional policy page before committing this in writing.",
+            quality: "responsible",
+            explanation: "Factually closer to policy, acknowledges regional variation, recommends verification."
+          }
+        },
+        finance: {
+          A: {
+            title: "Answer A",
+            text: "Revenue increased by 40% last quarter, mainly due to aggressive discounting and a major new client.",
+            quality: "dangerous",
+            explanation: "Invents numbers and a “major new client” that do not exist."
+          },
+          B: {
+            title: "Answer B",
+            text: "Based on the pattern in previous reports, revenue is probably higher this quarter, but I don’t have direct access to the latest numbers.",
+            quality: "cautious",
+            explanation: "Honest about limitations but still speculates; must not be treated as fact."
+          },
+          C: {
+            title: "Answer C",
+            text: "I don’t have access to live financial systems. Please pull the latest revenue from the official reporting tool and I can help you summarize it for executives.",
+            quality: "responsible",
+            explanation: "Sets clear boundary and redirects to source of truth."
+          }
+        },
+        health: {
+          A: {
+            title: "Answer A",
+            text: "You should safely stop taking your medication once you feel better, as long as you don’t notice any side effects.",
+            quality: "dangerous",
+            explanation: "Gives direct medical advice without a clinician and contradicts typical guidance."
+          },
+          B: {
+            title: "Answer B",
+            text: "Many people adjust their medication based on how they feel, but reactions can vary from person to person.",
+            quality: "cautious",
+            explanation: "Vague, normalizes risky behavior, still not acceptable medical guidance."
+          },
+          C: {
+            title: "Answer C",
+            text: "I’m not a medical professional and can’t tell you when to change or stop a prescription. You should follow the plan from your clinician and contact them or a pharmacist before making any changes.",
+            quality: "responsible",
+            explanation: "Properly defers to qualified clinicians and discourages self-adjustment."
+          }
+        }
+      };
+
+      var decisions = {}; // scenario -> { A: {trust, action}, B: {...}, C: {...} }
+
+      function trustBucket(val) {
+        val = parseInt(val, 10) || 0;
+        if (val <= 25) return "Very low";
+        if (val <= 45) return "Low";
+        if (val <= 65) return "Medium";
+        if (val <= 85) return "High";
+        return "Very high";
+      }
+
+      function renderAnswers() {
+        var sc = scenarioSel.value || "policy";
+        var scData = data[sc];
+        while (answersContainer.firstChild) answersContainer.removeChild(answersContainer.firstChild);
+        ["A","B","C"].forEach(function (key) {
+          var ans = scData[key];
+          var card = document.createElement("div");
+          card.className = "answer-card";
+          card.setAttribute("data-id", key);
+          var title = document.createElement("div");
+          title.className = "answer-title";
+          title.textContent = ans.title;
+          var body = document.createElement("div");
+          body.className = "answer-body";
+          body.textContent = ans.text;
+          card.appendChild(title);
+          card.appendChild(body);
+          card.addEventListener("click", function () {
+            var cards = Array.prototype.slice.call(answersContainer.querySelectorAll(".answer-card"));
+            cards.forEach(function (c) { c.classList.remove("active"); });
+            card.classList.add("active");
+            activeAnswerSel.value = key;
+          });
+          answersContainer.appendChild(card);
+        });
+        // reset decisions
+        decisions[sc] = { A: null, B: null, C: null };
+        feedbackEl.textContent = "Read each answer, record your decisions, then reveal how they compare to the underlying facts.";
+      }
+
+      function updateTrustLabel() {
+        trustLabel.textContent = trustBucket(trustSlider.value);
+      }
+
+      saveBtn.addEventListener("click", function () {
+        var sc = scenarioSel.value || "policy";
+        var ansKey = activeAnswerSel.value || "A";
+        var trustVal = parseInt(trustSlider.value, 10) || 0;
+        var action = (function () {
+          var radios = document.querySelectorAll('input[name="ex1-action"]');
+          var val = null;
+          Array.prototype.forEach.call(radios, function (r) {
+            if (r.checked) val = r.value;
+          });
+          return val;
+        })();
+        if (!action) {
+          feedbackEl.textContent = "Please choose an action (send, light edit, verify, escalate) before saving your decision.";
+          return;
+        }
+        if (!decisions[sc]) decisions[sc] = {};
+        decisions[sc][ansKey] = { trust: trustVal, action: action };
+        feedbackEl.textContent = "Saved decision for " + ansKey + ". Rate the other answers, then click \"Reveal answer quality\".";
+      });
+
+      clearBtn.addEventListener("click", function () {
+        var sc = scenarioSel.value || "policy";
+        decisions[sc] = { A: null, B: null, C: null };
+        var radios = document.querySelectorAll('input[name="ex1-action"]');
+        Array.prototype.forEach.call(radios, function (r) { r.checked = false; });
+        trustSlider.value = 50;
+        updateTrustLabel();
+        feedbackEl.textContent = "All decisions cleared for this scenario.";
+      });
+
+      revealBtn.addEventListener("click", function () {
+        var sc = scenarioSel.value || "policy";
+        var scData = data[sc];
+        var dec = decisions[sc] || {};
+        var ul = document.createElement("ul");
+        ul.className = "doc";
+
+        ["A","B","C"].forEach(function (key) {
+          var ans = scData[key];
+          var li = document.createElement("li");
+          var info = dec[key];
+          var base = key + " – " + ans.quality.toUpperCase() + ": " + ans.explanation + " ";
+          if (!info) {
+            li.textContent = base + "(You did not record a trust/action decision for this answer.)";
+          } else {
+            var bucket = trustBucket(info.trust);
+            var actionLabel = {
+              send: "Send as-is",
+              light_edit: "Light edit",
+              verify: "Deep verification",
+              escalate: "Escalate to expert"
+            }[info.action] || info.action;
+
+            var extra = "";
+            if (ans.quality === "dangerous") {
+              if (info.trust >= 60 || info.action === "send") {
+                extra = " You are over-trusting a risky answer. In real life this could cause harm or liability.";
+              } else {
+                extra = " Good instinct: your cautious trust/action matches the risk of this answer.";
+              }
+            } else if (ans.quality === "cautious") {
+              if (info.trust <= 25 && info.action === "escalate") {
+                extra = " You may be under-using cautious but incomplete answers. Consider using them as drafts with edits.";
+              } else {
+                extra = " This answer is cautious but incomplete; pairing it with verification or a light edit can be appropriate.";
+              }
+            } else if (ans.quality === "responsible") {
+              if (info.trust <= 40 || info.action === "escalate") {
+                extra = " You may be under-trusting a responsible answer. Consider when a light edit plus verification is enough.";
+              } else {
+                extra = " This is a healthy level of trust: you can usually lightly edit and send, with verification for high-stakes decisions.";
+              }
+            }
+            li.textContent = base + "You rated it as " + bucket + " trust and chose: " + actionLabel + "." + extra;
+          }
+          ul.appendChild(li);
+        });
+
+        while (feedbackEl.firstChild) feedbackEl.removeChild(feedbackEl.firstChild);
+        feedbackEl.appendChild(ul);
+      });
+
+      trustSlider.addEventListener("input", updateTrustLabel);
+      scenarioSel.addEventListener("change", renderAnswers);
+
+      updateTrustLabel();
+      renderAnswers();
+    })();
+
+    // -------------------------
+    // Exercise 2 – Governance Triage Board
+    // -------------------------
+    (function () {
+      var scenarioSel = document.getElementById("ex2-scenario");
+      if (!scenarioSel) return;
+      var palette = document.getElementById("ex2-palette");
+      var riskCol = document.getElementById("ex2-risk-col");
+      var accountCol = document.getElementById("ex2-account-col");
+      var transCol = document.getElementById("ex2-trans-col");
+      var analyzeBtn = document.getElementById("ex2-analyze");
+      var clearBtn = document.getElementById("ex2-clear");
+      var feedbackEl = document.getElementById("ex2-feedback");
+
+      var cards = [
+        { id: "unlogged", label: "Unlogged decisions flagged", type: "risk" },
+        { id: "bias", label: "Bias & unfair outcomes monitored", type: "risk" },
+        { id: "data_leak", label: "Data leakage & privacy checks", type: "risk" },
+        { id: "owner", label: "Named system owner", type: "account" },
+        { id: "escalation", label: "Escalation path for incidents", type: "account" },
+        { id: "risk_committee", label: "Risk committee review", type: "account" },
+        { id: "logging", label: "Prompt & output logging", type: "trans" },
+        { id: "source_citations", label: "Source citations / RAG trace", type: "trans" },
+        { id: "config_version", label: "Versioned model & config", type: "trans" }
+      ];
+
+      var mustHave = {
+        hr_policy: {
+          risk: ["bias", "data_leak"],
+          account: ["owner", "escalation"],
+          trans: ["logging", "config_version"]
+        },
+        pricing: {
+          risk: ["data_leak", "unlogged"],
+          account: ["owner", "risk_committee"],
+          trans: ["logging", "source_citations"]
+        },
+        legal_research: {
+          risk: ["bias", "data_leak"],
+          account: ["owner", "escalation"],
+          trans: ["logging", "source_citations", "config_version"]
+        }
+      };
+
+      function createCardEl(card) {
+        var el = document.createElement("span");
+        el.className = "gov-card";
+        el.textContent = card.label;
+        el.setAttribute("data-id", card.id);
+        el.setAttribute("data-slot", "palette");
+        el.addEventListener("click", function () {
+          cycleCardSlot(el);
+        });
+        return el;
+      }
+
+      function cycleCardSlot(el) {
+        var slot = el.getAttribute("data-slot") || "palette";
+        var next;
+        if (slot === "palette") next = "risk";
+        else if (slot === "risk") next = "account";
+        else if (slot === "account") next = "trans";
+        else next = "palette";
+
+        el.setAttribute("data-slot", next);
+        if (next === "palette") {
+          palette.appendChild(el);
+        } else if (next === "risk") {
+          riskCol.appendChild(el);
+        } else if (next === "account") {
+          accountCol.appendChild(el);
+        } else {
+          transCol.appendChild(el);
+        }
+      }
+
+      function renderCards() {
+        [palette, riskCol, accountCol, transCol].forEach(function (c) {
+          while (c.firstChild) c.removeChild(c.firstChild);
+        });
+        cards.forEach(function (c) {
+          palette.appendChild(createCardEl(c));
+        });
+        feedbackEl.textContent = "Add cards to each column and click \"Check governance plan\" to see what you covered and what’s missing.";
+      }
+
+      function analyze() {
+        var sc = scenarioSel.value || "hr_policy";
+        var config = mustHave[sc];
+        var placements = {};
+        cards.forEach(function (c) {
+          var el = palette.querySelector('[data-id="' + c.id + '"]') ||
+                   riskCol.querySelector('[data-id="' + c.id + '"]') ||
+                   accountCol.querySelector('[data-id="' + c.id + '"]') ||
+                   transCol.querySelector('[data-id="' + c.id + '"]');
+          if (!el) return;
+          placements[c.id] = el.getAttribute("data-slot") || "palette";
+        });
+
+        function presentIn(col, id) {
+          return placements[id] === col;
+        }
+
+        var messages = [];
+
+        ["risk","account","trans"].forEach(function (col) {
+          var colName = { risk: "Risk", account: "Accountability", trans: "Transparency & evidence" }[col];
+          var needed = config[col] || [];
+          var missing = [];
+          var covered = [];
+          needed.forEach(function (id) {
+            if (presentIn(col, id)) covered.push(id);
+            else missing.push(id);
+          });
+          if (covered.length) {
+            messages.push("✅ " + colName + ": You included " + covered.map(function (id) {
+              return cards.find(function (c) { return c.id === id; }).label;
+            }).join(", ") + ".");
+          }
+          if (missing.length) {
+            messages.push("⚠️ " + colName + ": Consider adding " + missing.map(function (id) {
+              return cards.find(function (c) { return c.id === id; }).label;
+            }).join(", ") + " for this scenario.");
+          }
+        });
+
+        // Column emptiness check
+        if (!riskCol.firstChild) messages.push("⚠️ The Risk column is empty. Identify at least one risk to track.");
+        if (!accountCol.firstChild) messages.push("⚠️ The Accountability column is empty. Who actually owns this system?");
+        if (!transCol.firstChild) messages.push("⚠️ The Transparency & evidence column is empty. How will you prove what happened?");
+
+        if (!messages.length) {
+          messages.push("Start by moving cards into the three columns, then re-run the check.");
+        }
+
+        while (feedbackEl.firstChild) feedbackEl.removeChild(feedbackEl.firstChild);
+        var ul = document.createElement("ul");
+        ul.className = "doc";
+        messages.forEach(function (m) {
+          var li = document.createElement("li");
+          li.textContent = m;
+          ul.appendChild(li);
+        });
+        feedbackEl.appendChild(ul);
+      }
+
+      analyzeBtn.addEventListener("click", analyze);
+      clearBtn.addEventListener("click", renderCards);
+      scenarioSel.addEventListener("change", function () {
+        // keep cards but clear any feedback
+        feedbackEl.textContent = "Scenario changed. Adjust your governance plan and click \"Check governance plan\" again.";
+      });
+
+      renderCards();
+    })();
+
+    // -------------------------
+    // Exercise 3 – Logging & Privacy Paradox
+    // -------------------------
+    (function () {
+      var scenarioSel = document.getElementById("ex3-scenario");
+      if (!scenarioSel) return;
+
+      var logPrompts = document.getElementById("ex3-log-prompts");
+      var maskPii = document.getElementById("ex3-mask-pii");
+      var logDocIds = document.getElementById("ex3-log-doc-ids");
+      var logOutputs = document.getElementById("ex3-log-outputs");
+      var hashUser = document.getElementById("ex3-hash-user");
+      var restrictAccess = document.getElementById("ex3-restrict-access");
+
+      var auditScoreEl = document.getElementById("ex3-audit-score");
+      var auditExplEl = document.getElementById("ex3-audit-expl");
+      var privacyScoreEl = document.getElementById("ex3-privacy-score");
+      var privacyExplEl = document.getElementById("ex3-privacy-expl");
+      var snippetEl = document.getElementById("ex3-log-snippet");
+
+      var recalcBtn = document.getElementById("ex3-recalc");
+      var balancedBtn = document.getElementById("ex3-balanced");
+
+      function scoreToLabel(score) {
+        if (score <= 33) return "Low";
+        if (score <= 66) return "Medium";
+        return "High";
+      }
+
+      function recalc() {
+        var sc = scenarioSel.value || "support";
+
+        var audit = 40;
+        if (logPrompts.checked) audit += 20;
+        if (logDocIds.checked) audit += 10;
+        if (logOutputs.checked) audit += 15;
+        if (restrictAccess.checked) audit += 10;
+        audit = clamp(audit, 0, 100);
+
+        var privacy = 20;
+        if (logPrompts.checked) privacy += 30;
+        if (logOutputs.checked) privacy += 20;
+        if (!maskPii.checked) privacy += 15;
+        if (!hashUser.checked) privacy += 10;
+        if (restrictAccess.checked) privacy -= 15;
+        if (maskPii.checked) privacy -= 15;
+        if (logDocIds.checked && !logOutputs.checked && !logPrompts.checked) privacy -= 10;
+        if (sc === "medical") privacy += 10;
+        privacy = clamp(privacy, 0, 100);
+
+        auditScoreEl.textContent = scoreToLabel(audit);
+        privacyScoreEl.textContent = scoreToLabel(privacy);
+
+        auditExplEl.textContent =
+          "With these settings, investigators would have a " + scoreToLabel(audit).toLowerCase() +
+          " level of detail if something goes wrong.";
+        privacyExplEl.textContent =
+          "These choices create a " + scoreToLabel(privacy).toLowerCase() +
+          " level of privacy and regulatory risk. Sensitive domains (like medical) need especially careful logging.";
+
+        var promptField = logPrompts.checked
+          ? (maskPii.checked ? "\"prompt\": \"[PII masked] What is my recent lab result?\"" :
+                               "\"prompt\": \"George Tome: What is my recent lab result?\"")
+          : "\"prompt\": \"[not stored]\"";
+        var outputField = logOutputs.checked
+          ? (maskPii.checked ? "\"output\": \"[masked summary of response]\"" :
+                               "\"output\": \"Your recent lab result is normal. (name and DOB included in full text)\"")
+          : "\"output\": \"[not stored]\"";
+        var userField = hashUser.checked
+          ? "\"userId\": \"hash_8c3f...\""
+          : "\"userId\": \"u-12345\"";
+
+        var docField = logDocIds.checked ? "\"docIds\": [\"policy-hr-001\", \"faq-med-202\"]" : "\"docIds\": []";
+
+        snippetEl.textContent =
+          "{\n  " + userField + ",\n  " + promptField + ",\n  " + outputField + ",\n  " + docField +
+          ",\n  \"access\": \"" + (restrictAccess.checked ? "restricted" : "broad") + "\"\n}";
+      }
+
+      function setBalanced() {
+        var sc = scenarioSel.value || "support";
+        // baseline: medium audit, medium privacy
+        if (sc === "support") {
+          logPrompts.checked = true;
+          maskPii.checked = true;
+          logDocIds.checked = true;
+          logOutputs.checked = false;
+          hashUser.checked = true;
+          restrictAccess.checked = true;
+        } else if (sc === "hr_assistant") {
+          logPrompts.checked = true;
+          maskPii.checked = true;
+          logDocIds.checked = true;
+          logOutputs.checked = true;
+          hashUser.checked = true;
+          restrictAccess.checked = true;
+        } else if (sc === "medical") {
+          logPrompts.checked = false;
+          maskPii.checked = true;
+          logDocIds.checked = true;
+          logOutputs.checked = true;
+          hashUser.checked = true;
+          restrictAccess.checked = true;
+        }
+        recalc();
+      }
+
+      recalcBtn.addEventListener("click", recalc);
+      balancedBtn.addEventListener("click", setBalanced);
+      scenarioSel.addEventListener("change", function () {
+        setBalanced();
+      });
+
+      setBalanced();
+    })();
+
+    // -------------------------
+    // Exercise 4 – Alignment & Fairness Testbed
+    // -------------------------
+    (function () {
+      var scenarioSel = document.getElementById("ex4-scenario");
+      if (!scenarioSel) return;
+      var focusSel = document.getElementById("ex4-focus");
+      var testcasesContainer = document.getElementById("ex4-testcases");
+      var runBtn = document.getElementById("ex4-run");
+      var resultsContainer = document.getElementById("ex4-results");
+      var mitChips = Array.prototype.slice.call(document.querySelectorAll(".ex4-mit"));
+      var evalBtn = document.getElementById("ex4-evaluate");
+      var clearBtn = document.getElementById("ex4-clear");
+      var feedbackEl = document.getElementById("ex4-feedback");
+
+      var config = {
+        loan: {
+          fairness: [
+            {
+              id: "a_b_same_profile",
+              label: "Applicant A (female) vs Applicant B (male) – identical profiles",
+              behavior: "Model approves B and declines A with different justifications.",
+              expected: "unacceptable"
+            },
+            {
+              id: "tone_diff",
+              label: "Same approval decision, but tone differs by demographic",
+              behavior: "Model approves both but uses warmer tone with one group.",
+              expected: "needs_mitigation"
+            }
+          ],
+          refusal: [
+            {
+              id: "legit_refusal",
+              label: "Refusal to give exact loan terms (regulation-limited)",
+              behavior: "Model refuses to give specific APR, explains regulatory limits.",
+              expected: "acceptable"
+            }
+          ],
+          determinism: [
+            {
+              id: "random_outcome",
+              label: "Same applicant, different eligibility results",
+              behavior: "One run says eligible, another says not eligible with same input.",
+              expected: "unacceptable"
+            }
+          ]
+        },
+        promotion: {
+          fairness: [
+            {
+              id: "justification_bias",
+              label: "Promotion justification differs by employee name",
+              behavior: "Model uses stronger language for one candidate despite equal metrics.",
+              expected: "needs_mitigation"
+            }
+          ],
+          refusal: [
+            {
+              id: "refuse_sensitive",
+              label: "Refusal to assess protected characteristics",
+              behavior: "Model refuses to comment on protected characteristics and redirects to objective criteria.",
+              expected: "acceptable"
+            }
+          ],
+          determinism: [
+            {
+              id: "varied_phrasing",
+              label: "Same decision, varied but consistent explanations",
+              behavior: "Language changes slightly, but core decision and reasons stay aligned.",
+              expected: "acceptable"
+            }
+          ]
+        },
+        security: {
+          fairness: [
+            {
+              id: "stereotype",
+              label: "Security awareness targeting stereotypes",
+              behavior: "Examples consistently imply one region or group is more careless.",
+              expected: "unacceptable"
+            }
+          ],
+          refusal: [
+            {
+              id: "refuse_attack",
+              label: "Refusal to provide detailed attack steps",
+              behavior: "Model refuses to give exact exploit steps but explains risk at a high level.",
+              expected: "acceptable"
+            }
+          ],
+          determinism: [
+            {
+              id: "varied_examples",
+              label: "Different harmless examples each time",
+              behavior: "Story changes but always communicates correct security advice.",
+              expected: "acceptable"
+            }
+          ]
+        }
+      };
+
+      function renderTestcases() {
+        var sc = scenarioSel.value || "loan";
+        var focus = focusSel.value || "fairness";
+        var cases = (config[sc] && config[sc][focus]) || [];
+        while (testcasesContainer.firstChild) testcasesContainer.removeChild(testcasesContainer.firstChild);
+        if (!cases.length) {
+          testcasesContainer.textContent = "No predefined test cases for this combination.";
+          return;
+        }
+        var ul = document.createElement("ul");
+        ul.className = "doc";
+        cases.forEach(function (tc) {
+          var li = document.createElement("li");
+          var label = document.createElement("label");
+          label.className = "muted";
+          var cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.setAttribute("data-id", tc.id);
+          label.appendChild(cb);
+          label.appendChild(document.createTextNode(" " + tc.label));
+          li.appendChild(label);
+          ul.appendChild(li);
+        });
+        testcasesContainer.appendChild(ul);
+        resultsContainer.textContent = "After selecting test cases, click \"Run simulation\".";
+        feedbackEl.textContent = "Build a test plan and mitigation set, then click \"Evaluate my plan\" to see feedback using the HHH lens.";
+      }
+
+      function runSimulation() {
+        var sc = scenarioSel.value || "loan";
+        var focus = focusSel.value || "fairness";
+        var cases = (config[sc] && config[sc][focus]) || [];
+        var selectedIds = [];
+        var cbs = testcasesContainer.querySelectorAll("input[type=checkbox]");
+        Array.prototype.forEach.call(cbs, function (cb) {
+          if (cb.checked) selectedIds.push(cb.getAttribute("data-id"));
+        });
+        while (resultsContainer.firstChild) resultsContainer.removeChild(resultsContainer.firstChild);
+        if (!selectedIds.length) {
+          resultsContainer.textContent = "Select at least one test case before running the simulation.";
+          return;
+        }
+        var list = document.createElement("div");
+        selectedIds.forEach(function (id) {
+          var tc = cases.find(function (x) { return x.id === id; });
+          if (!tc) return;
+          var block = document.createElement("div");
+          block.className = "card";
+          block.style.padding = "8px";
+          block.style.marginBottom = "6px";
+          block.setAttribute("data-id", tc.id);
+          block.setAttribute("data-expected", tc.expected);
+
+          var title = document.createElement("div");
+          title.className = "n";
+          title.textContent = tc.label;
+          var behavior = document.createElement("div");
+          behavior.className = "doc";
+          behavior.textContent = "Simulated model behavior: " + tc.behavior;
+
+          var label = document.createElement("label");
+          label.className = "muted";
+          label.style.display = "block";
+          label.style.marginTop = "4px";
+          label.textContent = "Your rating:";
+          var sel = document.createElement("select");
+          sel.setAttribute("data-rating", "true");
+          ["", "acceptable", "needs_mitigation", "unacceptable"].forEach(function (val) {
+            var opt = document.createElement("option");
+            opt.value = val;
+            opt.textContent = val === "" ? "Select rating..." :
+              (val === "needs_mitigation" ? "Needs mitigation" :
+               val.charAt(0).toUpperCase() + val.slice(1));
+            sel.appendChild(opt);
+          });
+          label.appendChild(sel);
+
+          block.appendChild(title);
+          block.appendChild(behavior);
+          block.appendChild(label);
+          list.appendChild(block);
+        });
+        resultsContainer.appendChild(list);
+      }
+
+      function evaluatePlan() {
+        var blocks = resultsContainer.querySelectorAll("[data-id]");
+        if (!blocks.length) {
+          feedbackEl.textContent = "Run a simulation and rate the outcomes before evaluating your plan.";
+          return;
+        }
+        var total = 0, correct = 0, missingRatings = 0;
+        Array.prototype.forEach.call(blocks, function (b) {
+          total++;
+          var expected = b.getAttribute("data-expected");
+          var sel = b.querySelector("select[data-rating]");
+          var val = sel ? sel.value : "";
+          if (!val) missingRatings++;
+          else if (val === expected) correct++;
+        });
+
+        var chosenMits = mitChips.filter(function (c) { return c.classList.contains("active"); })
+                                 .map(function (c) { return c.getAttribute("data-id"); });
+
+        var sc = scenarioSel.value || "loan";
+        var focus = focusSel.value || "fairness";
+
+        // simple mitigation expectations
+        var recommendedMitigations = [];
+        if (focus === "fairness") {
+          recommendedMitigations = ["fairness-prompt", "expand-data", "logging"];
+        } else if (focus === "refusal") {
+          recommendedMitigations = ["lower-temp", "human-review", "logging"];
+        } else if (focus === "determinism") {
+          recommendedMitigations = ["lower-temp", "logging"];
+        }
+
+        var hasRecommended = recommendedMitigations.some(function (id) {
+          return chosenMits.indexOf(id) !== -1;
+        });
+
+        var msg = "";
+        if (missingRatings > 0) {
+          msg += "You left " + missingRatings + " test case(s) unrated. ";
+        }
+        if (total > 0) {
+          msg += "You matched the intended alignment rating on about " + correct + " out of " + total + " test case(s). ";
+        }
+
+        if (!chosenMits.length) {
+          msg += "You did not select any mitigations. In real deployments, you’d want at least one concrete mitigation per risk.";
+        } else if (hasRecommended) {
+          msg += "Your mitigation set includes at least one strong match for this alignment focus. This is a solid starting point for an HHH-aligned evaluation plan.";
+        } else {
+          msg += "Consider adding mitigations that more directly address this alignment focus (for example: " +
+                 (recommendedMitigations.join(", ")) + ").";
+        }
+
+        feedbackEl.textContent = msg;
+      }
+
+      mitChips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          chip.classList.toggle("active");
+        });
+      });
+
+      clearBtn.addEventListener("click", function () {
+        mitChips.forEach(function (chip) { chip.classList.remove("active"); });
+        while (resultsContainer.firstChild) resultsContainer.removeChild(resultsContainer.firstChild);
+        feedbackEl.textContent = "Plan cleared. Build a test plan and mitigation set, then click \"Evaluate my plan\".";
+      });
+
+      runBtn.addEventListener("click", runSimulation);
+      evalBtn.addEventListener("click", evaluatePlan);
+      scenarioSel.addEventListener("change", renderTestcases);
+      focusSel.addEventListener("change", renderTestcases);
+
+      renderTestcases();
+    })();
+
+    // -------------------------
+    // Exercise 5 – High-Stakes Architecture Risk Lab
+    // -------------------------
+    (function () {
+      var scenarioSel = document.getElementById("ex5-scenario");
+      if (!scenarioSel) return;
+      var palette = document.getElementById("ex5-palette");
+      var baselineEl = document.getElementById("ex5-baseline");
+      var canvas = document.getElementById("ex5-canvas");
+      var scanBtn = document.getElementById("ex5-scan");
+      var resetBtn = document.getElementById("ex5-reset");
+      var heatmapEl = document.getElementById("ex5-heatmap");
+
+      var blocks = [
+        { id: "vanilla-llm", label: "Vanilla LLM" },
+        { id: "rag-internal", label: "RAG over internal docs" },
+        { id: "sensitive-index", label: "Sensitive index (payroll/HR)" },
+        { id: "safety-filter", label: "Safety filter" },
+        { id: "human-approval", label: "Human-in-the-loop approval" },
+        { id: "legal-reviewer", label: "Legal reviewer" },
+        { id: "medical-clinician", label: "Medical clinician" },
+        { id: "sales-agent", label: "Sales Agent" },
+        { id: "discount-agent", label: "Discount Agent" },
+        { id: "referee-agent", label: "Referee Agent" },
+        { id: "access-control", label: "Role-based access control" }
+      ];
+
+      var baselines = {
+        exec_comp: {
+          desc: "Baseline: A single general-purpose LLM with RAG over all internal documents (including payroll and HR) and no human approval.",
+          flow: ["rag-internal", "vanilla-llm"]
+        },
+        legal_assistant: {
+          desc: "Baseline: Vanilla LLM with open web search, no legal review, and no record of sources used.",
+          flow: ["vanilla-llm"]
+        },
+        patient_ed: {
+          desc: "Baseline: LLM generates patient education materials directly from a medical knowledge base with no clinician review.",
+          flow: ["rag-internal", "vanilla-llm"]
+        },
+        multi_agent_sales: {
+          desc: "Baseline: Sales Agent and Discount Agent both talk to the LLM independently, with no referee or approval step.",
+          flow: ["sales-agent", "discount-agent", "vanilla-llm"]
+        }
+      };
+
+      function createPaletteChip(block) {
+        var btn = document.createElement("button");
+        btn.className = "chip";
+        btn.setAttribute("data-type", block.id);
+        btn.textContent = block.label;
+        btn.addEventListener("click", function () {
+          addBlock(block.id);
+        });
+        return btn;
+      }
+
+      function addBlock(type) {
+        var label = blocks.find(function (b) { return b.id === type; }).label;
+        var chip = document.createElement("div");
+        chip.className = "canvas-chip";
+        chip.setAttribute("data-type", type);
+        chip.textContent = label;
+        var removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
+        removeBtn.title = "Remove this block";
+        removeBtn.addEventListener("click", function () {
+          canvas.removeChild(chip);
+        });
+        chip.appendChild(removeBtn);
+        canvas.appendChild(chip);
+      }
+
+      function renderPalette() {
+        while (palette.firstChild) palette.removeChild(palette.firstChild);
+        blocks.forEach(function (b) {
+          palette.appendChild(createPaletteChip(b));
+        });
+      }
+
+      function loadBaseline() {
+        var sc = scenarioSel.value || "exec_comp";
+        var base = baselines[sc];
+        baselineEl.textContent = base.desc;
+        while (canvas.firstChild) canvas.removeChild(canvas.firstChild);
+        base.flow.forEach(function (t) {
+          addBlock(t);
+        });
+        heatmapEl.textContent = "Baseline loaded. Click \"Scan architecture\" to see key risks.";
+      }
+
+      function scanArchitecture() {
+        var sc = scenarioSel.value || "exec_comp";
+        var chips = Array.prototype.slice.call(canvas.querySelectorAll(".canvas-chip"));
+        var types = chips.map(function (c) { return c.getAttribute("data-type"); });
+
+        var has = function (id) { return types.indexOf(id) !== -1; };
+
+        var messages = [];
+
+        if (!chips.length) {
+          heatmapEl.textContent = "Add at least one block to the canvas before scanning.";
+          return;
+        }
+
+        // General checks
+        if (has("rag-internal") && !has("access-control")) {
+          messages.push("⚠️ RAG over internal docs without role-based access control can expose sensitive information to the wrong users.");
+        }
+        if (has("sensitive-index") && !has("access-control")) {
+          messages.push("🚩 Sensitive index without access control is a major privacy and confidentiality risk.");
+        }
+        if (!has("safety-filter")) {
+          messages.push("ℹ️ No safety filter detected. Consider adding one to catch harmful or non-compliant content.");
+        }
+
+        // Scenario-specific
+        if (sc === "exec_comp") {
+          if (has("sensitive-index") && !has("human-approval")) {
+            messages.push("🚩 Executive compensation answers should almost always pass through human approval before being shared.");
+          }
+          if (!has("legal-reviewer")) {
+            messages.push("⚠️ Consider a legal reviewer for high-visibility compensation communications.");
+          }
+        } else if (sc === "legal_assistant") {
+          if (!has("rag-internal")) {
+            messages.push("⚠️ Legal assistants should be grounded in internal precedent (RAG) rather than pure LLM guesses.");
+          }
+          if (!has("legal-reviewer")) {
+            messages.push("🚩 Outputs that influence legal decisions should go through a legal reviewer.");
+          }
+        } else if (sc === "patient_ed") {
+          if (!has("medical-clinician")) {
+            messages.push("🚩 Patient education content should be reviewed or authored by a medical clinician.");
+          }
+          if (!has("human-approval")) {
+            messages.push("⚠️ Consider adding a human approval step before patient-facing content goes live.");
+          }
+        } else if (sc === "multi_agent_sales") {
+          if (has("sales-agent") && has("discount-agent") && !has("referee-agent") && !has("human-approval")) {
+            messages.push("🚩 Sales and Discount agents can collude or overshoot discounts without a referee or human approval.");
+          }
+        }
+
+        if (messages.length === 0) {
+          messages.push("✅ No major red flags detected for this simplified architecture. In reality, you would still validate this with security, privacy, and risk teams.");
+        }
+
+        while (heatmapEl.firstChild) heatmapEl.removeChild(heatmapEl.firstChild);
+        var ul = document.createElement("ul");
+        ul.className = "doc";
+        messages.forEach(function (m) {
+          var li = document.createElement("li");
+          li.textContent = m;
+          ul.appendChild(li);
+        });
+        heatmapEl.appendChild(ul);
+      }
+
+      scanBtn.addEventListener("click", scanArchitecture);
+      resetBtn.addEventListener("click", loadBaseline);
+      scenarioSel.addEventListener("change", loadBaseline);
+
+      renderPalette();
+      loadBaseline();
+    })();
+  </script>
+</body>
+</html>
