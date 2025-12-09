@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Chapter 4 Interactive Labs — Trust • Governance • Privacy • Alignment • Emergence</title>
+  <style>
+    :root{
+      --bg:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+      --blue:#2563eb; --orange:#f59e0b; --green:#10b981; --yellow:#eab308;
+      --card:#f8fafc; --card2:#ffffff; --danger:#ef4444;
+      --radius:16px; --shadow:0 8px 24px rgba(15,23,42,0.06);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
+    aside{width:300px;border-right:1px solid var(--line);padding:18px 14px;background:#fbfdff;position:sticky;top:0;height:100vh;overflow:auto}
+    main{flex:1;padding:18px 18px 60px}
+    .brand{display:flex;align-items:center;gap:10px;margin:2px 8px 16px}
+    .logo{width:40px;height:40px;border-radius:12px;background:
+      radial-gradient(circle at 20% 20%, var(--yellow), transparent 60%),
+      radial-gradient(circle at 80% 30%, var(--green), transparent 60%),
+      radial-gradient(circle at 30% 80%, var(--orange), transparent 60%),
+      radial-gradient(circle at 80% 80%, var(--blue), transparent 60%);
+      border:1px solid #e6eefc}
+    .brand h1{font-size:16px;margin:0}
+    .brand p{font-size:12px;margin:2px 0 0;color:var(--muted)}
+    .navbtn{width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid transparent;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--ink)}
+    .navbtn small{color:var(--muted);font-weight:500}
+    .navbtn.active{background:#eef2ff;border-color:#dbe3ff;box-shadow:inset 0 0 0 1px #dbe3ff}
+    .navbtn:hover{background:#f1f5f9}
+    .section{display:none;animation:fade .18s ease-out}
+    .section.active{display:block}
+    @keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}
+    .title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .title h2{margin:0;font-size:20px}
+    .pill{font-size:12px;color:#0b3a2e;background:#ecfdf5;border:1px solid #d1fae5;padding:4px 8px;border-radius:999px}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+    .card{background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px;font-size:15px}
+    .sub{font-size:13px;color:var(--muted);margin-top:2px}
+    label{font-size:12px;color:var(--muted);font-weight:600;display:block;margin:6px 0 4px}
+    input[type="text"], input[type="number"], select, textarea{
+      width:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--line);
+      font-size:14px;outline:none;background:#fff
+    }
+    textarea{min-height:90px;resize:vertical}
+    button{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:14px;transition:.12s ease}
+    button:hover{transform:translateY(-1px)}
+    button.primary{background:linear-gradient(180deg,#ffffff,#f8fafc);border-color:#c7d2fe;box-shadow:0 4px 10px rgba(37,99,235,.10)}
+    button.ghost{background:transparent}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .hr{height:1px;background:var(--line);margin:10px 0}
+    .list{display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:14px;max-height:360px;overflow:auto}
+    .item{border:1px solid var(--line);background:var(--card);padding:8px 10px;border-radius:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .tag{font-size:11px;color:#0b3a2e;background:#ecfdf5;border:1px solid #d1fae5;padding:2px 6px;border-radius:999px;white-space:nowrap}
+    .bad{color:#7f1d1d;background:#fef2f2;border-color:#fecaca}
+    .ok{color:#0b3a2e;background:#ecfdf5;border-color:#d1fae5}
+    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+    .kpi .box{border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}
+    .kpi .box .n{font-size:18px;font-weight:800}
+    .badge{font-size:12px;font-weight:600;padding:3px 6px;border-radius:999px;border:1px solid var(--line);background:#fff}
+    .muted{color:var(--muted)}
+    .doc{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:10px;white-space:pre-wrap}
+    .twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .tri{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .tri .panel{border:1px dashed var(--line);border-radius:12px;padding:8px;background:#fff;min-height:140px}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;cursor:grab;margin:3px 4px}
+    .chip[data-p="risk"]{border-color:#fecaca;background:#fff7ed}
+    .chip[data-p="acct"]{border-color:#c7d2fe;background:#eff6ff}
+    .chip[data-p="trans"]{border-color:#bbf7d0;background:#ecfdf5}
+    canvas{width:100%;height:260px;display:block;border-radius:8px;background:#fff;border:1px solid var(--line)}
+    @media (max-width:1100px){ aside{display:none} .grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+<aside>
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1>Chapter 4 Interactive Labs</h1>
+      <p>Trust • Governance • Privacy • Alignment • Emergence</p>
+    </div>
+  </div>
+  <button class="navbtn active" data-target="sec-trust"><span>1. Trust Calibration Lab</span><small>§4.1.1–4.1.2</small></button>
+  <button class="navbtn" data-target="sec-gov"><span>2. Governance Pillars Builder</span><small>§4.2.1–4.2.2</small></button>
+  <button class="navbtn" data-target="sec-privacy"><span>3. Privacy Paradox Sandbox</span><small>§4.2.3</small></button>
+  <button class="navbtn" data-target="sec-align"><span>4. Alignment vs Grounding Lab</span><small>§4.3.1 & §4.3.4</small></button>
+  <button class="navbtn" data-target="sec-emerge"><span>5. High-Stakes Failures Sim</span><small>§4.4.1 & §4.4.3</small></button>
+  <div class="hr"></div>
+  <div class="muted" style="padding:0 8px;font-size:12px;line-height:1.4">
+    Offline toy sims aligned to Chapter 4 safety + governance patterns.
+  </div>
+</aside>
+
+<main>
+  <!-- 1) TRUST CALIBRATION -->
+  <section id="sec-trust" class="section active">
+    <div class="title"><h2>Trust Calibration + Illusion of Confidence Lab</h2><div class="pill">Fluency ≠ Truth</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Scenario</h3>
+        <div class="sub">Read the AI answer. Decide how a responsible human should act.</div>
+        <div class="row">
+          <label class="muted">Domain</label>
+          <select id="trustDomain" style="min-width:200px">
+            <option value="marketing">Marketing (low stakes)</option>
+            <option value="hr">HR policy (moderate)</option>
+            <option value="legal">Legal memo (high)</option>
+            <option value="medical">Medical summary (high)</option>
+          </select>
+          <label class="muted">Time pressure</label>
+          <input id="trustPressure" type="range" min="0" max="1" step="0.1" value="0.2">
+          <span id="trustPressureVal" class="badge">0.2</span>
+          <button id="trustNext" class="primary blue">Next answer</button>
+        </div>
+        <div class="hr"></div>
+        <label>Tone confidence meter</label>
+        <div class="row"><progress id="toneMeter" max="100" value="70" style="width:100%"></progress><span id="toneVal" class="badge">High</span></div>
+        <label style="margin-top:8px">AI answer</label>
+        <div id="trustAnswer" class="doc"></div>
+        <div class="row" style="margin-top:8px">
+          <button class="primary green" data-act="verify">Verify</button>
+          <button class="primary orange" data-act="accept">Accept</button>
+          <button class="primary" data-act="reject">Reject</button>
+        </div>
+        <div class="hr"></div>
+        <div class="kpi">
+          <div class="box"><div class="muted" style="font-size:12px">Calibration score</div><div id="calScore" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Over-trust events</div><div id="overTrust" class="n">0</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Under-trust events</div><div id="underTrust" class="n">0</div></div>
+        </div>
+        <div id="trustFeedback" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h3>How to win</h3>
+        <div class="list" style="max-height:none">
+          <div class="item"><div>High-stakes domains should be verified unless evidence is iron-clad.</div></div>
+          <div class="item"><div>Fluent tone is not a reliability signal. Treat answers like a junior colleague’s draft.</div></div>
+          <div class="item"><div>Calibration score rises when your action matches the *true* accuracy + stakes.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) GOVERNANCE PILLARS -->
+  <section id="sec-gov" class="section">
+    <div class="title"><h2>AI Governance “Three Pillars” Builder + Audit Replay</h2><div class="pill">Risk • Accountability • Transparency</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Choose use case</h3>
+        <select id="govCase">
+          <option value="hrbot">HR Policy Assistant (internal)</option>
+          <option value="legalbot">Legal Drafting Assistant</option>
+          <option value="ragbot">RAG Policy Q&A Bot</option>
+          <option value="salesagents">Multi-Agent Sales Coach</option>
+        </select>
+        <div class="hr"></div>
+        <h3>Controls palette (drag to a pillar)</h3>
+        <div id="palette" class="row" style="min-height:60px;align-items:flex-start;gap:4px;flex-wrap:wrap"></div>
+        <div class="hr"></div>
+        <h3>Three pillars canvas</h3>
+        <div class="tri">
+          <div class="panel" id="riskPanel"><b>Risk Controls</b><div class="muted" style="font-size:12px">reduce harm</div></div>
+          <div class="panel" id="acctPanel"><b>Accountability</b><div class="muted" style="font-size:12px">owner + escalation</div></div>
+          <div class="panel" id="transPanel"><b>Transparency</b><div class="muted" style="font-size:12px">logs + citations</div></div>
+          <div class="panel"><b>Defensibility score</b>
+            <div class="kpi" style="grid-template-columns:1fr">
+              <div class="box"><div class="muted" style="font-size:12px">Score</div><div id="defScore" class="n">—</div></div>
+              <div class="box"><div class="muted" style="font-size:12px">Missing items</div><div id="missing" style="font-size:13px;margin-top:4px">—</div></div>
+            </div>
+            <div class="row" style="margin-top:6px">
+              <button id="govCheck" class="primary blue">Evaluate plan</button>
+              <button id="govReplay" class="ghost">Audit replay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Audit replay timeline</h3>
+        <div id="replay" class="list"></div>
+        <div class="sub">A defensible system can reconstruct “who-did-what-with-which-model-and-evidence.”</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) PRIVACY PARADOX -->
+  <section id="sec-privacy" class="section">
+    <div class="title"><h2>Privacy Paradox of Logging + PII Redaction Sandbox</h2><div class="pill">Debuggable ≠ Exposed</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Input text</h3>
+        <textarea id="piiInput">Employee John Smith (jsmith@company.com) called from 555-123-7788 about invoice 48392, SSN 123-45-6789. He mentioned a medical leave note dated 2025-10-01.</textarea>
+        <label style="margin-top:6px">Logging policy</label>
+        <select id="logPolicy">
+          <option value="raw">Log raw text</option>
+          <option value="mask">Mask obvious PII</option>
+          <option value="aggressive">Aggressive redaction + hashing</option>
+        </select>
+        <div class="twocol" style="margin-top:6px">
+          <div>
+            <label>PII sensitivity</label>
+            <input id="piiSens" type="range" min="0" max="1" step="0.1" value="0.7">
+            <span id="piiSensVal" class="badge">0.7</span>
+          </div>
+          <div>
+            <label>Audit detail level</label>
+            <input id="auditDetail" type="range" min="0" max="1" step="0.1" value="0.6">
+            <span id="auditDetailVal" class="badge">0.6</span>
+          </div>
+        </div>
+        <div class="row" style="margin-top:6px">
+          <button id="piiRun" class="primary blue">Apply policy</button>
+          <button id="piiExample" class="ghost">Load example</button>
+        </div>
+        <div class="hr"></div>
+        <div class="kpi">
+          <div class="box"><div class="muted" style="font-size:12px">Privacy risk</div><div id="privacyRisk" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Debuggability</div><div id="debugScore" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Compliance flags</div><div id="flags" class="n">—</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>What gets logged</h3>
+        <div id="loggedOut" class="doc"></div>
+        <div class="hr"></div>
+        <h3>PII missed (if any)</h3>
+        <div id="missed" class="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) ALIGNMENT VS GROUNDING VS DETERMINISM -->
+  <section id="sec-align" class="section">
+    <div class="title"><h2>Alignment vs Grounding vs Determinism Decision Lab</h2><div class="pill">Three different levers</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Scenario</h3>
+        <select id="alignCase">
+          <option value="marketing">Marketing copy bot (low stakes)</option>
+          <option value="hr">HR policy Q&A (moderate)</option>
+          <option value="medical">Medical summarizer (high)</option>
+          <option value="legal">Legal research assistant (high)</option>
+        </select>
+        <div class="hr"></div>
+        <label>Grounding strength (RAG + citations)</label>
+        <input id="groundDial" type="range" min="0" max="1" step="0.05" value="0.6">
+        <span id="groundVal" class="badge">0.60</span>
+
+        <label style="margin-top:6px">Alignment strictness (rules/refusals)</label>
+        <input id="alignDial" type="range" min="0" max="1" step="0.05" value="0.5">
+        <span id="alignVal" class="badge">0.50</span>
+
+        <label style="margin-top:6px">Determinism (temperature inverse)</label>
+        <input id="detDial" type="range" min="0" max="1" step="0.05" value="0.7">
+        <span id="detVal" class="badge">0.70</span>
+
+        <div class="row" style="margin-top:8px">
+          <button id="alignRun" class="primary blue">Simulate outcome</button>
+          <button id="alignReset" class="ghost">Reset</button>
+        </div>
+        <div class="hr"></div>
+        <div class="kpi">
+          <div class="box"><div class="muted" style="font-size:12px">Hallucination rate</div><div id="hallRate" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Refusal rate</div><div id="refRate" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Defensibility</div><div id="defRate" class="n">—</div></div>
+        </div>
+        <label style="margin-top:8px">System note</label>
+        <div id="alignNote" class="doc"></div>
+      </div>
+
+      <div class="card">
+        <h3>Target safety profile</h3>
+        <div id="targets" class="list"></div>
+        <div class="sub">Tune dials to meet the scenario’s targets. Each lever solves a different problem.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5) HIGH-STAKES FAILURES -->
+  <section id="sec-emerge" class="section">
+    <div class="title"><h2>High-Stakes Failure Modes Simulator</h2><div class="pill">RAG leaks + agent emergence</div></div>
+    <div class="grid">
+      <div class="card">
+        <h3>A) RAG Privacy Leak Simulator</h3>
+        <label>Indexed docs</label>
+        <textarea id="ragDocs" spellcheck="false">DOC1: Executive bonuses for 2025 are in spreadsheet S-77.
+DOC2: Public safety training policy (due Dec 15).
+DOC3: Employee medical leave notes (confidential).
+DOC4: Parts catalog for AX-992 gasket spec.</textarea>
+        <div class="twocol" style="margin-top:6px">
+          <div>
+            <label>User role</label>
+            <select id="userRole">
+              <option value="employee">Employee</option>
+              <option value="manager">Manager</option>
+              <option value="exec">Executive</option>
+            </select>
+          </div>
+          <div>
+            <label>ACL enforcement</label>
+            <select id="aclMode">
+              <option value="strict">Strict ACLs</option>
+              <option value="loose">Loose ACLs</option>
+              <option value="off">Off</option>
+            </select>
+          </div>
+        </div>
+        <label style="margin-top:6px">Query</label>
+        <input id="ragQuery" value="What are executive bonuses this year?">
+        <div class="row" style="margin-top:6px">
+          <button id="ragRun" class="primary blue">Retrieve</button>
+          <button id="ragExample" class="ghost">Load attacker query</button>
+        </div>
+        <div id="ragOut" class="list"></div>
+
+        <div class="hr"></div>
+        <h3>B) Multi-Agent Emergence Simulator</h3>
+        <div class="sub">Set local rewards & constraints, then run turns.</div>
+        <div class="twocol" style="margin-top:6px">
+          <div>
+            <label>Sales agent reward (close deal)</label>
+            <input id="salesReward" type="range" min="0" max="1" step="0.1" value="0.8">
+            <span id="salesRewardVal" class="badge">0.8</span>
+          </div>
+          <div>
+            <label>Discount agent reward (apply discount)</label>
+            <input id="discReward" type="range" min="0" max="1" step="0.1" value="0.7">
+            <span id="discRewardVal" class="badge">0.7</span>
+          </div>
+        </div>
+        <label style="margin-top:6px">Global constraint strictness</label>
+        <input id="globalStrict" type="range" min="0" max="1" step="0.1" value="0.6">
+        <span id="globalStrictVal" class="badge">0.6</span>
+        <div class="row" style="margin-top:6px">
+          <label class="muted">Referee agent enabled</label>
+          <input id="refEnabled" type="checkbox" checked>
+          <button id="emergeRun" class="primary green">Run 5 turns</button>
+          <button id="emergeReset" class="ghost">Reset</button>
+        </div>
+        <div class="kpi">
+          <div class="box"><div class="muted" style="font-size:12px">Collusion risk</div><div id="collRisk" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Unsafe actions</div><div id="unsafeCount" class="n">—</div></div>
+          <div class="box"><div class="muted" style="font-size:12px">Referee vetoes</div><div id="vetoCount" class="n">—</div></div>
+        </div>
+        <div id="emergeLog" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h3>Interpretation</h3>
+        <div class="list" style="max-height:none">
+          <div class="item"><div>If you index sensitive docs, leakage becomes a retrieval problem unless ACLs are strict.</div></div>
+          <div class="item"><div>Agents optimize local goals. Without a referee, they can collude into unsafe global behavior.</div></div>
+          <div class="item"><div>Use layered controls: ACLs + grounding + verifiers + referees.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ========================= NAV ========================= */
+const navBtns=[...document.querySelectorAll(".navbtn")];
+const sections=[...document.querySelectorAll(".section")];
+navBtns.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    navBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const id=btn.dataset.target;
+    sections.forEach(s=>s.classList.toggle("active", s.id===id));
+  });
+});
+
+/* ======================================================
+   1) TRUST CALIBRATION LAB
+   ====================================================== */
+const trustDomain=document.getElementById("trustDomain");
+const trustPressure=document.getElementById("trustPressure");
+const trustPressureVal=document.getElementById("trustPressureVal");
+const toneMeter=document.getElementById("toneMeter");
+const toneVal=document.getElementById("toneVal");
+const trustAnswer=document.getElementById("trustAnswer");
+const trustNext=document.getElementById("trustNext");
+const calScore=document.getElementById("calScore");
+const overTrust=document.getElementById("overTrust");
+const underTrust=document.getElementById("underTrust");
+const trustFeedback=document.getElementById("trustFeedback");
+const trustActBtns=[...document.querySelectorAll('#sec-trust button[data-act]')];
+
+const trustItems=[
+  {text:"The annual safety training deadline is December 15, and missing it triggers a compliance review.", tone:85, acc:0.95, stakes:{marketing:0.2, hr:0.6, legal:0.9, medical:0.9}},
+  {text:"Part AX-992 warranty lasts two full years by default.", tone:90, acc:0.35, stakes:{marketing:0.2, hr:0.6, legal:0.9, medical:0.9}},
+  {text:"Employees can work remotely three days per week with manager approval.", tone:60, acc:0.8, stakes:{marketing:0.2, hr:0.6, legal:0.9, medical:0.9}},
+  {text:"A clause in the contract limits liability for incidental damages.", tone:70, acc:0.7, stakes:{marketing:0.2, hr:0.6, legal:0.9, medical:0.9}},
+  {text:"This medical note indicates the patient must avoid heavy lifting for six weeks.", tone:75, acc:0.5, stakes:{marketing:0.2, hr:0.6, legal:0.9, medical:0.9}},
+];
+
+let trustIdx=0, score=0, over=0, under=0, played=0;
+function renderTrust(){
+  const item=trustItems[trustIdx];
+  toneMeter.value=item.tone;
+  toneVal.textContent=item.tone>75?"High":(item.tone>55?"Medium":"Low");
+  trustAnswer.textContent=item.text;
+  trustFeedback.innerHTML="";
+}
+trustPressure.addEventListener("input", ()=>trustPressureVal.textContent=trustPressure.value);
+trustNext.addEventListener("click", ()=>{
+  trustIdx=(trustIdx+1)%trustItems.length; renderTrust();
+});
+renderTrust();
+
+function judgeAction(act){
+  const item=trustItems[trustIdx];
+  const dom=trustDomain.value;
+  const stakes=item.stakes[dom];
+  const acc=item.acc;
+  const pressure=Number(trustPressure.value);
+
+  // normative policy: verify if stakes high or accuracy uncertain
+  let recommended="accept";
+  if(stakes>0.7) recommended = acc>0.9 ? "accept" : "verify";
+  else if(acc<0.6) recommended="verify";
+
+  // pressure increases accept bias
+  let penalty=0;
+  if(act!==recommended){
+    if(act==="accept" && recommended!=="accept"){ over++; penalty=1+Math.round(stakes*2); }
+    if(act==="reject" && recommended!=="reject" && acc>0.6){ under++; penalty=1; }
+  }
+  const gain = act===recommended ? 2 : (act==="verify" ? 1 : 0);
+  score += gain - penalty;
+  played++;
+
+  const div=document.createElement("div");
+  div.className="item";
+  div.innerHTML=`<div style="flex:1">
+    <b>Your action:</b> ${act.toUpperCase()} <span class="muted">| Recommended: ${recommended.toUpperCase()}</span>
+    <div class="muted" style="font-size:12px;margin-top:4px">
+      True accuracy ${(acc*100).toFixed(0)}% • Stakes ${(stakes*100).toFixed(0)}%
+    </div>
+  </div><div class="tag ${act===recommended?'ok':'bad'}">${act===recommended?'Calibrated':'Mis-calibrated'}</div>`;
+  trustFeedback.prepend(div);
+
+  calScore.textContent=Math.max(0,score);
+  overTrust.textContent=over;
+  underTrust.textContent=under;
+
+  // auto-advance with pressure-based chance
+  if(Math.random()<0.6+pressure*0.2){
+    trustIdx=(trustIdx+1)%trustItems.length; renderTrust();
+  }
+}
+trustActBtns.forEach(b=>b.addEventListener("click", ()=>judgeAction(b.dataset.act)));
+
+/* ======================================================
+   2) GOVERNANCE PILLARS BUILDER
+   ====================================================== */
+const govCase=document.getElementById("govCase");
+const palette=document.getElementById("palette");
+const riskPanel=document.getElementById("riskPanel");
+const acctPanel=document.getElementById("acctPanel");
+const transPanel=document.getElementById("transPanel");
+const defScore=document.getElementById("defScore");
+const missing=document.getElementById("missing");
+const govCheck=document.getElementById("govCheck");
+const govReplay=document.getElementById("govReplay");
+const replay=document.getElementById("replay");
+
+const controls=[
+  {id:"pii_filter", label:"PII filter", p:"risk"},
+  {id:"rag_acl", label:"RAG ACLs", p:"risk"},
+  {id:"bias_test", label:"Bias test", p:"risk"},
+  {id:"verifier_gate", label:"Verifier gate", p:"risk"},
+  {id:"owner", label:"Named owner", p:"acct"},
+  {id:"escalation", label:"Escalation path", p:"acct"},
+  {id:"incident", label:"Incident playbook", p:"acct"},
+  {id:"peer_review", label:"Peer review", p:"acct"},
+  {id:"version_stamp", label:"Model/version display", p:"trans"},
+  {id:"citations", label:"Citations required", p:"trans"},
+  {id:"log_retention", label:"Log retention", p:"trans"},
+  {id:"user_notice", label:"User notice", p:"trans"},
+];
+
+function renderPalette(){
+  palette.innerHTML="";
+  controls.forEach(c=>{
+    const chip=document.createElement("div");
+    chip.className="chip";
+    chip.textContent=c.label;
+    chip.draggable=true;
+    chip.dataset.id=c.id; chip.dataset.p=c.p;
+    palette.appendChild(chip);
+  });
+}
+renderPalette();
+
+function enableDrop(panel){
+  panel.addEventListener("dragover", e=>e.preventDefault());
+  panel.addEventListener("drop", e=>{
+    e.preventDefault();
+    const id=e.dataTransfer.getData("text/id");
+    const chip=[...palette.querySelectorAll(".chip")].find(x=>x.dataset.id===id);
+    if(chip) panel.appendChild(chip);
+  });
+}
+enableDrop(riskPanel); enableDrop(acctPanel); enableDrop(transPanel);
+
+palette.addEventListener("dragstart", e=>{
+  const t=e.target.closest(".chip"); if(!t) return;
+  e.dataTransfer.setData("text/id", t.dataset.id);
+});
+
+function getSelected(panel){
+  return [...panel.querySelectorAll(".chip")].map(c=>c.dataset.id);
+}
+
+const requiredByCase={
+  hrbot:{risk:["pii_filter","verifier_gate"], acct:["owner","escalation"], trans:["version_stamp","citations"]},
+  legalbot:{risk:["pii_filter","bias_test","verifier_gate"], acct:["owner","peer_review","incident"], trans:["version_stamp","log_retention","citations"]},
+  ragbot:{risk:["rag_acl","verifier_gate"], acct:["owner","incident"], trans:["citations","log_retention"]},
+  salesagents:{risk:["verifier_gate","bias_test"], acct:["owner","escalation"], trans:["version_stamp","user_notice"]},
+};
+
+govCheck.addEventListener("click", ()=>{
+  const caseId=govCase.value;
+  const req=requiredByCase[caseId];
+  const selRisk=getSelected(riskPanel), selAcct=getSelected(acctPanel), selTrans=getSelected(transPanel);
+  const miss=[];
+  req.risk.forEach(x=>{ if(!selRisk.includes(x)) miss.push("Risk: "+controls.find(c=>c.id===x).label); });
+  req.acct.forEach(x=>{ if(!selAcct.includes(x)) miss.push("Accountability: "+controls.find(c=>c.id===x).label); });
+  req.trans.forEach(x=>{ if(!selTrans.includes(x)) miss.push("Transparency: "+controls.find(c=>c.id===x).label); });
+  const totalReq=req.risk.length+req.acct.length+req.trans.length;
+  const hits=totalReq-miss.length;
+  const score=Math.round((hits/totalReq)*100);
+  defScore.textContent=score+"%";
+  missing.textContent=miss.length? miss.join("; "):"None — defensible baseline.";
+});
+
+govReplay.addEventListener("click", ()=>{
+  replay.innerHTML="";
+  const sel=[...getSelected(riskPanel),...getSelected(acctPanel),...getSelected(transPanel)];
+  const steps=[
+    {t:"User prompt received", ok:true},
+    {t:"Model/version stamped", ok:sel.includes("version_stamp")},
+    {t:"Retrieval with ACLs", ok:sel.includes("rag_acl")||govCase.value!=="ragbot"},
+    {t:"Output generated", ok:true},
+    {t:"Verifier gate run", ok:sel.includes("verifier_gate")},
+    {t:"Human owner sign-off", ok:sel.includes("owner")},
+    {t:"Logs retained per policy", ok:sel.includes("log_retention")},
+  ];
+  steps.forEach(s=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div style="flex:1">${s.t}</div><div class="tag ${s.ok?'ok':'bad'}">${s.ok?'Recorded':'Missing'}</div>`;
+    replay.appendChild(div);
+  });
+});
+
+/* ======================================================
+   3) PRIVACY PARADOX SANDBOX
+   ====================================================== */
+const piiInput=document.getElementById("piiInput");
+const logPolicy=document.getElementById("logPolicy");
+const piiSens=document.getElementById("piiSens");
+const piiSensVal=document.getElementById("piiSensVal");
+const auditDetail=document.getElementById("auditDetail");
+const auditDetailVal=document.getElementById("auditDetailVal");
+const piiRun=document.getElementById("piiRun");
+const piiExample=document.getElementById("piiExample");
+const loggedOut=document.getElementById("loggedOut");
+const missed=document.getElementById("missed");
+const privacyRisk=document.getElementById("privacyRisk");
+const debugScore=document.getElementById("debugScore");
+const flags=document.getElementById("flags");
+
+[piiSens,auditDetail].forEach(inp=>inp.addEventListener("input", ()=>{
+  piiSensVal.textContent=piiSens.value; auditDetailVal.textContent=auditDetail.value;
+}));
+piiSensVal.textContent=piiSens.value; auditDetailVal.textContent=auditDetail.value;
+
+const piiPatterns=[
+  {name:"Email", re:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi},
+  {name:"Phone", re:/\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g},
+  {name:"SSN", re:/\b\d{3}-\d{2}-\d{4}\b/g},
+  {name:"Date", re:/\b20\d{2}-\d{2}-\d{2}\b/g},
+  {name:"Name", re:/\b(John Smith|Jane Doe|Mary Johnson)\b/g},
+  {name:"InvoiceID", re:/\binvoice\s?\d{4,6}\b/gi},
+];
+
+function applyPolicy(){
+  const text=piiInput.value;
+  let out=text;
+  let found=[];
+  piiPatterns.forEach(p=>{
+    const m=text.match(p.re);
+    if(m) found.push({p:p.name, vals:[...new Set(m)]});
+  });
+
+  if(logPolicy.value==="mask"){
+    piiPatterns.forEach(p=>{ out=out.replace(p.re, (x)=>"*".repeat(Math.min(8,x.length))); });
+  }
+  if(logPolicy.value==="aggressive"){
+    piiPatterns.forEach(p=>{ out=out.replace(p.re, (x)=>`[${p.name}_HASH]`); });
+    out=out.replace(/\b[A-Z][a-z]+\b/g, "[TOKEN]");
+  }
+
+  loggedOut.textContent=out;
+
+  // missed PII if policy isn't aggressive and sensitivity high
+  missed.innerHTML="";
+  let missCount=0;
+  found.forEach(f=>{
+    if(logPolicy.value==="raw" || (logPolicy.value==="mask" && f.p in {"Name":1})){
+      if(Number(piiSens.value)>0.5){ missCount += f.vals.length; }
+    }
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div style="flex:1"><b>${f.p}</b>: ${f.vals.join(", ")}</div><div class="tag">detected</div>`;
+    missed.appendChild(div);
+  });
+
+  const riskBase = logPolicy.value==="raw"?0.9:(logPolicy.value==="mask"?0.55:0.2);
+  const privacy = Math.min(1, riskBase*Number(piiSens.value) + missCount*0.05);
+  const debug = Math.min(1, (logPolicy.value==="raw"?0.95:(logPolicy.value==="mask"?0.75:0.45)) * (0.6+Number(auditDetail.value)*0.5));
+  const flagCount = Math.round(found.reduce((a,f)=>a+f.vals.length,0) * (privacy>0.6?1:0.3));
+
+  privacyRisk.textContent=Math.round(privacy*100)+"%";
+  debugScore.textContent=Math.round(debug*100)+"%";
+  flags.textContent=flagCount;
+}
+piiRun.addEventListener("click", applyPolicy);
+piiExample.addEventListener("click", ()=>{
+  piiInput.value="Client Mary Johnson (maryj@vendor.com) sent bank acct 0011223344 and phone 312 555 0111. Her case ID is 77-AX-992. She attached a medical result for review.";
+  applyPolicy();
+});
+applyPolicy();
+
+/* ======================================================
+   4) ALIGNMENT vs GROUNDING vs DETERMINISM
+   ====================================================== */
+const alignCase=document.getElementById("alignCase");
+const groundDial=document.getElementById("groundDial");
+const alignDial=document.getElementById("alignDial");
+const detDial=document.getElementById("detDial");
+const groundVal=document.getElementById("groundVal");
+const alignVal=document.getElementById("alignVal");
+const detVal=document.getElementById("detVal");
+const alignRun=document.getElementById("alignRun");
+const alignReset=document.getElementById("alignReset");
+const hallRate=document.getElementById("hallRate");
+const refRate=document.getElementById("refRate");
+const defRate=document.getElementById("defRate");
+const alignNote=document.getElementById("alignNote");
+const targets=document.getElementById("targets");
+
+function updateDialLabels(){
+  groundVal.textContent=Number(groundDial.value).toFixed(2);
+  alignVal.textContent=Number(alignDial.value).toFixed(2);
+  detVal.textContent=Number(detDial.value).toFixed(2);
+}
+[groundDial,alignDial,detDial].forEach(d=>d.addEventListener("input", updateDialLabels));
+updateDialLabels();
+
+const targetProfiles={
+  marketing:{hallMax:0.40, refMax:0.20, defTarget:0.50, defMode:"max", msg:"Creativity allowed; moderate determinism; grounding optional."},
+  hr:{hallMax:0.25, refMax:0.25, defTarget:0.70, defMode:"min", msg:"Require citations & stable decoding; moderate alignment."},
+  medical:{hallMax:0.12, refMax:0.35, defTarget:0.85, defMode:"min", msg:"Strong grounding, strict alignment, high determinism."},
+  legal:{hallMax:0.10, refMax:0.30, defTarget:0.90, defMode:"min", msg:"Maximum grounding + auditability; refusals acceptable."},
+};
+
+function renderTargets(){
+  const c=alignCase.value;
+  const t=targetProfiles[c];
+  targets.innerHTML="";
+  const lines=[
+    `Hallucination target: < ${(t.hallMax*100).toFixed(0)}%`,
+    `Refusal target: < ${(t.refMax*100).toFixed(0)}%`,
+    `${t.defMode==="min"?"Defensibility target: > ":"Defensibility target: < "}${(t.defTarget*100).toFixed(0)}%`,
+    t.msg
+  ];
+  lines.forEach(l=>{
+    const div=document.createElement("div"); div.className="item"; div.innerHTML=`<div style="flex:1">${l}</div>`;
+    targets.appendChild(div);
+  });
+}
+alignCase.addEventListener("change", renderTargets);
+renderTargets();
+
+function simulateAlign(){
+  const g=Number(groundDial.value), a=Number(alignDial.value), d=Number(detDial.value);
+  // toy relationships
+  let hall = Math.max(0.02, 0.55*(1-g) + 0.25*(1-d));
+  let refu = Math.min(0.85, 0.05 + 0.6*a + 0.1*(1-d));
+  let def  = Math.min(0.98, 0.2 + 0.5*g + 0.3*a + 0.2*d);
+  const caseId=alignCase.value;
+  // case weighting
+  if(caseId==="marketing"){ hall*=0.9; refu*=0.5; def*=0.8; }
+  if(caseId==="hr"){ hall*=0.7; def*=1.05; }
+  if(caseId==="medical"){ hall*=0.55; refu*=1.1; def*=1.1; }
+  if(caseId==="legal"){ hall*=0.5; refu*=1.0; def*=1.15; }
+
+  hall=Math.min(0.95,hall); refu=Math.min(0.95,refu); def=Math.min(0.98,def);
+  hallRate.textContent=Math.round(hall*100)+"%";
+  refRate.textContent=Math.round(refu*100)+"%";
+  defRate.textContent=Math.round(def*100)+"%";
+  alignNote.textContent=`Grounding reduces hallucinations by tying claims to evidence. Alignment reduces unsafe content but raises refusals. Determinism improves repeatability but doesn't ensure truth without grounding.`;
+}
+alignRun.addEventListener("click", simulateAlign);
+alignReset.addEventListener("click", ()=>{
+  groundDial.value=0.6; alignDial.value=0.5; detDial.value=0.7; updateDialLabels();
+  hallRate.textContent="—"; refRate.textContent="—"; defRate.textContent="—"; alignNote.textContent="";
+});
+simulateAlign();
+
+/* ======================================================
+   5) HIGH-STAKES FAILURES SIM
+   ====================================================== */
+const ragDocs=document.getElementById("ragDocs");
+const userRole=document.getElementById("userRole");
+const aclMode=document.getElementById("aclMode");
+const ragQuery=document.getElementById("ragQuery");
+const ragRun=document.getElementById("ragRun");
+const ragExample=document.getElementById("ragExample");
+const ragOut=document.getElementById("ragOut");
+
+function parseDocs(text){
+  return text.split("\n").filter(Boolean).map((l,i)=>{
+    const m=l.match(/^(DOC\d+):\s*(.*)$/);
+    return {id:m?m[1]:"DOC"+(i+1), text:m?m[2]:l};
+  });
+}
+function ragRetrieve(){
+  ragOut.innerHTML="";
+  const docs=parseDocs(ragDocs.value);
+  const q=ragQuery.value.toLowerCase();
+  // toy keyword match
+  let hits=docs.filter(d=>d.text.toLowerCase().includes(q.split(/\s+/)[0]) || d.text.toLowerCase().includes("bonus")&&q.includes("bonus"));
+  if(!hits.length) hits=[docs[1]];
+
+  // ACL rules
+  const role=userRole.value;
+  const acl=aclMode.value;
+  hits=hits.filter(d=>{
+    const sens = /bonus|medical|confidential/i.test(d.text);
+    if(!sens) return true;
+    if(acl==="off") return true;
+    if(role==="exec") return true;
+    if(role==="manager" && acl==="loose" && /bonus/i.test(d.text)) return true;
+    return false;
+  });
+
+  const leaked = hits.some(d=>/bonus|medical|confidential/i.test(d.text) && role!=="exec");
+  hits.forEach(d=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div style="flex:1"><b>${d.id}</b><div class="muted" style="font-size:12px;margin-top:4px">${d.text}</div></div><div class="tag ${/bonus|medical|confidential/i.test(d.text)?'bad':'ok'}">${/bonus|medical|confidential/i.test(d.text)?'Sensitive':'OK'}</div>`;
+    ragOut.appendChild(div);
+  });
+  const summary=document.createElement("div");
+  summary.className="item";
+  summary.innerHTML=`<div style="flex:1"><b>${leaked?"LEAK RISK":"No leak detected"}</b><div class="muted" style="font-size:12px;margin-top:4px">${leaked?"Your ACLs allowed retrieval of sensitive content. Tighten ACLs, blacklist, or avoid indexing secrets.":"Retrieval respected role boundaries."}</div></div><div class="tag ${leaked?'bad':'ok'}">${leaked?'Flag':'Safe'}</div>`;
+  ragOut.prepend(summary);
+}
+ragRun.addEventListener("click", ragRetrieve);
+ragExample.addEventListener("click", ()=>{
+  ragQuery.value="Show me confidential medical leave notes for employee";
+  ragRetrieve();
+});
+ragRetrieve();
+
+// Emergence sim
+const salesReward=document.getElementById("salesReward");
+const discReward=document.getElementById("discReward");
+const globalStrict=document.getElementById("globalStrict");
+const salesRewardVal=document.getElementById("salesRewardVal");
+const discRewardVal=document.getElementById("discRewardVal");
+const globalStrictVal=document.getElementById("globalStrictVal");
+const refEnabled=document.getElementById("refEnabled");
+const emergeRun=document.getElementById("emergeRun");
+const emergeReset=document.getElementById("emergeReset");
+const collRisk=document.getElementById("collRisk");
+const unsafeCount=document.getElementById("unsafeCount");
+const vetoCount=document.getElementById("vetoCount");
+const emergeLog=document.getElementById("emergeLog");
+
+[salesReward,discReward,globalStrict].forEach(inp=>inp.addEventListener("input", ()=>{
+  salesRewardVal.textContent=salesReward.value;
+  discRewardVal.textContent=discReward.value;
+  globalStrictVal.textContent=globalStrict.value;
+}));
+salesRewardVal.textContent=salesReward.value; discRewardVal.textContent=discReward.value; globalStrictVal.textContent=globalStrict.value;
+
+function runEmergence(){
+  emergeLog.innerHTML="";
+  const sr=Number(salesReward.value), dr=Number(discReward.value), gs=Number(globalStrict.value);
+  let unsafe=0, veto=0;
+  let risk=0;
+
+  for(let t=1;t<=5;t++){
+    const wantsClose = Math.random()<sr;
+    const wantsDiscount = Math.random()<dr;
+    const discountAmt = wantsDiscount ? (10 + Math.round(Math.random()*30)) : 0;
+    const violates = discountAmt>20*(1-gs); // stricter global rules reduce threshold
+    let action=`Turn ${t}: Sales ${wantsClose?"pushes close":"waits"}; Discount proposes ${discountAmt}% off.`;
+    let result="OK";
+    if(violates){
+      risk+=0.25;
+      if(refEnabled.checked){
+        veto++; result="VETO"; action+= " Referee blocks unsafe discount.";
+      }else{
+        unsafe++; result="UNSAFE"; action+= " Collusion accepted. Policy violated.";
+      }
+    }
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div style="flex:1">${action}</div><div class="tag ${result==='OK'?'ok':'bad'}">${result}</div>`;
+    emergeLog.appendChild(div);
+  }
+  const coll = Math.min(1, risk + (sr*dr*0.4));
+  collRisk.textContent=Math.round(coll*100)+"%";
+  unsafeCount.textContent=unsafe;
+  vetoCount.textContent=veto;
+}
+emergeRun.addEventListener("click", runEmergence);
+emergeReset.addEventListener("click", ()=>{
+  salesReward.value=0.8; discReward.value=0.7; globalStrict.value=0.6;
+  salesRewardVal.textContent="0.8"; discRewardVal.textContent="0.7"; globalStrictVal.textContent="0.6";
+  refEnabled.checked=true;
+  emergeLog.innerHTML=""; collRisk.textContent="—"; unsafeCount.textContent="—"; vetoCount.textContent="—";
+});
+runEmergence();
+
+</script>
+</body>
+</html>
