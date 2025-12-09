@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter 3 Exercise Lab — Using AI Safely & Wisely</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      background: #f4f5f7;
+      color: #111827;
+    }
+    aside {
+      width: 260px;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    main {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .brand .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+    }
+    .brand h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .brand p {
+      margin: 0;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      text-align: left;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .navbtn small {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn:hover {
+      background: #1f2937;
+    }
+    .navbtn.active {
+      background: #22c55e;
+      color: #022c22;
+    }
+    .navbtn.active small {
+      color: #022c22;
+    }
+    .hr {
+      height: 1px;
+      background: #374151;
+      margin: 8px 0;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .section {
+      display: none;
+      max-width: 960px;
+    }
+    .section.active {
+      display: block;
+    }
+    .title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #d1fae5;
+      color: #065f46;
+      white-space: nowrap;
+    }
+    .subtitle-main {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+    }
+    .card h3, .card h4 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .card p {
+      font-size: 13px;
+      color: #4b5563;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: #374151;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    select, textarea, input[type="range"], input[type="number"] {
+      width: 100%;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f9fafb;
+      text-align: left;
+    }
+    .doc {
+      font-size: 12px;
+      color: #374151;
+    }
+    .primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: none;
+      background: #22c55e;
+      color: #022c22;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .primary:hover {
+      background: #16a34a;
+    }
+    .badge {
+      display: inline-flex;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .gauge {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .gauge-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      width: 0%;
+      transition: width 0.25s ease-out;
+    }
+    .gauge-bar-warning {
+      background: linear-gradient(90deg, #f97316, #ef4444);
+    }
+    ul.doc {
+      padding-left: 16px;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Chapter 3 Exercise Lab</h1>
+        <p>Using AI safely and wisely at work</p>
+      </div>
+    </div>
+
+    <button class="navbtn active" data-target="sec-ch3-ex1">
+      <span>Exercise 1 – RAG Control Panel</span>
+      <small>Tune chunking & search</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch3-ex2">
+      <span>Exercise 2 – RAG Incident Room</span>
+      <small>Diagnose failures</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch3-ex3">
+      <span>Exercise 3 – Agent Toolbelt</span>
+      <small>Design safe tool use</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch3-ex4">
+      <span>Exercise 4 – Agent Storyboard</span>
+      <small>Map the workflow</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch3-ex5">
+      <span>Exercise 5 – Safety & Ops Room</span>
+      <small>Dial speed vs safety</small>
+    </button>
+
+    <div class="hr"></div>
+    <div class="subtitle">
+      Each exercise is written for knowledge workers, not engineers. Use it to practice real decisions with AI.
+    </div>
+  </aside>
+
+  <main>
+    <!-- Exercise 1: RAG Control Panel -->
+    <section id="sec-ch3-ex1" class="section active">
+      <div class="title">
+        <h2>Exercise 1 – RAG Control Panel</h2>
+        <div class="pill">Objective: Tune retrieval settings for real work scenarios</div>
+      </div>
+      <p class="subtitle-main">
+        Adjust “dials” for chunk size, hybrid search, and document count, then see how they affect coverage vs. noise
+        for different business scenarios.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Step 1 – Choose a scenario & set the dials</h3>
+          <label for="ch3_ex1_scenario">Scenario</label>
+          <select id="ch3_ex1_scenario">
+            <option value="hr_policy">HR policy Q&amp;A</option>
+            <option value="product_sku">Find a product SKU</option>
+            <option value="leadership_summary">Summarize a long report</option>
+          </select>
+          <p id="ch3_ex1_scenario_desc" class="doc" style="margin-top:6px;"></p>
+
+          <label for="ch3_ex1_chunk_size" style="margin-top:10px;">Chunk size</label>
+          <input type="range" id="ch3_ex1_chunk_size" min="1" max="3" step="1" />
+          <p id="ch3_ex1_chunk_label" class="doc"></p>
+
+          <label for="ch3_ex1_hybrid_weight" style="margin-top:10px;">Hybrid search (keyword vs semantic)</label>
+          <input type="range" id="ch3_ex1_hybrid_weight" min="0" max="100" step="10" />
+          <p id="ch3_ex1_hybrid_label" class="doc"></p>
+
+          <label for="ch3_ex1_doc_count" style="margin-top:10px;">Number of documents</label>
+          <input type="range" id="ch3_ex1_doc_count" min="3" max="10" step="1" />
+          <p id="ch3_ex1_doc_label" class="doc"></p>
+
+          <button id="ch3_ex1_run" class="primary">Run configuration</button>
+        </div>
+
+        <div class="card">
+          <h3>Step 2 – See coverage vs. noise</h3>
+          <p class="doc"><b>Context coverage (Recall)</b></p>
+          <div class="gauge"><div id="ch3_ex1_recall_bar" class="gauge-bar"></div></div>
+          <p id="ch3_ex1_recall_label" class="doc"></p>
+
+          <p class="doc" style="margin-top:10px;"><b>Noise / Irrelevance (Precision loss)</b></p>
+          <div class="gauge"><div id="ch3_ex1_noise_bar" class="gauge-bar gauge-bar-warning"></div></div>
+          <p id="ch3_ex1_noise_label" class="doc"></p>
+
+          <div id="ch3_ex1_explanation" class="doc" style="margin-top:10px;">
+            Adjust the controls and click <b>Run configuration</b> to see how your choices affect recall and noise.
+          </div>
+
+          <label for="ch3_ex1_reflection" style="margin-top:10px;">Reflection</label>
+          <textarea id="ch3_ex1_reflection"
+            placeholder="In your own role, which configuration would you choose for this scenario and why?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 2: RAG Incident Room -->
+    <section id="sec-ch3-ex2" class="section">
+      <div class="title">
+        <h2>Exercise 2 – RAG Incident Room</h2>
+        <div class="pill">Objective: Diagnose what broke in a RAG incident</div>
+      </div>
+      <p class="subtitle-main">
+        Read short “incident” stories and decide which part of the RAG triad failed. Practice thinking like a product
+        owner for an AI system.
+      </p>
+
+      <div class="card">
+        <h3>Step 1 – Choose an incident</h3>
+        <label for="ch3_ex2_incident">Incident</label>
+        <select id="ch3_ex2_incident">
+          <option value="incident_a">Incident A – Plausible but wrong</option>
+          <option value="incident_b">Incident B – Off-topic answer</option>
+          <option value="incident_c">Incident C – Slow and partly wrong</option>
+        </select>
+        <div id="ch3_ex2_incident_desc" class="doc" style="margin-top:6px;"></div>
+        <div id="ch3_ex2_incident_question" class="doc" style="margin-top:6px;"></div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div class="card">
+          <h3>Step 2 – Review answer & context</h3>
+          <p class="doc"><b>AI answer</b></p>
+          <p id="ch3_ex2_answer" class="doc"></p>
+
+          <p class="doc" style="margin-top:10px;"><b>Retrieved snippets</b></p>
+          <ul id="ch3_ex2_snippets" class="doc"></ul>
+
+          <p class="doc" style="margin-top:10px;"><b>Latency breakdown</b></p>
+          <p id="ch3_ex2_latency" class="doc"></p>
+        </div>
+
+        <div class="card">
+          <h3>Step 3 – Diagnose what broke</h3>
+          <table>
+            <tr>
+              <th>Part of the RAG triad</th>
+              <th>Status</th>
+            </tr>
+            <tr>
+              <td>Context relevance (retrieval)</td>
+              <td>
+                <select id="ch3_ex2_context_status">
+                  <option value="">(select)</option>
+                  <option value="ok">OK</option>
+                  <option value="broken">Broken</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Grounding / faithfulness</td>
+              <td>
+                <select id="ch3_ex2_grounding_status">
+                  <option value="">(select)</option>
+                  <option value="ok">OK</option>
+                  <option value="broken">Broken</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Answer relevance (to user question)</td>
+              <td>
+                <select id="ch3_ex2_answer_status">
+                  <option value="">(select)</option>
+                  <option value="ok">OK</option>
+                  <option value="broken">Broken</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+
+          <label for="ch3_ex2_latency_focus" style="margin-top:10px;">Where is latency coming from?</label>
+          <select id="ch3_ex2_latency_focus">
+            <option value="">(select)</option>
+            <option value="retrieval">Mostly retrieval</option>
+            <option value="model">Mostly model / reasoning</option>
+            <option value="tools">Mostly tools / APIs</option>
+          </select>
+
+          <button id="ch3_ex2_run_diag" class="primary" style="margin-top:10px;">Show diagnosis summary</button>
+          <div id="ch3_ex2_diag_summary" class="doc" style="margin-top:10px;">
+            After you set the statuses, click <b>Show diagnosis summary</b> to see a product-owner style explanation.
+          </div>
+
+          <label for="ch3_ex2_owner_note" style="margin-top:10px;">Product owner note</label>
+          <textarea id="ch3_ex2_owner_note"
+            placeholder="If you owned this system, where would you ask your team to focus first?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 3: Agent Toolbelt Designer -->
+    <section id="sec-ch3-ex3" class="section">
+      <div class="title">
+        <h2>Exercise 3 – Agent Toolbelt Designer</h2>
+        <div class="pill">Objective: Decide which tools an agent should use first, optionally, or never</div>
+      </div>
+      <p class="subtitle-main">
+        Treat the AI assistant like a digital colleague. Decide which tools it must use, may use, or should never use
+        in specific business scenarios.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Step 1 – Choose a scenario</h3>
+          <label for="ch3_ex3_scenario">Scenario</label>
+          <select id="ch3_ex3_scenario">
+            <option value="billing">Customer billing assistant</option>
+            <option value="hr_helper">Internal HR policy helper</option>
+            <option value="sales_explainer">Sales pipeline explainer</option>
+          </select>
+          <p id="ch3_ex3_scenario_desc" class="doc" style="margin-top:6px;"></p>
+
+          <h4 style="margin-top:10px;">Available tools</h4>
+          <ul class="doc" id="ch3_ex3_tool_list"></ul>
+        </div>
+
+        <div class="card">
+          <h3>Step 2 – Assign tools to zones</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Zone</th>
+              </tr>
+            </thead>
+            <tbody id="ch3_ex3_tool_table">
+              <!-- JS will populate tool rows here -->
+            </tbody>
+          </table>
+
+          <label for="ch3_ex3_failure_strategy" style="margin-top:10px;">If a tool fails, the agent should...</label>
+          <select id="ch3_ex3_failure_strategy">
+            <option value="">(select)</option>
+            <option value="retry">Retry with backoff</option>
+            <option value="ask_user">Ask the user what to do</option>
+            <option value="try_other">Try a different tool</option>
+            <option value="fail_fast">Fail fast with a clear error</option>
+          </select>
+
+          <button id="ch3_ex3_review_playbook" class="primary" style="margin-top:10px;">Review my toolbelt</button>
+          <div id="ch3_ex3_playbook_summary" class="doc" style="margin-top:10px;">
+            After you assign tools to zones and choose a failure strategy, click <b>Review my toolbelt</b>.
+          </div>
+
+          <label for="ch3_ex3_reflection" style="margin-top:10px;">Reflection</label>
+          <textarea id="ch3_ex3_reflection"
+            placeholder="In your real work, which tools or systems should never be used automatically by an AI assistant and why?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 4: Agent Team Storyboard -->
+    <section id="sec-ch3-ex4" class="section">
+      <div class="title">
+        <h2>Exercise 4 – Agent Team Storyboard</h2>
+        <div class="pill">Objective: Design the flow between Research, Writer, and Verifier agents</div>
+      </div>
+      <p class="subtitle-main">
+        Map out a simple multi-agent workflow. Decide which agent handles each step and in what order, then “run” it to
+        see if anything important is missing.
+      </p>
+
+      <div class="card">
+        <h3>Step 1 – Choose a workflow</h3>
+        <label for="ch3_ex4_workflow">Workflow</label>
+        <select id="ch3_ex4_workflow">
+          <option value="competitor_briefing">Competitor briefing for leadership</option>
+          <option value="customer_complaint">Customer complaint case summary</option>
+          <option value="hr_announcement">HR policy announcement</option>
+        </select>
+        <p id="ch3_ex4_workflow_desc" class="doc" style="margin-top:6px;"></p>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div class="card">
+          <h3>Step 2 – Assign tasks to agents</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Agent lane</th>
+                <th>Order (1–6)</th>
+              </tr>
+            </thead>
+            <tbody id="ch3_ex4_task_table">
+              <!-- JS will populate tasks here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Step 3 – Run your storyboard</h3>
+          <button id="ch3_ex4_run_storyboard" class="primary">Run my workflow</button>
+          <div id="ch3_ex4_storyboard_feedback" class="doc" style="margin-top:10px;">
+            After you assign agents and order numbers, click <b>Run my workflow</b> to get feedback.
+          </div>
+
+          <label for="ch3_ex4_reflection" style="margin-top:10px;">Reflection</label>
+          <textarea id="ch3_ex4_reflection"
+            placeholder="What is one change you would make to your real-world process to mirror this best-practice chain?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 5: Safety & Ops Control Room -->
+    <section id="sec-ch3-ex5" class="section">
+      <div class="title">
+        <h2>Exercise 5 – Safety & Ops Control Room</h2>
+        <div class="pill">Objective: Design Experiment vs Production operating modes</div>
+      </div>
+      <p class="subtitle-main">
+        Configure a “Lab” mode and a “Production” mode for your AI assistant. Balance speed, freshness, and safety for
+        each environment.
+      </p>
+
+      <div class="card">
+        <h3>Step 1 – Configure Experiment (Lab) mode</h3>
+
+        <label>Guardian agent</label>
+        <select id="ch3_ex5_lab_guardian">
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+
+        <label style="margin-top:6px;">Citation verifier</label>
+        <select id="ch3_ex5_lab_citations">
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+
+        <label style="margin-top:6px;">Allowed sources</label>
+        <select id="ch3_ex5_lab_sources">
+          <option value="internal">Internal only</option>
+          <option value="mixed">Internal + web</option>
+        </select>
+
+        <label style="margin-top:6px;">Caching</label>
+        <select id="ch3_ex5_lab_cache">
+          <option value="none">None</option>
+          <option value="moderate">Moderate</option>
+          <option value="aggressive">Aggressive</option>
+        </select>
+
+        <label style="margin-top:6px;">Monitoring</label>
+        <select id="ch3_ex5_lab_monitoring">
+          <option value="basic">Basic logs only</option>
+          <option value="dashboards">Dashboards + alerts</option>
+        </select>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Step 2 – Configure Production mode</h3>
+
+        <label>Guardian agent</label>
+        <select id="ch3_ex5_prod_guardian">
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+
+        <label style="margin-top:6px;">Citation verifier</label>
+        <select id="ch3_ex5_prod_citations">
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+
+        <label style="margin-top:6px;">Allowed sources</label>
+        <select id="ch3_ex5_prod_sources">
+          <option value="internal">Internal only</option>
+          <option value="mixed">Internal + web</option>
+        </select>
+
+        <label style="margin-top:6px;">Caching</label>
+        <select id="ch3_ex5_prod_cache">
+          <option value="none">None</option>
+          <option value="moderate">Moderate</option>
+          <option value="aggressive">Aggressive</option>
+        </select>
+
+        <label style="margin-top:6px;">Monitoring</label>
+        <select id="ch3_ex5_prod_monitoring">
+          <option value="basic">Basic logs only</option>
+          <option value="dashboards">Dashboards + alerts</option>
+        </select>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Step 3 – Compare speed, freshness, and safety</h3>
+        <div class="grid">
+          <div>
+            <h4>Experiment mode gauges</h4>
+            <p class="doc"><b>Speed</b></p>
+            <div class="gauge"><div id="ch3_ex5_lab_speed_bar" class="gauge-bar"></div></div>
+            <p id="ch3_ex5_lab_speed_label" class="doc"></p>
+
+            <p class="doc" style="margin-top:6px;"><b>Freshness</b></p>
+            <div class="gauge"><div id="ch3_ex5_lab_fresh_bar" class="gauge-bar"></div></div>
+            <p id="ch3_ex5_lab_fresh_label" class="doc"></p>
+
+            <p class="doc" style="margin-top:6px;"><b>Safety</b></p>
+            <div class="gauge"><div id="ch3_ex5_lab_safety_bar" class="gauge-bar gauge-bar-warning"></div></div>
+            <p id="ch3_ex5_lab_safety_label" class="doc"></p>
+          </div>
+
+          <div>
+            <h4>Production mode gauges</h4>
+            <p class="doc"><b>Speed</b></p>
+            <div class="gauge"><div id="ch3_ex5_prod_speed_bar" class="gauge-bar"></div></div>
+            <p id="ch3_ex5_prod_speed_label" class="doc"></p>
+
+            <p class="doc" style="margin-top:6px;"><b>Freshness</b></p>
+            <div class="gauge"><div id="ch3_ex5_prod_fresh_bar" class="gauge-bar"></div></div>
+            <p id="ch3_ex5_prod_fresh_label" class="doc"></p>
+
+            <p class="doc" style="margin-top:6px;"><b>Safety</b></p>
+            <div class="gauge"><div id="ch3_ex5_prod_safety_bar" class="gauge-bar gauge-bar-warning"></div></div>
+            <p id="ch3_ex5_prod_safety_label" class="doc"></p>
+          </div>
+        </div>
+
+        <button id="ch3_ex5_compare_modes" class="primary" style="margin-top:10px;">Compare Lab vs Production</button>
+        <div id="ch3_ex5_mode_summary" class="doc" style="margin-top:10px;">
+          Adjust the settings above and click <b>Compare Lab vs Production</b> to see a summary of your trade-offs.
+        </div>
+
+        <label for="ch3_ex5_leadership_msg" style="margin-top:10px;">Leadership message</label>
+        <textarea id="ch3_ex5_leadership_msg"
+          placeholder="Write one sentence you would use with leadership to justify your Production mode choices."></textarea>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Shared navigation
+    (function () {
+      var navBtns = Array.prototype.slice.call(document.querySelectorAll(".navbtn"));
+      var sections = Array.prototype.slice.call(document.querySelectorAll(".section"));
+      navBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          navBtns.forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          var target = btn.getAttribute("data-target");
+          sections.forEach(function (sec) {
+            sec.classList.toggle("active", sec.id === target);
+          });
+        });
+      });
+    })();
+
+    // Utility: clamp
+    function clamp(num, min, max) {
+      return Math.max(min, Math.min(max, num));
+    }
+
+    // Exercise 1: RAG Control Panel
+    (function () {
+      var scenarioSelect = document.getElementById("ch3_ex1_scenario");
+      if (!scenarioSelect) return;
+
+      var scenarioDesc = document.getElementById("ch3_ex1_scenario_desc");
+      var chunkSlider = document.getElementById("ch3_ex1_chunk_size");
+      var chunkLabel = document.getElementById("ch3_ex1_chunk_label");
+      var hybridSlider = document.getElementById("ch3_ex1_hybrid_weight");
+      var hybridLabel = document.getElementById("ch3_ex1_hybrid_label");
+      var docSlider = document.getElementById("ch3_ex1_doc_count");
+      var docLabel = document.getElementById("ch3_ex1_doc_label");
+      var runBtn = document.getElementById("ch3_ex1_run");
+      var recallBar = document.getElementById("ch3_ex1_recall_bar");
+      var recallLabel = document.getElementById("ch3_ex1_recall_label");
+      var noiseBar = document.getElementById("ch3_ex1_noise_bar");
+      var noiseLabel = document.getElementById("ch3_ex1_noise_label");
+      var explanation = document.getElementById("ch3_ex1_explanation");
+
+      var scenarios = {
+        hr_policy: {
+          desc: "Answer employee questions based on internal HR policies and handbooks.",
+          guidance: "For HR, missing a clause can be risky. You usually want medium chunks and a small set of very relevant documents."
+        },
+        product_sku: {
+          desc: "Find the right product SKU from catalogs when a customer describes what they need.",
+          guidance: "For product SKUs, precise matching matters. Some keyword weight is important so you land on the correct item."
+        },
+        leadership_summary: {
+          desc: "Summarize a long report into a brief for senior leadership.",
+          guidance: "For leadership summaries, recall is important so you don't miss big themes. Larger chunks and more documents can help, but watch for noise."
+        }
+      };
+
+      function updateScenarioDesc() {
+        var sc = scenarios[scenarioSelect.value];
+        scenarioDesc.textContent = sc ? sc.desc : "";
+      }
+
+      function updateChunkLabel() {
+        var v = parseInt(chunkSlider.value, 10);
+        var txt = (v === 1 ? "Small chunks – very focused, less context per chunk" :
+          v === 2 ? "Medium chunks – balanced context and precision" :
+            "Large chunks – more context, higher risk of unrelated details");
+        chunkLabel.textContent = txt;
+      }
+
+      function updateHybridLabel() {
+        var v = parseInt(hybridSlider.value, 10);
+        hybridLabel.textContent =
+          "About " + v + "% semantic similarity and " + (100 - v) + "% keyword search.";
+      }
+
+      function updateDocLabel() {
+        var v = parseInt(docSlider.value, 10);
+        docLabel.textContent =
+          v + " document(s) will be pulled into the context window.";
+      }
+
+      function runConfig() {
+        var scKey = scenarioSelect.value;
+        var sc = scenarios[scKey] || scenarios.hr_policy;
+
+        var chunk = parseInt(chunkSlider.value, 10);       // 1–3
+        var hybrid = parseInt(hybridSlider.value, 10);     // 0–100
+        var docCount = parseInt(docSlider.value, 10);      // 3–10
+
+        // Heuristic scoring for pedagogy only
+        var recall = 40 + (chunk - 1) * 15 + (docCount - 3) * 5 + (hybrid * 0.2);
+        var noise = 20 + (chunk - 1) * 10 + (docCount - 3) * 6 + ((100 - hybrid) * 0.3);
+
+        recall = clamp(Math.round(recall), 0, 100);
+        noise = clamp(Math.round(noise), 0, 100);
+
+        recallBar.style.width = recall + "%";
+        noiseBar.style.width = noise + "%";
+
+        recallLabel.textContent = "Estimated recall: " + recall + "/100 (higher means you are less likely to miss relevant content).";
+        noiseLabel.textContent = "Estimated noise: " + noise + "/100 (higher means more irrelevant or distracting content).";
+
+        var msg = "";
+        if (scKey === "hr_policy") {
+          msg = "For HR policies, you typically want enough recall to avoid missing important rules, "
+              + "but not so much noise that outdated or unrelated clauses creep in. "
+              + sc.guidance;
+        } else if (scKey === "product_sku") {
+          msg = "For product SKUs, a bit more keyword emphasis can keep you anchored on exact codes, "
+              + "while still using semantic search to understand the customer's description. "
+              + sc.guidance;
+        } else {
+          msg = "For leadership summaries, it's better to err slightly on the side of recall, "
+              + "then rely on good summarization prompts to reduce noise. "
+              + sc.guidance;
+        }
+        explanation.textContent = msg;
+      }
+
+      scenarioSelect.addEventListener("change", updateScenarioDesc);
+      chunkSlider.addEventListener("input", updateChunkLabel);
+      hybridSlider.addEventListener("input", updateHybridLabel);
+      docSlider.addEventListener("input", updateDocLabel);
+      runBtn.addEventListener("click", runConfig);
+
+      // Initialize defaults
+      scenarioSelect.value = "hr_policy";
+      chunkSlider.value = "2";
+      hybridSlider.value = "50";
+      docSlider.value = "5";
+      updateScenarioDesc();
+      updateChunkLabel();
+      updateHybridLabel();
+      updateDocLabel();
+      runConfig();
+    })();
+
+    // Exercise 2: RAG Incident Room
+    (function () {
+      var incidentSelect = document.getElementById("ch3_ex2_incident");
+      if (!incidentSelect) return;
+
+      var descEl = document.getElementById("ch3_ex2_incident_desc");
+      var questionEl = document.getElementById("ch3_ex2_incident_question");
+      var answerEl = document.getElementById("ch3_ex2_answer");
+      var snippetsEl = document.getElementById("ch3_ex2_snippets");
+      var latencyEl = document.getElementById("ch3_ex2_latency");
+
+      var contextStatus = document.getElementById("ch3_ex2_context_status");
+      var groundingStatus = document.getElementById("ch3_ex2_grounding_status");
+      var answerStatus = document.getElementById("ch3_ex2_answer_status");
+      var latencyFocus = document.getElementById("ch3_ex2_latency_focus");
+      var runDiagBtn = document.getElementById("ch3_ex2_run_diag");
+      var diagSummary = document.getElementById("ch3_ex2_diag_summary");
+
+      var incidents = {
+        incident_a: {
+          desc: "The system answered a HR eligibility question with high confidence, but the answer turned out to be wrong.",
+          question: "“Am I eligible for paid parental leave if I have been with the company for 8 months?”",
+          answer: "Yes, you are eligible for 12 weeks of paid parental leave. Our policy states that any employee with more than 6 months of tenure qualifies for full parental leave.",
+          snippets: [
+            "Excerpt from Parental Leave Policy (updated 2020): Employees with 12+ months of continuous service are eligible for paid parental leave.",
+            "Benefits FAQ: 'Paid parental leave requires one year of service at the time of the event.'"
+          ],
+          latency: "Retrieval: 0.9s | Model: 0.8s | Tools: 0.2s"
+        },
+        incident_b: {
+          desc: "The system pulled the wrong type of documents and produced an answer that sounds polished but is off-topic.",
+          question: "“What are the safety requirements for visitors entering our plant?”",
+          answer: "Visitors should be greeted warmly and informed about our company’s mission and values. It is also important to share our diversity and inclusion commitments.",
+          snippets: [
+            "Excerpt from 'Corporate Values Overview' document.",
+            "Excerpt from 'Diversity & Inclusion Statement'."
+          ],
+          latency: "Retrieval: 1.4s | Model: 0.6s | Tools: 0.1s"
+        },
+        incident_c: {
+          desc: "The system was very slow and the answer combined some correct details with outdated information.",
+          question: "“What’s our current travel reimbursement rate for mileage?”",
+          answer: "Our mileage reimbursement rate is $0.50 per mile. Employees should submit their claims through the legacy expense portal within 30 days.",
+          snippets: [
+            "Travel policy (2019): Mileage reimbursement rate is $0.50 per mile; claims via legacy expense portal.",
+            "Travel policy (2024): Mileage reimbursement rate is $0.62 per mile; claims via new unified expense system."
+          ],
+          latency: "Retrieval: 3.1s | Model: 0.9s | Tools: 0.6s"
+        }
+      };
+
+      function renderIncident() {
+        var inc = incidents[incidentSelect.value] || incidents.incident_a;
+        descEl.textContent = inc.desc;
+        questionEl.innerHTML = "<b>Question:</b> " + inc.question;
+        answerEl.textContent = inc.answer;
+        latencyEl.textContent = inc.latency;
+
+        // Clear snippet list
+        while (snippetsEl.firstChild) snippetsEl.removeChild(snippetsEl.firstChild);
+        inc.snippets.forEach(function (s) {
+          var li = document.createElement("li");
+          li.textContent = s;
+          snippetsEl.appendChild(li);
+        });
+
+        // Reset selections
+        contextStatus.value = "";
+        groundingStatus.value = "";
+        answerStatus.value = "";
+        latencyFocus.value = "";
+        diagSummary.textContent = "After you set the statuses, click \"Show diagnosis summary\" to see a product-owner style explanation.";
+      }
+
+      incidentSelect.addEventListener("change", renderIncident);
+      renderIncident();
+
+      runDiagBtn.addEventListener("click", function () {
+        var c = contextStatus.value;
+        var g = groundingStatus.value;
+        var a = answerStatus.value;
+        var l = latencyFocus.value;
+
+        if (!c || !g || !a) {
+          diagSummary.textContent = "Please choose a status (OK/Broken) for each part of the RAG triad before reviewing.";
+          return;
+        }
+
+        var msg = "You marked context as " + c + ", grounding as " + g + ", and answer relevance as " + a + ". ";
+
+        if (incidentSelect.value === "incident_a") {
+          msg += "In Incident A, retrieval actually found the right policy excerpts, but the answer ignored them. "
+               + "That points to grounding/faithfulness being broken: the model is hallucinating over correct context. ";
+        } else if (incidentSelect.value === "incident_b") {
+          msg += "In Incident B, the system latched onto the wrong documents (values instead of safety policies). "
+               + "That suggests a context relevance problem: your retriever is pulling the wrong content. ";
+        } else {
+          msg += "In Incident C, the answer blends old and new policies and is slow. "
+               + "Here, both retrieval freshness and grounding matter: stale documents and weak cross-checking create mixed answers. ";
+        }
+
+        if (l) {
+          msg += "You also noted latency is mostly from " + (l === "retrieval" ? "retrieval" : (l === "model" ? "model/reasoning" : "tools/APIs")) + ". ";
+          msg += "That gives you a hint about where to optimize performance in addition to quality.";
+        } else {
+          msg += "Consider where latency is coming from, so you can discuss performance and quality together with your team.";
+        }
+
+        diagSummary.textContent = msg;
+      });
+    })();
+
+    // Exercise 3: Agent Toolbelt Designer
+    (function () {
+      var scenarioSelect = document.getElementById("ch3_ex3_scenario");
+      if (!scenarioSelect) return;
+
+      var scenarioDesc = document.getElementById("ch3_ex3_scenario_desc");
+      var toolList = document.getElementById("ch3_ex3_tool_list");
+      var toolTable = document.getElementById("ch3_ex3_tool_table");
+      var failureSelect = document.getElementById("ch3_ex3_failure_strategy");
+      var reviewBtn = document.getElementById("ch3_ex3_review_playbook");
+      var summaryEl = document.getElementById("ch3_ex3_playbook_summary");
+
+      var scenarioConfigs = {
+        billing: {
+          desc: "The assistant helps agents answer customer questions about invoices, payments, and credits.",
+          tools: [
+            { id: "policy_search", name: "Policy search", desc: "Looks up billing and credit policies." },
+            { id: "billing_system", name: "Billing system lookup", desc: "Fetches invoice and payment records." },
+            { id: "crm_lookup", name: "CRM lookup", desc: "Shows full customer history and notes." },
+            { id: "web_search", name: "Web search", desc: "Searches the public web." },
+            { id: "email_sender", name: "Email sender", desc: "Sends emails on your behalf." }
+          ]
+        },
+        hr_helper: {
+          desc: "The assistant helps employees understand HR policies and benefits.",
+          tools: [
+            { id: "policy_search", name: "Policy search", desc: "Looks up official HR policies." },
+            { id: "faq_search", name: "HR FAQ search", desc: "Searches the HR FAQ portal." },
+            { id: "ticket_system", name: "HR ticket system", desc: "Creates HR tickets on behalf of employees." },
+            { id: "web_search", name: "Web search", desc: "Searches the public web." }
+          ]
+        },
+        sales_explainer: {
+          desc: "The assistant helps salespeople understand the state of a deal and next best actions.",
+          tools: [
+            { id: "crm_lookup", name: "CRM lookup", desc: "Shows pipeline, stage, and notes for each opportunity." },
+            { id: "notes_summarizer", name: "Call notes summarizer", desc: "Summarizes call transcripts." },
+            { id: "pricing_calc", name: "Pricing calculator", desc: "Applies discount rules and pricing tiers." },
+            { id: "email_sender", name: "Email sender", desc: "Drafts follow-up emails." }
+          ]
+        }
+      };
+
+      function renderScenario() {
+        var sc = scenarioConfigs[scenarioSelect.value] || scenarioConfigs.billing;
+        scenarioDesc.textContent = sc.desc;
+
+        // Render tool list
+        while (toolList.firstChild) toolList.removeChild(toolList.firstChild);
+        sc.tools.forEach(function (t) {
+          var li = document.createElement("li");
+          li.textContent = t.name + " – " + t.desc;
+          toolList.appendChild(li);
+        });
+
+        // Render tool table rows
+        while (toolTable.firstChild) toolTable.removeChild(toolTable.firstChild);
+        sc.tools.forEach(function (t) {
+          var tr = document.createElement("tr");
+          tr.setAttribute("data-toolid", t.id);
+
+          var tdName = document.createElement("td");
+          tdName.textContent = t.name;
+          tr.appendChild(tdName);
+
+          var tdZone = document.createElement("td");
+          var sel = document.createElement("select");
+          sel.className = "ch3_ex3_zone";
+          var opts = [
+            { v: "", label: "(select zone)" },
+            { v: "must", label: "Must use first" },
+            { v: "optional", label: "Use if needed" },
+            { v: "never", label: "Never use for this scenario" }
+          ];
+          opts.forEach(function (o) {
+            var opt = document.createElement("option");
+            opt.value = o.v;
+            opt.textContent = o.label;
+            sel.appendChild(opt);
+          });
+          tdZone.appendChild(sel);
+          tr.appendChild(tdZone);
+
+          toolTable.appendChild(tr);
+        });
+
+        failureSelect.value = "";
+        summaryEl.textContent = 'After you assign tools to zones and choose a failure strategy, click "Review my toolbelt".';
+      }
+
+      scenarioSelect.addEventListener("change", renderScenario);
+      renderScenario();
+
+      reviewBtn.addEventListener("click", function () {
+        var scKey = scenarioSelect.value;
+        var sc = scenarioConfigs[scKey] || scenarioConfigs.billing;
+
+        var zoneCounts = { must: 0, optional: 0, never: 0 };
+        var webZone = null;
+        var rows = Array.prototype.slice.call(toolTable.querySelectorAll("tr"));
+
+        // Collect selections
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var select = row.querySelector("select.ch3_ex3_zone");
+          var val = select ? select.value : "";
+          var toolId = row.getAttribute("data-toolid");
+
+          if (!val) {
+            summaryEl.textContent = "Please choose a zone for every tool before reviewing.";
+            return;
+          }
+          zoneCounts[val]++;
+
+          if (toolId === "web_search") {
+            webZone = val;
+          }
+        }
+
+        var failure = failureSelect.value;
+        if (!failure) {
+          summaryEl.textContent = "Please choose a failure strategy before reviewing.";
+          return;
+        }
+
+        var msg = "You set " + zoneCounts.must + " tool(s) to 'Must use first', "
+                + zoneCounts.optional + " to 'Use if needed', and "
+                + zoneCounts.never + " to 'Never use'. ";
+
+        if (scKey === "hr_helper" && webZone !== "never") {
+          msg += "For HR helpers, it is usually safer to keep Web search in 'Never use' or at most 'Use if needed', "
+               + "because internal policies should be the primary source. ";
+        } else if (scKey === "billing" && webZone === "must") {
+          msg += "Putting Web search in 'Must use first' for billing may introduce external, non-authoritative information "
+               + "ahead of your official systems. Consider making internal tools primary. ";
+        } else {
+          msg += "Your zones are generally aligned with the idea that internal, authoritative systems should lead, "
+               + "with broader tools used more cautiously. ";
+        }
+
+        msg += "With a failure strategy of ";
+        if (failure === "retry") msg += "'Retry with backoff', you prioritize resilience but may increase latency.";
+        else if (failure === "ask_user") msg += "'Ask the user', you keep the human in control but add friction.";
+        else if (failure === "try_other") msg += "'Try a different tool', you value flexibility but must guard against unexpected tool choices.";
+        else msg += "'Fail fast', you limit surprises but risk hard stops for users.";
+
+        summaryEl.textContent = msg;
+      });
+    })();
+
+    // Exercise 4: Agent Team Storyboard
+    (function () {
+      var workflowSelect = document.getElementById("ch3_ex4_workflow");
+      if (!workflowSelect) return;
+
+      var workflowDesc = document.getElementById("ch3_ex4_workflow_desc");
+      var taskTable = document.getElementById("ch3_ex4_task_table");
+      var runBtn = document.getElementById("ch3_ex4_run_storyboard");
+      var feedbackEl = document.getElementById("ch3_ex4_storyboard_feedback");
+
+      var workflows = {
+        competitor_briefing: {
+          desc: "Prepare a concise competitor briefing for leadership, based on recent market information and internal notes.",
+          tasks: [
+            { id: "gather_docs", name: "Gather relevant internal and external documents" },
+            { id: "extract_facts", name: "Extract key facts, risks, and trends" },
+            { id: "draft_summary", name: "Draft a 1-page briefing" },
+            { id: "check_policies", name: "Check for any policy or disclosure issues" },
+            { id: "tone_polish", name: "Polish tone and clarity for leadership" }
+          ]
+        },
+        customer_complaint: {
+          desc: "Summarize a customer complaint and propose next steps for the support team.",
+          tasks: [
+            { id: "gather_case_data", name: "Gather case data and past interactions" },
+            { id: "extract_root_causes", name: "Extract root causes and key moments" },
+            { id: "draft_case_summary", name: "Draft a case summary" },
+            { id: "check_against_policies", name: "Check proposed steps against support policies" },
+            { id: "suggest_next_steps", name: "Suggest next steps for the team" }
+          ]
+        },
+        hr_announcement: {
+          desc: "Draft and check an HR policy announcement to be sent to all employees.",
+          tasks: [
+            { id: "gather_policy_text", name: "Gather the final approved policy text" },
+            { id: "draft_announcement", name: "Draft the HR announcement" },
+            { id: "check_tone", name: "Check tone for clarity and empathy" },
+            { id: "check_compliance", name: "Verify compliance and legal wording" },
+            { id: "final_review", name: "Prepare the final version for sign-off" }
+          ]
+        }
+      };
+
+      function renderWorkflow() {
+        var wf = workflows[workflowSelect.value] || workflows.competitor_briefing;
+        workflowDesc.textContent = wf.desc;
+
+        while (taskTable.firstChild) taskTable.removeChild(taskTable.firstChild);
+
+        wf.tasks.forEach(function (t, idx) {
+          var tr = document.createElement("tr");
+          tr.setAttribute("data-taskid", t.id);
+
+          var tdTask = document.createElement("td");
+          tdTask.textContent = t.name;
+          tr.appendChild(tdTask);
+
+          var tdAgent = document.createElement("td");
+          var selAgent = document.createElement("select");
+          selAgent.className = "ch3_ex4_agent";
+          var agents = [
+            { v: "", label: "(choose agent)" },
+            { v: "research", label: "Research agent" },
+            { v: "writer", label: "Writer agent" },
+            { v: "verifier", label: "Verifier / Guardian agent" }
+          ];
+          agents.forEach(function (a) {
+            var opt = document.createElement("option");
+            opt.value = a.v;
+            opt.textContent = a.label;
+            selAgent.appendChild(opt);
+          });
+          tdAgent.appendChild(selAgent);
+          tr.appendChild(tdAgent);
+
+          var tdOrder = document.createElement("td");
+          var inputOrder = document.createElement("input");
+          inputOrder.type = "number";
+          inputOrder.className = "ch3_ex4_order";
+          inputOrder.min = "1";
+          inputOrder.max = "6";
+          inputOrder.value = (idx + 1);
+          tdOrder.appendChild(inputOrder);
+          tr.appendChild(tdOrder);
+
+          taskTable.appendChild(tr);
+        });
+
+        feedbackEl.textContent = 'After you assign agents and order numbers, click "Run my workflow" to get feedback.';
+      }
+
+      workflowSelect.addEventListener("change", renderWorkflow);
+      renderWorkflow();
+
+      runBtn.addEventListener("click", function () {
+        var rows = Array.prototype.slice.call(taskTable.querySelectorAll("tr"));
+        if (!rows.length) {
+          feedbackEl.textContent = "No tasks found for this workflow.";
+          return;
+        }
+
+        var hasVerifier = false;
+        var earliestWriterOrder = null;
+        var earliestResearchOrder = null;
+        var verifierMaxOrder = 0;
+        var orders = [];
+
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var agentSel = row.querySelector(".ch3_ex4_agent");
+          var orderInput = row.querySelector(".ch3_ex4_order");
+
+          var agent = agentSel ? agentSel.value : "";
+          var order = parseInt(orderInput && orderInput.value ? orderInput.value : "0", 10);
+
+          if (!agent || !order || isNaN(order)) {
+            feedbackEl.textContent = "Please choose an agent and a valid order (1–6) for every task.";
+            return;
+          }
+
+          orders.push(order);
+
+          if (agent === "verifier") {
+            hasVerifier = true;
+            if (order > verifierMaxOrder) verifierMaxOrder = order;
+          }
+          if (agent === "writer") {
+            if (earliestWriterOrder === null || order < earliestWriterOrder) {
+              earliestWriterOrder = order;
+            }
+          }
+          if (agent === "research") {
+            if (earliestResearchOrder === null || order < earliestResearchOrder) {
+              earliestResearchOrder = order;
+            }
+          }
+        }
+
+        // Basic ordering sanity: check for duplicates
+        var sortedOrders = orders.slice().sort(function (a, b) { return a - b; });
+        for (var j = 1; j < sortedOrders.length; j++) {
+          if (sortedOrders[j] === sortedOrders[j - 1]) {
+            feedbackEl.textContent = "At least two tasks share the same order. Use unique order numbers so the flow is clear.";
+            return;
+          }
+        }
+
+        var msg = "";
+        if (!hasVerifier) {
+          msg += "You did not assign any task to the Verifier/Guardian agent. "
+               + "Chapter 3 recommends a verification or guardrail step near the end of important workflows. ";
+        } else {
+          msg += "You included at least one Verifier/Guardian step at order " + verifierMaxOrder + ". ";
+          if (verifierMaxOrder < Math.max.apply(null, orders)) {
+            msg += "Consider moving it closer to the final output so it can review the full result. ";
+          }
+        }
+
+        if (earliestWriterOrder !== null && earliestResearchOrder !== null
+            && earliestWriterOrder < earliestResearchOrder) {
+          msg += "Your Writer agent starts drafting before any Research agent task runs. "
+               + "This mirrors a common real-world failure: drafting without enough context, which can increase hallucinations. ";
+        } else {
+          msg += "You allow Research to inform Writing, which reduces hallucination risk and improves grounding. ";
+        }
+
+        msg += "Overall, think of this storyboard as a design for both human and AI roles. "
+             + "Where you place the Verifier is especially important for high-risk content.";
+
+        feedbackEl.textContent = msg;
+      });
+    })();
+
+    // Exercise 5: Safety & Ops Control Room
+    (function () {
+      var labGuardian = document.getElementById("ch3_ex5_lab_guardian");
+      if (!labGuardian) return;
+
+      var labCitations = document.getElementById("ch3_ex5_lab_citations");
+      var labSources = document.getElementById("ch3_ex5_lab_sources");
+      var labCache = document.getElementById("ch3_ex5_lab_cache");
+      var labMonitoring = document.getElementById("ch3_ex5_lab_monitoring");
+
+      var prodGuardian = document.getElementById("ch3_ex5_prod_guardian");
+      var prodCitations = document.getElementById("ch3_ex5_prod_citations");
+      var prodSources = document.getElementById("ch3_ex5_prod_sources");
+      var prodCache = document.getElementById("ch3_ex5_prod_cache");
+      var prodMonitoring = document.getElementById("ch3_ex5_prod_monitoring");
+
+      var labSpeedBar = document.getElementById("ch3_ex5_lab_speed_bar");
+      var labSpeedLabel = document.getElementById("ch3_ex5_lab_speed_label");
+      var labFreshBar = document.getElementById("ch3_ex5_lab_fresh_bar");
+      var labFreshLabel = document.getElementById("ch3_ex5_lab_fresh_label");
+      var labSafetyBar = document.getElementById("ch3_ex5_lab_safety_bar");
+      var labSafetyLabel = document.getElementById("ch3_ex5_lab_safety_label");
+
+      var prodSpeedBar = document.getElementById("ch3_ex5_prod_speed_bar");
+      var prodSpeedLabel = document.getElementById("ch3_ex5_prod_speed_label");
+      var prodFreshBar = document.getElementById("ch3_ex5_prod_fresh_bar");
+      var prodFreshLabel = document.getElementById("ch3_ex5_prod_fresh_label");
+      var prodSafetyBar = document.getElementById("ch3_ex5_prod_safety_bar");
+      var prodSafetyLabel = document.getElementById("ch3_ex5_prod_safety_label");
+
+      var compareBtn = document.getElementById("ch3_ex5_compare_modes");
+      var summaryEl = document.getElementById("ch3_ex5_mode_summary");
+
+      function computeScores(config) {
+        var speed = 60;
+        var freshness = 60;
+        var safety = 60;
+
+        if (config.guardian === "on") {
+          speed -= 10;
+          safety += 20;
+        }
+        if (config.citations === "on") {
+          speed -= 5;
+          safety += 15;
+        }
+        if (config.sources === "mixed") {
+          freshness += 10;  // can see more up-to-date external info
+          safety -= 5;      // more risk to manage
+        } else {
+          safety += 5;
+        }
+        if (config.cache === "none") {
+          speed -= 10;
+          freshness += 10;
+        } else if (config.cache === "moderate") {
+          speed += 10;
+        } else if (config.cache === "aggressive") {
+          speed += 20;
+          freshness -= 10;
+        }
+        if (config.monitoring === "dashboards") {
+          speed -= 5;
+          safety += 15;
+        }
+
+        return {
+          speed: clamp(Math.round(speed), 0, 100),
+          freshness: clamp(Math.round(freshness), 0, 100),
+          safety: clamp(Math.round(safety), 0, 100)
+        };
+      }
+
+      function renderModeGauges(prefix, scores) {
+        if (prefix === "lab") {
+          labSpeedBar.style.width = scores.speed + "%";
+          labFreshBar.style.width = scores.freshness + "%";
+          labSafetyBar.style.width = scores.safety + "%";
+          labSpeedLabel.textContent = "Speed: " + scores.speed + "/100";
+          labFreshLabel.textContent = "Freshness: " + scores.freshness + "/100";
+          labSafetyLabel.textContent = "Safety: " + scores.safety + "/100";
+        } else {
+          prodSpeedBar.style.width = scores.speed + "%";
+          prodFreshBar.style.width = scores.freshness + "%";
+          prodSafetyBar.style.width = scores.safety + "%";
+          prodSpeedLabel.textContent = "Speed: " + scores.speed + "/100";
+          prodFreshLabel.textContent = "Freshness: " + scores.freshness + "/100";
+          prodSafetyLabel.textContent = "Safety: " + scores.safety + "/100";
+        }
+      }
+
+      function updateAllGauges() {
+        var labConfig = {
+          guardian: labGuardian.value,
+          citations: labCitations.value,
+          sources: labSources.value,
+          cache: labCache.value,
+          monitoring: labMonitoring.value
+        };
+        var prodConfig = {
+          guardian: prodGuardian.value,
+          citations: prodCitations.value,
+          sources: prodSources.value,
+          cache: prodCache.value,
+          monitoring: prodMonitoring.value
+        };
+        var labScores = computeScores(labConfig);
+        var prodScores = computeScores(prodConfig);
+        renderModeGauges("lab", labScores);
+        renderModeGauges("prod", prodScores);
+        return { labScores: labScores, prodScores: prodScores };
+      }
+
+      function attachChangeListeners(selects, handler) {
+        selects.forEach(function (sel) {
+          sel.addEventListener("change", handler);
+        });
+      }
+
+      attachChangeListeners(
+        [labGuardian, labCitations, labSources, labCache, labMonitoring,
+         prodGuardian, prodCitations, prodSources, prodCache, prodMonitoring],
+        updateAllGauges
+      );
+
+      compareBtn.addEventListener("click", function () {
+        var res = updateAllGauges();
+        var lab = res.labScores;
+        var prod = res.prodScores;
+
+        var msg = "In Experiment (Lab) mode, your configuration yields Speed " + lab.speed +
+          "/100, Freshness " + lab.freshness + "/100, and Safety " + lab.safety + "/100. ";
+        msg += "In Production mode, you have Speed " + prod.speed +
+          "/100, Freshness " + prod.freshness + "/100, and Safety " + prod.safety + "/100. ";
+
+        if (prod.safety > lab.safety && prod.speed < lab.speed) {
+          msg += "This matches a common pattern: Lab is faster and looser, while Production trades some speed for stronger guardrails and monitoring.";
+        } else if (prod.speed > lab.speed && prod.safety < lab.safety) {
+          msg += "Your Production mode is actually faster but less safe than Lab, which may require justification with risk and compliance teams.";
+        } else {
+          msg += "Compare these trade-offs with your risk appetite: high-risk content usually deserves higher safety even if it costs speed.";
+        }
+
+        summaryEl.textContent = msg;
+      });
+
+      // Initialize defaults
+      labGuardian.value = "off";
+      labCitations.value = "off";
+      labSources.value = "mixed";
+      labCache.value = "none";
+      labMonitoring.value = "basic";
+
+      prodGuardian.value = "on";
+      prodCitations.value = "on";
+      prodSources.value = "internal";
+      prodCache.value = "moderate";
+      prodMonitoring.value = "dashboards";
+
+      updateAllGauges();
+    })();
+  </script>
+</body>
+</html>
