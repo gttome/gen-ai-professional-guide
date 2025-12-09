@@ -1,0 +1,1567 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter 2 Exercise Lab — Structuring, Reasoning & Grounding</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      background: #f4f5f7;
+      color: #111827;
+    }
+    aside {
+      width: 260px;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    main {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .brand .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #22c55e, #3b82f6);
+    }
+    .brand h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .brand p {
+      margin: 0;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      text-align: left;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .navbtn small {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .navbtn:hover {
+      background: #1f2937;
+    }
+    .navbtn.active {
+      background: #22c55e;
+      color: #022c22;
+    }
+    .navbtn.active small {
+      color: #022c22;
+    }
+    .hr {
+      height: 1px;
+      background: #374151;
+      margin: 8px 0;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .section {
+      display: none;
+      max-width: 960px;
+    }
+    .section.active {
+      display: block;
+    }
+    .title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #d1fae5;
+      color: #065f46;
+      white-space: nowrap;
+    }
+    .subtitle-main {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+    }
+    .card h3, .card h4 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .card p {
+      font-size: 13px;
+      color: #4b5563;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: #374151;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    select, textarea, input[type="range"], input[type="number"], input[type="text"] {
+      width: 100%;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f9fafb;
+      text-align: left;
+    }
+    .doc {
+      font-size: 12px;
+      color: #374151;
+    }
+    .primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: none;
+      background: #22c55e;
+      color: #022c22;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .primary:hover {
+      background: #16a34a;
+    }
+    ul.doc {
+      padding-left: 16px;
+    }
+    .gauge {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .gauge-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      width: 0%;
+      transition: width 0.25s ease-out;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .bar-label {
+      flex: 0 0 90px;
+      font-size: 12px;
+    }
+    .bar-track {
+      flex: 1;
+      height: 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      width: 0%;
+      transition: width 0.25s ease-out;
+    }
+    .checklist-inline label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 8px;
+      margin-top: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Chapter 2 Exercise Lab</h1>
+        <p>Structure, reasoning & grounding</p>
+      </div>
+    </div>
+
+    <button class="navbtn active" data-target="sec-ch2-ex1">
+      <span>Exercise 1 – Inbox to Dashboard</span>
+      <small>Design schema & labels</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch2-ex2">
+      <span>Exercise 2 – Reasoning Blueprint</span>
+      <small>Design stabilizers</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch2-ex3">
+      <span>Exercise 3 – Evidence Courtroom</span>
+      <small>Audit claims vs sources</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch2-ex4">
+      <span>Exercise 4 – AI Team Architect</span>
+      <small>Design roles & contracts</small>
+    </button>
+    <button class="navbtn" data-target="sec-ch2-ex5">
+      <span>Exercise 5 – Compression Studio</span>
+      <small>Design summary recipes</small>
+    </button>
+
+    <div class="hr"></div>
+    <div class="subtitle">
+      These exercises are for knowledge workers. Use them to design, critique, and govern AI—without writing code.
+    </div>
+  </aside>
+
+  <main>
+    <!-- Exercise 1 -->
+    <section id="sec-ch2-ex1" class="section active">
+      <div class="title">
+        <h2>Exercise 1 – Inbox to Dashboard</h2>
+        <div class="pill">Objective: Design a schema that drives honest dashboards</div>
+      </div>
+      <p class="subtitle-main">
+        Choose fields and label sets for a business scenario, then see how your schema changes the story your dashboard tells.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Step 1 – Choose a scenario</h3>
+          <label for="ch2_ex1_scenario">Scenario</label>
+          <select id="ch2_ex1_scenario">
+            <option value="feedback">Customer feedback triage</option>
+            <option value="analyst_reports">Risk extraction from analyst reports</option>
+            <option value="incidents">Internal incident reports</option>
+          </select>
+          <p id="ch2_ex1_scenario_desc" class="doc" style="margin-top:6px;"></p>
+
+          <h3 style="margin-top:12px;">Step 2 – Pick your schema fields</h3>
+          <p class="doc">Select which fields your AI assistant should extract and structure for this scenario.</p>
+
+          <div id="ch2_ex1_field_list" class="doc">
+            <!-- JS populates checkboxes -->
+          </div>
+
+          <h4 style="margin-top:10px;">Label sets for key fields</h4>
+
+          <label for="ch2_ex1_severity_labels">Severity labels</label>
+          <select id="ch2_ex1_severity_labels">
+            <option value="3_level">High / Medium / Low</option>
+            <option value="5_level">Critical / High / Medium / Low / Info</option>
+            <option value="binary">High risk / Not high risk</option>
+          </select>
+
+          <label for="ch2_ex1_sentiment_labels" style="margin-top:8px;">Sentiment labels</label>
+          <select id="ch2_ex1_sentiment_labels">
+            <option value="3">Positive / Neutral / Negative</option>
+            <option value="2">Positive / Negative</option>
+            <option value="5">Strongly positive → Strongly negative</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <h3>Step 3 – See the dashboard effect</h3>
+          <button id="ch2_ex1_generate" class="primary">Generate mocked dashboard</button>
+
+          <p class="doc" style="margin-top:8px;"><b>Label distribution</b></p>
+          <div id="ch2_ex1_chart" class="doc">
+            <!-- Text-based bars rendered by JS -->
+          </div>
+
+          <p class="doc" style="margin-top:8px;"><b>Ops summary card</b></p>
+          <div id="ch2_ex1_summary_card" class="doc">
+            Choose a scenario, pick your fields and labels, then click <b>Generate mocked dashboard</b> to preview the story it tells.
+          </div>
+
+          <label for="ch2_ex1_reflection" style="margin-top:10px;">Reflection</label>
+          <textarea id="ch2_ex1_reflection"
+            placeholder="How might your schema design mislead or help leadership if turned into a real dashboard?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 2 -->
+    <section id="sec-ch2-ex2" class="section">
+      <div class="title">
+        <h2>Exercise 2 – Reasoning Blueprint</h2>
+        <div class="pill">Objective: Design a reasoning flow that reduces error cascades</div>
+      </div>
+      <p class="subtitle-main">
+        Build a 3-step reasoning blueprint for a real task using stabilizers like anchor prompts and critique passes, then see likely failure and success stories.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Step 1 – Pick a task</h3>
+          <label for="ch2_ex2_scenario">Scenario</label>
+          <select id="ch2_ex2_scenario">
+            <option value="policy_summary">Summarize a 10-page policy for managers</option>
+            <option value="compliance_checklist">Draft a compliance checklist from a regulation</option>
+            <option value="contract_review">Review a partner contract for red flags</option>
+          </select>
+          <p id="ch2_ex2_scenario_desc" class="doc" style="margin-top:6px;"></p>
+
+          <h3 style="margin-top:10px;">Step 2 – Stabilizer toolbox</h3>
+          <p class="doc">You can use these stabilizers to strengthen each step:</p>
+          <ul class="doc" id="ch2_ex2_toolbox">
+            <li>Anchor prompt</li>
+            <li>Worked example</li>
+            <li>Verification question</li>
+            <li>Critique pass</li>
+            <li>Grounding check (RAG)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Step 3 – Build your 3-step blueprint</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Stabilizer 1</th>
+                <th>Stabilizer 2 (optional)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Step 1</td>
+                <td>
+                  <select class="ch2_ex2_step" data-step="1" data-slot="1">
+                    <option value="">(none)</option>
+                    <option value="anchor">Anchor prompt</option>
+                    <option value="example">Worked example</option>
+                    <option value="verify_q">Verification question</option>
+                    <option value="critique">Critique pass</option>
+                    <option value="grounding">Grounding check (RAG)</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="ch2_ex2_step" data-step="1" data-slot="2">
+                    <option value="">(none)</option>
+                    <option value="anchor">Anchor prompt</option>
+                    <option value="example">Worked example</option>
+                    <option value="verify_q">Verification question</option>
+                    <option value="critique">Critique pass</option>
+                    <option value="grounding">Grounding check (RAG)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Step 2</td>
+                <td>
+                  <select class="ch2_ex2_step" data-step="2" data-slot="1">
+                    <option value="">(none)</option>
+                    <option value="anchor">Anchor prompt</option>
+                    <option value="example">Worked example</option>
+                    <option value="verify_q">Verification question</option>
+                    <option value="critique">Critique pass</option>
+                    <option value="grounding">Grounding check (RAG)</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="ch2_ex2_step" data-step="2" data-slot="2">
+                    <option value="">(none)</option>
+                    <option value="anchor">Anchor prompt</option>
+                    <option value="example">Worked example</option>
+                    <option value="verify_q">Verification question</option>
+                    <option value="critique">Critique pass</option>
+                    <option value="grounding">Grounding check (RAG)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Step 3</td>
+                <td>
+                  <select class="ch2_ex2_step" data-step="3" data-slot="1">
+                    <option value="">(none)</option>
+                    <option value="anchor">Anchor prompt</option>
+                    <option value="example">Worked example</option>
+                    <option value="verify_q">Verification question</option>
+                    <option value="critique">Critique pass</option>
+                    <option value="grounding">Grounding check (RAG)</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="ch2_ex2_step" data-step="3" data-slot="2">
+                    <option value="">(none)</option>
+                    <option value="anchor">Anchor prompt</option>
+                    <option value="example">Worked example</option>
+                    <option value="verify_q">Verification question</option>
+                    <option value="critique">Critique pass</option>
+                    <option value="grounding">Grounding check (RAG)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button id="ch2_ex2_run" class="primary" style="margin-top:10px;">Show likely outcomes</button>
+
+          <p class="doc" style="margin-top:10px;"><b>Likely failure mode</b></p>
+          <div id="ch2_ex2_failure" class="doc">
+            Pick a scenario, configure your blueprint, then click <b>Show likely outcomes</b>.
+          </div>
+
+          <p class="doc" style="margin-top:10px;"><b>Likely robust outcome</b></p>
+          <div id="ch2_ex2_success" class="doc"></div>
+
+          <label for="ch2_ex2_reflection" style="margin-top:10px;">Reflection</label>
+          <textarea id="ch2_ex2_reflection"
+            placeholder="Where would you add stabilizers in your real workflows to prevent error cascades?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 3 -->
+    <section id="sec-ch2-ex3" class="section">
+      <div class="title">
+        <h2>Exercise 3 – Evidence Courtroom</h2>
+        <div class="pill">Objective: Decide which claims are truly grounded in the retrieved evidence</div>
+      </div>
+      <p class="subtitle-main">
+        Act as an evidence judge: label each claim in the model’s answer as supported, partially supported, or unsupported by the retrieved snippets.
+      </p>
+
+      <div class="card">
+        <h3>Step 1 – Choose a scenario</h3>
+        <label for="ch2_ex3_scenario">Scenario</label>
+        <select id="ch2_ex3_scenario">
+          <option value="hr_policy">HR policy helpdesk</option>
+          <option value="product_faq">Product feature FAQ</option>
+          <option value="reg_compliance">Regulatory compliance helpdesk</option>
+        </select>
+        <p id="ch2_ex3_scenario_desc" class="doc" style="margin-top:6px;"></p>
+
+        <p class="doc" style="margin-top:10px;"><b>Question</b></p>
+        <p id="ch2_ex3_question" class="doc"></p>
+
+        <p class="doc" style="margin-top:10px;"><b>Model answer</b></p>
+        <p id="ch2_ex3_answer" class="doc"></p>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Step 2 – Compare answer with retrieved snippets</h3>
+
+        <p class="doc"><b>Retrieved snippets</b></p>
+        <ul id="ch2_ex3_snippets" class="doc"></ul>
+
+        <p class="doc" style="margin-top:10px;"><b>Individual claims</b></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Your judgment</th>
+            </tr>
+          </thead>
+          <tbody id="ch2_ex3_claims">
+            <!-- JS populates rows -->
+          </tbody>
+        </table>
+
+        <button id="ch2_ex3_check" class="primary" style="margin-top:10px;">Check my judgments</button>
+        <div id="ch2_ex3_feedback" class="doc" style="margin-top:10px;">
+          After you label each claim, click <b>Check my judgments</b> to see coaching feedback.
+        </div>
+
+        <label for="ch2_ex3_reflection" style="margin-top:10px;">Reflection</label>
+        <textarea id="ch2_ex3_reflection"
+          placeholder="How could you use this claim-by-claim thinking when reading AI answers at work?"></textarea>
+      </div>
+    </section>
+
+    <!-- Exercise 4 -->
+    <section id="sec-ch2-ex4" class="section">
+      <div class="title">
+        <h2>Exercise 4 – AI Team Architect</h2>
+        <div class="pill">Objective: Define clear roles, permissions, and handoffs for an AI agent team</div>
+      </div>
+      <p class="subtitle-main">
+        Treat agents like teammates: define what each is allowed to do, what they focus on, and where collisions or safety issues might appear.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Step 1 – Choose a workflow</h3>
+          <label for="ch2_ex4_workflow">Workflow</label>
+          <select id="ch2_ex4_workflow">
+            <option value="marketing">Marketing content pipeline</option>
+            <option value="risk_report">Risk report pipeline</option>
+            <option value="support_assistant">Customer support assistant</option>
+          </select>
+          <p id="ch2_ex4_workflow_desc" class="doc" style="margin-top:6px;"></p>
+
+          <h3 style="margin-top:10px;">Step 2 – Configure your AI team</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Agent</th>
+                <th>Job focus</th>
+                <th>Allowed actions</th>
+              </tr>
+            </thead>
+            <tbody id="ch2_ex4_agents">
+              <!-- JS populates rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Step 3 – Check for collisions and risks</h3>
+          <button id="ch2_ex4_analyze" class="primary">Analyze my design</button>
+
+          <p class="doc" style="margin-top:10px;"><b>Role clarity score</b></p>
+          <p id="ch2_ex4_clarity" class="doc"></p>
+
+          <p class="doc" style="margin-top:10px;"><b>Potential collisions</b></p>
+          <ul id="ch2_ex4_collisions" class="doc"></ul>
+
+          <p class="doc" style="margin-top:10px;"><b>Safety & injection hints</b></p>
+          <ul id="ch2_ex4_safety" class="doc"></ul>
+
+          <label for="ch2_ex4_reflection" style="margin-top:10px;">Reflection</label>
+          <textarea id="ch2_ex4_reflection"
+            placeholder="If these agents were real teammates, would they know what they are allowed to do? What would you change?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercise 5 -->
+    <section id="sec-ch2-ex5" class="section">
+      <div class="title">
+        <h2>Exercise 5 – Compression Studio</h2>
+        <div class="pill">Objective: Design the right summarization path for your audience</div>
+      </div>
+      <p class="subtitle-main">
+        Choose an audience and use case, then design a compression path that turns a long document into the right kind of summary—with visibility into risks.
+      </p>
+
+      <div class="card">
+        <h3>Step 1 – Choose a document and audience</h3>
+
+        <label for="ch2_ex5_doc_type">Document type</label>
+        <select id="ch2_ex5_doc_type">
+          <option value="vendor_contract">50-page vendor contract</option>
+          <option value="clinical_paper">Clinical research paper</option>
+          <option value="policy_manual">Policy manual</option>
+        </select>
+
+        <label for="ch2_ex5_audience" style="margin-top:8px;">Audience</label>
+        <select id="ch2_ex5_audience">
+          <option value="cfo">CFO / executive</option>
+          <option value="lawyer">Legal counsel</option>
+          <option value="clinician">Busy clinician</option>
+          <option value="manager">Front-line manager</option>
+          <option value="new_hire">New hire</option>
+        </select>
+
+        <label for="ch2_ex5_use_case" style="margin-top:8px;">Use case</label>
+        <select id="ch2_ex5_use_case">
+          <option value="decision_brief">Decision briefing</option>
+          <option value="risk_review">Risk review</option>
+          <option value="orientation">Quick orientation</option>
+        </select>
+
+        <p id="ch2_ex5_scenario_desc" class="doc" style="margin-top:6px;"></p>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Step 2 – Build your compression path</h3>
+        <table>
+          <tbody>
+            <tr>
+              <td class="doc"><b>Chunking strategy</b></td>
+              <td>
+                <select id="ch2_ex5_chunking">
+                  <option value="sections">By sections</option>
+                  <option value="topics">By topics</option>
+                  <option value="pages">By fixed page ranges</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="doc"><b>Section summary style</b></td>
+              <td>
+                <select id="ch2_ex5_section_style">
+                  <option value="bullets_risks">Bulleted risks</option>
+                  <option value="narrative">Narrative paragraphs</option>
+                  <option value="qa">Q&amp;A style</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="doc"><b>Final merge format</b></td>
+              <td>
+                <select id="ch2_ex5_merge_format">
+                  <option value="exec_summary">Executive summary</option>
+                  <option value="faq">FAQ</option>
+                  <option value="checklist">Checklist</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="doc"><b>Verbosity control</b></td>
+              <td>
+                <select id="ch2_ex5_verbosity">
+                  <option value="2_bullets">2 bullets per section</option>
+                  <option value="5_points">5 key points total</option>
+                  <option value="200_words">200-word cap</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Step 3 – Preview and risk check</h3>
+        <button id="ch2_ex5_preview" class="primary">Generate sample summary</button>
+
+        <p class="doc" style="margin-top:10px;"><b>Sample summary snippets</b></p>
+        <div id="ch2_ex5_sample" class="doc">
+          Configure the path above and click <b>Generate sample summary</b> to see what your recipe might produce.
+        </div>
+
+        <p class="doc" style="margin-top:10px;"><b>Compression overview</b></p>
+        <p id="ch2_ex5_overview" class="doc"></p>
+
+        <p class="doc" style="margin-top:10px;"><b>Potential risks</b></p>
+        <ul id="ch2_ex5_risks" class="doc"></ul>
+
+        <label for="ch2_ex5_reflection" style="margin-top:10px;">Reflection</label>
+        <textarea id="ch2_ex5_reflection"
+          placeholder="Would your target audience accept this level of compression? What would you adjust?"></textarea>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Shared navigation (same pattern as Chapter 3)
+    (function () {
+      var navBtns = Array.prototype.slice.call(document.querySelectorAll(".navbtn"));
+      var sections = Array.prototype.slice.call(document.querySelectorAll(".section"));
+      navBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          navBtns.forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          var target = btn.getAttribute("data-target");
+          sections.forEach(function (sec) {
+            sec.classList.toggle("active", sec.id === target);
+          });
+        });
+      });
+    })();
+
+    function clamp(num, min, max) {
+      return Math.max(min, Math.min(max, num));
+    }
+
+    // Exercise 1: Inbox to Dashboard
+    (function () {
+      var scenarioSel = document.getElementById("ch2_ex1_scenario");
+      if (!scenarioSel) return;
+
+      var scenarioDesc = document.getElementById("ch2_ex1_scenario_desc");
+      var fieldList = document.getElementById("ch2_ex1_field_list");
+      var severitySel = document.getElementById("ch2_ex1_severity_labels");
+      var sentimentSel = document.getElementById("ch2_ex1_sentiment_labels");
+      var generateBtn = document.getElementById("ch2_ex1_generate");
+      var chartEl = document.getElementById("ch2_ex1_chart");
+      var summaryCard = document.getElementById("ch2_ex1_summary_card");
+
+      var scenarios = {
+        feedback: {
+          desc: "Classify incoming customer feedback so you can triage issues and spot themes.",
+          fields: [
+            { id: "sentiment", label: "Sentiment label" },
+            { id: "topic", label: "Topic/category" },
+            { id: "severity", label: "Impact severity" },
+            { id: "channel", label: "Channel (email / app / social)" },
+            { id: "owner", label: "Owner / team" }
+          ]
+        },
+        analyst_reports: {
+          desc: "Extract key risks and opportunities from long analyst reports.",
+          fields: [
+            { id: "risk_level", label: "Risk level" },
+            { id: "opportunity_level", label: "Opportunity level" },
+            { id: "sector", label: "Sector / segment" },
+            { id: "indicator_phrase", label: "Indicator phrase / quote" },
+            { id: "time_horizon", label: "Time horizon" }
+          ]
+        },
+        incidents: {
+          desc: "Turn internal incident reports into actionable data for operations and safety.",
+          fields: [
+            { id: "incident_type", label: "Incident type" },
+            { id: "severity", label: "Severity" },
+            { id: "location", label: "Location / site" },
+            { id: "cause", label: "Suspected cause" },
+            { id: "followup_owner", label: "Follow-up owner" }
+          ]
+        }
+      };
+
+      function renderFieldList() {
+        var sc = scenarios[scenarioSel.value] || scenarios.feedback;
+        scenarioDesc.textContent = sc.desc;
+        while (fieldList.firstChild) fieldList.removeChild(fieldList.firstChild);
+        sc.fields.forEach(function (f) {
+          var lbl = document.createElement("label");
+          var cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.value = f.id;
+          cb.checked = (f.id === "severity" || f.id === "sentiment" || f.id === "risk_level");
+          lbl.appendChild(cb);
+          lbl.appendChild(document.createTextNode(" " + f.label));
+          fieldList.appendChild(lbl);
+          fieldList.appendChild(document.createElement("br"));
+        });
+      }
+
+      function generateDashboard() {
+        var scKey = scenarioSel.value;
+        var sc = scenarios[scKey] || scenarios.feedback;
+        var checked = Array.prototype.slice.call(fieldList.querySelectorAll("input[type=checkbox]:checked"))
+          .map(function (cb) { return cb.value; });
+
+        if (checked.length === 0) {
+          chartEl.textContent = "Please select at least one field for your schema.";
+          summaryCard.textContent = "";
+          return;
+        }
+
+        // Basic pseudo-distributions based on label config
+        var severityConfig = severitySel.value;
+        var sentimentConfig = sentimentSel.value;
+
+        var severityLabels;
+        if (severityConfig === "5_level") {
+          severityLabels = ["Critical", "High", "Medium", "Low", "Info"];
+        } else if (severityConfig === "binary") {
+          severityLabels = ["High risk", "Not high risk"];
+        } else {
+          severityLabels = ["High", "Medium", "Low"];
+        }
+
+        var sentimentLabels;
+        if (sentimentConfig === "2") {
+          sentimentLabels = ["Positive", "Negative"];
+        } else if (sentimentConfig === "5") {
+          sentimentLabels = ["Strongly positive", "Positive", "Neutral", "Negative", "Strongly negative"];
+        } else {
+          sentimentLabels = ["Positive", "Neutral", "Negative"];
+        }
+
+        // Create a simple distribution (deterministic from scenario & config)
+        function pseudoHash(str) {
+          var h = 0;
+          for (var i = 0; i < str.length; i++) {
+            h = (h * 31 + str.charCodeAt(i)) >>> 0;
+          }
+          return h;
+        }
+
+        var seed = pseudoHash(scKey + severityConfig + sentimentConfig);
+        function pseudoRand() {
+          seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+          return seed / 0x7fffffff;
+        }
+
+        var severityCounts = {};
+        severityLabels.forEach(function (l) { severityCounts[l] = 0; });
+        var sentimentCounts = {};
+        sentimentLabels.forEach(function (l) { sentimentCounts[l] = 0; });
+
+        // pretend we have 40 records
+        var totalItems = 40;
+        for (var i = 0; i < totalItems; i++) {
+          var sIdx = Math.floor(pseudoRand() * severityLabels.length);
+          var seLabel = severityLabels[clamp(sIdx, 0, severityLabels.length - 1)];
+          severityCounts[seLabel]++;
+
+          var tIdx = Math.floor(pseudoRand() * sentimentLabels.length);
+          var sentLabel = sentimentLabels[clamp(tIdx, 0, sentimentLabels.length - 1)];
+          sentimentCounts[sentLabel]++;
+        }
+
+        // Render chart text
+        while (chartEl.firstChild) chartEl.removeChild(chartEl.firstChild);
+
+        if (checked.indexOf("severity") !== -1 || checked.indexOf("risk_level") !== -1) {
+          var titleSev = document.createElement("p");
+          titleSev.className = "doc";
+          titleSev.innerHTML = "<b>Severity / risk distribution</b>";
+          chartEl.appendChild(titleSev);
+          Object.keys(severityCounts).forEach(function (lab) {
+            var row = document.createElement("div");
+            row.className = "bar-row";
+            var lbl = document.createElement("div");
+            lbl.className = "bar-label";
+            lbl.textContent = lab;
+            var track = document.createElement("div");
+            track.className = "bar-track";
+            var fill = document.createElement("div");
+            fill.className = "bar-fill";
+            var pct = (severityCounts[lab] / totalItems) * 100;
+            fill.style.width = pct.toFixed(0) + "%";
+            track.appendChild(fill);
+            row.appendChild(lbl);
+            row.appendChild(track);
+            chartEl.appendChild(row);
+          });
+        }
+
+        if (checked.indexOf("sentiment") !== -1) {
+          var titleSent = document.createElement("p");
+          titleSent.className = "doc";
+          titleSent.style.marginTop = "8px";
+          titleSent.innerHTML = "<b>Sentiment distribution</b>";
+          chartEl.appendChild(titleSent);
+          Object.keys(sentimentCounts).forEach(function (lab2) {
+            var row2 = document.createElement("div");
+            row2.className = "bar-row";
+            var lbl2 = document.createElement("div");
+            lbl2.className = "bar-label";
+            lbl2.textContent = lab2;
+            var track2 = document.createElement("div");
+            track2.className = "bar-track";
+            var fill2 = document.createElement("div");
+            fill2.className = "bar-fill";
+            var pct2 = (sentimentCounts[lab2] / totalItems) * 100;
+            fill2.style.width = pct2.toFixed(0) + "%";
+            track2.appendChild(fill2);
+            row2.appendChild(lbl2);
+            row2.appendChild(track2);
+            chartEl.appendChild(row2);
+          });
+        }
+
+        if (!chartEl.firstChild) {
+          chartEl.textContent = "Your selected fields don't include severity or sentiment, so there's no label distribution to show. Try including one of those fields.";
+        }
+
+        // Ops summary text
+        var highestSeverity = null;
+        var highestCount = -1;
+        Object.keys(severityCounts).forEach(function (lab3) {
+          if (severityCounts[lab3] > highestCount) {
+            highestCount = severityCounts[lab3];
+            highestSeverity = lab3;
+          }
+        });
+
+        var msg = "";
+        if (checked.indexOf("severity") !== -1 || checked.indexOf("risk_level") !== -1) {
+          msg += "Your dashboard suggests about " + highestCount + " items at '" + highestSeverity + "' level out of "
+            + totalItems + ". ";
+        } else {
+          msg += "Because your schema does not track severity or risk, your dashboard can’t highlight which items are most urgent. ";
+        }
+
+        if (scKey === "feedback") {
+          msg += "In customer feedback triage, this might drive where support teams focus first, or it might hide slow-burning issues if labels are too coarse.";
+        } else if (scKey === "analyst_reports") {
+          msg += "For analyst reports, label design affects what leadership sees as 'high-risk' vs 'background noise'.";
+        } else {
+          msg += "For incidents, your schema choices directly impact how safety and operations teams prioritize follow-ups.";
+        }
+
+        summaryCard.textContent = msg;
+      }
+
+      scenarioSel.addEventListener("change", renderFieldList);
+      generateBtn.addEventListener("click", generateDashboard);
+
+      scenarioSel.value = "feedback";
+      renderFieldList();
+      generateDashboard();
+    })();
+
+    // Exercise 2: Reasoning Blueprint
+    (function () {
+      var scSel = document.getElementById("ch2_ex2_scenario");
+      if (!scSel) return;
+
+      var scDesc = document.getElementById("ch2_ex2_scenario_desc");
+      var runBtn = document.getElementById("ch2_ex2_run");
+      var failureEl = document.getElementById("ch2_ex2_failure");
+      var successEl = document.getElementById("ch2_ex2_success");
+
+      var scenarios = {
+        policy_summary: {
+          desc: "Produce a manager-friendly summary of a long policy while preserving key rules and exceptions."
+        },
+        compliance_checklist: {
+          desc: "Turn a complex regulation into a checklist that non-lawyers can follow."
+        },
+        contract_review: {
+          desc: "Scan a partner contract and highlight red-flag clauses for legal or procurement."
+        }
+      };
+
+      function updateScenarioDesc() {
+        var sc = scenarios[scSel.value] || scenarios.policy_summary;
+        scDesc.textContent = sc.desc;
+      }
+
+      function collectStabilizers() {
+        var selects = Array.prototype.slice.call(document.querySelectorAll(".ch2_ex2_step"));
+        var blueprint = {
+          1: [], 2: [], 3: []
+        };
+        selects.forEach(function (sel) {
+          var v = sel.value;
+          if (!v) return;
+          var step = sel.getAttribute("data-step");
+          if (!blueprint[step]) blueprint[step] = [];
+          if (blueprint[step].indexOf(v) === -1) {
+            blueprint[step].push(v);
+          }
+        });
+        return blueprint;
+      }
+
+      function anyStabilizer(bp, name) {
+        return Object.keys(bp).some(function (s) {
+          return bp[s].indexOf(name) !== -1;
+        });
+      }
+
+      runBtn.addEventListener("click", function () {
+        var scKey = scSel.value;
+        var bp = collectStabilizers();
+        var hasGrounding = anyStabilizer(bp, "grounding");
+        var hasCritique = anyStabilizer(bp, "critique");
+        var hasVerify = anyStabilizer(bp, "verify_q");
+        var hasExample = anyStabilizer(bp, "example");
+        var hasAnchor = anyStabilizer(bp, "anchor");
+
+        var failureStory = "";
+        var successStory = "";
+
+        if (scKey === "policy_summary") {
+          failureStory = "Without strong stabilizers, the policy summary may sound polished but quietly drop key exceptions, eligibility conditions, or dates. "
+            + "Managers walk away believing 'everyone is eligible' when the fine print says otherwise.";
+          successStory = "With grounding checks and at least one verification question, your blueprint encourages the AI to cross-check rules against the source text "
+            + "and surface exceptions explicitly (e.g., 'Only employees with 12+ months of service qualify').";
+        } else if (scKey === "compliance_checklist") {
+          failureStory = "If the blueprint jumps straight to checklist bullets, it can easily turn dense legal text into over-simplified 'do/don't' rules that miss mandatory conditions. "
+            + "Teams might think they are compliant while skipping required steps.";
+          successStory = "By adding a worked example and critique pass, your blueprint nudges the system to test the checklist against a sample scenario and refine it, "
+            + "catching missing steps before humans rely on it.";
+        } else {
+          failureStory = "A contract review without grounding or critique may highlight some obvious issues but miss subtle but high-impact clauses, "
+            + "like auto-renewal with steep penalties, or one-way indemnity.";
+          successStory = "By applying grounding checks and verification questions, your blueprint gives the AI a habit of quoting the exact clause text and checking it against known risk patterns. "
+            + "Legal partners receive a more trustworthy shortlist of red flags.";
+        }
+
+        if (!hasGrounding && !hasVerify && !hasCritique) {
+          failureStory += " In your chosen blueprint, there are no explicit checks to tie the answer back to the source or to question its own reasoning, "
+            + "so the risk of error cascades remains high.";
+        } else {
+          successStory += " Your blueprint includes at least one stabilizer that forces the AI to either look back at the source (grounding) or question its own output (verification/critique), "
+            + "which directly reduces the chance of error cascades.";
+        }
+
+        if (!hasExample && hasAnchor) {
+          successStory += " An anchor prompt alone can point the model in the right direction, but real strength often comes from worked examples that demonstrate what 'good' looks like.";
+        } else if (hasExample) {
+          successStory += " Including worked examples helps the AI mirror the exact format and level of detail you want.";
+        }
+
+        failureEl.textContent = failureStory;
+        successEl.textContent = successStory;
+      });
+
+      scSel.addEventListener("change", updateScenarioDesc);
+      scSel.value = "policy_summary";
+      updateScenarioDesc();
+    })();
+
+    // Exercise 3: Evidence Courtroom
+    (function () {
+      var scSel = document.getElementById("ch2_ex3_scenario");
+      if (!scSel) return;
+
+      var scDesc = document.getElementById("ch2_ex3_scenario_desc");
+      var qEl = document.getElementById("ch2_ex3_question");
+      var ansEl = document.getElementById("ch2_ex3_answer");
+      var snippetsEl = document.getElementById("ch2_ex3_snippets");
+      var claimsBody = document.getElementById("ch2_ex3_claims");
+      var checkBtn = document.getElementById("ch2_ex3_check");
+      var feedbackEl = document.getElementById("ch2_ex3_feedback");
+
+      var datasets = {
+        hr_policy: {
+          desc: "You are answering employees’ HR questions based on an internal policy manual.",
+          question: "“Am I eligible for paid parental leave if I’ve worked here for 9 months?”",
+          answer: "Yes, you are eligible for 8 weeks of paid parental leave, because anyone who has worked more than 6 months at the company qualifies. The benefit applies to both full-time and part-time employees.",
+          snippets: [
+            "Parental Leave Policy, section 2.1: Employees with at least 12 months of continuous service are eligible for paid parental leave.",
+            "Parental Leave Policy, section 2.2: The standard paid parental leave duration is 8 weeks.",
+            "Parental Leave Policy, section 2.3: Paid parental leave applies to full-time employees only."
+          ],
+          claims: [
+            { text: "Employees with more than 6 months of service qualify for paid parental leave.", label: "unsupported" },
+            { text: "The standard paid parental leave duration is 8 weeks.", label: "supported" },
+            { text: "Paid parental leave applies to both full-time and part-time employees.", label: "unsupported" },
+            { text: "The answer given to the employee is incorrect about eligibility timing.", label: "partial" }
+          ]
+        },
+        product_faq: {
+          desc: "You are answering product questions based on the official product documentation.",
+          question: "“Does the Standard plan include daily data backups and 24/7 support?”",
+          answer: "Yes, the Standard plan includes daily data backups and 24/7 live chat support. Phone support is available on weekdays only.",
+          snippets: [
+            "Pricing & Plans: Standard plan includes daily automated backups and business-hours live chat support.",
+            "Pricing & Plans: Premium plan includes 24/7 live chat and phone support.",
+            "Service Description: All plans include at least weekly backups."
+          ],
+          claims: [
+            { text: "The Standard plan includes daily data backups.", label: "supported" },
+            { text: "The Standard plan includes 24/7 live chat support.", label: "unsupported" },
+            { text: "Phone support is available on weekdays only for the Standard plan.", label: "partial" },
+            { text: "The answer overstates the support level offered by the Standard plan.", label: "supported" }
+          ]
+        },
+        reg_compliance: {
+          desc: "You are answering compliance questions based on an internal summary of a regulation.",
+          question: "“Do we need explicit consent before sending promotional emails to EU customers?”",
+          answer: "No, explicit consent is not strictly required, as long as customers can unsubscribe easily and we only send them relevant product updates. The regulation mainly focuses on transparency and unsubscribe mechanisms.",
+          snippets: [
+            "Regulation summary, section 4.1: For EU customers, explicit opt-in consent is required before sending promotional email campaigns.",
+            "Regulation summary, section 4.3: All promotional emails must include a clear unsubscribe link.",
+            "Regulation summary, section 1.2: The regulation emphasizes both consent and transparency."
+          ],
+          claims: [
+            { text: "Explicit consent is not strictly required for EU promotional emails.", label: "unsupported" },
+            { text: "The regulation emphasizes transparency and unsubscribe mechanisms.", label: "supported" },
+            { text: "Explicit opt-in consent is actually required by the regulation for EU customers.", label: "supported" },
+            { text: "The model’s answer downplays an important compliance requirement.", label: "supported" }
+          ]
+        }
+      };
+
+      function renderScenario() {
+        var data = datasets[scSel.value] || datasets.hr_policy;
+        scDesc.textContent = data.desc;
+        qEl.textContent = data.question;
+        ansEl.textContent = data.answer;
+
+        while (snippetsEl.firstChild) snippetsEl.removeChild(snippetsEl.firstChild);
+        data.snippets.forEach(function (s) {
+          var li = document.createElement("li");
+          li.textContent = s;
+          snippetsEl.appendChild(li);
+        });
+
+        while (claimsBody.firstChild) claimsBody.removeChild(claimsBody.firstChild);
+        data.claims.forEach(function (c, idx) {
+          var tr = document.createElement("tr");
+          var tdClaim = document.createElement("td");
+          tdClaim.textContent = c.text;
+          var tdSelect = document.createElement("td");
+          var sel = document.createElement("select");
+          sel.className = "ch2_ex3_claim_sel";
+          sel.setAttribute("data-idx", idx);
+          var opts = [
+            { v: "", label: "(choose)" },
+            { v: "supported", label: "Supported" },
+            { v: "partial", label: "Partially supported" },
+            { v: "unsupported", label: "Unsupported" }
+          ];
+          opts.forEach(function (o) {
+            var opt = document.createElement("option");
+            opt.value = o.v;
+            opt.textContent = o.label;
+            sel.appendChild(opt);
+          });
+          tdSelect.appendChild(sel);
+          tr.appendChild(tdClaim);
+          tr.appendChild(tdSelect);
+          claimsBody.appendChild(tr);
+        });
+
+        feedbackEl.textContent = 'After you label each claim, click "Check my judgments" to see coaching feedback.';
+      }
+
+      scSel.addEventListener("change", renderScenario);
+      renderScenario();
+
+      checkBtn.addEventListener("click", function () {
+        var data = datasets[scSel.value] || datasets.hr_policy;
+        var sels = Array.prototype.slice.call(document.querySelectorAll(".ch2_ex3_claim_sel"));
+        if (!sels.length) {
+          feedbackEl.textContent = "No claims found.";
+          return;
+        }
+
+        var correct = 0;
+        var total = data.claims.length;
+        var messages = [];
+
+        for (var i = 0; i < sels.length; i++) {
+          var sel = sels[i];
+          var idx = parseInt(sel.getAttribute("data-idx"), 10);
+          var userVal = sel.value;
+          var correctVal = data.claims[idx].label;
+
+          if (!userVal) {
+            feedbackEl.textContent = "Please make a judgment for each claim before checking.";
+            return;
+          }
+
+          if (userVal === correctVal) {
+            correct++;
+          } else {
+            messages.push("Claim " + (idx + 1) + " is best seen as '" + correctVal
+              + "'. Re-read the snippets to see whether they actually say what the claim asserts.");
+          }
+        }
+
+        var summary = "You matched " + correct + " out of " + total + " claim judgments.";
+        if (messages.length) {
+          summary += " Pay special attention to borderline-sounding statements that feel plausible but aren't actually stated in the snippets.";
+        }
+        feedbackEl.textContent = summary + (messages.length ? " " + messages.join(" "): "");
+      });
+    })();
+
+    // Exercise 4: AI Team Architect
+    (function () {
+      var wfSel = document.getElementById("ch2_ex4_workflow");
+      if (!wfSel) return;
+
+      var wfDesc = document.getElementById("ch2_ex4_workflow_desc");
+      var agentsBody = document.getElementById("ch2_ex4_agents");
+      var analyzeBtn = document.getElementById("ch2_ex4_analyze");
+      var clarityEl = document.getElementById("ch2_ex4_clarity");
+      var collEl = document.getElementById("ch2_ex4_collisions");
+      var safetyEl = document.getElementById("ch2_ex4_safety");
+
+      var workflows = {
+        marketing: {
+          desc: "Design an AI-assisted marketing content pipeline (from research to legally safe final copy).",
+          agents: [
+            { id: "researcher", name: "Research agent" },
+            { id: "writer", name: "Writer agent" },
+            { id: "editor", name: "Editor agent" },
+            { id: "legal", name: "Legal reviewer agent" }
+          ]
+        },
+        risk_report: {
+          desc: "Design an AI-assisted pipeline for drafting a risk report for leadership.",
+          agents: [
+            { id: "retriever", name: "Retriever agent" },
+            { id: "analyst", name: "Analyst agent" },
+            { id: "checker", name: "Checker / Guardian agent" }
+          ]
+        },
+        support_assistant: {
+          desc: "Design an AI-assisted customer support assistant with clear escalation and safety.",
+          agents: [
+            { id: "router", name: "Router agent" },
+            { id: "responder", name: "Responder agent" },
+            { id: "escalation", name: "Escalation / Human-handoff agent" }
+          ]
+        }
+      };
+
+      function renderAgents() {
+        var wf = workflows[wfSel.value] || workflows.marketing;
+        wfDesc.textContent = wf.desc;
+        while (agentsBody.firstChild) agentsBody.removeChild(agentsBody.firstChild);
+
+        wf.agents.forEach(function (a) {
+          var tr = document.createElement("tr");
+          tr.setAttribute("data-agentid", a.id);
+
+          var tdName = document.createElement("td");
+          tdName.textContent = a.name;
+          tr.appendChild(tdName);
+
+          var tdFocus = document.createElement("td");
+          var selFocus = document.createElement("select");
+          selFocus.className = "ch2_ex4_focus";
+          var focusOptions = [
+            { v: "", label: "(choose focus)" },
+            { v: "ideas", label: "Generate ideas / options" },
+            { v: "draft", label: "Draft main content" },
+            { v: "check_facts", label: "Check facts / consistency" },
+            { v: "enforce_style", label: "Enforce style / tone" },
+            { v: "route", label: "Route / escalate" }
+          ];
+          focusOptions.forEach(function (f) {
+            var opt = document.createElement("option");
+            opt.value = f.v;
+            opt.textContent = f.label;
+            selFocus.appendChild(opt);
+          });
+          tdFocus.appendChild(selFocus);
+          tr.appendChild(tdFocus);
+
+          var tdActions = document.createElement("td");
+          var divActions = document.createElement("div");
+          divActions.className = "checklist-inline";
+          var actions = [
+            { v: "change_structure", label: "Change structure" },
+            { v: "change_meaning", label: "Change meaning" },
+            { v: "introduce_facts", label: "Introduce new facts" }
+          ];
+          actions.forEach(function (ac) {
+            var lbl = document.createElement("label");
+            var cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.value = ac.v;
+            cb.className = "ch2_ex4_action";
+            lbl.appendChild(cb);
+            lbl.appendChild(document.createTextNode(ac.label));
+            divActions.appendChild(lbl);
+          });
+          tdActions.appendChild(divActions);
+          tr.appendChild(tdActions);
+
+          agentsBody.appendChild(tr);
+        });
+
+        clarityEl.textContent = "";
+        while (collEl.firstChild) collEl.removeChild(collEl.firstChild);
+        while (safetyEl.firstChild) safetyEl.removeChild(safetyEl.firstChild);
+      }
+
+      wfSel.addEventListener("change", renderAgents);
+      renderAgents();
+
+      analyzeBtn.addEventListener("click", function () {
+        var rows = Array.prototype.slice.call(agentsBody.querySelectorAll("tr"));
+        if (!rows.length) {
+          clarityEl.textContent = "No agents found.";
+          return;
+        }
+
+        var agents = [];
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          var id = row.getAttribute("data-agentid");
+          var focusSel = row.querySelector(".ch2_ex4_focus");
+          var actionCbs = Array.prototype.slice.call(row.querySelectorAll(".ch2_ex4_action"));
+          var focus = focusSel ? focusSel.value : "";
+          var actions = actionCbs.filter(function (cb) { return cb.checked; })
+            .map(function (cb) { return cb.value; });
+          if (!focus) {
+            clarityEl.textContent = "Please select a job focus for each agent before analyzing.";
+            return;
+          }
+          agents.push({
+            id: id,
+            name: row.firstChild.textContent,
+            focus: focus,
+            actions: actions
+          });
+        }
+
+        var clarity = 100;
+        var collisions = [];
+        var safetyHints = [];
+
+        function hasAction(agent, action) {
+          return agent.actions.indexOf(action) !== -1;
+        }
+
+        // Check overlaps: identical focus + powerful actions
+        for (var i = 0; i < agents.length; i++) {
+          for (var j = i + 1; j < agents.length; j++) {
+            var a1 = agents[i], a2 = agents[j];
+            if (a1.focus === a2.focus && a1.focus) {
+              if (hasAction(a1, "change_meaning") && hasAction(a2, "change_meaning")) {
+                clarity -= 15;
+                collisions.push(a1.name + " and " + a2.name + " both change meaning for the same focus, which can cause drift or disagreement.");
+              } else {
+                clarity -= 8;
+                collisions.push(a1.name + " and " + a2.name + " share the same focus. Consider making one more specialized.");
+              }
+            }
+          }
+        }
+
+        // Check absence of checking role
+        var hasChecker = agents.some(function (a) { return a.focus === "check_facts"; });
+        var multipleIntroduce = agents.filter(function (a) { return hasAction(a, "introduce_facts"); }).length;
+
+        if (multipleIntroduce > 1 && !hasChecker) {
+          clarity -= 15;
+          safetyHints.push("More than one agent can introduce new facts but none is focused on checking facts. This can increase hallucination risk.");
+        }
+
+        if (!hasChecker) {
+          safetyHints.push("No agent is explicitly focused on checking facts / consistency. Consider adding one or giving an existing agent that responsibility.");
+        }
+
+        // Check for mismatch: check_facts but can also introduce_facts
+        agents.forEach(function (a) {
+          if (a.focus === "check_facts" && hasAction(a, "introduce_facts")) {
+            clarity -= 10;
+            safetyHints.push(a.name + " is focused on checking facts but is also allowed to introduce new facts. This weakens the checker role.");
+          }
+        });
+
+        clarity = clamp(Math.round(clarity), 0, 100);
+        clarityEl.textContent = "Estimated role clarity: " + clarity + "/100.";
+
+        while (collEl.firstChild) collEl.removeChild(collEl.firstChild);
+        if (collisions.length === 0) {
+          var liOk = document.createElement("li");
+          liOk.textContent = "No major collisions detected. Roles appear reasonably distinct.";
+          collEl.appendChild(liOk);
+        } else {
+          collisions.forEach(function (c) {
+            var li = document.createElement("li");
+            li.textContent = c;
+            collEl.appendChild(li);
+          });
+        }
+
+        while (safetyEl.firstChild) safetyEl.removeChild(safetyEl.firstChild);
+        if (safetyHints.length === 0) {
+          var liOk2 = document.createElement("li");
+          liOk2.textContent = "No obvious safety or injection issues based on this simple analysis.";
+          safetyEl.appendChild(liOk2);
+        } else {
+          safetyHints.forEach(function (s) {
+            var li2 = document.createElement("li");
+            li2.textContent = s;
+            safetyEl.appendChild(li2);
+          });
+        }
+      });
+    })();
+
+    // Exercise 5: Compression Studio
+    (function () {
+      var docSel = document.getElementById("ch2_ex5_doc_type");
+      if (!docSel) return;
+
+      var audSel = document.getElementById("ch2_ex5_audience");
+      var useSel = document.getElementById("ch2_ex5_use_case");
+      var scDesc = document.getElementById("ch2_ex5_scenario_desc");
+      var chunkSel = document.getElementById("ch2_ex5_chunking");
+      var styleSel = document.getElementById("ch2_ex5_section_style");
+      var mergeSel = document.getElementById("ch2_ex5_merge_format");
+      var verbSel = document.getElementById("ch2_ex5_verbosity");
+      var previewBtn = document.getElementById("ch2_ex5_preview");
+      var sampleEl = document.getElementById("ch2_ex5_sample");
+      var overviewEl = document.getElementById("ch2_ex5_overview");
+      var risksEl = document.getElementById("ch2_ex5_risks");
+
+      function updateScenarioDesc() {
+        var docType = docSel.value;
+        var aud = audSel.value;
+        var useCase = useSel.value;
+        var desc = "You are summarizing a ";
+
+        if (docType === "vendor_contract") desc += "50-page vendor contract ";
+        else if (docType === "clinical_paper") desc += "clinical research paper ";
+        else desc += "policy manual ";
+
+        desc += "for ";
+
+        if (aud === "cfo") desc += "a CFO/executive ";
+        else if (aud === "lawyer") desc += "legal counsel ";
+        else if (aud === "clinician") desc += "a busy clinician ";
+        else if (aud === "manager") desc += "a front-line manager ";
+        else desc += "a new hire ";
+
+        desc += "to support ";
+
+        if (useCase === "decision_brief") desc += "a decision briefing.";
+        else if (useCase === "risk_review") desc += "a risk review.";
+        else desc += "a quick orientation.";
+
+        scDesc.textContent = desc;
+      }
+
+      docSel.addEventListener("change", updateScenarioDesc);
+      audSel.addEventListener("change", updateScenarioDesc);
+      useSel.addEventListener("change", updateScenarioDesc);
+      updateScenarioDesc();
+
+      function clearChildren(el) {
+        while (el.firstChild) el.removeChild(el.firstChild);
+      }
+
+      previewBtn.addEventListener("click", function () {
+        var docType = docSel.value;
+        var aud = audSel.value;
+        var useCase = useSel.value;
+        var chunk = chunkSel.value;
+        var style = styleSel.value;
+        var merge = mergeSel.value;
+        var verb = verbSel.value;
+
+        // Sample summary snippet
+        var snippets = [];
+        if (merge === "exec_summary") {
+          snippets.push("Executive summary: Key decisions and risks distilled for quick review.");
+        } else if (merge === "faq") {
+          snippets.push("FAQ-style summary: Short Q&A covering the most common questions this audience will have.");
+        } else {
+          snippets.push("Checklist summary: A series of actionable items the reader can tick off as they comply.");
+        }
+
+        if (style === "bullets_risks") {
+          snippets.push("• Top 3 risks highlighted with a brief explanation for each.\n• Additional lower-level items grouped for later review.");
+        } else if (style === "narrative") {
+          snippets.push("Narrative paragraphs explain the main points in plain language with occasional callouts for high-risk clauses.");
+        } else {
+          snippets.push("Each section is turned into Q&A: 'What does this part mean for me?' followed by a concise answer.");
+        }
+
+        if (chunk === "sections") {
+          snippets.push("The document is processed section-by-section, so structure mostly follows the original layout.");
+        } else if (chunk === "topics") {
+          snippets.push("The assistant clusters content by theme (e.g., payment terms, liability, termination) before summarizing.");
+        } else {
+          snippets.push("Content is chunked by fixed page ranges, which can be easier for systems but may mix unrelated topics.");
+        }
+
+        clearChildren(sampleEl);
+        snippets.forEach(function (s) {
+          var p = document.createElement("p");
+          p.className = "doc";
+          p.textContent = s;
+          sampleEl.appendChild(p);
+        });
+
+        // Compression overview
+        var basePages = 50;
+        var approxWords;
+        if (verb === "2_bullets") approxWords = 300;
+        else if (verb === "5_points") approxWords = 250;
+        else approxWords = 200;
+
+        var overview = basePages + " pages → approximately " + approxWords + " words of summary";
+        if (merge === "exec_summary") overview += " in the form of a single executive summary.";
+        else if (merge === "faq") overview += " organized as a short FAQ.";
+        else overview += " organized as a checklist.";
+
+        overviewEl.textContent = overview;
+
+        // Risks
+        clearChildren(risksEl);
+        var riskMessages = [];
+
+        if (docType === "vendor_contract") {
+          if (verb !== "2_bullets") {
+            riskMessages.push("Fine-grained legal language and edge-case clauses may be compressed away; consider an annex of 'clauses you must read in full' for legal.");
+          }
+          if (aud === "cfo" && merge === "checklist") {
+            riskMessages.push("A checklist alone may not convey the financial exposure; combine with a one-paragraph 'risk for finance' summary.");
+          }
+        }
+
+        if (docType === "clinical_paper") {
+          if (aud === "clinician" && style === "bullets_risks") {
+            riskMessages.push("Bulleted risks are helpful, but clinicians may also need context on study design and population to judge applicability.");
+          }
+          if (verb === "200_words") {
+            riskMessages.push("A 200-word cap can hide important limitations or side effects; consider a separate 'limitations' mini-summary.");
+          }
+        }
+
+        if (docType === "policy_manual") {
+          if (aud === "new_hire" && merge === "exec_summary") {
+            riskMessages.push("New hires may not see concrete 'what do I actually do?' steps; a checklist or FAQ may be more actionable.");
+          }
+          if (chunk === "pages") {
+            riskMessages.push("Chunking by fixed page ranges can mix unrelated policy topics, making summaries harder to navigate.");
+          }
+        }
+
+        if (riskMessages.length === 0) {
+          riskMessages.push("No obvious red flags from this simple analysis, but always have a subject-matter expert review critical summaries.");
+        }
+
+        riskMessages.forEach(function (m) {
+          var li = document.createElement("li");
+          li.textContent = m;
+          risksEl.appendChild(li);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
