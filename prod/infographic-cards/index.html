@@ -761,10 +761,27 @@
 "Conclusion - The Architect’s Mindset.png","Conclusion - The Architect’s Mindset","The conclusion summarizes the shift from being a prompt writer to a system architect, focusing on design, governance, and long-term stability.","Conclusion - The Architect’s Mindset"
 `;
 
-    const chapter3Csv = `ImageFileName,Title,Description,Section
-"3.1-temperature.png","Temperature as a Risk Dial","The temperature parameter controls randomness in token selection, trading off creativity and stability.","3.1 Temperature – The “Risk Dial”"
+const chapter3Csv = `
+ImageFileName,Title,Description,Section
+Introduction – From Chatbots to Digital Colleagues.png,Introduction – From Chatbots to Digital Colleagues,"Introduces the shift from single-turn chat to end-to-end AI systems that retrieve knowledge, use tools, and coordinate steps like a digital colleague.",Introduction – From Chatbots to Digital Colleagues
+3.1.1 Retrieval as “Semantic GPS”.png,3.1.1 Retrieval as “Semantic GPS”,"Explains retrieval as a navigation problem: embed the query, search the vector space, and pull the most relevant chunks before the model answers.",3.1.1 Retrieval as “Semantic GPS”
+3.1.2 Chunking - Balancing Precision and Context.png,3.1.2 Chunking - Balancing Precision and Context,"Shows how chunk size and overlap affect relevance and grounding—too small loses context, too large dilutes precision and increases noise.",3.1.2 Chunking - Balancing Precision and Context
+3.1.3 Hybrid Search – Combining Semantics and Exact Matches.png,3.1.3 Hybrid Search – Combining Semantics and Exact Matches,"Illustrates why mixing vector similarity with keyword/BM25-style matching improves recall and precision, especially for names, numbers, and exact phrases.",3.1.3 Hybrid Search – Combining Semantics and Exact Matches
+3.1.4 Why RAG Still Hallucinates.png,3.1.4 Why RAG Still Hallucinates,"Highlights the common failure modes where retrieval helps but does not guarantee truth: missing evidence, misread context, and overconfident generation.",3.1.4 Why RAG Still Hallucinates
+3.2.1 How Agents Use Tools.png,3.2.1 How Agents Use Tools,"Depicts an agent loop that plans, calls tools (search, calculators, APIs), observes results, and iterates until it completes the objective.",3.2.1 How Agents Use Tools
+3.2.2 Handling Failures and Conflicts.png,3.2.2 Handling Failures and Conflicts,"Covers practical recovery patterns: retries with backoff, fallbacks, conflict resolution between tools, and graceful degradation when a dependency fails.",3.2.2 Handling Failures and Conflicts
+"3.2.3 Memory, Drift, and State.png","3.2.3 Memory, Drift, and State","Explains short-term and long-term memory, state management, and how ‘drift’ can accumulate when agents carry assumptions forward across steps.","3.2.3 Memory, Drift, and State"
+3.3.1 Handoffs and Structured Contracts.png,3.3.1 Handoffs and Structured Contracts,Demonstrates how to pass work between components or agents using structured inputs/outputs so responsibilities are clear and errors are containable.,3.3.1 Handoffs and Structured Contracts
+3.3.2 Scheduling Work.png,3.3.2 Scheduling Work,"Shows how orchestration and scheduling turn complex goals into queued tasks with priorities, timeouts, and checkpoints for reliability.",3.3.2 Scheduling Work
+3.3.3 Verification as the Final Gate.png,3.3.3 Verification as the Final Gate,"Emphasizes verification before output: fact checks, constraint checks, and sanity tests that prevent plausible-but-wrong answers from shipping.",3.3.3 Verification as the Final Gate
+3.4.1 Defense Against Hallucinations.png,3.4.1 Defense Against Hallucinations,"Summarizes core anti-hallucination tactics: grounding in sources, asking for evidence, uncertainty reporting, and refusing when information is absent.",3.4.1 Defense Against Hallucinations
+3.4.2 Safety Design Patterns and Constraint Density.png,3.4.2 Safety Design Patterns and Constraint Density,"Illustrates safety as layered constraints—policies, schemas, and guardrails—and explains how tighter constraints reduce risk but can reduce flexibility.",3.4.2 Safety Design Patterns and Constraint Density
+3.4.3 Prompt Injection and Instruction Integrity.png,3.4.3 Prompt Injection and Instruction Integrity,"Shows how malicious or accidental instructions can override goals, and the design patterns that preserve instruction hierarchy and data boundaries.",3.4.3 Prompt Injection and Instruction Integrity
+"3.5.1 Performance, Latency, and Batching.png","3.5.1 Performance, Latency, and Batching","Explains the main performance levers in production: token costs, parallelism, batching requests, and controlling context length.","3.5.1 Performance, Latency, and Batching"
+3.5.2 Caching - Smart Shortcuts.png,3.5.2 Caching - Smart Shortcuts,"Demonstrates caching strategies (prompt, retrieval, and response caching) that cut cost and latency while keeping answers consistent.",3.5.2 Caching - Smart Shortcuts
+3.5.3 Scaling and Monitoring.png,3.5.3 Scaling and Monitoring,"Shows what to monitor at scale—quality, drift, latency, and errors—and how dashboards and alerts keep systems reliable over time.",3.5.3 Scaling and Monitoring
+Conclusion - Thinking Like a System Architect.png,Conclusion - Thinking Like a System Architect,"Wraps the chapter by framing RAG, agents, safety, and performance as a system architecture problem with explicit tradeoffs and design decisions.",Conclusion - Thinking Like a System Architect
 `;
-
     const chapter4Csv = `ImageFileName,Title,Description,Section
 "4.1-system-messages.png","System Messages as Constitution","System messages define the highest-priority rules and roles that guide the model’s behavior.","4.1 System Messages – The Constitution of the Model"
 `;
