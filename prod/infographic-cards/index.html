@@ -782,9 +782,26 @@ Introduction – From Chatbots to Digital Colleagues.png,Introduction – From C
 3.5.3 Scaling and Monitoring.png,3.5.3 Scaling and Monitoring,"Shows what to monitor at scale—quality, drift, latency, and errors—and how dashboards and alerts keep systems reliable over time.",3.5.3 Scaling and Monitoring
 Conclusion - Thinking Like a System Architect.png,Conclusion - Thinking Like a System Architect,"Wraps the chapter by framing RAG, agents, safety, and performance as a system architecture problem with explicit tradeoffs and design decisions.",Conclusion - Thinking Like a System Architect
 `;
-    const chapter4Csv = `ImageFileName,Title,Description,Section
-"4.1-system-messages.png","System Messages as Constitution","System messages define the highest-priority rules and roles that guide the model’s behavior.","4.1 System Messages – The Constitution of the Model"
+
+const chapter4Csv = `ImageFileName,Title,Description,Section
+"Introduction – The Guardrails of Intelligent Systems.png","Introduction – The Guardrails of Intelligent Systems","Introduces why real-world generative AI needs guardrails—policy, process, and technical controls—so capability turns into safe, repeatable outcomes.","Introduction – The Guardrails of Intelligent Systems"
+"4.1.1 The Illusion of Confidence.png","4.1.1 The Illusion of Confidence","Explains how fluent outputs can project certainty even when incorrect, and why confidence signals must be verified rather than trusted.","4.1.1 The Illusion of Confidence"
+"4.1.2 Managing Expectations and Calibrating Trust.png","4.1.2 Managing Expectations and Calibrating Trust","Shows how to set user expectations, communicate uncertainty, and calibrate trust so AI outputs become decision support—not decision authority.","4.1.2 Managing Expectations and Calibrating Trust"
+"4.1.3 Task Substitution, Not Full Job Replacement.png","4.1.3 Task Substitution, Not Full Job Replacement","Frames gen AI as a task-level accelerator that reshapes workflows, clarifies accountability, and reduces risk from over-automation narratives.","4.1.3 Task Substitution, Not Full Job Replacement"
+"4.2.1 The Three Pillars of AI Governance.png","4.2.1 The Three Pillars of AI Governance","Defines governance as a practical system of rules, oversight, and enforcement that translates organizational intent into operational AI behavior.","4.2.1 The Three Pillars of AI Governance"
+"4.2.2 Audit Trails and Legal Defensibility.png","4.2.2 Audit Trails and Legal Defensibility","Covers traceability for prompts, data, and decisions so you can investigate incidents, prove compliance, and defend outcomes under scrutiny.","4.2.2 Audit Trails and Legal Defensibility"
+"4.2.3 The Privacy Paradox of Logging.png","4.2.3 The Privacy Paradox of Logging","Explores the tradeoff between logging for safety and the privacy risks of storing sensitive prompts, outputs, and contextual data.","4.2.3 The Privacy Paradox of Logging"
+"4.2.4 Prompt Stability and Policy Boundaries.png","4.2.4 Prompt Stability and Policy Boundaries","Shows why small prompt or policy changes can cause large behavior shifts and why versioning, tests, and boundaries prevent regressions.","4.2.4 Prompt Stability and Policy Boundaries"
+"4.3.1 What Alignment Really Means.png","4.3.1 What Alignment Really Means","Clarifies alignment as reliable behavior that matches human intent and policy constraints, including common real-world failure modes.","4.3.1 What Alignment Really Means"
+"4.3.2 Bias and Fairness.png","4.3.2 Bias and Fairness","Explains how bias enters through data and systems, and how to evaluate and mitigate unfair outputs before they scale into harm.","4.3.2 Bias and Fairness"
+"4.3.3 Handling Excessive Refusals.png","4.3.3 Handling Excessive Refusals","Addresses over-restriction: when safety rules block valid work, and how to tune prompts, policies, and UX without weakening protections.","4.3.3 Handling Excessive Refusals"
+"4.3.4 Determinism in High-Stakes Domains.png","4.3.4 Determinism in High-Stakes Domains","Explains when you need repeatable outputs and how constraints, templates, and verification reduce variance in high-impact workflows.","4.3.4 Determinism in High-Stakes Domains"
+"4.4.1 RAG and the Privacy Leak Problem.png","4.4.1 RAG and the Privacy Leak Problem","Shows how retrieval can unintentionally surface sensitive content and how access control, filtering, and redaction reduce leakage risk.","4.4.1 RAG and the Privacy Leak Problem"
+"4.4.2 Legal and Medical Workflows.png","4.4.2 Legal and Medical Workflows","Applies guardrail design to regulated domains where auditability, safety, and liability require stronger controls than casual use cases.","4.4.2 Legal and Medical Workflows"
+"4.4.3 Emergent Risks in Multi-Agent Systems.png","4.4.3 Emergent Risks in Multi-Agent Systems","Highlights how multiple agents can amplify errors or leak data and why message contracts, permissions, and monitoring are essential.","4.4.3 Emergent Risks in Multi-Agent Systems"
+"Conclusion – Becoming the Responsible Architect.png","Conclusion – Becoming the Responsible Architect","Reframes the practitioner as a responsible architect who designs governance, evaluation, and guardrails into every AI-enabled system.","Conclusion – Becoming the Responsible Architect"
 `;
+
 
     const FAVORITES_KEY = "infographicGalleryFavorites_v1";
 
