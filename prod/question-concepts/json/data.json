@@ -1,0 +1,866 @@
+{
+  "chapterTitles": {
+    "1": "Chapter 1: Foundations",
+    "2": "Chapter 2: Applications",
+    "3": "Chapter 3: Agents and Production Systems",
+    "4": "Chapter 4: Ethics, Safety, Business Value"
+  },
+  "chapters": {
+    "1": [
+      {
+        "id": "ch1:1. Latent Space Concept.png",
+        "chapter": 1,
+        "imageFileName": "1. Latent Space Concept.png",
+        "title": "1. Latent Space Concept",
+        "description": "1.1 Latent Space – The Model’s Map of Meaning; 1.2 Embeddings – Coordinates in that Space",
+        "section": "1.1"
+      },
+      {
+        "id": "ch1:2. Multi-Head Attention Purpose.png",
+        "chapter": 1,
+        "imageFileName": "2. Multi-Head Attention Purpose.png",
+        "title": "2. Multi-Head Attention Purpose",
+        "description": "2.1 Multi-Head Attention – Many “Views” on the Same Text",
+        "section": "2.1"
+      },
+      {
+        "id": "ch1:3. Core Limitations of LLMs.png",
+        "chapter": 1,
+        "imageFileName": "3. Core Limitations of LLMs.png",
+        "title": "3. Core Limitations of LLMs",
+        "description": "2.3 Information Compression and the Economics of Tokens",
+        "section": "2.3"
+      },
+      {
+        "id": "ch1:4. Effect of Temperature.png",
+        "chapter": 1,
+        "imageFileName": "4. Effect of Temperature.png",
+        "title": "4. Effect of Temperature",
+        "description": "3.1 Temperature – The “Risk Dial”; 3.3 Entropy – How “Sure” Is the Model?",
+        "section": "3.1"
+      },
+      {
+        "id": "ch1:5. Top-P Sampling.png",
+        "chapter": 1,
+        "imageFileName": "5. Top-P Sampling.png",
+        "title": "5. Top-P Sampling",
+        "description": "3.2 Sampling Strategies – Top-K and Top-P",
+        "section": "3.2"
+      },
+      {
+        "id": "ch1:6. Nature of Embeddings.png",
+        "chapter": 1,
+        "imageFileName": "6. Nature of Embeddings.png",
+        "title": "6. Nature of Embeddings",
+        "description": "1.2 Embeddings – Coordinates in that Space; 1.1 Latent Space – The Model’s Map of Meaning",
+        "section": "1.2"
+      },
+      {
+        "id": "ch1:7. Chain-of-Thought Failure Mode.png",
+        "chapter": 1,
+        "imageFileName": "7. Chain-of-Thought Failure Mode.png",
+        "title": "7. Chain-of-Thought Failure Mode",
+        "description": "4.2 Chain-of-Thought and Anchor Thoughts; 5.1 RAG – Connecting the Model to Real Knowledge",
+        "section": "4.2"
+      },
+      {
+        "id": "ch1:8. Controlling Verbosity.png",
+        "chapter": 1,
+        "imageFileName": "8. Controlling Verbosity.png",
+        "title": "8. Controlling Verbosity",
+        "description": "4.3 Controlling Output Format and Length",
+        "section": "4.3"
+      },
+      {
+        "id": "ch1:9. Risk of Meta-Prompting.png",
+        "chapter": 1,
+        "imageFileName": "9. Risk of Meta-Prompting.png",
+        "title": "9. Risk of Meta-Prompting",
+        "description": "4.4 Complexity and Its Pitfalls",
+        "section": "4.4"
+      },
+      {
+        "id": "ch1:10. Weakest Link in RAG Systems.png",
+        "chapter": 1,
+        "imageFileName": "10. Weakest Link in RAG Systems.png",
+        "title": "10. Weakest Link in RAG Systems",
+        "description": "5.1 RAG – Connecting the Model to Real Knowledge",
+        "section": "5.1"
+      },
+      {
+        "id": "ch1:11. Alignment Tax.png",
+        "chapter": 1,
+        "imageFileName": "11. Alignment Tax.png",
+        "title": "11. Alignment Tax",
+        "description": "6.1 The Alignment Tax – Safety vs. Raw Capability",
+        "section": "6.1"
+      },
+      {
+        "id": "ch1:12. Semantic Drift.png",
+        "chapter": 1,
+        "imageFileName": "12. Semantic Drift.png",
+        "title": "12. Semantic Drift",
+        "description": "1.3 Semantic Drift – When Meaning Slowly Slides Away",
+        "section": "1.3"
+      },
+      {
+        "id": "ch1:13. Multi-Agent Prompting Risk.png",
+        "chapter": 1,
+        "imageFileName": "13. Multi-Agent Prompting Risk.png",
+        "title": "13. Multi-Agent Prompting Risk",
+        "description": "5.3 Multi-Agent Systems and Prompt Collisions",
+        "section": "5.3"
+      },
+      {
+        "id": "ch1:14. Long-Context Accuracy.png",
+        "chapter": 1,
+        "imageFileName": "14. Long-Context Accuracy.png",
+        "title": "14. Long-Context Accuracy",
+        "description": "2.2 Context Window – Big Memory, Selective Focus",
+        "section": "2.2"
+      },
+      {
+        "id": "ch1:15. Anchor Thought Purpose.png",
+        "chapter": 1,
+        "imageFileName": "15. Anchor Thought Purpose.png",
+        "title": "15. Anchor Thought Purpose",
+        "description": "4.2 Chain-of-Thought and Anchor Thoughts",
+        "section": "4.2"
+      },
+      {
+        "id": "ch1:16. Evaluating Hallucinations.png",
+        "chapter": 1,
+        "imageFileName": "16. Evaluating Hallucinations.png",
+        "title": "16. Evaluating Hallucinations",
+        "description": "6.2 Evaluating Quality – Beyond Word Overlap",
+        "section": "6.2"
+      },
+      {
+        "id": "ch1:17. Prompt Library Best Practices.png",
+        "chapter": 1,
+        "imageFileName": "17. Prompt Library Best Practices.png",
+        "title": "17. Prompt Library Best Practices",
+        "description": "4.4 Complexity and Its Pitfalls",
+        "section": "4.4"
+      },
+      {
+        "id": "ch1:18. Main Driver of Inference Cost.png",
+        "chapter": 1,
+        "imageFileName": "18. Main Driver of Inference Cost.png",
+        "title": "18. Main Driver of Inference Cost",
+        "description": "2.3 Information Compression and the Economics of Tokens",
+        "section": "2.3"
+      },
+      {
+        "id": "ch1:19. Gradient Leakage.png",
+        "chapter": 1,
+        "imageFileName": "19. Gradient Leakage.png",
+        "title": "19. Gradient Leakage",
+        "description": "6.3 Security Perspective – Training vs. Inference",
+        "section": "6.3"
+      },
+      {
+        "id": "ch1:20. System Message Role.png",
+        "chapter": 1,
+        "imageFileName": "20. System Message Role.png",
+        "title": "20. System Message Role",
+        "description": "4.1 System Messages – The Constitution of the Model",
+        "section": "4.1"
+      },
+      {
+        "id": "ch1:21. RAG Pipeline Behavior.png",
+        "chapter": 1,
+        "imageFileName": "21. RAG Pipeline Behavior.png",
+        "title": "21. RAG Pipeline Behavior",
+        "description": "5.1 RAG – Connecting the Model to Real Knowledge",
+        "section": "5.1"
+      },
+      {
+        "id": "ch1:22. Prompt Entropy.png",
+        "chapter": 1,
+        "imageFileName": "22. Prompt Entropy.png",
+        "title": "22. Prompt Entropy",
+        "description": "3.3 Entropy – How “Sure” Is the Model",
+        "section": "3.3"
+      },
+      {
+        "id": "ch1:23. Attention Score Explosion.png",
+        "chapter": 1,
+        "imageFileName": "23. Attention Score Explosion.png",
+        "title": "23. Attention Score Explosion",
+        "description": "2.1 Multi-Head Attention – Many “Views” on the Same Text",
+        "section": "2.1"
+      },
+      {
+        "id": "ch1:24. Why Models Hallucinate in Reasoning.png",
+        "chapter": 1,
+        "imageFileName": "24. Why Models Hallucinate in Reasoning.png",
+        "title": "24. Why Models Hallucinate in Reasoning",
+        "description": "5.1 RAG – Connecting the Model to Real Knowledge; 1.2 Embeddings – Coordinates in that Space",
+        "section": "5.1"
+      },
+      {
+        "id": "ch1:25. Tool-Calling and Reliability.png",
+        "chapter": 1,
+        "imageFileName": "25. Tool-Calling and Reliability.png",
+        "title": "25. Tool-Calling and Reliability",
+        "description": "5.2 Tools and Hybrid Intelligence",
+        "section": "5.2"
+      },
+      {
+        "id": "ch1:26. Weakness of Few-Shot Prompting.png",
+        "chapter": 1,
+        "imageFileName": "26. Weakness of Few-Shot Prompting.png",
+        "title": "26. Weakness of Few-Shot Prompting",
+        "description": "4.4 Complexity and Its Pitfalls",
+        "section": "4.4"
+      },
+      {
+        "id": "ch1:27. Increasing Determinism.png",
+        "chapter": 1,
+        "imageFileName": "27. Increasing Determinism.png",
+        "title": "27. Increasing Determinism",
+        "description": "3.1 Temperature – The “Risk Dial”; 3.3 Entropy – How “Sure” Is the Model?",
+        "section": "3.1"
+      },
+      {
+        "id": "ch1:28. Long Context Windows.png",
+        "chapter": 1,
+        "imageFileName": "28. Long Context Windows.png",
+        "title": "28. Long Context Windows",
+        "description": "2.2 Context Window – Big Memory, Selective Focus",
+        "section": "2.2"
+      },
+      {
+        "id": "ch1:29. Recursive Summarization.png",
+        "chapter": 1,
+        "imageFileName": "29. Recursive Summarization.png",
+        "title": "29. Recursive Summarization",
+        "description": "4.3 Controlling Output Format and Length; 2.2 Context Window – Big Memory, Selective Focus",
+        "section": "4.3"
+      },
+      {
+        "id": "ch1:30. Grounding Model Answers.png",
+        "chapter": 1,
+        "imageFileName": "30. Grounding Model Answers.png",
+        "title": "30. Grounding Model Answers",
+        "description": "5.1 RAG – Connecting the Model to Real Knowledge",
+        "section": "5.1"
+      }
+    ],
+    "2": [
+      {
+        "id": "ch2:31. Financial Risk Extraction Scenario.png",
+        "chapter": 2,
+        "imageFileName": "31. Financial Risk Extraction Scenario.png",
+        "title": "31. Financial Risk Extraction Scenario",
+        "description": "2.3.1 Why Grounding Beats Personality; 2.1.1 Why Structure Matters; 2.1.2 Enforcing Compliance and Stability",
+        "section": "2.3.1"
+      },
+      {
+        "id": "ch2:32. Enforcing JSON Compliance.png",
+        "chapter": 2,
+        "imageFileName": "32. Enforcing JSON Compliance.png",
+        "title": "32. Enforcing JSON Compliance",
+        "description": "2.1.1 Why Structure Matters; 2.1.2 Enforcing Compliance and Stability",
+        "section": "2.1.1"
+      },
+      {
+        "id": "ch2:33. Summarizing Legal Cases.png",
+        "chapter": 2,
+        "imageFileName": "33. Summarizing Legal Cases.png",
+        "title": "33. Summarizing Legal Cases",
+        "description": "2.5.1 Long Documents and Progressive Compression; 2.3.1 Why Grounding Beats Personality",
+        "section": "2.5.1"
+      },
+      {
+        "id": "ch2:34. Failure Risk in Multi-Step Reasoning.png",
+        "chapter": 2,
+        "imageFileName": "34. Failure Risk in Multi-Step Reasoning.png",
+        "title": "34. Failure Risk in Multi-Step Reasoning",
+        "description": "2.2.1 The Error Cascade Problem",
+        "section": "2.2.1"
+      },
+      {
+        "id": "ch2:35. Mathematical Reasoning Technique.png",
+        "chapter": 2,
+        "imageFileName": "35. Mathematical Reasoning Technique.png",
+        "title": "35. Mathematical Reasoning Technique",
+        "description": "2.2.2 Stabilizing Math and Logic",
+        "section": "2.2.2"
+      },
+      {
+        "id": "ch2:36. Prompt Collisions in Multi-Agent Systems.png",
+        "chapter": 2,
+        "imageFileName": "36. Prompt Collisions in Multi-Agent Systems.png",
+        "title": "36. Prompt Collisions in Multi-Agent Systems",
+        "description": "2.4.2 Multi-Agent Workflows and Prompt Collisions",
+        "section": "2.4.2"
+      },
+      {
+        "id": "ch2:37. Reducing Hallucinations in a Biomedical Assistant.png",
+        "chapter": 2,
+        "imageFileName": "37. Reducing Hallucinations in a Biomedical Assistant.png",
+        "title": "37. Reducing Hallucinations in a Biomedical Assistant",
+        "description": "2.3.1 Why Grounding Beats Personality; 2.3.2 Citations That Can Be Verified",
+        "section": "2.3.1"
+      },
+      {
+        "id": "ch2:38. “Break-the-Pattern” Technique.png",
+        "chapter": 2,
+        "imageFileName": "38. “Break-the-Pattern” Technique.png",
+        "title": "38. “Break-the-Pattern” Technique",
+        "description": "2.6.3 Reproducibility, State Compression, and Adversarial Testing",
+        "section": "2.6.3"
+      },
+      {
+        "id": "ch2:39. Ensuring Reproducibility in QA Workflows.png",
+        "chapter": 2,
+        "imageFileName": "39. Ensuring Reproducibility in QA Workflows.png",
+        "title": "39. Ensuring Reproducibility in QA Workflows",
+        "description": "2.6.3 Reproducibility, State Compression, and Adversarial Testing; 2.4.4 Managing Variance in Agent Chains",
+        "section": "2.6.3"
+      },
+      {
+        "id": "ch2:40. Translating Complex Documents.png",
+        "chapter": 2,
+        "imageFileName": "40. Translating Complex Documents.png",
+        "title": "40. Translating Complex Documents",
+        "description": "2.5.2 Professional Translation with Glossaries",
+        "section": "2.5.2"
+      },
+      {
+        "id": "ch2:41. Failure Mode of Unconditional Role Prompts.png",
+        "chapter": 2,
+        "imageFileName": "41. Failure Mode of Unconditional Role Prompts.png",
+        "title": "41. Failure Mode of Unconditional Role Prompts",
+        "description": "2.4.1 Role Prompts and “Bleed-Through”",
+        "section": "2.4.1"
+      },
+      {
+        "id": "ch2:42. Improving Long-Horizon Reasoning.png",
+        "chapter": 2,
+        "imageFileName": "42. Improving Long-Horizon Reasoning.png",
+        "title": "42. Improving Long-Horizon Reasoning",
+        "description": "2.2.3 Loops, Self-Critique, and Visible Reasoning",
+        "section": "2.2.3"
+      },
+      {
+        "id": "ch2:43. What Output Schemas Reduce.png",
+        "chapter": 2,
+        "imageFileName": "43. What Output Schemas Reduce.png",
+        "title": "43. What Output Schemas Reduce",
+        "description": "2.1.1 Why Structure Matters",
+        "section": "2.1.1"
+      },
+      {
+        "id": "ch2:44. To make a model follow strict rules in a creative task.png",
+        "chapter": 2,
+        "imageFileName": "44. To make a model follow strict rules in a creative task.png",
+        "title": "44. To make a model follow strict rules in a creative task",
+        "description": "2.2.1 The Error Cascade Problem; 2.1.1 Why Structure Matters",
+        "section": "2.2.1"
+      },
+      {
+        "id": "ch2:45. When a Rewrite Agent Is Useful.png",
+        "chapter": 2,
+        "imageFileName": "45. When a Rewrite Agent Is Useful.png",
+        "title": "45. When a Rewrite Agent Is Useful",
+        "description": "2.4.3 Utility Agents and Sandboxes",
+        "section": "2.4.3"
+      },
+      {
+        "id": "ch2:46. Pattern That Reduces Verbosity.png",
+        "chapter": 2,
+        "imageFileName": "46. Pattern That Reduces Verbosity.png",
+        "title": "46. Pattern That Reduces Verbosity",
+        "description": "2.5.3 Controlling Verbosity and Staying in Domain",
+        "section": "2.5.3"
+      },
+      {
+        "id": "ch2:47. “Ground Truth Leakage” in Workflows.png",
+        "chapter": 2,
+        "imageFileName": "47. “Ground Truth Leakage” in Workflows.png",
+        "title": "47. “Ground Truth Leakage” in Workflows",
+        "description": "2.6.2 Injection, Leakage, and Other Security Risks",
+        "section": "2.6.2"
+      },
+      {
+        "id": "ch2:48. Hallucination-Resistant Evaluation Pipeline.png",
+        "chapter": 2,
+        "imageFileName": "48. Hallucination-Resistant Evaluation Pipeline.png",
+        "title": "48. Hallucination-Resistant Evaluation Pipeline",
+        "description": "2.6.1 Testing Like a Scientist, Not by Vibes; 2.3.2 Citations That Can Be Verified",
+        "section": "2.6.1"
+      },
+      {
+        "id": "ch2:49. Detecting Reasoning Failure.png",
+        "chapter": 2,
+        "imageFileName": "49. Detecting Reasoning Failure.png",
+        "title": "49. Detecting Reasoning Failure",
+        "description": "2.2.3 Loops, Self-Critique, and Visible Reasoning",
+        "section": "2.2.3"
+      },
+      {
+        "id": "ch2:50. Best Prompt for Summarizing Medical Research.png",
+        "chapter": 2,
+        "imageFileName": "50. Best Prompt for Summarizing Medical Research.png",
+        "title": "50. Best Prompt for Summarizing Medical Research",
+        "description": "2.5.1 Long Documents and Progressive Compression",
+        "section": "2.5.1"
+      },
+      {
+        "id": "ch2:51. What a “Content Boundary” Pattern Prevents.png",
+        "chapter": 2,
+        "imageFileName": "51. What a “Content Boundary” Pattern Prevents.png",
+        "title": "51. What a “Content Boundary” Pattern Prevents",
+        "description": "2.5.3 Controlling Verbosity and Staying in Domain",
+        "section": "2.5.3"
+      },
+      {
+        "id": "ch2:52. Greatest Risk When Building Dynamic Prompts from User Inputs.png",
+        "chapter": 2,
+        "imageFileName": "52. Greatest Risk When Building Dynamic Prompts from User Inputs.png",
+        "title": "52. Greatest Risk When Building Dynamic Prompts from User Inputs",
+        "description": "2.6.2 Injection, Leakage, and Other Security Risks",
+        "section": "2.6.2"
+      },
+      {
+        "id": "ch2:53. Solving Knowledge Dilution.png",
+        "chapter": 2,
+        "imageFileName": "53. Solving Knowledge Dilution.png",
+        "title": "53. Solving Knowledge Dilution",
+        "description": "2.3.4 Knowledge Dilution and Multi-Step Retrieval",
+        "section": "2.3.4"
+      },
+      {
+        "id": "ch2:54. What State Compression Helps With.png",
+        "chapter": 2,
+        "imageFileName": "54. What State Compression Helps With.png",
+        "title": "54. What State Compression Helps With",
+        "description": "2.6.3 Reproducibility, State Compression, and Adversarial Testing",
+        "section": "2.6.3"
+      },
+      {
+        "id": "ch2:55. Best Way to Tune a Classification Prompt.png",
+        "chapter": 2,
+        "imageFileName": "55. Best Way to Tune a Classification Prompt.png",
+        "title": "55. Best Way to Tune a Classification Prompt",
+        "description": "2.1.3 Turning Free Text into Decisions",
+        "section": "2.1.3"
+      },
+      {
+        "id": "ch2:56. Evaluating Prompt Versions.png",
+        "chapter": 2,
+        "imageFileName": "56. Evaluating Prompt Versions.png",
+        "title": "56. Evaluating Prompt Versions",
+        "description": "2.6.1 Testing Like a Scientist, Not by Vibes",
+        "section": "2.6.1"
+      },
+      {
+        "id": "ch2:57. Best Solution for Multilingual Hallucination.png",
+        "chapter": 2,
+        "imageFileName": "57. Best Solution for Multilingual Hallucination.png",
+        "title": "57. Best Solution for Multilingual Hallucination",
+        "description": "2.3.5 The Multilingual Edge",
+        "section": "2.3.5"
+      },
+      {
+        "id": "ch2:58. What a “Sandboxed Prompt” Is.png",
+        "chapter": 2,
+        "imageFileName": "58. What a “Sandboxed Prompt” Is.png",
+        "title": "58. What a “Sandboxed Prompt” Is",
+        "description": "2.4.3 Utility Agents and Sandboxes",
+        "section": "2.4.3"
+      },
+      {
+        "id": "ch2:59. Knowledge-Intensive Agents.png",
+        "chapter": 2,
+        "imageFileName": "59. Knowledge-Intensive Agents.png",
+        "title": "59. Knowledge-Intensive Agents",
+        "description": "2.3.4 Knowledge Dilution and Multi-Step Retrieval",
+        "section": "2.3.4"
+      },
+      {
+        "id": "ch2:60. Avoiding Overfitting on Examples.png",
+        "chapter": 2,
+        "imageFileName": "60. Avoiding Overfitting on Examples.png",
+        "title": "60. Avoiding Overfitting on Examples",
+        "description": "2.2.2 Stabilizing Math and Logic",
+        "section": "2.2.2"
+      },
+      {
+        "id": "ch2:61. Compressing Long Text.png",
+        "chapter": 2,
+        "imageFileName": "61. Compressing Long Text.png",
+        "title": "61. Compressing Long Text",
+        "description": "2.5.1 Long Documents and Progressive Compression",
+        "section": "2.5.1"
+      },
+      {
+        "id": "ch2:62. Forcing Citation Quality.png",
+        "chapter": 2,
+        "imageFileName": "62. Forcing Citation Quality.png",
+        "title": "62. Forcing Citation Quality",
+        "description": "2.3.2 Citations That Can Be Verified",
+        "section": "2.3.2"
+      },
+      {
+        "id": "ch2:63. When Prompt Chaining Leads to Compounding Variance.png",
+        "chapter": 2,
+        "imageFileName": "63. When Prompt Chaining Leads to Compounding Variance.png",
+        "title": "63. When Prompt Chaining Leads to Compounding Variance",
+        "description": "2.4.4 Managing Variance in Agent Chains",
+        "section": "2.4.4"
+      },
+      {
+        "id": "ch2:64. In RAG QA, When Answers Contradict Retrieval.png",
+        "chapter": 2,
+        "imageFileName": "64. In RAG QA, When Answers Contradict Retrieval.png",
+        "title": "64. In RAG QA, When Answers Contradict Retrieval",
+        "description": "2.3.3 When the Model Disagrees with Your Documents; 2.3.2 Citations That Can Be Verified",
+        "section": "2.3.3"
+      },
+      {
+        "id": "ch2:65. Best Practice for Translating Legal Contracts.png",
+        "chapter": 2,
+        "imageFileName": "65. Best Practice for Translating Legal Contracts.png",
+        "title": "65. Best Practice for Translating Legal Contracts",
+        "description": "2.5.2 Professional Translation with Glossaries",
+        "section": "2.5.2"
+      },
+      {
+        "id": "ch2:66. When Prompt Output Becomes Unstable.png",
+        "chapter": 2,
+        "imageFileName": "66. When Prompt Output Becomes Unstable.png",
+        "title": "66. When Prompt Output Becomes Unstable",
+        "description": "2.1.2 Enforcing Compliance and Stability; 2.1.1 Why Structure Matters",
+        "section": "2.1.2"
+      },
+      {
+        "id": "ch2:67. A role-primed chain.png",
+        "chapter": 2,
+        "imageFileName": "67. A role-primed chain.png",
+        "title": "67. A role-primed chain",
+        "description": "2.4.1 Role Prompts and “Bleed-Through”",
+        "section": "2.4.1"
+      },
+      {
+        "id": "ch2:68. Tracking Improvement Across Prompt Iterations.png",
+        "chapter": 2,
+        "imageFileName": "68. Tracking Improvement Across Prompt Iterations.png",
+        "title": "68. Tracking Improvement Across Prompt Iterations",
+        "description": "2.6.1 Testing Like a Scientist, Not by Vibes",
+        "section": "2.6.1"
+      },
+      {
+        "id": "ch2:69. What Fact-Checking Loops Rely On.png",
+        "chapter": 2,
+        "imageFileName": "69. What Fact-Checking Loops Rely On.png",
+        "title": "69. What Fact-Checking Loops Rely On",
+        "description": "2.2.3 Loops, Self-Critique, and Visible Reasoning; 2.3.2 Citations That Can Be Verified",
+        "section": "2.2.3"
+      },
+      {
+        "id": "ch2:70. Enforcing Compliance in Multi-Agent Chains.png",
+        "chapter": 2,
+        "imageFileName": "70. Enforcing Compliance in Multi-Agent Chains.png",
+        "title": "70. Enforcing Compliance in Multi-Agent Chains",
+        "description": "2.4.2 Multi-Agent Workflows and Prompt Collisions",
+        "section": "2.4.2"
+      }
+    ],
+    "3": [
+      {
+        "id": "ch3:71. Agent Drift Root Cause.png",
+        "chapter": 3,
+        "imageFileName": "71. Agent Drift Root Cause.png",
+        "title": "71. Agent Drift Root Cause",
+        "description": "3.2.3 Memory, Drift, and State",
+        "section": "3.2.3"
+      },
+      {
+        "id": "ch3:72. Reliable Tool Calling Design.png",
+        "chapter": 3,
+        "imageFileName": "72. Reliable Tool Calling Design.png",
+        "title": "72. Reliable Tool Calling Design",
+        "description": "3.2.1 How Agents Use Tools",
+        "section": "3.2.1"
+      },
+      {
+        "id": "ch3:73. Chunk Size Effects in Retrieval.png",
+        "chapter": 3,
+        "imageFileName": "73. Chunk Size Effects in Retrieval.png",
+        "title": "73. Chunk Size Effects in Retrieval",
+        "description": "3.1.2 Chunking – Balancing Precision and Context",
+        "section": "3.1.2"
+      },
+      {
+        "id": "ch3:74. Risks of Higher Embedding Dimensionality.png",
+        "chapter": 3,
+        "imageFileName": "74. Risks of Higher Embedding Dimensionality.png",
+        "title": "74. Risks of Higher Embedding Dimensionality",
+        "description": "3.1.1 Retrieval as “Semantic GPS”",
+        "section": "3.1.1"
+      },
+      {
+        "id": "ch3:75. Latency Spikes in RAG.png",
+        "chapter": 3,
+        "imageFileName": "75. Latency Spikes in RAG.png",
+        "title": "75. Latency Spikes in RAG",
+        "description": "3.1.4 Why RAG Still Hallucinates; 3.5.1 Performance, Latency, and Batching",
+        "section": "3.1.4"
+      },
+      {
+        "id": "ch3:76. Role of a Hallucination Filter Agent.png",
+        "chapter": 3,
+        "imageFileName": "76. Role of a Hallucination Filter Agent.png",
+        "title": "76. Role of a Hallucination Filter Agent",
+        "description": "3.4.1 Defense Against Hallucinations",
+        "section": "3.4.1"
+      },
+      {
+        "id": "ch3:77. Improving Agent Handoffs.png",
+        "chapter": 3,
+        "imageFileName": "77. Improving Agent Handoffs.png",
+        "title": "77. Improving Agent Handoffs",
+        "description": "3.3.1 Handoffs and Structured Contracts",
+        "section": "3.3.1"
+      },
+      {
+        "id": "ch3:78. Best Caching Strategy for High-Traffic Agents.png",
+        "chapter": 3,
+        "imageFileName": "78. Best Caching Strategy for High-Traffic Agents.png",
+        "title": "78. Best Caching Strategy for High-Traffic Agents",
+        "description": "3.5.2 Caching – Smart Shortcuts",
+        "section": "3.5.2"
+      },
+      {
+        "id": "ch3:79. Retrieval Scoring Focus in Production RAG.png",
+        "chapter": 3,
+        "imageFileName": "79. Retrieval Scoring Focus in Production RAG.png",
+        "title": "79. Retrieval Scoring Focus in Production RAG",
+        "description": "3.1.1 Retrieval as “Semantic GPS”",
+        "section": "3.1.1"
+      },
+      {
+        "id": "ch3:80. Why Agent Feedback Loops Fail.png",
+        "chapter": 3,
+        "imageFileName": "80. Why Agent Feedback Loops Fail.png",
+        "title": "80. Why Agent Feedback Loops Fail",
+        "description": "3.3.3 Verification as the Final Gate",
+        "section": "3.3.3"
+      },
+      {
+        "id": "ch3:81. How Models Choose Tools.png",
+        "chapter": 3,
+        "imageFileName": "81. How Models Choose Tools.png",
+        "title": "81. How Models Choose Tools",
+        "description": "3.2.1 How Agents Use Tools",
+        "section": "3.2.1"
+      },
+      {
+        "id": "ch3:82. Assigning Multiple Tools to an Agent.png",
+        "chapter": 3,
+        "imageFileName": "82. Assigning Multiple Tools to an Agent.png",
+        "title": "82. Assigning Multiple Tools to an Agent",
+        "description": "3.2.2 Handling Failures and Conflicts",
+        "section": "3.2.2"
+      },
+      {
+        "id": "ch3:83. When RAG Hallucination Occurs.png",
+        "chapter": 3,
+        "imageFileName": "83. When RAG Hallucination Occurs.png",
+        "title": "83. When RAG Hallucination Occurs",
+        "description": "3.1.4 Why RAG Still Hallucinates",
+        "section": "3.1.4"
+      },
+      {
+        "id": "ch3:84. Purpose of Memory Replay Buffers.png",
+        "chapter": 3,
+        "imageFileName": "84. Purpose of Memory Replay Buffers.png",
+        "title": "84. Purpose of Memory Replay Buffers",
+        "description": "3.2.3 Memory, Drift, and State",
+        "section": "3.2.3"
+      },
+      {
+        "id": "ch3:85. Biggest Threat to Production Agents.png",
+        "chapter": 3,
+        "imageFileName": "85. Biggest Threat to Production Agents.png",
+        "title": "85. Biggest Threat to Production Agents",
+        "description": "3.4.3 Prompt Injection and Instruction Integrity",
+        "section": "3.4.3"
+      },
+      {
+        "id": "ch3:86. Hybrid RAG Systems.png",
+        "chapter": 3,
+        "imageFileName": "86. Hybrid RAG Systems.png",
+        "title": "86. Hybrid RAG Systems",
+        "description": "3.1.3 Hybrid Search – Combining Semantics and Exact Matches",
+        "section": "3.1.3"
+      },
+      {
+        "id": "ch3:87. Role of a Guardian Agent.png",
+        "chapter": 3,
+        "imageFileName": "87. Role of a Guardian Agent.png",
+        "title": "87. Role of a Guardian Agent",
+        "description": "3.4.2 Safety Design Patterns and Constraint Density",
+        "section": "3.4.2"
+      },
+      {
+        "id": "ch3:88. Scheduler Role in Agent Orchestration.png",
+        "chapter": 3,
+        "imageFileName": "88. Scheduler Role in Agent Orchestration.png",
+        "title": "88. Scheduler Role in Agent Orchestration",
+        "description": "3.3.2 Scheduling Work",
+        "section": "3.3.2"
+      },
+      {
+        "id": "ch3:89. Citation-Verifier Agent.png",
+        "chapter": 3,
+        "imageFileName": "89. Citation-Verifier Agent.png",
+        "title": "89. Citation-Verifier Agent",
+        "description": "3.4.1 Defense Against Hallucinations",
+        "section": "3.4.1"
+      },
+      {
+        "id": "ch3:90. High-Reliability RAG Deployment Pattern.png",
+        "chapter": 3,
+        "imageFileName": "90. High-Reliability RAG Deployment Pattern.png",
+        "title": "90. High-Reliability RAG Deployment Pattern",
+        "description": "3.4.2 Safety Design Patterns and Constraint Density",
+        "section": "3.4.2"
+      },
+      {
+        "id": "ch3:91. Handling Tool Errors.png",
+        "chapter": 3,
+        "imageFileName": "91. Handling Tool Errors.png",
+        "title": "91. Handling Tool Errors",
+        "description": "3.2.2 Handling Failures and Conflicts",
+        "section": "3.2.2"
+      },
+      {
+        "id": "ch3:92. Scaling Agents Horizontally.png",
+        "chapter": 3,
+        "imageFileName": "92. Scaling Agents Horizontally.png",
+        "title": "92. Scaling Agents Horizontally",
+        "description": "3.5.3 Scaling and Monitoring",
+        "section": "3.5.3"
+      },
+      {
+        "id": "ch3:93. Basis of Anti-Hallucination Guardrails.png",
+        "chapter": 3,
+        "imageFileName": "93. Basis of Anti-Hallucination Guardrails.png",
+        "title": "93. Basis of Anti-Hallucination Guardrails",
+        "description": "3.4.2 Safety Design Patterns and Constraint Density",
+        "section": "3.4.2"
+      },
+      {
+        "id": "ch3:94. Combining Multiple Retrieval Sources.png",
+        "chapter": 3,
+        "imageFileName": "94. Combining Multiple Retrieval Sources.png",
+        "title": "94. Combining Multiple Retrieval Sources",
+        "description": "3.1.3 Hybrid Search – Combining Semantics and Exact Matches",
+        "section": "3.1.3"
+      },
+      {
+        "id": "ch3:95. Best Practice for Production Monitoring.png",
+        "chapter": 3,
+        "imageFileName": "95. Best Practice for Production Monitoring.png",
+        "title": "95. Best Practice for Production Monitoring",
+        "description": "3.5.3 Scaling and Monitoring",
+        "section": "3.5.3"
+      },
+      {
+        "id": "ch3:96. Source of Stale-Cache Errors.png",
+        "chapter": 3,
+        "imageFileName": "96. Source of Stale-Cache Errors.png",
+        "title": "96. Source of Stale-Cache Errors",
+        "description": "3.5.2 Caching – Smart Shortcuts",
+        "section": "3.5.2"
+      },
+      {
+        "id": "ch3:97. Effect of Inference Batching.png",
+        "chapter": 3,
+        "imageFileName": "97. Effect of Inference Batching.png",
+        "title": "97. Effect of Inference Batching",
+        "description": "3.5.1 Performance, Latency, and Batching",
+        "section": "3.5.1"
+      },
+      {
+        "id": "ch3:98. RAG Relevance Testing.png",
+        "chapter": 3,
+        "imageFileName": "98. RAG Relevance Testing.png",
+        "title": "98. RAG Relevance Testing",
+        "description": "3.1.1 Retrieval as “Semantic GPS”; 3.1.4 Why RAG Still Hallucinates",
+        "section": "3.1.1"
+      },
+      {
+        "id": "ch3:99. Last Agent in Enterprise Pipelines.png",
+        "chapter": 3,
+        "imageFileName": "99. Last Agent in Enterprise Pipelines.png",
+        "title": "99. Last Agent in Enterprise Pipelines",
+        "description": "3.3.3 Verification as the Final Gate",
+        "section": "3.3.3"
+      },
+      {
+        "id": "ch3:100. Root Cause of “Context Forgetting”.png",
+        "chapter": 3,
+        "imageFileName": "100. Root Cause of “Context Forgetting”.png",
+        "title": "100. Root Cause of “Context Forgetting”",
+        "description": "3.2.3 Memory, Drift, and State",
+        "section": "3.2.3"
+      }
+    ],
+    "4": [
+      {
+        "id": "ch4:101. Over trust as a Workplace Risk.png",
+        "chapter": 4,
+        "imageFileName": "101. Over trust as a Workplace Risk.png",
+        "title": "101. Over trust as a Workplace Risk",
+        "description": "4.1.1 The Illusion of Confidence",
+        "section": "4.1.1"
+      },
+      {
+        "id": "ch4:102. Focus of AI Governance Frameworks.png",
+        "chapter": 4,
+        "imageFileName": "102. Focus of AI Governance Frameworks.png",
+        "title": "102. Focus of AI Governance Frameworks",
+        "description": "4.2.1 The Three Pillars of AI Governance",
+        "section": "4.2.1"
+      },
+      {
+        "id": "ch4:103. Ethical Risk in RAG.png",
+        "chapter": 4,
+        "imageFileName": "103. Ethical Risk in RAG.png",
+        "title": "103. Ethical Risk in RAG",
+        "description": "4.4.1 RAG and the Privacy Leak Problem",
+        "section": "4.4.1"
+      },
+      {
+        "id": "ch4:104. Determinism in High Stakes Domains.png",
+        "chapter": 4,
+        "imageFileName": "104. Determinism in High Stakes Domains.png",
+        "title": "104. Determinism in High Stakes Domains",
+        "description": "4.3.4 Determinism in High-Stakes Domains",
+        "section": "4.3.4"
+      },
+      {
+        "id": "ch4:105. Grounding Legal AI Outputs.png",
+        "chapter": 4,
+        "imageFileName": "105. Grounding Legal AI Outputs.png",
+        "title": "105. Grounding Legal AI Outputs",
+        "description": "4.4.2 Legal and Medical Workflows",
+        "section": "4.4.2"
+      },
+      {
+        "id": "ch4:106. Human-in-the-Loop in Medical Decisions.png",
+        "chapter": 4,
+        "imageFileName": "106. Human-in-the-Loop in Medical Decisions.png",
+        "title": "106. Human-in-the-Loop in Medical Decisions",
+        "description": "4.4.2 Legal and Medical Workflows",
+        "section": "4.4.2"
+      }
+    ]
+  }
+}
