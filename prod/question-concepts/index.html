@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter Infographic Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top-row">
+      <div>
+        <div class="chapter-tabs" id="chapterTabs"></div>
+        <div class="top-row-subtitle">
+          Use ← / → or the buttons to navigate. Tap the image to open a full-screen, zoomable view.
+        </div>
+        <div class="mobile-swipe-hint" id="mobileSwipeHint">
+          Swipe left/right to navigate. Tap the image to zoom.
+        </div>
+      </div>
+      <button class="review-toggle" id="reviewToggle" type="button">
+        <span class="icon">✔</span>
+        <span class="label">View Review</span>
+      </button>
+    </header>
+
+    <section class="card-area">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous image">&#8592;</button>
+
+      <div class="card-shell" id="cardShell">
+        <div class="card-stack-shadow"></div>
+
+        <article class="card" id="card">
+          <div class="card-section-tag" id="imageSection"></div>
+
+          <div class="card-header-row">
+            <h2 class="card-title" id="imageTitle"></h2>
+            <button class="review-btn inactive" id="reviewBtn" type="button" aria-label="Toggle review">
+              <span>✔</span>
+            </button>
+          </div>
+
+          <div class="image-wrapper">
+            <div class="image-wrapper-inner">
+              <img id="imageElement" src="" alt="Infographic" />
+            </div>
+          </div>
+
+          <div class="card-description" id="imageDescription"></div>
+
+          <div class="card-footer-hint" id="cardFooterHint">
+            Tap the image to open a full-screen view. Swipe to move between infographics.
+          </div>
+        </article>
+      </div>
+
+      <button class="nav-btn" id="nextBtn" aria-label="Next image">&#8594;</button>
+    </section>
+
+    <footer class="bottom-bar">
+      <div class="review-area">
+        <div class="review-count" id="reviewCount">In Review: 0</div>
+        <div class="review-actions" id="reviewActions">
+          <button class="review-export-btn" id="downloadReviewBtn" type="button">Download Review List</button>
+          <button class="review-export-btn" id="copyReviewBtn" type="button">Copy Review List</button>
+        </div>
+      </div>
+
+      <div class="progress-area">
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0 of 0 images</div>
+      </div>
+
+      <div class="bottom-hint">
+        Tip: Click an image on desktop or pinch on mobile to zoom.
+      </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-header-title" id="modalTitle"></div>
+          <button class="modal-close-btn" id="modalCloseBtn" type="button">
+            ✕ Close
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-image-wrapper">
+            <img id="modalImage" src="" alt="Infographic full view" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+<!-- Contact / Feedback Button -->
+<button
+  id="contactBtn"
+  style="
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+  "
+>
+  💬 Feedback / Contact
+</button>
+  <script src="js/script.js" defer></script>
+</body>
+</html>
