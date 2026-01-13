@@ -1,0 +1,79 @@
+Clarify Before Answering: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "Clarify Before Answering" technique employs a constraint-based workflow where the AI is explicitly forbidden from answering immediately. Instead, it must first review the user's request and generate a list of targeted questions to gather missing context. This ensures the final output is based on a complete understanding of the specific scenario rather than generic assumptions.
+
+Syntax:
+[Step 1 - Setup]
+You are a leading expert in [domain / industry]. I will ask you questions but before you answer, I want you to:
+Review the request.
+If the request is not clear, ask questions you need to know the answers to so that you can provide the best possible response to the request.
+Provide your questions in a numbered list.
+
+[Step 2 - Execution]
+Great! My question is [question]. Your task is to [task]. Remember to ask any questions you have so that the prompt can be improved before you complete the task.
+
+Usage Instructions:
+Expert Persona: Define the specific field (e.g., Cardiology, Real Estate) to ground the AI's questioning logic.
+The Constraint: The core mechanism is the instruction to "ask questions you need to know" *before* providing the solution.
+Iterative Process: Users should expect to answer the AI's questions to refine the prompt, leading to a more precise result.
+
+2. USE CASES
+
+The following examples demonstrate the "Clarify Before Answering" methodology applied to professional scenarios where missing details could lead to incorrect or dangerous advice.
+
+MEDICAL CONSULTATION (SIMULATED)
+
+Scenario:
+A Cardiologist needs to provide lifestyle advice to a patient with a specific profile but needs to ensure no contraindications are missed.
+
+Prompt:
+You are a leading expert in cardiology. I will ask you questions but before you answer, I want you to review the request and ask clarifying questions in a numbered list if the request is not clear.
+[Wait for acknowledgment]
+Great! My question is about managing hypertension. Your task is to provide lifestyle recommendations for a 45-year-old male with a family history of heart disease. Remember to ask any questions you have regarding medication history or dietary restrictions before you complete the task.
+
+
+INTERNATIONAL BUSINESS STRATEGY
+
+Scenario:
+A Business Strategist is planning an expansion for an e-commerce brand but needs to account for local regulatory and logistical nuances.
+
+Prompt:
+You are a leading expert in business strategy. I will ask you questions but before you answer, I want you to review the request and ask clarifying questions in a numbered list.
+[Wait for acknowledgment]
+Great! My question is about expanding into new markets. Your task is to outline a market entry strategy for an e-commerce business targeting Southeast Asia. Remember to ask any questions you have regarding specific target countries or product categories before you complete the task.
+
+
+REAL ESTATE ACQUISITION
+
+Scenario:
+A Real Estate agent is assisting a family with a first-time purchase but needs to narrow down location and financial constraints.
+
+Prompt:
+You are a leading expert in real estate. I will ask you questions but before you answer, I want you to review the request and ask clarifying questions in a numbered list.
+[Wait for acknowledgment]
+Great! My question is that a family is looking to buy their first home. Your task is to ask clarifying questions about budget, location preferences, and financing before making property suggestions.
+
+
+TECHNICAL SUPPORT DIAGNOSTICS
+
+Scenario:
+A Support Engineer is troubleshooting a vague software complaint and needs to isolate the variable before offering a fix.
+
+Prompt:
+You are a leading expert in customer support. I will ask you questions but before you answer, I want you to review the request and ask clarifying questions in a numbered list.
+[Wait for acknowledgment]
+Great! My question is that the customer has a complaint about a product. Your task is to ask clarifying questions about the specific error messages and user environment before suggesting a resolution.
+
+
+TRAVEL LOGISTICS PLANNING
+
+Scenario:
+A Travel Agent is planning a vacation but needs to determine the group's demographics and interests to avoid bad recommendations.
+
+Prompt:
+You are a leading expert in travel planning. I will ask you questions but before you answer, I want you to review the request and ask clarifying questions in a numbered list.
+[Wait for acknowledgment]
+Great! My question is that a family wants a vacation destination recommendation. Your task is to ask clarifying questions about budget, preferred activities, and travel dates before making a suggestion.
+

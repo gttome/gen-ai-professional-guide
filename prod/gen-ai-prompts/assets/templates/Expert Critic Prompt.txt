@@ -1,0 +1,71 @@
+Expert Critic Prompt: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "Expert Critic" prompt is a feedback-generation technique where the AI adopts the persona of a highly qualified specialist to audit, critique, and improve user-generated content. Unlike generic feedback, this method relies on specific, professional criteria to provide actionable, high-level analysis suitable for refining drafts, strategies, or technical documents.
+
+Syntax:
+Use the Expert Critic approach to act as a specialist or authority in the field of [Expert in]. Critique the content provided, highlighting areas that need improvement and offering constructive feedback. Your analysis should be detailed, professional, and geared towards enhancing the quality of the work. Base your critique on the following criteria: [Criteria]. If criteria are not provided, please develop the criteria based on the [Expert in] and the pasted text or uploaded file. TEXT: [Pasted Text or File Upload]
+
+Usage Instructions:
+Expert Field: Define the specific domain (e.g., "International Corporate Law", "Bioinformatics").
+Criteria: List specific pillars for evaluation (e.g., "compliance", "scalability", "tone"). If left blank, the AI will generate criteria based on industry best practices.
+Input: The text or file to be reviewed is placed at the end.
+
+2. USE CASES
+
+The following examples demonstrate the "Expert Critic" methodology applied to high-stakes professional reviews where precision and authority are required.
+
+CYBERSECURITY COMPLIANCE
+
+
+Scenario:
+A Chief Information Security Officer (CISO) is auditing a draft Incident Response Plan (IRP) for a fintech company to ensure it meets federal standards.
+
+Prompt:
+Use the Expert Critic approach to act as a specialist in Information Security and NIST Compliance. Critique the content provided, highlighting areas that need improvement and offering constructive feedback. Your analysis should be detailed, professional, and geared towards enhancing the resilience of the security posture. Base your critique on the following criteria: [alignment with NIST SP 800-61 r2, clarity of escalation chains, forensic data preservation protocols, and legal notification timelines for data breaches].
+
+
+
+ACADEMIC GRANT WRITING
+
+
+Scenario:
+A Principal Investigator is finalizing an NIH R01 grant proposal for a new study on neurodegenerative diseases.
+
+Prompt:
+Use the Expert Critic approach to act as a specialist in Neuroscience and Federal Grant Review. Critique the content provided, highlighting areas that need improvement and offering constructive feedback. Your analysis should be detailed, professional, and geared towards enhancing the probability of funding. Base your critique on the following criteria: [hypothesis viability, statistical power analysis, budget justification, and the persuasive strength of the 'Broader Impacts' section].
+
+
+
+VENTURE CAPITAL FUNDRAISING
+
+
+Scenario:
+A Startup Founder is refining a Series B pitch deck for presentation to institutional investors.
+
+Prompt:
+Use the Expert Critic approach to act as a specialist in Venture Capital and SaaS Economics. Critique the content provided, highlighting areas that need improvement and offering constructive feedback. Your analysis should be detailed, professional, and geared towards enhancing investor appeal. Base your critique on the following criteria: [defensibility of the competitive moat, logic of LTV:CAC ratio analysis, accuracy of Total Addressable Market (TAM) projections, and the clarity of the exit strategy].
+
+
+
+SUSTAINABLE URBAN PLANNING
+
+
+Scenario:
+A City Planner is reviewing a developer's proposal for a new mixed-use transit hub to ensure it meets the city's green building goals.
+
+Prompt:
+Use the Expert Critic approach to act as a specialist in Sustainable Urban Planning and Civil Engineering. Critique the content provided, highlighting areas that need improvement and offering constructive feedback. Your analysis should be detailed, professional, and geared towards enhancing the project's sustainability. Base your critique on the following criteria: [LEED certification feasibility, traffic flow modeling accuracy, integration with public transit systems, and long-term energy efficiency projections].
+
+
+
+CROSS-BORDER M&A LEGAL REVIEW
+
+
+Scenario:
+A Senior Associate is reviewing a Letter of Intent (LOI) for the acquisition of a European software firm by a US corporation.
+
+Prompt:
+Use the Expert Critic approach to act as a specialist in International Corporate Law and Mergers & Acquisitions. Critique the content provided, highlighting areas that need improvement and offering constructive feedback. Your analysis should be detailed, professional, and geared towards enhancing legal robustness. Base your critique on the following criteria: [jurisdictional risk exposure, clarity of indemnity clauses, intellectual property transfer mechanisms, and compliance with GDPR and data sovereignty laws].
+

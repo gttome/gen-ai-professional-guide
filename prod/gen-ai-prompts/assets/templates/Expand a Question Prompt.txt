@@ -1,0 +1,74 @@
+Expand a Question Prompt: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "Expand a Question" prompt is a divergence-convergence technique. It instructs the AI not to answer a broad query immediately, but to first break it down into specific sub-questions (divergence), answer those individually, and then synthesize them into a final comprehensive report (convergence). This prevents shallow, generic responses to complex problems.
+
+Syntax:
+When tasked with creating a [topic/solution], adhere to the following guidelines:
+First, generate a series of additional questions that explore various [subtopic1, subtopic2, …].
+After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive response to the overall question.
+This approach ensures that all aspects of the topic are thoroughly covered and integrated into the final answer.
+
+Usage Instructions:
+Topic: The broad challenge or goal (e.g., "Designing a new curriculum").
+Subtopics: The specific pillars or variables the AI must investigate (e.g., "student retention," "digital accessibility," "industry demand").
+Synthesis: The prompt explicitly demands that the final output be a "cohesive response" derived from the sub-answers, not just a list of Q&A.
+
+2. USE CASES
+
+The following examples demonstrate the "Expand a Question" methodology applied to multi-faceted professional challenges where a single-paragraph answer would be insufficient.
+
+URBAN DISASTER RESILIENCE
+
+
+Scenario:
+A City Manager needs a resilience plan for a coastal city facing rising sea levels, but a simple "build walls" answer is too reductive.
+
+Prompt:
+When tasked with creating a [comprehensive flood resilience strategy for a coastal metro area], adhere to the following guidelines: First, generate a series of additional questions that explore various [permeable pavement infrastructures, managed retreat legal frameworks, emergency evacuation logistics, and salt-marsh restoration buffers]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive response to the overall question.
+
+
+
+CORPORATE REBRANDING
+
+
+Scenario:
+A CMO is leading a rebrand for a legacy company but needs to ensure the new identity resonates without alienating the existing customer base.
+
+Prompt:
+When tasked with creating a [rebranding strategy for a 50-year-old B2B manufacturer], adhere to the following guidelines: First, generate a series of additional questions that explore various [brand equity retention, digital-first visual identity systems, internal employee cultural alignment, and competitor differentiation]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive brand transformation roadmap.
+
+
+
+SOFTWARE LEGACY MIGRATION
+
+
+Scenario:
+A CIO is planning to migrate a mission-critical mainframe system to the cloud and needs a risk-averse strategy.
+
+Prompt:
+When tasked with creating a [mainframe-to-cloud migration plan], adhere to the following guidelines: First, generate a series of additional questions that explore various [data integrity verification during transfer, code refactoring vs. rehosting, cost governance in the cloud, and business continuity during cutover]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive migration playbook.
+
+
+
+SUPPLY CHAIN DIVERSIFICATION
+
+
+Scenario:
+A Supply Chain Director needs to reduce dependency on a single region for raw materials.
+
+Prompt:
+When tasked with creating a [supply chain diversification strategy for semiconductor procurement], adhere to the following guidelines: First, generate a series of additional questions that explore various [geopolitical risk assessment, alternative supplier qualification times, inventory buffer costs, and logistics route redundancy]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive procurement resilience plan.
+
+
+
+CLINICAL TRIAL RECRUITMENT
+
+
+Scenario:
+A Pharma Program Lead wants to improve diversity in clinical trial participation.
+
+Prompt:
+When tasked with creating a [diversity inclusion plan for Phase III clinical trials], adhere to the following guidelines: First, generate a series of additional questions that explore various [community trust-building initiatives, decentralized trial technologies, socio-economic barriers to participation, and culturally relevant informed consent materials]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive patient recruitment strategy.
+

@@ -1,0 +1,74 @@
+Include Markdown Prompt: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "Include Markdown" prompt is a formatting-centric technique that compels the AI to structure its output using specific Markdown syntax. By explicitly requesting elements like tables, headers, bold text, or lists, the user ensures the response is visually organized, readable, and ready for professional presentation or documentation.
+
+Syntax:
+You are an expert in [Role]. Please create a [Output Type] regarding [Topic].
+You must utilize the following Markdown formatting elements in your response:
+[List of Elements: e.g., Tables, Headers, Bold key terms, Bullet points, Blockquotes].
+Ensure the final output is visually structured for [Purpose] and strictly adheres to the requested formatting.
+
+Usage Instructions:
+Role: Define the persona (e.g., "Technical Writer," "Data Analyst").
+Formatting Constraints: Explicitly list the Markdown elements required. For example, request a "table" for data comparison or "bold" for emphasis on specific terms.
+Purpose: Clarify how the output will be used (e.g., "for a vacation response," "for a project update") to guide the tone and structure.
+
+2. USE CASES
+
+The following examples demonstrate the "Include Markdown" methodology applied to professional scenarios where precise visual structuring is essential for clarity and utility.
+
+API DOCUMENTATION
+
+
+Scenario:
+A Senior Technical Writer needs to generate a clean, readable reference for a new REST API endpoint to share with external developers.
+
+Prompt:
+Act as a Senior Technical Writer. Document the 'POST /v1/transactions' API endpoint. You must utilize the following Markdown formatting elements: Use 'Heading 2' for major sections (Endpoint, Headers, Body), a 'Markdown Table' to define the request parameters (Name, Type, Required, Description), 'Inline Code' for parameter names, and a 'Code Block' to demonstrate the JSON response schema. Ensure the table is formatted in markdown for clarity.
+
+
+
+EXECUTIVE SWOT ANALYSIS
+
+
+Scenario:
+A Management Consultant is preparing a strategic analysis for a merger and needs a high-level summary that highlights critical risks immediately.
+
+Prompt:
+Act as a Strategic Consultant. Perform a SWOT analysis for the proposed merger between Acme Corp and Beta Industries. You must utilize the following Markdown formatting elements: Use 'Heading 3' for each quadrant (Strengths, Weaknesses, Opportunities, Threats), use 'Bullet Points' for the factors, and use 'Bold' text to highlight the single most critical factor in each list. Use a 'Blockquote' at the end to summarize the final recommendation.
+
+
+
+SPRINT RETROSPECTIVE SUMMARY
+
+
+Scenario:
+A Scrum Master wants to distribute a summary of the sprint retrospective to stakeholders, ensuring action items are distinct from metrics.
+
+Prompt:
+Act as an Agile Coach. Summarize the results of the recent Sprint Retrospective. You must utilize the following Markdown formatting elements: Use a 'Markdown Table' to present the sprint metrics (Velocity, Completion Rate, Bugs Found), use 'Heading 1' for the email subject line, use 'Italic' for direct quotes from the team feedback, and use 'Checkboxes' ( - [ ] ) for the list of committed action items for the next sprint.
+
+
+
+CLINICAL DRUG INTERACTION GUIDE
+
+
+Scenario:
+A Pharmacist needs to create a quick-reference one-pager for patients regarding a new medication regimen.
+
+Prompt:
+Act as a Clinical Pharmacist. Create a patient guide for taking 'Metformin'. You must utilize the following Markdown formatting elements: Use 'Heading 1' for the drug name, 'Heading 2' for sections (Dosage, Side Effects, Warnings), use 'Bold' for all symptoms requiring immediate medical attention, and use a 'Markdown Table' to show the schedule of when to take the medication (Morning, Noon, Night) relative to meals.
+
+
+
+CURRICULUM MODULE OUTLINE
+
+
+Scenario:
+An Instructional Designer is outlining a Python programming module and needs to differentiate between concepts, exercises, and syntax.
+
+Prompt:
+Act as a Computer Science Instructor. Create a lesson outline for "Introduction to Python Data Structures." You must utilize the following Markdown formatting elements: Use 'Ordered Lists' for the lesson progression, 'Inline Code' when mentioning specific Python types (e.g., list, dict, tuple), 'Blockquotes' for defining key terminology, and 'Heading 3' for the title of the practical lab exercise at the end.
+

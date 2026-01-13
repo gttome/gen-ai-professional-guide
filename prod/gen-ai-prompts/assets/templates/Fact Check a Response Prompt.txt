@@ -1,0 +1,71 @@
+Fact Check a Response Prompt: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "Fact Check a Response Prompt" is a self-verification technique designed to combat AI hallucinations. By instructing the AI to isolate and list the "load-bearing" facts of its own argument—those which, if proven false, would invalidate the entire response—the user forces the model to prioritize accuracy and provides a clear checklist for manual verification.
+
+Syntax:
+After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:'. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+
+Usage Instructions:
+Placement: Append this instruction to the end of any complex inquiry where accuracy is paramount.
+Mechanism: The AI will generate the standard answer first, followed immediately by the "Key Facts" list.
+Verification: The user can then verify just the listed facts against trusted sources, rather than checking every sentence of the generated text.
+
+2. USE CASES
+
+The following examples demonstrate the "Fact Check a Response Prompt" methodology applied to high-risk professional domains where factual precision is critical for decision-making.
+
+LEGAL PRECEDENT ANALYSIS
+
+
+Scenario:
+A Paralegal is summarizing the implications of a specific Supreme Court ruling regarding digital privacy rights for a senior partner.
+
+Prompt:
+Summarize the key legal precedents established in Carpenter v. United States regarding the Fourth Amendment and historical cell-site location information (CSLI). Detail how this impacts current warrantless surveillance practices. After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:'. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+
+
+
+PHARMACOKINETIC DRUG INTERACTIONS
+
+
+Scenario:
+A Clinical Pharmacist is verifying a potential drug interaction between a new anticoagulant and a patient's existing heart medication.
+
+Prompt:
+Explain the pharmacokinetic interaction mechanism between Warfarin and Amiodarone, specifically focusing on the inhibition of cytochrome P450 isozymes. Provide recommended dosage adjustments. After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:'. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+
+
+
+AEROSPACE MATERIAL SCIENCE
+
+
+Scenario:
+An Aerospace Engineer is validating the fatigue limits of a specific alloy for use in cryogenic fuel tanks.
+
+Prompt:
+Evaluate the suitability of Titanium Grade 5 (Ti-6Al-4V) for use in liquid hydrogen storage tanks, focusing on its tensile strength and fracture toughness at -253°C. After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:'. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+
+
+
+HISTORICAL ECONOMIC ANALYSIS
+
+
+Scenario:
+An Economist is drafting a report on the regulatory triggers of the 2008 Financial Crisis for a policy review.
+
+Prompt:
+Analyze the specific role of the Commodity Futures Modernization Act of 2000 in the proliferation of unregulated over-the-counter derivatives (CDS) leading up to the 2008 crash. After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:'. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+
+
+
+CYBERSECURITY VULNERABILITY ASSESSMENT
+
+
+Scenario:
+A Security Analyst is documenting the execution flow of a critical vulnerability to write a detection rule.
+
+Prompt:
+Detail the technical execution flow of the Log4Shell (CVE-2021-44228) exploit, specifically explaining how the JNDI lookup mechanism interacts with LDAP servers to execute remote code. After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:'. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+

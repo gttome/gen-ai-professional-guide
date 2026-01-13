@@ -1,0 +1,57 @@
+AI Creates the Prompt: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "AI Creates the Prompt" technique is a meta-prompting strategy where the user empowers the AI system to generate and execute its own optimized prompt based on a raw request. This method overcomes user uncertainty about how to phrase complex inquiries by leveraging the AI's ability to structure instructions for maximum relevance and efficiency.
+
+Syntax:
+Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Request]. Please create this prompt then use it to complete the request. Do not use code blocks.
+
+Usage Instructions:
+    Request: Input your raw, unstructured, or complex goal here. The AI will analyze this input to determine the necessary context and constraints.
+    Mechanism: The AI performs two distinct actions: first, it drafts a "professionally formatted" prompt tailored to the specific domain; second, it immediately uses that prompt to generate the final response.
+    Value: This ensures the user receives a response derived from a highly optimized instruction set, even if their initial input was vague or poorly structured.
+
+2. USE CASES
+
+The following examples demonstrate the "AI Creates the Prompt" methodology applied to high-complexity domains where the user knows the desired outcome but relies on the AI to formulate the technical constraints required to achieve it.
+
+GENOMIC RESEARCH
+
+    Scenario:
+    A Bioinformatics Researcher has a raw dataset of gene sequences and needs to identify potential CRISPR off-target effects but is unsure how to parameterize the search query for the AI.
+
+    Prompt:
+    Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Analyze the provided FASTA dataset of Cas9 target sequences to predict potential off-target cleavage sites in the human genome; I need the analysis to account for 3-4 base pair mismatches and prioritize exonic regions over intronic ones]. Please create this prompt then use it to complete the request. Do not use code blocks.
+
+FORENSIC ACCOUNTING
+
+    Scenario:
+    A Forensic Auditor is reviewing a disorganized set of wire transfer logs to detect layering schemes indicative of money laundering.
+
+    Prompt:
+    Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Examine this unstructured CSV list of international wire transfers for patterns indicative of 'layering' in money laundering; specifically look for rapid movement of funds between shell entities in high-risk jurisdictions followed by immediate consolidation into a single account]. Please create this prompt then use it to complete the request. Do not use code blocks.
+
+STRUCTURAL ENGINEERING
+
+    Scenario:
+    A Civil Engineer needs to propose a seismic retrofit plan for a historic masonry building that cannot be visually altered.
+
+    Prompt:
+    Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Develop a conceptual plan for seismically retrofitting a 1920s unreinforced masonry building; the solution must adhere to ASCE 41-17 standards and prioritize non-invasive techniques like center-core drilling or fiber-reinforced polymers to preserve the historic facade]. Please create this prompt then use it to complete the request. Do not use code blocks.
+
+INTERNATIONAL DIPLOMACY
+
+    Scenario:
+    A Diplomat is drafting a framework for a water-sharing treaty between three nations with conflicting riparian rights.
+
+    Prompt:
+    Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Draft a preliminary framework for a transboundary water-sharing treaty between three nations sharing the same river basin; the framework must balance upstream hydroelectric needs with downstream agricultural rights and include a dispute resolution mechanism based on the Helsinki Rules]. Please create this prompt then use it to complete the request. Do not use code blocks.
+
+NEUROLOGICAL SIGNAL PROCESSING
+
+    Scenario:
+    A Neuroscientist wants to interpret noisy EEG data to identify pre-motor cortex activity for a brain-computer interface (BCI) application.
+
+    Prompt:
+    Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Analyze this segment of noisy EEG data to isolate the Mueller rhythm desynchronization events that precede voluntary hand movement; filter out ocular artifacts and 60Hz line noise to provide a clear signal feature set for training a BCI classifier]. Please create this prompt then use it to complete the request. Do not use code blocks.

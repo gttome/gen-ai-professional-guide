@@ -1,0 +1,107 @@
+Summarization Prompt: Prompt Engineering Resource
+
+1. THE PROMPT TEMPLATE
+
+The "Summarization Prompt" (specifically the "Precision Text Summarization" technique) is an iterative density method. Instead of simply shortening text, this prompt generates five distinct variations of a summary, all keeping to the same word count. With each iteration, the AI is tasked with increasing the "information density"—incorporating new key points while retaining essential information from the previous version—resulting in a final "Ultra-Dense Distillation" that maximizes content within a fixed constraint.
+
+Syntax:
+Precision Text Summarization
+Welcome! Let's transform content into a series of increasingly potent summaries.
+Choose your summary length: How many words would you like each summary to be? (Recommended: 50-100)
+[Wait for user input]
+Provide your content: [Paste text or upload document]
+Your task: Create 5 summaries of the content, each containing exactly [user's chosen word count].
+Label each summary as follows:
+
+1. Broad Overview
+2. Focused Recap
+3. Condensed Synopsis
+4. Concentrated Extract
+5. Ultra-Dense Distillation
+
+Guidelines:
+
+* Keep the word count consistent across all summaries.
+* Each new summary should incorporate new key points from the content.
+* Retain all important info from the previous summary.
+* Increase information density with each iteration.
+* Ensure each summary can stand alone.
+* Begin with a verbose overview and progressively refine to create an ultra-dense final summary.
+
+Usage Instructions:
+Word Count: The user must define a strict constraint (e.g., "100 words"). This forces the AI to trade stylistic fluff for hard data as the density increases.
+Iterative Process: The output will provide five versions. The first is a general introduction; the fifth is a highly compressed, fact-heavy extraction.
+Density: The core mechanic is "increasing information density," which compels the AI to rewrite sentences to hold more facts per word.
+
+2. USE CASES
+
+The following examples demonstrate the "Summarization Prompt" methodology applied to professional domains where brevity and information density are competing priorities.
+
+EXECUTIVE BOARD REPORTING
+
+
+Scenario:
+A Chief Strategy Officer needs to present a 50-page annual performance report to the Board. They need a summary that captures all financial KPIs without exceeding a single slide's word limit.
+
+Prompt:
+[Standard Syntax as above]
+Input: [Paste 50-page Annual Report]
+Constraint: 100 words.
+(Goal: The 'Ultra-Dense Distillation' will likely strip all narrative flow and present a dense block of revenue, EBITDA, and growth percentages suitable for an executive summary.)
+
+
+
+ACADEMIC LITERATURE REVIEW
+
+
+Scenario:
+A PhD Candidate is reviewing dozens of dense papers on machine learning architectures. They need to extract the core methodology and results of each paper to populate a comparative matrix.
+
+Prompt:
+[Standard Syntax as above]
+Input: [Paste Academic Paper on Transformer Architectures]
+Constraint: 75 words.
+(Goal: The final summary will strip the abstract's introduction and focus purely on the algorithmic novelty, dataset used, and accuracy scores achieved.)
+
+
+
+LEGAL DISCOVERY & DEPOSITIONS
+
+
+Scenario:
+A Litigation Associate has a transcript of a 4-hour deposition. They need to extract the key admissions and contradictions for a case strategy memo.
+
+Prompt:
+[Standard Syntax as above]
+Input: [Paste Deposition Transcript]
+Constraint: 150 words.
+(Goal: The summary must evolve from a general description of the witness's testimony to a dense list of specific admitted facts and timeline contradictions.)
+
+
+
+MARKET INTELLIGENCE ANALYSIS
+
+
+Scenario:
+A Product Manager is analyzing a competitor's new product launch based on press releases, user manuals, and reviews. They need a feature-set comparison.
+
+Prompt:
+[Standard Syntax as above]
+Input: [Paste Competitor Product Documentation]
+Constraint: 80 words.
+(Goal: The 'Concentrated Extract' will likely list distinct features and specs (e.g., battery life, processor speed) rather than marketing fluff.)
+
+
+
+MEDICAL RESEARCH DIGEST
+
+
+Scenario:
+A Physician needs to stay current with new clinical trials but has limited reading time. They need to understand the inclusion criteria and primary endpoints of a new cardiology study.
+
+Prompt:
+[Standard Syntax as above]
+Input: [Paste Clinical Trial Protocol or Results]
+Constraint: 100 words.
+(Goal: The final summary will prioritize p-values, hazard ratios, and adverse event statistics over the study's background rationale.)
+
