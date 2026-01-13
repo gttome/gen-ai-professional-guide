@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Gen AI Prompt Companion – Quick Start</title>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to content</a>
+
+  <header class="app-header" role="banner">
+    <!-- Row 1: Menu -->
+    <div class="topbar-row">
+      <div class="topbar-right" role="navigation" aria-label="Top menu">
+        <button id="helpBtn" class="ghost-btn" type="button">How to use</button>
+<button id="themeToggleBtn"
+                class="ghost-btn"
+                type="button"
+                aria-label="Toggle light/dark theme">
+          Theme
+        </button>
+</div>
+    </div>
+
+    <!-- Row 2: Prompt title + actions -->
+    <div class="title-row">
+      <h1 id="promptTitle" class="prompt-title">Loading…</h1>
+
+      <div class="title-prompt">
+        <label for="promptSelect" class="sr-only">Select prompt template</label>
+        <select id="promptSelect" name="promptSelect" aria-label="Select a prompt template"></select>
+      </div>
+
+      <div class="title-actions">
+        <button id="favoriteBtn"
+                class="icon-star"
+                type="button"
+                aria-label="Add to favorites"
+                aria-pressed="false"
+                title="Favorite">☆</button>
+      </div>
+    </div>
+
+    <!-- Row 3: Asset navigation -->
+    <nav class="asset-nav" aria-label="Asset navigation">
+      <button class="nav-btn" type="button" data-asset="infographics" aria-pressed="true">Infographics</button>
+      <button class="nav-btn" type="button" data-asset="video" aria-pressed="false">Video</button>
+      <button class="nav-btn" type="button" data-asset="audio" aria-pressed="false">Audio</button>
+      <button class="nav-btn" type="button" data-asset="template" aria-pressed="false">Template</button>
+    </nav>
+  </header>
+
+  <main id="workspace" class="workspace" role="main" aria-live="polite">
+    <div class="workspace-loading" role="status" aria-label="Loading content">Loading…</div>
+  </main>
+
+  <!-- Footer branding: moved to bottom per requirement -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="footer-brand">
+      <!-- Inline mark (no assets folder required) -->
+<div class="footer-text">
+        <div class="footer-title">Gen AI Prompt Companion</div>
+        <div class="footer-subtitle">
+          <span>Version </span><span id="appVersion">Loading version…</span>
+        </div>
+      </div>
+    </div>
+</footer>
+
+  <!-- Modal: How to use -->
+  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="helpTitle">How to use</h2>
+        <button class="icon-btn" type="button" data-close-modal aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li><strong>Select a prompt</strong> from the dropdown at the top.</li>
+          <li><strong>Switch views</strong> using the pills: Infographics, Video, Audio, Template.</li>
+          <li><strong>Favorite</strong> a prompt with the star to make it easier to return to later.</li>
+          <li><strong>Diagnostics</strong> helps you see which configured files are present or missing.</li>
+          <li><strong>Feedback</strong> lets you capture notes and export them as a text file.</li>
+        </ol>
+
+        <p class="muted">
+          This ZIP intentionally excludes the <strong>assets</strong> folder. To use real media, place your assets
+          folder alongside <strong>index.html</strong> using the paths in <strong>data/prompts.json</strong>.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="ghost-btn" type="button" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Feedback -->
+  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="feedbackTitle">Feedback</h2>
+        <button class="icon-btn" type="button" data-close-modal aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted">Write feedback or notes below, then download a local file.</p>
+        <textarea id="feedbackText" class="textarea" rows="8" placeholder="Your feedback…"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="downloadFeedbackBtn" class="primary-btn" type="button">Download feedback (.txt)</button>
+        <button class="ghost-btn" type="button" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+  <noscript>
+    <div class="noscript">
+      This app requires JavaScript to load assets and templates.
+    </div>
+  </noscript>
+
+  <script type="module" src="js/main.js"></script>
+
+
+<!-- Contact / Feedback Button -->
+<button
+  id="contactBtn"
+  style="
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+  "
+>
+  💬 Feedback / Contact
+</button>
+
+<script>
+  // Update with your email + tweak subject per app if you’d like
+  const APP_NAME = "Gen AI Prompt Companion"; // change per app
+  const CONTACT_EMAIL = "agilityaiwork@gmail.com";
+
+  document.getElementById("contactBtn").addEventListener("click", () => {
+    const subject = encodeURIComponent(`[Feedback] ${APP_NAME}`);
+    const body = encodeURIComponent(
+`Hi Agility AI,
+
+I’m using the ${APP_NAME} and wanted to share:
+
+
+(Feel free to add screenshots.)
+
+Thanks!`
+    );
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+</body>
+</html>

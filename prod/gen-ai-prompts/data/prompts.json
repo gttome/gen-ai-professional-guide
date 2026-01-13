@@ -1,0 +1,282 @@
+{
+  "app": {
+    "name": "Gen AI Prompt Companion – Quick Start",
+    "version": "v0.3.0 (Phase 3)",
+    "lastUpdated": "2026-01-12"
+  },
+  "prompts": [
+    {
+      "id": "acting-as",
+      "title": "Acting As Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Acting As (concise).png",
+        "standard": "assets/infographics/Acting As (standard).png",
+        "detailed": "assets/infographics/Acting As Prompt (detailed).png"
+      },
+      "video": "assets/videos/Acting-As-Prompt.mp4",
+      "audio": "assets/audios/Acting_As_Prompt.m4a",
+      "template": "assets/templates/Acting As.txt",
+      "tags": ["persona", "role", "foundations"]
+    },
+    {
+      "id": "ai-asks-questions",
+      "title": "AI Asks You Questions to form a Response Prompt",
+      "infographics": {
+        "concise": "assets/infographics/AI Asks You Questions to form a Response (concise).png",
+        "standard": "assets/infographics/AI Asks You Questions to form a Response (standard).png",
+        "detailed": "assets/infographics/AI Asks You Questions to form a Response (detailed).png"
+      },
+      "video": "assets/videos/AI_Asks_You_Questions_to_form_a_Response_Prompt.mp4",
+      "audio": "assets/audios/AI_Asks_You_Questions_to_form_a_Response_Prompt.m4a",
+      "template": "assets/templates/AI Asks You Questions to form a Response.txt",
+      "tags": ["clarify", "interactive", "analysis"]
+    },
+    {
+      "id": "ai-creates-the-prompt",
+      "title": "AI Creates the Prompt",
+      "infographics": {
+        "concise": "assets/infographics/AI Creates the Prompt (concise).png",
+        "standard": "assets/infographics/AI Creates the Prompt (standard).png",
+        "detailed": "assets/infographics/AI Creates the Prompt (detailed).png"
+      },
+      "video": "assets/videos/AI-Creates-the-Prompt.mp4",
+      "audio": "assets/audios/AI_Creates_the_Prompt.m4a",
+      "template": "assets/templates/AI Creates the Prompt.txt",
+      "tags": ["meta-prompt", "prompting", "creation"]
+    },
+    {
+      "id": "always-include",
+      "title": "Always Include Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Always Include Prompt (concise).png",
+        "standard": "assets/infographics/Always Include Prompt (standard).png",
+        "detailed": "assets/infographics/Always Include Prompt (detailed).png"
+      },
+      "video": "assets/videos/Always-Include-Prompt.mp4",
+      "audio": "assets/audios/Always_Include_AI_Prompt.m4a",
+      "template": "assets/templates/Always Include Prompt.txt",
+      "tags": ["structure", "checklist", "reliability"]
+    },
+    {
+      "id": "ask-ai-to-improve",
+      "title": "Ask AI to Improve a Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Ask AI to Improve a Prompt (concise).png",
+        "standard": "assets/infographics/Ask AI to Improve a Prompt (standard).png",
+        "detailed": "assets/infographics/Ask AI to Improve a Prompt (detailed).png"
+      },
+      "video": "assets/videos/Ask-AI-to-Improve-Prompt.mp4",
+      "audio": "assets/audios/Ask_AI_to_Improve_a_Prompt.m4a",
+      "template": "assets/templates/Ask AI to Improve a Prompt.txt",
+      "tags": ["iteration", "refinement", "editing"]
+    },
+    {
+      "id": "brainstorming",
+      "title": "Brainstorming Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Brainstorming Prompt (concise).png",
+        "standard": "assets/infographics/Brainstorming Prompt (standard).png",
+        "detailed": "assets/infographics/Brainstorming Prompt (detailed).png"
+      },
+      "video": "assets/videos/Brainstorming-Prompt.mp4",
+      "audio": "assets/audios/Brainstorming_Prompt.m4a",
+      "template": "assets/templates/Brainstorming Prompt.txt",
+      "tags": ["ideation", "creativity", "divergent"]
+    },
+    {
+      "id": "clarify-before-answering",
+      "title": "Clarify Before Answering Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Clarify Before Answering Prompt (concise).png",
+        "standard": "assets/infographics/Clarify Before Answering Prompt (standard).png",
+        "detailed": "assets/infographics/Clarify Before Answering Prompt (detailed).png"
+      },
+      "video": "assets/videos/Clarify-Before-Answering.mp4",
+      "audio": "assets/audios/Clarify_Before_Answering_Prompt.m4a",
+      "template": "assets/templates/Clarify Before Answering.txt",
+      "tags": ["clarify", "requirements", "alignment"]
+    },
+    {
+      "id": "comparative-prompting",
+      "title": "Comparative Prompting",
+      "infographics": {
+        "concise": "assets/infographics/Comparative Prompting (concise).png",
+        "standard": "assets/infographics/Comparative Prompting (standard).png",
+        "detailed": "assets/infographics/Comparative Prompting (detailed).png"
+      },
+      "video": "assets/videos/Comparative-Prompting.mp4",
+      "audio": "assets/audios/Comparative_Prompting.m4a",
+      "template": "assets/templates/Comparative Prompting.txt",
+      "tags": ["comparison", "analysis", "decision"]
+    },
+    {
+      "id": "data-retrieval",
+      "title": "Data Retrieval Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Data Retrieval Prompt (concise).png",
+        "standard": "assets/infographics/Data Retrieval Prompt (standard).png",
+        "detailed": "assets/infographics/Data Retrieval Prompt (detailed).png"
+      },
+      "video": "assets/videos/Data-Retrieval-Prompt.mp4",
+      "audio": "assets/audios/Data_Retrieval_Prompt.m4a",
+      "template": "assets/templates/Data Retrieval.txt",
+      "tags": ["research", "information", "sources"]
+    },
+    {
+      "id": "expand-a-question",
+      "title": "Expand a Question Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Expand a Question Prompt (concise).png",
+        "standard": "assets/infographics/Expand a Question Prompt (standard).png",
+        "detailed": "assets/infographics/Expand a Question Prompt (detailed).png"
+      },
+      "video": "assets/videos/Expand-a-Question-Prompt.mp4",
+      "audio": "assets/audios/Expand_a_Question_Prompt.m4a",
+      "template": "assets/templates/Expand a Question Prompt.txt",
+      "tags": ["decomposition", "analysis", "exploration"]
+    },
+    {
+      "id": "expert-critic",
+      "title": "Expert Critic Prompt",
+      "infographics": {
+        "concise": "assets/infographics/The Expert Critic Prompt (concise).png",
+        "standard": "assets/infographics/The Expert Critic Prompt (standard).png",
+        "detailed": "assets/infographics/Expert Critic Prompt (detailed).png"
+      },
+      "video": "assets/videos/Expert-Critic-Prompt.mp4",
+      "audio": "assets/audios/Expert_Critic_Prompt.m4a",
+      "template": "assets/templates/Expert Critic Prompt.txt",
+      "tags": ["critique", "quality", "review"]
+    },
+    {
+      "id": "fact-check-a-response",
+      "title": "Fact Check a Response Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Fact Check a Response (concise).png",
+        "standard": "assets/infographics/Fact Check a Response (standard).png",
+        "detailed": "assets/infographics/Fact Check a Response Prompt (detailed).png"
+      },
+      "video": "assets/videos/Fact-Check-a-Response-Prompt.mp4",
+      "audio": "assets/audios/Fact_Check_a_Response_Prompt.m4a",
+      "template": "assets/templates/Fact Check a Response Prompt.txt",
+      "tags": ["verification", "accuracy", "citations"]
+    },
+    {
+      "id": "identify-tone",
+      "title": "Identify Tone Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Identify Tone Prompt (concise).png",
+        "standard": "assets/infographics/Identify Tone Prompt (standard).png",
+        "detailed": "assets/infographics/Identify Tone Prompt (detailed).png"
+      },
+      "video": "assets/videos/Identify-Tone-Prompt.mp4",
+      "audio": "assets/audios/Identify_Tone_Prompt.m4a",
+      "template": "assets/templates/Identify Tone Prompt.txt",
+      "tags": ["tone", "style", "writing"]
+    },
+    {
+      "id": "include-markdown",
+      "title": "Include Markdown Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Include Markdown Prompt (concise).png",
+        "standard": "assets/infographics/Include Markdown Prompt (standard).png",
+        "detailed": "assets/infographics/Include Markdown Prompt (detailed).png"
+      },
+      "video": "assets/videos/Include-Markdown-Prompt.mp4",
+      "audio": "assets/audios/Include_Markdown_Prompt.m4a",
+      "template": "assets/templates/Include Markdown Prompt.txt",
+      "tags": ["formatting", "markdown", "documentation"]
+    },
+    {
+      "id": "language-translator",
+      "title": "Language Translator Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Language Translator Prompt (concise).png",
+        "standard": "assets/infographics/Language Translator Prompt (standard).png",
+        "detailed": "assets/infographics/Language Translator Prompt (detailed).png"
+      },
+      "video": "assets/videos/Language-Translator-Prompt.mp4",
+      "audio": "assets/audios/Language_Translator_Prompt.m4a",
+      "template": "assets/templates/Language Translator Prompt.txt",
+      "tags": ["translation", "localization", "language"]
+    },
+    {
+      "id": "step-by-step",
+      "title": "Let’s Think Step by Step Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Let's think about this step by step Prompt (concise).png",
+        "standard": "assets/infographics/Let's think about this step by step Prompt (standard).png",
+        "detailed": "assets/infographics/Let's Think about this Step by Step Prompt (detailed).png"
+      },
+      "video": "assets/videos/Let-s-Think-about-this-Step-by-S.mp4",
+      "audio": "assets/audios/Let_s_Think_about_this_Step_by_Step_Prompt.m4a",
+      "template": "assets/templates/Step by Step.txt",
+      "tags": ["reasoning", "process", "planning"]
+    },
+    {
+      "id": "multiple-perspectives",
+      "title": "Multiple Perspectives Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Multiple Perspectives Prompt (concise).png",
+        "standard": "assets/infographics/Multiple Perspectives Prompt (standard).png",
+        "detailed": "assets/infographics/Multiple Perspectives Prompt (detailed).png"
+      },
+      "video": "assets/videos/Multiple-Perspectives-Prompt.mp4",
+      "audio": "assets/audios/Multiple_Perspectives_Prompt.m4a",
+      "template": "assets/templates/Multiple Perspectives.txt",
+      "tags": ["perspectives", "analysis", "bias"]
+    },
+    {
+      "id": "refine-and-focus",
+      "title": "Refine and Focus Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Refine and Focus Prompt (concise).png",
+        "standard": "assets/infographics/Refine and Focus Prompt (standard).png",
+        "detailed": "assets/infographics/Refine and Focus Prompt (detailed).png"
+      },
+      "video": "assets/videos/Refine-and-Focus-Prompt.mp4",
+      "audio": "assets/audios/Refine_and_Focus_Prompt.m4a",
+      "template": "assets/templates/Refine and Focus a Question Prompt.txt",
+      "tags": ["refinement", "scope", "focus"]
+    },
+    {
+      "id": "remove-information",
+      "title": "Remove Information Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Remove Information Prompt (concise).png",
+        "standard": "assets/infographics/Remove Information Prompt (standard).png",
+        "detailed": "assets/infographics/Remove Information Prompt (detailed).png"
+      },
+      "video": "assets/videos/Remove-Information-Prompt.mp4",
+      "audio": "assets/audios/Remove_Information_Prompt.m4a",
+      "template": "assets/templates/Remove Information Prompt.txt",
+      "tags": ["redaction", "privacy", "minimize"]
+    },
+    {
+      "id": "summarization",
+      "title": "Summarization Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Summarization Prompt (concise).png",
+        "standard": "assets/infographics/Summarization Prompt (standard).png",
+        "detailed": "assets/infographics/Summarization Prompt (detailed).png"
+      },
+      "video": "assets/videos/Summary-Prompt.mp4",
+      "audio": "assets/audios/Summarization_Prompt.m4a",
+      "template": "assets/templates/Summarization Prompt.txt",
+      "tags": ["summary", "compression", "notes"]
+    },
+    {
+      "id": "tone-changer",
+      "title": "Tone Changer Prompt",
+      "infographics": {
+        "concise": "assets/infographics/Tone Changer Prompt (concise).png",
+        "standard": "assets/infographics/Tone Changer Prompt (standard).png",
+        "detailed": "assets/infographics/Tone Changer Prompt (detailed).png"
+      },
+      "video": "assets/videos/Tone-Changer-Prompt.mp4",
+      "audio": "assets/audios/Tone_Changer_Prompt.m4a",
+      "template": "assets/templates/Tone Changer Prompt.txt",
+      "tags": ["tone", "rewrite", "style"]
+    }
+  ]
+}
