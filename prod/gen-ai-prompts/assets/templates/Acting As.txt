@@ -1,0 +1,106 @@
+Acting As
+
+PROMPT 1 (Prompt)
+Acting as [role or persona] and [task].
+
+PROMPT 2 (Prompt)
+Acting as a [Doctor] and [offer strategies for managing chronic back pain, including lifestyle changes, medications, and physical therapy options]
+Culinary Content
+
+PROMPT 3 (Prompt)
+Acting as a [Chef] and [write a recipe for a festive Thanksgiving dinner, including a main course, side dishes, and dessert]
+Financial Analysis
+
+PROMPT 4 (Prompt)
+Acting as a [Financial Analyst] and [interpret the latest quarterly earnings report for a tech company, highlighting key financial metrics and growth trends]
+News Reporting
+
+PROMPT 5 (Prompt)
+Acting as a [Journalist] and [cover the story of a natural disaster in real-time, including eyewitness accounts and official statements]
+Mental Health Advice
+
+PROMPT 6 (Prompt)
+Acting as a [Psychologist] and [offering tips for managing anxiety in stressful situations, focusing on breathing exercises, mindfulness, and cognitive-behavioral techniques]
+Project Planning
+
+PROMPT 7 (Prompt)
+Acting as a [Project Manager] and [outline the steps for launching a new software product, including timeline, resource allocation, and risk management]
+Travel Planning
+
+PROMPT 8 (Prompt)
+Acting as a [Travel Guide] and [create a 10-day itinerary for a trip to Japan, covering major cities, cultural experiences, and accommodation options]
+Fitness Training
+
+PROMPT 9 (Prompt)
+Acting as a [Fitness Coach] and [develop a training plan for someone preparing to run their first marathon, including weekly running schedules, cross-training, and nutrition advice]
+Legal Document Drafting
+
+PROMPT 10 (Prompt)
+Acting as a [Lawyer] and [draft a partnership agreement for two companies, covering terms of the partnership, responsibilities, and dispute resolution procedures]
+Pet Care Advice
+
+PROMPT 11 (Prompt)
+Acting as a [Veterinarian] and [guiding a new pet owner on how to care for their puppy, including feeding schedules, vaccinations, and training tips]
+Historical Explanation
+
+PROMPT 12 (Prompt)
+Acting as a [Historian] and [explaining the significance of the Industrial Revolution, including its impact on society, technology, and the economy]
+Music Instruction
+
+PROMPT 13 (Prompt)
+Acting as a [Music Teacher] and [instructing a beginner on how to play basic piano scales, including finger positioning and practice exercises]
+Political Discourse
+
+PROMPT 14 (Prompt)
+Acting as a [Politician] and [discuss new policy proposals for improving healthcare, including funding strategies, accessibility improvements, and patient rights]
+Architectural Design
+
+PROMPT 15 (Prompt)
+Acting as an [Architect] and [create a design plan for a sustainable office building, incorporating green technologies, energy efficiency, and eco-friendly materials]
+Personal Development Coaching
+
+PROMPT 16 (Prompt)
+Acting as a [Life Coach] and [help an individual set and achieve personal development goals, including career planning, skill development, and time management strategies]
+Data Analysis
+
+PROMPT 17 (Prompt)
+Acting as a [Data Scientist] and [analyzing a sales dataset to identify trends, including seasonal fluctuations, customer preferences, and revenue growth opportunities]
+Educational Content Creation
+
+PROMPT 18 (Prompt)
+Acting as a [Teacher] and [create a lesson plan for teaching World War II history, including key events, significant figures, and classroom activities]
+Scientific Research
+
+PROMPT 19 (Prompt)
+Acting as a [Scientist] and [conducting research on the effects of climate change on polar ice caps, including data collection, analysis, and possible mitigation strategies]
+Creative Writing
+
+PROMPT 20 (Prompt)
+Acting as a [Novelist] and [write the opening chapter of a mystery novel set in a small town, introducing the main characters and setting up the central conflict]
+Relationship Counseling
+
+PROMPT 21 (Prompt)
+Acting as a [Counselor] and [offer relationship advice to a couple facing communication issues, including active listening techniques and conflict resolution strategies]
+Using "Acting As"
+Overview
+The Acting As prompt enables the AI to adopt a specific role, persona, or character to provide responses that align with that identity. This approach can enhance interactions by making the AI's responses more relatable, tailored, and contextually appropriate to the role it is performing. Whether it's an expert in a specific field, a fictional character, or a historical figure, the AI will consistently respond as that persona.
+Why
+Contextual Relevance
+By adopting a role, the AI can provide more contextually appropriate and relevant responses. This makes interactions feel more natural and engaging.
+Personalization
+It allows for personalized experience, as the AI can tailor its responses to fit the expectations and needs associated with the chosen persona.
+Learning Enhancement
+For educational purposes, having AI act as an expert can help clarify complex topics and provide authoritative answers.
+How
+Defining the Role or Persona
+You specify the role or persona that the AI should adopt. This could be anything from a subject matter expert to a historical figure.
+Assigning a Task
+You define the task the AI needs to perform while acting as the specified role. This task could involve answering questions, providing explanations, or engaging in a conversation.
+Generating Consistent Responses
+The AI generates responses that are consistent with the defined role, ensuring that the interaction aligns with the persona's characteristics and expertise.
+
+PROMPT 22 (Prompt)
+Acting as a [role or persona] and [task].
+Resources
+View these examples in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Acting As Prompt

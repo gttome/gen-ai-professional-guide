@@ -1,0 +1,85 @@
+Multiple Perspectives
+
+PROMPT 1 (Multiple Perspectives Prompt)
+The Multiple Perspectives Prompt guides AI to provide insights from a variety of viewpoints, angles, or standpoints. Instead of giving a single, straightforward answer, the AI looks at different facets, interpretations, or schools of thought that are relevant to the topic. This method helps to ensure a well-rounded understanding of the subject, promotes critical thinking, and aids in making better decisions by presenting a complete picture of the matter at hand.
+
+PROMPT 2 (Prompt)
+For this  [topic] consider the perspectives of  [personas]
+
+PROMPT 3 (Prompt)
+For this [environmental sustainability] consider the perspectives of [environmentalists, business executives, employees, consumers]
+Supply Chain Sustainability
+
+PROMPT 4 (Prompt)
+For [supply chain ethics] consider the perspectives of [suppliers, factory workers, distributors, consumers]
+Product Development
+
+PROMPT 5 (Prompt)
+For this [smart home assistant development] consider the perspectives of [teenagers, elderly, technophobes]
+Public Policy Analysis
+
+PROMPT 6 (Prompt)
+For this [healthcare data privacy policy] consider the perspectives of [patients, healthcare providers, insurance companies, regulators]
+Urban Development and Community Impact
+Scenario A city council plans to redevelop a downtown area
+Usage Consider perspectives from local business owners, residents, urban planners, and environmentalists to balance development with community and environmental concerns
+Prompt "For this [downtown redevelopment project] consider the perspectives of [local business owners, residents, urban planners, environmentalists]"
+Education System Reform
+
+PROMPT 7 (Prompt)
+For this [curriculum reform] consider the perspectives of [students, teachers, parents, education experts]
+Healthcare Accessibility
+
+PROMPT 8 (Prompt)
+For this [healthcare accessibility assessment] consider the perspectives of [patients, healthcare professionals, insurance providers, policymakers]
+Corporate Diversity and Inclusion Initiatives
+
+PROMPT 9 (Prompt)
+For this [diversity and inclusion initiative] consider the perspectives of [employees from diverse backgrounds, HR professionals, diversity consultants]
+Artificial Intelligence Ethics
+
+PROMPT 10 (Prompt)
+For this [AI ethics discussion] consider the perspectives of [AI researchers, ethicists, tech industry workers, the public]
+Climate Change Mitigation Strategies
+
+PROMPT 11 (Prompt)
+For this [climate change mitigation strategy] consider the perspectives of [climate scientists, policymakers, industry leaders, activists]
+Consumer Product Development
+
+PROMPT 12 (Prompt)
+For this [consumer product development] consider the perspectives of [potential customers, product designers, marketing professionals, sustainability experts]
+Historical Event Analysis
+
+PROMPT 13 (Prompt)
+For this [historical event analysis] consider the perspectives of [historians, sociologists, eyewitnesses, cultural analysts]
+Public Transportation Planning
+
+PROMPT 14 (Prompt)
+For this [public transit system planning] consider the perspectives of [commuters, urban planners, environmentalists, local government officials]
+Tourism Development in a Region
+
+PROMPT 15 (Prompt)
+For this [regional tourism development] consider the perspectives of [local community members, tourism experts, environmental groups, business owners]
+Using "Multiple Perspectives"
+Overview
+The "Multiple Perspectives Prompt" guides AI to provide insights from a variety of viewpoints, angles, or standpoints. Instead of giving a single, straightforward answer, the AI looks at different facets, interpretations, or schools of thought that are relevant to the topic. This method helps to ensure a well-rounded understanding of the subject, promotes critical thinking, and aids in making better decisions by presenting a complete picture of the matter at hand.
+Why
+Well-Rounded Understanding
+By exploring multiple perspectives, users can gain a comprehensive view of the topic.
+Promotes Critical Thinking
+Considering different viewpoints encourages users to think critically and evaluate the merits of various arguments.
+Informed Decision-Making
+A thorough understanding of different perspectives helps users make more informed and balanced decisions.
+How
+Specify Topic and Personas
+Define the specific topic and the personas or viewpoints to be considered.
+Generate Perspectives
+The AI generates insights from the specified perspectives, providing a diverse range of views on the topic.
+Analyze Results
+Review the multiple perspectives to gain a deeper and more nuanced understanding of the subject.
+
+PROMPT 16 (Prompt)
+For [topic] consider the perspectives of [personas]
+Resources
+View these examples in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Multiple Perspectives Prompt

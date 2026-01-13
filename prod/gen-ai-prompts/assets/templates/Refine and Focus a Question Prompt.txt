@@ -1,0 +1,108 @@
+Refine and Focus a Question Prompt
+
+PROMPT 1 (Prompt)
+Please help refine and focus the question [question] by proposing an improved version that highlights [number] additional key areas. Your revised question should better target these areas, enhancing the clarity and precision of the inquiry.
+
+PROMPT 2 (Prompt)
+Please refine and focus this question [How sustainable is our company?], by suggesting a better version of the question to use instead that emphasizes [3] additional areas to refine and focus the question.
+Customer Service and Feedback
+
+PROMPT 3 (Prompt)
+Please refine and focus this question [How did our customer service team do?], by suggesting a better version of the question to use instead that emphasizes [5] additional areas to refine and focus the question.
+Product Design and User Experience
+
+PROMPT 4 (Prompt)
+Please refine and focus this question [What do you think of our app's design?], by suggesting a better version of the question to use instead that emphasizes [4] additional areas to refine and focus the question.
+Branding and Market Perception
+
+PROMPT 5 (Prompt)
+Please refine and focus this question [How is our brand perceived in the market?], by suggesting a better version of the question to use instead that emphasizes [5] additional areas to refine and focus the question.
+Workplace Culture and Employee Well-being
+
+PROMPT 6 (Prompt)
+Please refine and focus this question [How is our workplace culture?], by suggesting a better version of the question to use instead that emphasizes [6] additional areas to refine and focus the question.
+Healthcare Patient Intake
+
+PROMPT 7 (Prompt)
+Please refine this question [What brings you in today?] to focus on [3] specific aspects: symptoms, duration, and any self-treatment attempts.
+Academic Research Surveys
+
+PROMPT 8 (Prompt)
+Please refine this question [How do you use social media?] to specifically address [4] areas: daily usage time, preferred platforms, content interaction, and impact on mental health.
+Real Estate Client Needs
+
+PROMPT 9 (Prompt)
+Please refine this question [What are you looking for in a home?] to focus on [5] specific areas: location, size, budget, essential amenities, and style preferences.
+Financial Planning Consultation
+
+PROMPT 10 (Prompt)
+Please refine this question [What are your financial goals?] to concentrate on [3] aspects: retirement age, risk tolerance, and investment return expectations.
+Technology Product Feedback
+
+PROMPT 11 (Prompt)
+Please refine this question [What do you think about our new product?] to emphasize [4] areas: ease of use, feature usefulness, design aesthetics, and overall satisfaction.
+Educational Curriculum Development
+
+PROMPT 12 (Prompt)
+Please refine this question [How effective is our current curriculum?] to highlight [3] specific areas: student engagement, learning outcomes, and alignment with educational standards.
+Sports Team Performance Analysis
+
+PROMPT 13 (Prompt)
+Please refine this question [How did the team perform this season?] to focus on [4] aspects: team cohesion, skill development, match strategy, and areas for improvement.
+Employee Job Satisfaction Survey
+
+PROMPT 14 (Prompt)
+Please refine this question [Are you satisfied with your job?] to detail [5] specific elements: work-life balance, career development opportunities, management support, workplace environment, and compensation satisfaction.
+Event Planning Feedback
+
+PROMPT 15 (Prompt)
+Please refine this question [How was your experience at our event?] to emphasize [3] key areas: event organization, speaker quality, and networking opportunities.
+Automotive Customer Preference Analysis
+
+PROMPT 16 (Prompt)
+Please refine this question [What features do you look for in a car?] to focus on [4] specific factors: fuel efficiency, interior comfort, technological features, and safety measures.
+The Refine and Focus a Question prompt enhances clarity by emphasizing specific areas, refining questions for precision. This approach is particularly beneficial in fields like journalism, research, business, finance, healthcare, and law, where targeted questions are essential for obtaining specific, accurate answers, aiding in decision-making and verification processes.
+Using the Refine and Focus a Question Prompt
+The Refine and Focus a Question prompt is a powerful tool designed to help you get clearer and more specific answers by homing in on the details and subtopics of your original question. This technique is especially useful when your initial question is too broad or ambiguous. By refining the question, the AI can provide more accurate and relevant responses, ensuring that you get the information you truly need.
+How
+Initial Broad Question
+You start with a broad or unclear question.
+AI Rephrasing
+The AI will suggest a better version of the question, highlighting important details or subtopics.
+Enhanced Clarity
+The refined question will be more focused, making it easier to get precise and useful answers.
+Why
+Increased Specificity
+Narrowing down the question helps the AI understand exactly what information you need.
+Better Insights
+By focusing on specific aspects, the AI can provide deeper and more relevant insights.
+Reduced Ambiguity
+Refining the question eliminates vagueness, leading to more accurate responses.
+
+PROMPT 17 (Prompt)
+Please refine and focus this question [question], by suggesting a better version of the question to use instead that emphasizes [number] additional areas to refine and focus the question.
+Resources
+View the 2 use cases below in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Refine and Focus a Question prompt
+
+PROMPT 18 (Prompt)
+Please refine and focus this question [What are the benefits of AI]? by suggesting a better version of the question to use instead that emphasizes [3] additional areas to refine and focus the question.
+Refined Question
+What are the key benefits of AI in enhancing industry-specific outcomes, addressing ethical challenges, and providing long-term strategic advantages?
+Economic Impact of Renewables: A Focused Approach
+Question
+How can renewable energy impact the economy?
+
+PROMPT 19 (Prompt)
+Please refine and focus this question [How can renewable energy impact the economy?] by suggesting a better version of the question to use instead that emphasizes [2] additional areas to refine and focus the question.
+Refined Question
+How does renewable energy impact economic growth, with a focus on energy price stability and regional economic development?
+Remote Work Challenges: A Multi-Dimensional Analysis
+Question
+What are the challenges of remote work?
+
+PROMPT 20 (Prompt)
+Please refine and focus this question [What are the challenges of remote work?] by suggesting a better version of the question to use instead that emphasizes [3] additional areas to refine and focus the question.
+Refined Question
+What are the key challenges of remote work related to employee well-being, team dynamics, and productivity management?
+By following this guide, you can effectively use the Refine and Focus a Question prompt to achieve more precise and relevant answers from the AI, enhancing the quality of information you receive.

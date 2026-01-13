@@ -1,0 +1,84 @@
+Expand a Question Prompt
+
+PROMPT 1 (Prompt)
+When tasked with creating a [topic], adhere to the following guidelines: First, generate a series of additional questions that explore various [subtopic1, subtopic2, …]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive response to the overall question. This approach ensures that all aspects of the topic are thoroughly covered and integrated into the final answer.
+
+PROMPT 2 (Prompt)
+The product team refines [How can we improve this feature?] by generating additional questions about [user pain points], [usage patterns], and [feature integration]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive response for overall feature improvement. This approach ensures that all aspects of the feature are thoroughly covered and integrated into the final solution.
+Content Strategy and Audience Engagement
+
+PROMPT 3 (Prompt)
+The creator refines [Why wasn't this content popular?] by generating additional questions about [content [format], [timing], [audience segmentation], and [promotion]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive explanation for the lack of engagement. This approach ensures that all aspects of the content are thoroughly covered and integrated into future strategies.
+Tourism and Travel
+
+PROMPT 4 (Prompt)
+To address [Where should our mystery vacations take travelers?] by generating additional questions about [underrated spots], [seasonal attractions], [adventure vs. relaxation], and [cultural experiences]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive response for optimal destinations. This approach ensures that all aspects of the vacation packages are thoroughly covered and refined.
+Educational Curriculum Planning
+
+PROMPT 5 (Prompt)
+To improve the [curriculum], generate additional questions about [educational gaps], [student interests], and [teaching methodologies]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive curriculum design. This approach ensures that all aspects of the curriculum are thoroughly covered and integrated into the final plan.
+Healthcare Treatment Optimization
+
+PROMPT 6 (Prompt)
+To [enhance patient care], generate additional questions about [patient feedback], [treatment efficacy], and [follow-up care]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive treatment plan. This approach ensures that all aspects of patient care are thoroughly covered and integrated into the final plan.
+Environmental Policy Development
+
+PROMPT 7 (Prompt)
+To [better protect the environment], generate additional questions about [current challenges], [community impact], and [sustainable practices]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive policy. This approach ensures that all aspects of environmental protection are thoroughly covered and integrated into the final regulations.
+Retail Customer Experience Improvement
+
+PROMPT 8 (Prompt)
+To [improve customer satisfaction], generate additional questions about [shopper behavior], [store layout], and [employee interactions]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive improvement strategy. This approach ensures that all aspects of customer experience are thoroughly covered and integrated into the final strategy.
+Fitness Program Personalization
+
+PROMPT 9 (Prompt)
+To [create the best fitness plan for a client], generate additional questions about [fitness goals], [health status], and [exercise preferences]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive fitness program. This approach ensures that all aspects of the fitness plan are thoroughly covered and integrated into the final program.
+Event Planning and Management
+
+PROMPT 10 (Prompt)
+To [ensure a successful event], generate additional questions about [target audience preferences], [event themes], and [logistical challenges]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive event plan. This approach ensures that all aspects of the event are thoroughly covered and integrated into the final plan.
+Automotive Design and Innovation
+
+PROMPT 11 (Prompt)
+To [refine the car model], generate additional questions about [consumer trends], [technological advancements], and [safety features]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive design. This approach ensures that all aspects of the car model are thoroughly covered and integrated into the final design.
+Film Production and Direction
+
+PROMPT 12 (Prompt)
+To [make the film more engaging], generate additional questions about [storyline depth], [character development], and [audience preferences]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive production plan. This approach ensures that all aspects of the film are thoroughly covered and integrated into the final production.
+Restaurant Menu Development
+
+PROMPT 13 (Prompt)
+To [develop the new menu], generate additional questions about [culinary trends], [dietary preferences], and [ingredient availability]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive menu. This approach ensures that all aspects of the menu are thoroughly covered and integrated into the final offerings.
+Software User Experience Enhancement
+
+PROMPT 14 (Prompt)
+To [make the software more user-friendly], generate additional questions about [user pain points], [navigation ease], and [desired features]. After addressing each subtopic through these questions, synthesize the answers to form a comprehensive and cohesive UX improvement plan. This approach ensures that all aspects of the user experience are thoroughly covered and integrated into the final design.
+The Expand a Question prompt helps AI explore user queries in-depth, generating related, focused sub-questions to ensure comprehensive topic coverage. This approach is invaluable in scenarios where user specificity is unclear, aiding structured topic exploration and enhancing responses in various fields.
+Using the Expand a Question
+The Expand a Question approach is a powerful technique that allows AI to delve deeper into a user’s query by generating a series of related sub-questions. This method helps cover the topic comprehensively, refining the user’s understanding and inquiry direction. By breaking down broad questions into detailed parts, the AI can address each aspect thoroughly. This is particularly useful when users aren't sure about specifics, guiding them through a structured exploration of the topic.
+How
+Initial Question
+Start with a broad question or topic that you need to explore in depth.
+Generate Sub-questions
+Break down the broad question into several related sub-questions. These should cover different aspects of the main topic.
+Answer Sub-questions
+Address each sub-question individually to gather detailed information.
+Combine Answers
+Synthesize the answers to the sub-questions to produce a comprehensive response to the initial broad question.
+Why
+The Expand a Question approach is effective because it ensures that the AI covers all relevant aspects of a topic, providing a thorough and well-rounded response. It guides the AI to think systematically and comprehensively, making sure that no critical details are overlooked. This method is particularly beneficial for complex topics that require detailed exploration and nuanced understanding. By generating and answering sub-questions, users can achieve a deeper and more precise insight into their original query.
+
+PROMPT 15 (Prompt)
+When you are asked to create a [topic], follow these rules. Generate several additional questions about [subtopic1, subtopic2, …]. Combine the answers to the individual questions to produce the final answer to the overall question.
+Resources
+View the 2 use cases below in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Expand a Question Prompt
+
+PROMPT 16 (Prompt)
+When you are asked to create a detailed report on [the effects of climate change], follow these rules. Generate several additional questions about [impact on sea levels, effect on weather patterns, impact on biodiversity, economic consequences, and social implications]. Combine the answers to the individual questions to produce the final answer to the overall question.
+Expanding a Business Inquiry
+Question
+"How can we improve our customer service?"
+
+PROMPT 17 (Prompt)
+When you are asked to create a plan for [improving customer service], follow these rules. Generate several additional questions about [current customer satisfaction levels, common customer complaints, best practices in the industry, potential technological solutions, and training needs for staff]. Combine the answers to the individual questions to produce the final answer to the overall question.

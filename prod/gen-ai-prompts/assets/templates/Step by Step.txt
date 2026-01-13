@@ -1,0 +1,13 @@
+Step by Step
+
+PROMPT 1 (Prompt)
+Let's think about this step by step. [Question or Problem]
+While the Let's Think About This Step-by-Step prompt has been a valuable technique for guiding AI through complex problems and methodically breaking down tasks, the capabilities of GPT-4o have advanced significantly. With the enhanced reasoning and understanding of GPT-4o, the model can often address intricate queries without needing to be led through each step manually.
+However, this prompt technique still holds value. It can be particularly useful when you want to guide the AI through a specific process or method. By clearly defining each step, you ensure that GPT-4o follows your preferred approach and emphasizes the aspects you consider most important. This can be especially helpful when dealing with complex tasks where customized structure and thorough breakdowns are desired.
+In short, while "Let's Think About This Step by Step" may not always be necessary with GPT-4o, it's a useful tool to keep in your toolbox for times when you need to direct the AI through a methodical approach.
+
+PROMPT 2 (Prompt)
+Let's think about this step by step [Question or Problem].
+Resources
+View these examples in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Let's think about this Step by Step

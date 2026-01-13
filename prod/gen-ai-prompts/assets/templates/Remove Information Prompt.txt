@@ -1,0 +1,81 @@
+Remove Information Prompt
+
+PROMPT 1 (Prompt)
+Thoroughly review the provided information and remove any content specified in the brackets, including [text to remove]. Ensure that all instances of the specified content, along with any associated formatting or metadata, are completely eliminated. The final output should be free of the specified content while maintaining the coherence and integrity of the remaining information. Double-check the result to confirm no unintended content has been removed or retained.
+Provide text to be reviewed [text].
+
+PROMPT 2 (Prompt)
+Thoroughly review the provided information and remove any content specified in the brackets, including [personally identifying information] or [information that could potentially be used to re-identify the person]. Rewrite the text as little as possible to address issues caused by the removal of this content. Double-check the result to confirm no unintended content has been removed or retained. [provide text here]
+Redundant Information from an Email
+
+PROMPT 3 (Prompt)
+Thoroughly review the provided email and remove any content specified in the brackets, including [redundant information]. Ensure the final output maintains coherence and integrity. Double-check the result to confirm no unintended content has been removed or retained. [provide email text here]
+Customer Testimonial Publishing
+
+PROMPT 4 (Prompt)
+Thoroughly review the provided testimonials and remove any content specified in the brackets, including [personally identifying information] or [details that could potentially be used to re-identify the person]. Rewrite the text as minimally as possible to maintain clarity while addressing issues caused by the removal. Double-check the result to confirm no unintended content has been removed or retained. [provide testimonials here]
+Email Communication Efficiency
+
+PROMPT 5 (Prompt)
+Thoroughly review the provided email and remove any content specified in the brackets, including [redundant information] and [unnecessary details]. Ensure the final output leaves only the key points and action items. Double-check the result to confirm no unintended content has been removed or retained. [provide email text here]
+Market Research Report Sharing
+
+PROMPT 6 (Prompt)
+Thoroughly review the market research report provided and remove any content specified in the brackets, including [sections detailing methodologies and processes]. Retain only the statistics and key findings. Double-check the result to confirm no unintended content has been removed or retained. [provide market research report here]
+Employee Feedback Anonymization
+
+PROMPT 7 (Prompt)
+Thoroughly review the provided employee feedback and remove any content specified in the brackets, including [names], [job titles], or [other information that could potentially be used to identify the individuals]. Preserve the essence of the feedback. Double-check the result to confirm no unintended content has been removed or retained. [provide employee feedback here]
+Academic Paper Redaction for Public Sharing
+
+PROMPT 8 (Prompt)
+Thoroughly review the provided academic paper and remove any content specified in the brackets, including [sensitive data] and [proprietary information]. Maintain the integrity of the research findings. Double-check the result to confirm no unintended content has been removed or retained. [provide academic paper here]
+Removing Spoilers from Book Reviews
+
+PROMPT 9 (Prompt)
+Thoroughly review the book reviews provided and remove any content specified in the brackets, including [plot spoilers]. Keep the critique and analysis intact. Double-check the result to confirm no unintended content has been removed or retained. [provide book reviews here]
+Contract Details for General Disclosure
+
+PROMPT 10 (Prompt)
+Thoroughly review the provided contract and remove any content specified in the brackets, including [specific financial figures] and [confidential clauses]. Retain only the general terms and conditions. Double-check the result to confirm no unintended content has been removed or retained. [provide contract here]
+Streamlining Government Reports for Public Release
+
+PROMPT 11 (Prompt)
+Thoroughly review the provided government report and remove any content specified in the brackets, including [classified information] and [personal data]. Retain the main findings and recommendations. Double-check the result to confirm no unintended content has been removed or retained. [provide government report here]
+Editing Personal Stories for Anonymity in Case Studies
+
+PROMPT 12 (Prompt)
+Thoroughly review the provided personal stories and remove any content specified in the brackets, including [identifiable details]. Preserve the core experiences and insights. Double-check the result to confirm no unintended content has been removed or retained. [provide personal stories here]
+Redacting Client Information in Legal Case Summaries
+
+PROMPT 13 (Prompt)
+Thoroughly review the provided case summaries and remove any content specified in the brackets, including [client names] and [personal identifiers]. Focus on the legal arguments and outcomes. Double-check the result to confirm no unintended content has been removed or retained. [provide case summaries here]
+Summarizing News Articles for Educational Purposes
+
+PROMPT 14 (Prompt)
+Thoroughly review the provided news article and remove any content specified in the brackets, including [extraneous details] and [background information]. Highlight the main events and implications. Double-check the result to confirm no unintended content has been removed or retained. [provide news article here]
+Censoring User-Generated Content for Public Forums
+
+PROMPT 15 (Prompt)
+Thoroughly review the provided user comments and remove any content specified in the brackets, including [offensive language] and [inappropriate content]. Ensure the overall message and opinions are preserved. Double-check the result to confirm no unintended content has been removed or retained. [provide user comments here]
+Preparing Interviews for Publishing in Media
+
+PROMPT 16 (Prompt)
+Thoroughly review the interview transcript provided and remove any content specified in the brackets, including [off-topic discussions] and [personal remarks]. Focus on the key statements and viewpoints. Double-check the result to confirm no unintended content has been removed or retained. [provide interview transcript here]
+Cleaning Up Corporate Communications for External Release
+
+PROMPT 17 (Prompt)
+Thoroughly review the provided internal announcement and remove any content specified in the brackets, including [internal jargon] and [sensitive company information]. Ensure the final output is suitable for public release. Double-check the result to confirm no unintended content has been removed or retained. [provide internal announcement here]
+Using the Remove Information
+The Remove Information prompt is a powerful tool designed to refine and streamline content by removing specific information or types of details. This prompt acts as a precise filter, ensuring the final output only includes what's truly important and necessary. It's particularly useful for maintaining privacy, confidentiality, efficiency, and clarity in various contexts.
+How
+This prompt helps you extract essential information by filtering out irrelevant or sensitive details from any given text. By defining what needs to be removed, you can customize the output to meet your unique needs. This method is beneficial for anyone needing to handle sensitive information carefully or streamline content for clarity and focus.
+Why
+Precision
+By specifying the details to be removed, the prompt ensures that the output is tailored to the user's requirements.
+Efficiency
+It saves time by automatically filtering out unnecessary information, allowing users to focus on the core message.
+Privacy
+It helps maintain confidentiality by removing sensitive details from the text.
+Clarity
+It makes the content more straightforward and easier to understand by eliminating extraneous information.
