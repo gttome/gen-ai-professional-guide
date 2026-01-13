@@ -1,0 +1,10 @@
+Fact Check a Response Prompt
+
+PROMPT 1 (Prompt)
+After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:' . These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+
+PROMPT 2 (Prompt)
+After providing your main response, please include a concise list of the most important factual claims you made. Focus on core facts that are essential to the accuracy and integrity of your answer. Label this section 'Key Facts:’. These should be facts that, if proven incorrect, would significantly undermine or invalidate your response.
+Resources
+View the use case below in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Fact Check A Response Prompt

@@ -1,0 +1,30 @@
+Identify Tone Prompt
+
+PROMPT 1 (Prompt)
+Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. If you have any specific tones you're aiming for, feel free to let me know!
+
+PROMPT 2 (Prompt)
+Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. If you have any specific tones you're aiming for, feel free to let me know!
+Resources
+View the 3 use cases below in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Identify Tone Prompt
+
+PROMPT 3 (General Prompt)
+This versatile prompt analyzes the tone of any text, explains the reasoning, and provides insights on how the tone aligns with the message. Simply paste your text, and the AI will handle the rest.
+Specific Feedback
+I’ll analyze its tone for you. I’ll identify the tone, explain why it was selected, and provide insights on how your text aligns with this tone. If you have a specific tone you’re aiming for—such as formal, friendly, urgent, or apologetic—let me know so I can give targeted feedback on how well your text achieves that tone and suggest adjustments if needed! Please paste your text below.
+Optional Focus Areas
+Clarity Does the tone support the message's clarity?
+Appropriateness Is the tone suitable for the intended audience or purpose?
+Impact How effectively does the tone convey the intended impact (e.g., urgency, empathy)?
+Feel free to specify any of these areas or others that you’d like feedback on!
+Literary Analysis
+I will provide a detailed literary analysis. I’ll explore key elements such as themes, tone, character development, symbolism, and stylistic choices. If there are specific aspects or literary devices you want to focus on—like imagery, narrative style, or use of metaphors—let me know, and I'll tailor the analysis to those areas. Please paste your text below.
+Optional Focus Areas
+Themes What are the central ideas or messages conveyed in the text?
+Tone How does the tone contribute to the overall mood and impact of the piece?
+Character Analysis How are the characters developed, and what do they represent?
+Symbolism and Imagery What symbols or imagery are used, and what do they signify?
+Stylistic Choices How do the author's stylistic choices affect the narrative?
+Feel free to specify any elements you’re interested in exploring further!
+By following this guide, students can effectively understand and utilize the Identify Tone prompt to analyze and interpret the emotional and stylistic nuances of various texts.

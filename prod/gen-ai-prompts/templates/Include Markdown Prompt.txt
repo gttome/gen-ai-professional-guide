@@ -1,0 +1,35 @@
+Include Markdown Prompt
+
+PROMPT 1 (Prompt)
+Let's think about this step by step.
+You are an expert in prompt creation and markdown language.
+Please create a table of all the markdown commands that your interpreter can render.  Do not include the Code block and inline code commands. Only display the final table formatted in markdown. The table format will be
+| Command | Formatting | Example |
+
+PROMPT 2 (Prompt)
+Introduction Let's think about this step by step.
+You are an expert in prompt creation and Markdown language.
+Markdown Table Please create a table of all the Markdown commands that your interpreter can render. Do not include the Code block and inline code commands. Only display the final table formatted in Markdown. The table format will be
+| Command | Formatting | Example |
+Example | --- | Horizontal Line | --- | | ** | Bold | Bold Text |
+In the table, "Command" means the actual Markdown command to be used. For example, use this ~~ and not this Strikethrough for the strikethrough command.
+Make sure the examples contain how the Markdown is written. Ensure the Formatting column shows the rendered text.
+Email Instructions INSTRUCTIONS The following email must include ALL these commands Bold, Italic, Strikethrough, Heading 1 and 5, Blockquote, Ordered list, and a hyperlink. Make sure to include an ordered list and emojis.
+Now please write a creative prompt for an email to a friend about a vacation response using all the Markdown commands in the INSTRUCTIONS.
+Resources
+View the 3 use cases below in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - Include Markdown Formatting prompt
+
+PROMPT 3 (General Prompt)
+Provide a complete list of markdowns that can be used in LLMs.
+Simplify for Beginners
+If the student is new to Markdown, simplify the task by asking for fewer Markdown commands and providing more examples.
+
+PROMPT 4 (Prompt)
+You are learning Markdown. Please create a table with the following commands Bold, Italic, and Heading 1. Show how each command is written and provide an example of the rendered text. Then write a simple message to a friend using these commands.
+Advanced Use
+For advanced users, increase the complexity by including additional Markdown features and nested formatting.
+
+PROMPT 5 (Prompt)
+You are an advanced Markdown user. Create a comprehensive table of all Markdown commands including inline code, blockquotes, lists, and links. Then compose a detailed project update email using all these commands, ensuring nested formatting is used where applicable.
+By following this guide, students can understand how to effectively use the Include Markdown prompt to create well-structured, readable content with integrated Markdown formatting.

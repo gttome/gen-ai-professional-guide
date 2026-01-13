@@ -1,0 +1,94 @@
+AI Creates the Prompt
+
+PROMPT 1 (AI Creates the Prompt)
+AI Creates the Prompt is a flexible approach where the AI system is empowered to generate custom prompts tailored to the user's specific needs or requirements. This method goes beyond the usual fixed or predefined prompts, highlighting the AI's adaptability and innovative abilities. By analyzing the user's input or problem statement, the AI creates prompts that are both relevant and efficient for the given situation. This way, the user not only gets an accurate response but also benefits from a personalized interaction framework that evolves with each request.
+This approach is particularly useful when the user knows what information they need but is unsure how to phrase or structure their inquiry. With AI Creates the Prompt, users are assured of professionally formatted and contextually appropriate interactions, enhancing their experience and engagement with the AI system.
+
+PROMPT 2 (Prompt)
+Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Request]. Please create this prompt then use it to complete the request. Do not use code blocks.
+
+PROMPT 3 (AI-Created Prompt)
+Provide a detailed comparison of our product features versus [competitor's name] and highlight key areas of customer feedback for both products.
+Sales Strategy Optimization
+User Request
+Help me understand the effectiveness of our current sales tactics and potential areas of improvement.
+
+PROMPT 4 (AI-Created Prompt)
+Analyze the current sales strategy, its outcomes in the past quarter, and suggest actionable improvements based on market trends.
+Supply Chain Assessment
+User Request
+Give me an overview of our supply chain's efficiency and potential bottlenecks.
+
+PROMPT 5 (AI-Created Prompt)
+Provide a comprehensive assessment of the supply chain flow, highlighting areas of efficiency and pinpointing potential bottlenecks or delays.
+Product Development Feedback
+User Request
+I want feedback on our new product prototype from a user experience perspective.
+
+PROMPT 6 (AI-Created Prompt)
+Evaluate the new product prototype focusing on user interface, usability, and overall user experience, offering feedback and suggestions.
+Brand Perception in New Markets
+User Request
+How is our brand perceived in the Asian market, especially in terms of trustworthiness and product quality?
+
+PROMPT 7 (AI-Created Prompt)
+Analyze brand perception data for our company in the Asian market, emphasizing trustworthiness and product quality metrics.
+Financial Forecast for the Next Quarter
+User Request
+Predict our financial performance for the next quarter based on current sales, expenses, and market trends.
+
+PROMPT 8 (AI-Created Prompt)
+Forecast the potential revenue, profit margins, and key financial metrics for the upcoming quarter, considering current sales data, operational expenses, and prevailing market trends.
+Customer Satisfaction Survey Analysis
+User Request
+Summarize the main points from our latest customer satisfaction survey.
+AI-Created Prompt:
+Extract key themes and feedback from the latest customer satisfaction survey, highlighting areas of satisfaction and potential improvement.
+Website Traffic Insights
+User Request
+What are the main sources of our website traffic?
+
+PROMPT 9 (AI-Created Prompt)
+Analyze website traffic data to identify the main sources, including search engines, social media, direct visits, and referrals, and provide insights on user behavior from each source.
+Employee Engagement Overview
+User Request
+How engaged are our employees?
+
+PROMPT 10 (AI-Created Prompt)
+Evaluate employee engagement survey results, focusing on participation rates, key areas of engagement, and any notable trends or concerns.
+Market Entry Strategy
+User Request
+What's the best way to enter a new market?
+
+PROMPT 11 (AI-Created Prompt)
+Develop a market entry strategy based on current market conditions, competitive landscape, and potential customer segments, highlighting key steps and considerations.
+In each of these examples, the AI Creates the Prompt approach tailors the inquiry into the specific needs and context of the user's request. By crafting a custom prompt, the AI ensures that the subsequent response is targeted, relevant, and offers actionable insights for the user.
+Using AI Creates the Prompt
+AI Creates the Prompt is an advanced technique where the AI takes the user's input or problem statement and generates a customized prompt that meets specific needs or requirements. This method leverages the AI's adaptability and creativity, allowing for more precise and contextually appropriate responses. By generating a tailored prompt, the AI can address the user's query more effectively, ensuring that the interaction is both relevant and efficient.
+Why
+Personalization
+The AI analyzes the user's input to create prompts that are tailored to the user's unique situation, making the responses more relevant.
+Efficiency
+By crafting a specific prompt, the AI ensures that the information provided is concise and directly related to the user's needs.
+Adaptability
+This method highlights the AI's ability to adapt to different contexts and requirements, providing innovative solutions.
+
+PROMPT 12 (Prompt)
+Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Request]. Please create this prompt then use it to complete the request. Do not use code blocks.
+Resources
+View the example in the companion to the book - Gen AI Professional Prompt Engineering Guide
+Podcast review of this template - AI Creates the Prompt
+
+PROMPT 13 (AI Prompt)
+Please provide a detailed and professional response explaining the steps required to reset a password, ensuring clarity and ease of understanding for the user.
+* See the GPT above for the results of the prompt AI created
+Explanation This modification specifies the need for a step-by-step guide, making the response more detailed and helpful for the customer.
+Technical Documentation
+User Request
+Please create a prompt that will complete a request and format the output in a professional manner. REQUEST [Create a prompt that will compare 2 uploaded emails and provide a list of differences between the emails.]. Please create this prompt then use it to complete the request. Do not use code blocks.
+* See the GPT above for the results of the prompt AI created
+
+PROMPT 14 (AI Prompt)
+Please create a prompt that will detail the technical specifications for the latest product, including dimensions, weight, and performance metrics, in a professional format. REQUEST What are the technical specifications for our new Model X laptop? Please create this prompt then use it to generate a comprehensive technical summary.
+Explanation This modification includes specific details that should be covered, ensuring that the response is comprehensive and aligned with the user's needs.
+The AI Creates the Prompt method is a powerful tool for generating customized and contextually relevant interactions. By carefully crafting the initial request, users can ensure that the AI provides precise and valuable information, enhancing the overall quality of the interaction. Through examples and modifications, users can better understand how to leverage this technique to meet their specific needs.
