@@ -146,10 +146,12 @@ export async function renderInfographics(workspaceEl, prompt, state, saveState){
   btnZoomOut.addEventListener('click', () => setScale(scale - 0.25));
   btnReset.addEventListener('click', () => setScale(1));
   btnOpen.addEventListener('click', () => {
+    // Open the currently displayed infographic directly (avoid about:blank).
+    const currentSrc = (img && img.src) ? String(img.src) : '';
     const path = info[select.value] || '';
     const url = (path && String(path).startsWith('data:')) ? path : safeUrl(path);
     const absUrl = (url && !String(url).startsWith('data:')) ? new URL(url, window.location.href).toString() : url;
-    const currentSrc = (img && img.src) ? String(img.src) : '';
+
     const src = currentSrc || absUrl;
 
     if (!src || !String(src).trim()){
@@ -157,42 +159,8 @@ export async function renderInfographics(workspaceEl, prompt, state, saveState){
       return;
     }
 
-    const w = window.open('', '_blank', 'noopener,noreferrer');
-    if (!w){ toast('Popup blocked by browser.'); return; }
-
-    const title = (prompt?.title ? prompt.title : 'Infographic');
-    const safeTitle = String(title).replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-    w.document.write(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${safeTitle}</title>
-  <style>
-    :root{ color-scheme: light dark; }
-    body{ margin:0; overflow:hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0b0f17; color:#e7eefc; }
-    .wrap{ height:100vh; width:100vw; display:flex; flex-direction:column; }
-    .bar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.12); }
-    .title{ font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .btn{ border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#e7eefc; padding:8px 12px; border-radius:999px; cursor:pointer; }
-    .stage{ flex:1; display:flex; align-items:center; justify-content:center; padding:10px; }
-    img{ max-width:90vw; max-height:90vh; width:auto; height:auto; object-fit:contain; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="bar">
-      <div class="title">${safeTitle}</div>
-      <button class="btn" title="Close" onclick="window.close()">Close</button>
-    </div>
-    <div class="stage">
-      <img alt="${safeTitle}" src=${JSON.stringify(src)} />
-    </div>
-  </div>
-</body>
-</html>`);
-    w.document.close();
+    // Open the image URL directly (new tab shows the infographic, not about:blank).
+    window.open(src, '_blank', 'noopener,noreferrer');
   });
 
   // Drag-to-pan (uses the scroll container)
