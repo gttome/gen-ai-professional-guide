@@ -1,136 +1,130 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="color-scheme" content="light dark" />
-  <title>Gen AI Prompt Companion – Quick Start</title>
-  <link rel="stylesheet" href="css/app.css" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="light dark" name="color-scheme"/>
+<title>Gen AI Prompt Companion – Quick Start</title>
+<link href="css/app.css" rel="stylesheet"/>
 </head>
 <body>
-  <a class="skip-link" href="#workspace">Skip to content</a>
-
-  <header class="app-header" role="banner">
-    <!-- Row 1: Menu -->
-    <div class="topbar-row">
-      <div class="topbar-right" role="navigation" aria-label="Top menu">
-        <button id="helpBtn" class="ghost-btn" type="button">How to use</button>
-<button id="themeToggleBtn"
-                class="ghost-btn"
-                type="button"
-                aria-label="Toggle light/dark theme">
+<a class="skip-link" href="#workspace">Skip to content</a>
+<header class="app-header" role="banner">
+<!-- Row 1: Menu -->
+<div class="topbar-row">
+<div aria-label="Top menu" class="topbar-right" role="navigation">
+<button class="ghost-btn" id="helpBtn" title="Open the user guide" type="button">How to use</button>
+<button aria-label="Toggle light/dark theme" class="ghost-btn" id="themeToggleBtn" title="Toggle light/dark theme" type="button">
           Theme
         </button>
 </div>
-    </div>
-
-    <!-- Row 2: Prompt title + actions -->
-    <div class="title-row">
-      <h1 id="promptTitle" class="prompt-title">Loading…</h1>
-
-      <div class="title-prompt">
-        <label for="promptSelect" class="sr-only">Select prompt template</label>
-        <select id="promptSelect" name="promptSelect" aria-label="Select a prompt template"></select>
-      </div>
-
-      <div class="title-actions">
-        <button id="favoriteBtn"
-                class="icon-star"
-                type="button"
-                aria-label="Add to favorites"
-                aria-pressed="false"
-                title="Favorite">☆</button>
-      </div>
-    </div>
-
-    <!-- Row 3: Asset navigation -->
-    <nav class="asset-nav" aria-label="Asset navigation">
-      <button class="nav-btn" type="button" data-asset="infographics" aria-pressed="true">Infographics</button>
-      <button class="nav-btn" type="button" data-asset="video" aria-pressed="false">Video</button>
-      <button class="nav-btn" type="button" data-asset="audio" aria-pressed="false">Audio</button>
-      <button class="nav-btn" type="button" data-asset="template" aria-pressed="false">Template</button>
-    </nav>
-  </header>
-
-  <main id="workspace" class="workspace" role="main" aria-live="polite">
-    <div class="workspace-loading" role="status" aria-label="Loading content">Loading…</div>
-  </main>
-
-  <!-- Footer branding: moved to bottom per requirement -->
-  <footer class="app-footer" role="contentinfo">
-    <div class="footer-brand">
-      <!-- Inline mark (no assets folder required) -->
+</div>
+<!-- Row 2: Prompt title + actions -->
+<div class="title-row">
+<h1 class="prompt-title" id="promptTitle">Loading…</h1>
+<div class="title-prompt">
+<label class="sr-only" for="promptSelect">Select prompt template</label>
+<select aria-label="Select a prompt template" id="promptSelect" name="promptSelect"></select>
+</div>
+<div class="title-actions">
+<button aria-label="Add to favorites" aria-pressed="false" class="icon-star" id="favoriteBtn" title="Mark/unmark this prompt as a favorite" type="button">☆</button>
+</div>
+</div>
+<!-- Row 3: Asset navigation -->
+<nav aria-label="Asset navigation" class="asset-nav">
+<button aria-pressed="true" class="nav-btn" data-asset="infographics" title="Switch to Infographics view" type="button">Infographics</button>
+<button aria-pressed="false" class="nav-btn" data-asset="video" title="Switch to Video view" type="button">Video</button>
+<button aria-pressed="false" class="nav-btn" data-asset="audio" title="Switch to Audio view" type="button">Audio</button>
+<button aria-pressed="false" class="nav-btn" data-asset="template" title="Switch to Template view" type="button">Template</button>
+</nav>
+</header>
+<main aria-live="polite" class="workspace" id="workspace" role="main">
+<div aria-label="Loading content" class="workspace-loading" role="status">Loading…</div>
+</main>
+<!-- Footer branding: moved to bottom per requirement -->
+<footer class="app-footer" role="contentinfo">
+<div class="footer-brand">
+<!-- Inline mark (no assets folder required) -->
 <div class="footer-text">
-        <div class="footer-title">Gen AI Prompt Companion</div>
-        <div class="footer-subtitle">
-          <span>Version </span><span id="appVersion">Loading version…</span>
-        </div>
-      </div>
-    </div>
+<div class="footer-title">Gen AI Prompt Companion</div>
+<div class="footer-subtitle">
+<span>Version </span><span id="appVersion">Loading version…</span>
+</div>
+</div>
+</div>
 </footer>
+<!-- Modal: How to use -->
+<div aria-labelledby="helpTitle" aria-modal="true" class="modal" hidden="" id="helpModal" role="dialog">
+<div class="modal-card">
+<div class="modal-header">
+<h2 id="helpTitle">How to use</h2>
+<button aria-label="Close" class="icon-btn" data-close-modal="" title="Close" type="button">✕</button>
+</div>
+<div class="modal-body">
 
-  <!-- Modal: How to use -->
-  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
-    <div class="modal-card">
-      <div class="modal-header">
-        <h2 id="helpTitle">How to use</h2>
-        <button class="icon-btn" type="button" data-close-modal aria-label="Close">✕</button>
-      </div>
-      <div class="modal-body">
-        <ol>
-          <li><strong>Select a prompt</strong> from the dropdown at the top.</li>
-          <li><strong>Switch views</strong> using the pills: Infographics, Video, Audio, Template.</li>
-          <li><strong>Favorite</strong> a prompt with the star to make it easier to return to later.</li>
-          <li><strong>Diagnostics</strong> helps you see which configured files are present or missing.</li>
-          <li><strong>Feedback</strong> lets you capture notes and export them as a text file.</li>
-        </ol>
+<section class="howto">
+  <ol class="howto-list">
+    <li>
+      <strong>Select a prompt</strong> using the dropdown next to the title.
+      <div class="muted">Each prompt can reference an infographic, video, audio file, and one or more templates.</div>
+    </li>
+    <li>
+      <strong>Switch views</strong> using the pill buttons: <em>Infographics</em>, <em>Videos</em>, <em>Audio</em>, <em>Templates</em>.
+      <ul>
+        <li><strong>Infographics</strong>: choose <em>Concise</em>, <em>Standard</em>, or <em>Detailed</em>. Use <em>Zoom</em> controls and <em>Reset</em>. Use <em>Open</em> to view the infographic in a new tab sized to the viewport (no scrollbars for concise).</li>
+        <li><strong>Videos</strong>: plays the configured video for the selected prompt (if present).</li>
+        <li><strong>Audio</strong>: plays the configured audio for the selected prompt (if present).</li>
+        <li><strong>Templates</strong>: edit the prompt template text and copy/download it. Use <em>Load Template</em> (base file) and <em>Load Use Cases</em> (companion “uc” file) when available.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Favorites</strong>: click the star (☆/★) to save the current prompt in Favorites (stored locally in your browser).
+    </li>
+    <li>
+      <strong>Theme</strong>: use the <em>Theme</em> button to toggle Light/Dark mode.
+    </li>
+    <li>
+      <strong>Feedback</strong>: use the floating <em>Feedback / Contact</em> button to email feedback. The app name is included automatically.
+    </li>
+  </ol>
 
-        <p class="muted">
-          This ZIP intentionally excludes the <strong>assets</strong> folder. To use real media, place your assets
-          folder alongside <strong>index.html</strong> using the paths in <strong>data/prompts.json</strong>.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button class="ghost-btn" type="button" data-close-modal>Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Feedback -->
-  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle" hidden>
-    <div class="modal-card">
-      <div class="modal-header">
-        <h2 id="feedbackTitle">Feedback</h2>
-        <button class="icon-btn" type="button" data-close-modal aria-label="Close">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="muted">Write feedback or notes below, then download a local file.</p>
-        <textarea id="feedbackText" class="textarea" rows="8" placeholder="Your feedback…"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button id="downloadFeedbackBtn" class="primary-btn" type="button">Download feedback (.txt)</button>
-        <button class="ghost-btn" type="button" data-close-modal>Close</button>
-      </div>
-    </div>
-  </div>
-
-  
-
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
-
-  <noscript>
-    <div class="noscript">
+  <p class="muted" style="margin-top:12px;">
+    Tip: if media files don’t load, confirm you are running <strong>start-server.bat</strong> and that the files referenced in <strong>data/prompts.json</strong> exist alongside the app.
+  </p>
+</section>
+</div>
+<div class="modal-footer">
+<button class="ghost-btn" data-close-modal="" title="Close" type="button">Close</button>
+</div>
+</div>
+</div>
+<!-- Modal: Feedback -->
+<div aria-labelledby="feedbackTitle" aria-modal="true" class="modal" hidden="" id="feedbackModal" role="dialog">
+<div class="modal-card">
+<div class="modal-header">
+<h2 id="feedbackTitle">Feedback</h2>
+<button aria-label="Close" class="icon-btn" data-close-modal="" title="Close" type="button">✕</button>
+</div>
+<div class="modal-body">
+<p class="muted">Write feedback or notes below, then download a local file.</p>
+<textarea class="textarea" id="feedbackText" placeholder="Your feedback…" rows="8"></textarea>
+</div>
+<div class="modal-footer">
+<button class="primary-btn" id="downloadFeedbackBtn" title="Download your feedback as a .txt file" type="button">Download feedback (.txt)</button>
+<button class="ghost-btn" data-close-modal="" title="Close" type="button">Close</button>
+</div>
+</div>
+</div>
+<div aria-atomic="true" aria-live="polite" class="toast" hidden="" id="toast" role="status"></div>
+<noscript>
+<div class="noscript">
       This app requires JavaScript to load assets and templates.
     </div>
-  </noscript>
-
-  <script type="module" src="js/main.js"></script>
-
-
+</noscript>
+<script src="js/main.js" type="module"></script>
 <!-- Contact / Feedback Button -->
-<button
-  id="contactBtn"
-  style="
+<button id="contactBtn" style="
     position: fixed;
     right: 12px;
     bottom: 12px;
@@ -143,11 +137,9 @@
     font-size: 0.8rem;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     cursor: pointer;
-  "
->
+  " title="Email feedback about Gen AI Prompt Companion">
   💬 Feedback / Contact
 </button>
-
 <script>
   // Update with your email + tweak subject per app if you’d like
   const APP_NAME = "Gen AI Prompt Companion"; // change per app
@@ -169,6 +161,5 @@ Thanks!`
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   });
 </script>
-
 </body>
 </html>
