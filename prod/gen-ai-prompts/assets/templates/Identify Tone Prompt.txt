@@ -1,6 +1,6 @@
-Identify Tone Prompt: Prompt Engineering Resource
+Identify Tone Prompt
 
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Identify Tone" prompt is an analytical tool that tasks the AI with auditing the emotional and stylistic resonance of a text. It provides a feedback loop where the AI not only labels the tone but explains the linguistic evidence ("why") and offers insights on how well it aligns with the author's intent.
 
@@ -11,66 +11,3 @@ Usage Instructions:
 Input: Paste the draft content (email, speech, article, etc.) into the prompt.
 Target Tone (Optional): You can specify a desired outcome (e.g., "formal," "urgent," "empathetic") to get gap analysis feedback.
 Focus Areas: You can request specific checks on clarity, appropriateness for the audience, or emotional impact.
-
-2. USE CASES
-
-The following examples demonstrate the "Identify Tone" methodology applied to high-stakes communication scenarios where tonal nuance determines success or failure.
-
-CORPORATE CRISIS COMMUNICATIONS
-
-
-Scenario:
-A PR Director is drafting a public apology regarding a product safety recall. The message must convey sincere accountability without admitting legal liability or sounding defensive.
-
-Prompt:
-Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. I am aiming for a tone that is [Sincere, Accountable, yet Legally Guarded]. specifically analyze if any phrases sound defensive or dismissive of customer safety.
-[Paste Draft Apology Letter]
-
-
-
-DIPLOMATIC RELATIONS
-
-
-Scenario:
-A Foreign Service Officer is drafting a communiqué to a trade partner regarding new tariffs. The language must be firm and assertive regarding national interests but remain de-escalatory to prevent a trade war.
-
-Prompt:
-Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. I am aiming for a tone that is [Assertive but De-escalatory]. Please highlight any adjectives or verbs that might be interpreted as aggressive or hostile rather than firm.
-[Paste Diplomatic Communiqué]
-
-
-
-UX MICROCOPY DESIGN
-
-
-Scenario:
-A Product Designer is writing error messages for a consumer banking app. The goal is to alert users to a transaction failure (e.g., insufficient funds) without inducing panic or shame.
-
-Prompt:
-Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. I am aiming for a tone that is [Helpful, Neutral, and Reassuring]. specifically check if the language sounds accusatory or alarming.
-[Paste Error Message Strings]
-
-
-
-ACADEMIC PEER REVIEW REBUTTAL
-
-
-Scenario:
-A Researcher is writing a response to Reviewer 2 regarding a rejected manuscript. The response must defend the methodology rigorously without sounding arrogant, dismissive, or emotional.
-
-Prompt:
-Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. I am aiming for a tone that is [Objective, Deferential, yet Scientifically Rigorous]. Please flag any sentences that read as passive-aggressive or defensive.
-[Paste Rebuttal Letter]
-
-
-
-EXECUTIVE LEADERSHIP & HR
-
-
-Scenario:
-A CEO is announcing a restructuring plan that involves layoffs. The internal memo must balance the strategic necessity of the move with genuine compassion for affected employees.
-
-Prompt:
-Please paste your text below, and I will analyze the tone for you. I'll identify the tone, explain why it was selected, and provide insights into how your text matches this tone. I am aiming for a tone that is [Transparent, Compassionate, and Future-Focused]. Analyze if the "corporate speak" undermines the empathy intended for the departing staff.
-[Paste Restructuring Memo]
-

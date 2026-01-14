@@ -1,0 +1,54 @@
+Comparative Prompting: Prompt Engineering Resource
+
+USE CASES
+
+The following examples demonstrate the "Comparative Prompting" methodology applied to high-level professional decision-making scenarios where relative analysis is required.
+
+CLOUD ARCHITECTURE SELECTION
+
+Scenario:
+A CTO needs to select a serverless compute platform for a high-frequency trading application, prioritizing speed and compliance over ease of use.
+
+Prompt:
+Provide a comparison based on [cold start latency in milliseconds, cost per million requests, compliance certifications for SOC2 and ISO 27001, and native support for high-throughput event streaming] for these [AWS Lambda, Azure Functions, Google Cloud Functions] in a tabular format.
+
+
+
+PHARMACEUTICAL DRUG DELIVERY
+
+Scenario:
+A Lead Scientist is evaluating delivery mechanisms for a new biologic drug to maximize patient adherence and patent lifecycle.
+
+Prompt:
+Provide a comparison based on [bioavailability percentages, manufacturing scalability, patient adherence potential, and extension of patent lifecycle] for these [Subcutaneous Injection, Oral Lipid-Based Delivery, Transdermal Microneedle Patch] in a tabular format.
+
+
+
+GRID ENERGY STORAGE
+
+Scenario:
+An Energy Infrastructure Engineer is selecting battery technology for a municipal grid stabilization project.
+
+Prompt:
+Provide a comparison based on [energy density (Wh/kg), cycle life at 80% depth of discharge, risk of thermal runaway, and Levelized Cost of Storage (LCOS)] for these [Lithium Iron Phosphate (LFP), Nickel Manganese Cobalt (NMC), Vanadium Redox Flow Batteries] in a tabular format.
+
+
+
+MERGERS AND ACQUISITIONS
+
+Scenario:
+A Corporate Development Director is assessing three potential acquisition targets in the fintech sector.
+
+Prompt:
+Provide a comparison based on [EBITDA multiples, debt-to-equity ratio, cultural fit assessment, and potential for technological synergy integration] for these [Target Alpha (Payment Processing), Target Beta (Lending Platform), Target Gamma (Blockchain Infrastructure)] in a tabular format.
+
+
+
+LEGAL DISCOVERY PLATFORMS
+
+Scenario:
+A Litigation Support Manager is procuring an eDiscovery platform for a massive multi-district litigation case.
+
+Prompt:
+Provide a comparison based on [processing speed (GB/hour), accuracy of Technology Assisted Review (TAR) 2.0 algorithms, per-custodian pricing models, and data residency compliance for GDPR] for these [RelativityOne, Everlaw, DISCO] in a tabular format.
+

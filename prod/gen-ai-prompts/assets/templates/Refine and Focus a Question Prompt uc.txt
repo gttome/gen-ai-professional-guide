@@ -1,0 +1,59 @@
+Refine and Focus a Question Prompt
+
+USE CASES
+
+The following examples demonstrate the "Refine and Focus" methodology applied to professional domains where precision in questioning is critical for obtaining actionable intelligence.
+
+MARKET RESEARCH
+
+
+Scenario:
+A Product Manager wants to assess the viability of a new SaaS platform but starts with the vague question, "Will our new product be successful?"
+
+Prompt:
+Please help refine and focus the question "Will our new SaaS platform be successful?" by proposing an improved version that highlights 4 additional key areas: customer acquisition cost (CAC), churn rate projections, competitive feature parity, and total addressable market (TAM) saturation.
+
+
+
+CLINICAL PSYCHOLOGY
+
+
+Scenario:
+A Clinical Therapist is preparing for an intake session and wants to move beyond the generic "How are you feeling?" to assess specific diagnostic markers.
+
+Prompt:
+Please help refine and focus the question "How have you been feeling lately?" by proposing an improved version that highlights 3 additional key areas: sleep architecture disturbances, frequency of anhedonia episodes, and somatic manifestations of anxiety.
+
+
+
+SUPPLY CHAIN MANAGEMENT
+
+
+Scenario:
+A Logistics Director needs to audit global operations but the initial question "Is our supply chain efficient?" lacks measurable KPIs.
+
+Prompt:
+Please help refine and focus the question "How efficient is our global supply chain?" by proposing an improved version that highlights 5 additional key areas: last-mile delivery latency, inventory turnover ratio, carbon footprint per unit, supplier risk stratification, and cold-chain integrity.
+
+
+
+INTELLECTUAL PROPERTY LAW
+
+
+Scenario:
+A Patent Attorney is evaluating a software submission and needs to sharpen the question "Is this patentable?" to address specific Supreme Court precedents.
+
+Prompt:
+Please help refine and focus the question "Can we patent this software algorithm?" by proposing an improved version that highlights 3 additional key areas: the Alice/Mayo framework for subject matter eligibility, the machine-or-transformation test, and the non-obviousness standard under 35 U.S.C. 103.
+
+
+
+EDUCATIONAL POLICY ANALYSIS
+
+
+Scenario:
+A School Board Administrator wants to evaluate a pilot program but asks the overly broad question, "Is the new math curriculum working?"
+
+Prompt:
+Please help refine and focus the question "Is the new math curriculum working?" by proposing an improved version that highlights 4 additional key areas: standardized testing velocity, longitudinal student retention rates, socio-economic achievement gap narrowing, and teacher proficiency self-assessments.
+

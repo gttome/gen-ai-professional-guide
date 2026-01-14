@@ -1,8 +1,6 @@
-Here is the "Remove Information Prompt" resource with all citation markers removed.
+Remove Information Prompt
 
-Remove Information Prompt: Prompt Engineering Resource
-
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Remove Information" prompt is a redaction and sanitization technique used to systematically strip specific data points from a text while preserving its overall narrative flow. This is essential for privacy compliance (PII/PHI), confidentiality, or simply tightening communication by removing redundancy.
 
@@ -14,66 +12,3 @@ Usage Instructions:
 Removal Criteria: Define exactly what needs to go inside the brackets (e.g., "personally identifying information," "financial figures," "redundant adverbs").
 Integrity Check: The prompt includes an instruction to "maintain coherence," forcing the AI to bridge any gaps left by the deleted text so the result remains readable.
 Verification: The "Double-check" instruction adds a self-correction layer to prevent data leakage.
-
-2. USE CASES
-
-The following examples demonstrate the "Remove Information" methodology applied to professional scenarios requiring data privacy, brevity, or confidentiality.
-
-ANONYMIZING LEGAL CASE SUMMARIES
-
-
-Scenario:
-A Law Firm needs to publish case studies for marketing but must protect client confidentiality and attorney-client privilege.
-
-Prompt:
-Thoroughly review the provided case summaries and remove any content specified in the brackets, including [client names, specific settlement amounts, and opposing counsel details]. Focus on the legal arguments and outcomes. Double-check the result to confirm no unintended content has been removed or retained.
-Text: [Paste Legal Case Summary]
-
-
-
-REDACTING HEALTHCARE PATIENT FEEDBACK
-
-
-Scenario:
-A Hospital Administrator wants to share positive patient testimonials on a public website but must strip all PHI (Protected Health Information).
-
-Prompt:
-Thoroughly review the provided testimonials and remove any content specified in the brackets, including [personally identifying information, specific diagnosis details, and dates of service] or [details that could potentially be used to re-identify the person]. Rewrite the text as minimally as possible to maintain clarity while addressing issues caused by the removal.
-Text: [Paste Patient Testimonials]
-
-
-
-CLEANING CORPORATE MINUTES FOR EXTERNAL RELEASE
-
-
-Scenario:
-A Public Relations Officer is releasing a summary of a board meeting to shareholders but needs to scrub sensitive internal strategy discussions.
-
-Prompt:
-Thoroughly review the provided internal announcement and remove any content specified in the brackets, including [internal jargon, unannounced product codenames, and specific trade secrets] or [sensitive company information]. Ensure the final output is suitable for public release.
-Text: [Paste Meeting Minutes]
-
-
-
-STREAMLINING EXECUTIVE BRIEFINGS
-
-
-Scenario:
-A Chief of Staff is preparing a daily briefing for the CEO by condensing long email chains into actionable bullet points.
-
-Prompt:
-Thoroughly review the provided email thread and remove any content specified in the brackets, including [redundant information, pleasantries, and signature blocks] and [unnecessary details]. Ensure the final output leaves only the key points and action items.
-Text: [Paste Email Thread]
-
-
-
-SANITIZING ACADEMIC RESEARCH FOR PEER REVIEW
-
-
-Scenario:
-A Researcher is submitting a paper for "blind" peer review and must ensure no self-identifying references or institutional affiliations remain.
-
-Prompt:
-Thoroughly review the provided academic paper and remove any content specified in the brackets, including [author names, institutional affiliations, grant numbers, and proprietary dataset locations]. Maintain the integrity of the research findings.
-Text: [Paste Research Draft]
-

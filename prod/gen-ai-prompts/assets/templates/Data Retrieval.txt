@@ -1,6 +1,6 @@
-Data Retrieval: Prompt Engineering Resource
+Data Retrieval Prompt
 
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Data Retrieval" prompt is a structured extraction technique designed to mine specific information from large blocks of unstructured text. By defining precise data points and requesting a tabular output, this method transforms qualitative content (like reviews, transcripts, or reports) into quantitative, analyzable datasets.
 
@@ -17,96 +17,3 @@ Usage Instructions:
 Input Text: Paste the raw content (emails, articles, logs, etc.) into the "Text" field.
 Data Points: List the specific entities or themes you need to extract (e.g., "dates," "error codes," "sentiment").
 Output: The prompt explicitly forces a table format to ensure the results are ready for immediate analysis or export.
-
-2. USE CASES
-
-The following examples demonstrate the "Data Retrieval" methodology applied to high-volume, unstructured data scenarios in professional environments.
-
-LEGAL CONTRACT REVIEW
-
-
-Scenario:
-A Corporate Attorney needs to quickly audit a batch of vendor Master Service Agreements (MSAs) to identify risk exposure regarding liability and termination.
-
-Prompt:
-Text: "[Paste the full text of the vendor Master Service Agreement]"
-Retrieve the following data points from the text above:
-Specific clauses related to [Indemnification obligations]
-Details regarding [Limitation of Liability caps]
-Conditions for [Termination for Convenience]
-Mentions of [Governing Law and Jurisdiction]
-Create a markdown table summarizing the retrieved data:
-Ensure the table is formatted in markdown for clarity and rapid risk assessment.
-
-
-
-FINANCIAL MARKET ANALYSIS
-
-
-Scenario:
-A Hedge Fund Analyst is processing transcripts from a multi-hour quarterly earnings call to isolate forward-looking guidance and operational headwinds.
-
-Prompt:
-Text: "[Paste the transcript of the Q3 Earnings Conference Call]"
-Retrieve the following data points from the text above:
-Quantitative statements regarding [Revenue Guidance for Q4]
-Specific mentions of [Supply Chain Disruptions or Headwinds]
-Details on [Share Buyback Programs or Dividend Adjustments]
-Analyst questions related to [AI Infrastructure CapEx]
-Create a markdown table summarizing the retrieved data:
-Ensure the table is formatted in markdown to facilitate a comparative analysis against consensus estimates.
-
-
-
-CLINICAL TRIALS PHARMACOVIGILANCE
-
-
-Scenario:
-A Drug Safety Officer is reviewing unstructured patient progress notes from a clinical trial to track potential adverse drug reactions (ADRs).
-
-Prompt:
-Text: "[Paste the collection of anonymized patient progress notes from Site 101]"
-Retrieve the following data points from the text above:
-Mentions of [Gastrointestinal side effects]
-Reported severity levels of [Headaches or Migraines]
-Timestamps relative to [Dosage administration]
-Patient comments regarding [Discontinuation of medication]
-Create a markdown table summarizing the retrieved data:
-Ensure the table is formatted in markdown for easy integration into the safety signal detection database.
-
-
-
-CYBERTHREAT INTELLIGENCE
-
-
-Scenario:
-A SOC Analyst receives a dense threat intelligence report regarding a new ransomware strain and needs to extract actionable Indicators of Compromise (IOCs).
-
-Prompt:
-Text: "[Paste the unstructured Threat Intelligence Report on the 'DarkLock' Ransomware]"
-Retrieve the following data points from the text above:
-List of [Malicious IP addresses or C2 domains]
-Specific [File Hashes (SHA-256/MD5)] associated with the payload
-Mentions of [MITRE ATT&CK tactics] used for lateral movement
-Details on [Registry keys modified] for persistence
-Create a markdown table summarizing the retrieved data:
-Ensure the table is formatted in markdown for immediate ingestion into the SIEM firewall rules.
-
-
-
-HR TALENT ACQUISITION
-
-
-Scenario:
-A Technical Recruiter is screening a portfolio of senior developer resumes to identify specific cloud certifications and leadership experience.
-
-Prompt:
-Text: "[Paste the text from the candidate's resume and cover letter]"
-Retrieve the following data points from the text above:
-Years of experience with [Kubernetes or Container Orchestration]
-Specific certifications related to [AWS Solutions Architect or Azure DevOps]
-Examples of [Team Leadership or Mentoring] experience (>5 reports)
-Mentions of [Python or Go] proficiency in production environments
-Create a markdown table summarizing the retrieved data:
-Ensure the table is formatted in markdown to standardize candidate scoring metrics.
-

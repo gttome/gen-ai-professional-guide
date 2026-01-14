@@ -1,0 +1,59 @@
+Multiple Perspectives Prompt
+
+USE CASES
+
+The following examples demonstrate the "Multiple Perspectives" methodology applied to high-complexity professional scenarios where understanding stakeholder friction is essential.
+
+BIOETHICS AND GENETICS
+
+
+Scenario:
+A Policy Institute is drafting a framework for the regulation of human germline editing (CRISPR) and needs to anticipate global objections.
+
+Prompt:
+For this [global regulatory framework on human germline editing] consider the perspectives of [clinical geneticists focusing on disease eradication, bioethicists concerned with eugenics, patients with hereditary Huntington's disease, and religious leaders evaluating the moral implications of playing god].
+
+
+
+SMART CITY URBAN PLANNING
+
+
+Scenario:
+A City Council is proposing a ban on human-driven vehicles in the central business district to favor autonomous transit, but faces pushback.
+
+Prompt:
+For this [municipal proposal to ban human-driven vehicles in the central business district] consider the perspectives of [urban planners focused on congestion reduction, disability rights advocates concerned with accessible transit, logistics companies requiring flexible delivery windows, and civil liberties groups opposing automated surveillance].
+
+
+
+CORPORATE GOVERNANCE
+
+
+Scenario:
+A Board of Directors is considering the implementation of a "Poison Pill" strategy to defend against a hostile takeover by an activist investor.
+
+Prompt:
+For this [implementation of a shareholder rights plan 'poison pill' defense] consider the perspectives of [the incumbent Board of Directors seeking stability, activist investors seeking short-term alpha, long-term institutional shareholders (pension funds), and employee unions concerned with post-acquisition job security].
+
+
+
+ALGORITHMIC POLICING
+
+
+Scenario:
+A Police Department is evaluating the deployment of predictive policing software in high-crime zones.
+
+Prompt:
+For this [deployment of predictive policing algorithms in high-crime zones] consider the perspectives of [law enforcement command staff looking for resource optimization, data scientists focused on mitigating training data bias, civil rights attorneys, and community leaders in the affected neighborhoods].
+
+
+
+COMMERCIAL SPACE EXPLORATION
+
+
+Scenario:
+An International Space Agency is drafting a treaty regarding the commercial exploitation of asteroid resources.
+
+Prompt:
+For this [international treaty on commercial asteroid mining rights] consider the perspectives of [private aerospace CEOs seeking property rights, representatives from developing nations citing the Outer Space Treaty's 'common heritage' clause, environmental scientists concerned with orbital debris, and defense contractors monitoring dual-use technology].
+

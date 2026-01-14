@@ -1,0 +1,45 @@
+AI Asks You Questions to form a Response
+
+USE CASES
+
+The following examples demonstrate the "AI Asks You Questions" methodology applied to high-complexity scenarios where the user may not have all the necessary information upfront, requiring the AI to lead the investigation.
+
+CYBERSECURITY INCIDENT RESPONSE
+
+    Scenario:
+    A Lead Security Analyst detects anomalous lateral movement in a network but cannot pinpoint the entry vector or the extent of the compromise.
+
+    Prompt:
+    I would like you to ask me questions to help me conduct a forensic analysis of a potential Advanced Persistent Threat (APT) inside our corporate network. Continue asking questions until you gather sufficient information to identify the 3 most likely vectors of compromise and the scope of lateral movement. Approach this methodically by asking one question at a time, ensuring each question builds upon my previous forensic findings. Begin by asking the first question.
+
+PHARMACEUTICAL R&D STRATEGY
+
+    Scenario:
+    A Clinical Trial Director is facing unexpected retention issues in a Phase III trial for a new cardiac drug and needs to diagnose the root cause without biasing the data.
+
+    Prompt:
+    Please engage with me by asking a series of targeted questions to help me diagnose the root causes of high patient dropout rates in our multi-site Phase III cardiac study. Continue asking questions until you gather sufficient information to pinpoint the 5 most critical friction points in the patient journey. Ask me one question at a time, focusing on protocol complexity, site logistics, and patient demographics. Begin by asking the first question.
+
+SMART CITY URBAN PLANNING
+
+    Scenario:
+    An Urban Planner is trying to optimize traffic flow for a congested metropolitan district but needs to account for variables like public transit schedules, pedestrian zones, and rush hour patterns.
+
+    Prompt:
+    I would like you to ask me questions to help me design an adaptive traffic signal control strategy for the downtown financial district. Continue asking questions until you have enough information to propose a model that reduces peak-hour congestion by 15%. Ask me one question at a time, specifically probing into current sensor infrastructure, traffic volume data, and public transit integration points. Begin by asking the first question.
+
+CORPORATE MERGERS & ACQUISITIONS
+
+    Scenario:
+    An M&A Consultant is assessing the cultural integration risks between a traditional manufacturing firm and an agile tech startup following a merger.
+
+    Prompt:
+    Please engage with me by asking a series of targeted questions to help me assess the cultural compatibility risks between a legacy manufacturing firm and a Series-B tech startup. Continue asking questions until you gather sufficient information to identify the 4 primary areas of friction that could jeopardize post-merger integration. Approach this methodically by asking one question at a time regarding leadership styles, communication norms, and decision-making hierarchies. Begin by asking the first question.
+
+AEROSPACE ENGINEERING
+
+    Scenario:
+    A Systems Engineer is troubleshooting an intermittent telemetry failure on a satellite propulsion bus that only occurs during specific solar cycles.
+
+    Prompt:
+    I would like you to ask me questions to help me troubleshoot an intermittent telemetry loss in our satellite's Hall-effect thruster subsystem. Continue asking questions until you gather sufficient information to isolate the failure to a specific thermal, electrical, or software anomaly. Ask me one question at a time, ensuring each query rules out a specific subsystem based on my telemetry data. Begin by asking the first question.

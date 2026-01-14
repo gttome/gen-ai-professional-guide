@@ -1,0 +1,45 @@
+Acting As
+
+USE CASES
+
+The following examples demonstrate the "Acting As" methodology applied to high-complexity scenarios, utilizing specific details to guide the AI effectively.
+
+ENTERPRISE ARCHITECTURE
+
+    Scenario:
+    A Chief Architect needs to transition a monolithic banking application to a cloud-native environment.
+
+    Prompt:
+    Acting as a [Chief Enterprise Architect] and [design a comprehensive migration strategy for transitioning a legacy monolithic banking system to a microservices architecture on AWS; your output must detail the domain-driven design (DDD) decomposition patterns, specific security compliance measures for SOC2 and GDPR, and a blue-green deployment strategy to ensure zero downtime during the cutover].
+
+INTERNATIONAL LAW
+
+    Scenario:
+    A legal expert advises on the implications of new environmental trade policies.
+
+    Prompt:
+    Acting as an [International Trade Attorney] and [draft a legal memorandum analyzing the impact of the European Union's Carbon Border Adjustment Mechanism (CBAM) on a US-based automotive manufacturer; include citations of relevant WTO precedents, potential supply chain risks, and specific contractual clauses to mitigate liability with third-party suppliers].
+
+QUANTUM PHYSICS
+
+    Scenario:
+    A researcher explains complex cryptographic vulnerabilities to a non-technical executive board.
+
+    Prompt:
+    Acting as a [Senior Quantum Algorithm Researcher] and [write an executive briefing that explains the theoretical threat of Shor's Algorithm to current RSA encryption standards; use high-level analogies suitable for a non-technical board of directors while accurately maintaining the distinction between classical bit processing and qubit superposition/entanglement advantages].
+
+CRISIS MANAGEMENT
+
+    Scenario:
+    A Director of Communications handles a severe data breach involving PII.
+
+    Prompt:
+    Acting as a [Crisis Communications Director] and [develop a multi-phase crisis response plan for a massive data breach involving customer PII; this must include a draft press release prioritizing radical transparency, an internal memo script for employee alignment, and a detailed timeline for stakeholder notifications that complies with legal disclosure windows].
+
+FULL-STACK DEVELOPMENT
+
+    Scenario:
+    A DevOps Engineer architects a deployment pipeline for a high-traffic platform.
+
+    Prompt:
+    Acting as a [Principal DevOps Engineer] and [architect a CI/CD pipeline specification for a high-traffic e-commerce application using Kubernetes and Terraform; detail the exact stages for automated integration testing, the configuration for auto-scaling based on CPU/memory metrics, and the rollback triggers for failed database schema migrations].

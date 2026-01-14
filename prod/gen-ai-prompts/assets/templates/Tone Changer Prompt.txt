@@ -1,6 +1,6 @@
-Tone Changer Prompt: Prompt Engineering Resource
+Tone Changer Prompt
 
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Tone Changer" prompt sets up an interactive editing tool where the AI acts as a stylistic editor. Instead of a one-off rewriting task, this prompt creates a workflow where the user provides raw text, and the AI presents a menu of 20 distinct tonal options. Crucially, the AI is instructed to display the original and revised versions side-by-side, allowing for immediate comparative analysis of how syntax and vocabulary shifts alter the emotional impact.
 
@@ -33,76 +33,3 @@ Usage Instructions:
 Interaction Flow: The prompt is designed to wait for the user's input before revealing the menu options.
 Side-by-Side Comparison: The output forces a direct comparison, which is essential for understanding the nuance of the changes (e.g., how "fix this" changes between "Assertive" vs. "Apologetic").
 Tone Selection: The wide range of tones covers everything from professional (Formal, Objective) to creative (Ironic, Sarcastic), making it versatile for different content types.
-
-2. USE CASES
-
-The following examples demonstrate the "Tone Changer" methodology applied to professional scenarios where the emotional delivery of a message is as important as the content itself.
-
-CUSTOMER SERVICE DE-ESCALATION
-
-
-Scenario:
-A Support Agent has written a frustrated draft response to a rude customer and needs to convert it into a professional, de-escalating reply without losing the core facts.
-
-Prompt:
-[Standard Syntax]
-Input Text: "You can't just demand a refund because you broke the screen. We told you in the manual that drops aren't covered. Read the warranty."
-Target Tone: 2. Apologetic (or 15. Objective)
-(Goal: To soften the blow while maintaining policy firmness.)
-
-
-
-SALES & MARKETING COPYWRITING
-
-
-Scenario:
-A Product Marketer has a dry technical specification sheet for a new coffee machine and wants to turn it into an exciting social media launch post.
-
-Prompt:
-[Standard Syntax]
-Input Text: "The Model X features a dual-boiler system and maintains water temperature at 93 degrees Celsius. It has a 2-liter tank and fits on standard counters."
-Target Tone: 6. Enthusiastic (or 17. Persuasive)
-(Goal: To transform specs into benefits and excitement.)
-
-
-
-EXECUTIVE LEADERSHIP COMMUNIQUÉ
-
-
-Scenario:
-A CEO needs to address the company regarding a missed quarterly target. The initial draft sounds too negative, and they want to pivot to a message of resilience and future opportunity.
-
-Prompt:
-[Standard Syntax]
-Input Text: "We failed to hit our Q3 numbers. The market is bad and sales were slow. We need to work harder or Q4 will also be a disaster."
-Target Tone: 11. Inspirational (or 16. Optimistic)
-(Goal: To acknowledge the failure without demoralizing the workforce.)
-
-
-
-LEGAL & COMPLIANCE DOCUMENTATION
-
-
-Scenario:
-A HR Manager has rough notes from a disciplinary meeting that are too casual and conversational. They need to formalize them for the official employee file.
-
-Prompt:
-[Standard Syntax]
-Input Text: "So I sat down with John and told him he's gotta stop coming in late. He said traffic is bad, but I said that's not an excuse. He promised to try better."
-Target Tone: 7. Formal (or 15. Objective)
-(Goal: To create a legally defensible record of the conversation.)
-
-
-
-INTERNAL TEAM FEEDBACK
-
-
-Scenario:
-A Team Lead wants to give feedback on a project that is technically correct but missed the deadline. They want to be firm about the deadline without damaging the relationship.
-
-Prompt:
-[Standard Syntax]
-Input Text: "Great job on the code, but you were late again. This messes up the release schedule. Don't let it happen next time."
-Target Tone: 3. Assertive (or 8. Friendly)
-(Goal: To correct behavior clearly while maintaining team morale.)
-

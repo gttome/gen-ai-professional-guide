@@ -1,6 +1,6 @@
 Ask AI to Improve a Prompt: Prompt Engineering Resource
 
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Ask AI to Improve a Prompt" technique enables the user to leverage the AI's understanding of its own processing logic to refine a draft question. By asking the AI to critique and revise an initial input, the user transforms broad or vague requests into specific, actionable instructions, ensuring the final response is highly relevant to the actual requirements.
 
@@ -11,71 +11,3 @@ Usage Instructions:
 Draft Prompt: Provide your initial, rough attempt at the question or task (e.g., "Tell me about the market").
 The Meta-Prompt: Prepend the specific command "What changes or revisions..." to force the AI into an editorial role.
 Iterative Refinement: Use the AI's feedback to finalize the prompt before executing the actual task.
-
-2. USE CASES
-
-The following examples demonstrate the "Ask AI to Improve a Prompt" methodology applied to complex, professional domains. In each case, the goal is to transform a basic draft into a professional-grade instruction set using the AI's guidance.
-
-EPIDEMIOLOGY & PUBLIC HEALTH
-
-
-Scenario:
-A Public Health Analyst wants to study the spread of a pathogen but initially writes a vague request about "virus spread."
-
-Prompt:
-What changes or revisions can be made to this prompt to make your response better. Prompt = [Analyze the spread of the virus in the city.]
-
-(Target Optimization: The AI will refine this to request an analysis of specific transmission vectors, R0 values, and heat maps based on zip code density.)
-
-
-
-SOFTWARE ARCHITECTURE REFACTORING
-
-
-Scenario:
-A Senior Developer needs to update a legacy codebase but provides a generic instruction that could lead to superficial changes.
-
-Prompt:
-What changes or revisions can be made to this prompt to make your response better. Prompt = [Rewrite this Python code to be better.]
-
-(Target Optimization: The AI will refine this to specify adherence to PEP 8 standards, implementation of asynchronous processing, and reduction of cyclomatic complexity.)
-
-
-
-DERIVATIVES TRADING STRATEGY
-
-
-Scenario:
-A Quantitative Analyst is looking for risk factors in a portfolio but starts with a broad question that lacks mathematical rigor.
-
-Prompt:
-What changes or revisions can be made to this prompt to make your response better. Prompt = [Is my options portfolio risky?]
-
-(Target Optimization: The AI will refine this to request a calculation of the Greeks (Delta, Gamma, Theta), Value at Risk (VaR) at a 95% confidence interval, and exposure to implied volatility shifts.)
-
-
-
-CONSTITUTIONAL LAW RESEARCH
-
-
-Scenario:
-A Legal Clerk is researching precedents for a case involving digital privacy but initially frames the search too loosely.
-
-Prompt:
-What changes or revisions can be made to this prompt to make your response better. Prompt = [Find cases about police searching phones.]
-
-(Target Optimization: The AI will refine this to specific Supreme Court precedents regarding Fourth Amendment violations, the "plain view" doctrine as applied to digital data, and circuit court splits on biometric unlocking.)
-
-
-
-INDUSTRIAL MANUFACTURING OPTIMIZATION
-
-
-Scenario:
-A Plant Manager wants to reduce waste in a production line but asks a question that doesn't account for specific variables like material costs or machine downtime.
-
-Prompt:
-What changes or revisions can be made to this prompt to make your response better. Prompt = [How do I save money on the assembly line?]
-
-(Target Optimization: The AI will refine this to request a Six Sigma analysis of the production workflow, identifying bottlenecks in the conveyor system and material yield variances for the current fiscal quarter.)
-

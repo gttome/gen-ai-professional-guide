@@ -1,6 +1,6 @@
-Step by Step: Prompt Engineering Resource
+Step by Step Prompt 
 
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Step by Step" prompt (often called Chain of Thought prompting) is a technique used to guide Artificial Intelligence through complex problems by methodically breaking down tasks. While advanced models like GPT-4o have improved reasoning capabilities, this technique remains highly valuable when a user needs to direct the AI through a specific process or method rather than relying on the model's default path. By clearly defining the need for a step-by-step approach, users ensure the AI follows a preferred structure and emphasizes the aspects considered most important.
 
@@ -11,61 +11,3 @@ Usage Instructions:
 Trigger: Use this phrase when dealing with intricate queries that require a logical progression.
 Control: This prompt is particularly useful for enforcing a customized structure or a thorough breakdown of a topic.
 Methodology: It directs the AI to process information sequentially, reducing the likelihood of skipping critical dependencies in complex tasks.
-
-2. USE CASES
-
-The following examples demonstrate the "Step by Step" methodology applied to scenarios where a methodical breakdown is required to ensure accuracy and clarity.
-
-PROJECT MANAGEMENT DEPENDENCIES
-
-
-Scenario:
-A Project Manager needs to create a timeline for a software launch but must ensure no prerequisite tasks are missed (e.g., QA testing before deployment).
-
-Prompt:
-Let's think about this step by step. Create a critical path timeline for launching a new mobile banking app. Start from the final code commit and end with the public store release. Ensure you detail every dependency involving security audits and app store review cycles.
-
-
-
-SOFTWARE DEBUGGING
-
-
-Scenario:
-A Developer is trying to isolate a race condition in a multi-threaded application and needs the AI to trace the logic flaw without jumping to conclusions.
-
-Prompt:
-Let's think about this step by step. Analyze this pseudo-code for a banking transaction. Trace the state of the 'account_balance' variable through each thread execution to identify where the double-spending vulnerability occurs.
-
-
-
-LEGAL CONTRACT ANALYSIS
-
-
-Scenario:
-A Paralegal is reviewing a contract to determine if a force majeure clause applies to a specific supply chain disruption.
-
-Prompt:
-Let's think about this step by step. Review the provided Force Majeure clause. First, identify the specific definition of 'unforeseeable events.' Second, compare that definition to the current port strike situation. Third, determine if the notice period requirements were met based on the provided email timestamps.
-
-
-
-COMPLEX MATH OR LOGIC PROBLEMS
-
-
-Scenario:
-A Data Analyst is calculating the weighted average cost of capital (WACC) for a company with a complex debt structure.
-
-Prompt:
-Let's think about this step by step. Calculate the WACC for Company X. First, determine the cost of equity using the CAPM model. Next, calculate the after-tax cost of debt. Finally, weight these costs according to the market value of the firm's capital structure.
-
-
-
-FORENSIC INCIDENT RESPONSE
-
-
-Scenario:
-A Cybersecurity Analyst is reconstructing the timeline of a data breach to determine the initial point of entry.
-
-Prompt:
-Let's think about this step by step. Analyze these server logs. Start from the first failed login attempt at 02:00 AM and trace the attacker's lateral movement through the network until the data exfiltration event at 04:30 AM. Identify each specific vulnerability exploited at every stage.
-

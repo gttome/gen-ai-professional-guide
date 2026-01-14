@@ -1,8 +1,6 @@
-Understood. Here is the "Always Include Prompt" resource formatted as plain text without code blocks, ready to be saved as a .txt file.
+Always Include Prompt
 
-Always Include Prompt: Prompt Engineering Resource
-
-1. THE PROMPT TEMPLATE
+PROMPT TEMPLATE
 
 The "Always Include" prompt is a persistent configuration technique that forces the AI to systematically attach specific content—such as disclaimers, signatures, or instructional wrappers—to the beginning or end of every subsequent response. This ensures strict adherence to compliance, branding, or safety protocols throughout a session without requiring the user to repeat the instruction.
 
@@ -13,61 +11,3 @@ Usage Instructions:
 Action [Prepend/Append]: Choose "Prepend" to place text before the main response (ideal for safety warnings or context setting) or "Append" to place it after (ideal for signatures, surveys, or disclaimers).
 Text: The exact string of text, including formatting or links, that must appear in every output.
 Persistence: This instruction creates a session rule; the AI will apply this formatting to all future answers until told otherwise.
-
-2. USE CASES
-
-The following examples demonstrate the "Always Include" methodology applied to high-stakes environments where consistency is mandatory for legal, safety, or technical reasons.
-
-HEALTHCARE TRIAGE SYSTEM
-
-
-Scenario:
-A telehealth provider is deploying an AI chatbot to assist patients with symptom checking. [cite_start]To mitigate liability and ensure patient safety, every response must immediately flag that the AI is not a doctor and that emergencies require calling 911[cite: 296, 299].
-
-Prompt:
-Configure the system to [prepend] the text '[CRITICAL MEDICAL DISCLAIMER: I am an AI, not a doctor. My responses are for informational purposes only and do not constitute medical diagnosis or treatment. If you are experiencing a medical emergency, hang up and dial emergency services immediately.]' to all responses generated after this prompt is executed. This setup ensures patient safety by prioritizing the emergency warning before any advice is displayed.
-
-
-
-DEFENSE SECTOR SOFTWARE DEVELOPMENT
-
-
-Scenario:
-A DevSecOps team is using an AI coding assistant. [cite_start]To prevent security leaks, every generated code snippet must be followed by a mandatory reminder to scrub hardcoded credentials and perform a static application security testing (SAST) scan[cite: 302].
-
-Prompt:
-Configure the system to [append] the text '[SECURITY AUDIT REQUIRED: 1. Verify no API keys or credentials are hardcoded. 2. Run local SAST scan (e.g., SonarQube) before committing. 3. Validate input sanitization logic.]' to all responses generated after this prompt is executed. This setup reinforces secure coding practices by attaching a checklist to every output.
-
-
-
-FINANCIAL ADVISORY SERVICES
-
-
-Scenario:
-An investment firm uses an AI tool to summarize market trends for clients. [cite_start]To comply with SEC and FINRA regulations, every summary must carry a specific non-advisory disclosure to prevent the information from being construed as a personalized recommendation[cite: 296, 304].
-
-Prompt:
-Configure the system to [append] the text '[REGULATORY NOTICE: This communication is for general informational purposes only and does not constitute an offer to sell or a solicitation of an offer to buy any securities. Past performance is not indicative of future results. Consult a qualified financial advisor before making investment decisions.]' to all responses generated after this prompt is executed. This setup ensures compliance with financial regulations across all client interactions.
-
-
-
-ACADEMIC RESEARCH ASSISTANT
-
-
-Scenario:
-A university is providing an AI tool for graduate students to assist with literature reviews. [cite_start]To combat AI hallucinations, the system must prepend a warning urging students to verify citations against primary sources[cite: 297].
-
-Prompt:
-Configure the system to [prepend] the text '[ACADEMIC INTEGRITY CHECK: Verify all citations and data points against primary sources. AI-generated text may contain inaccuracies or hallucinations. Do not use this output directly in your thesis without cross-referencing.]' to all responses generated after this prompt is executed. This setup promotes academic rigor by framing every interaction with a verification mandate.
-
-
-
-ENTERPRISE KNOWLEDGE MANAGEMENT
-
-
-Scenario:
-A multinational corporation uses an internal AI to retrieve sensitive HR and IP documents. [cite_start]To prevent data leakage, every response needs a "confidential" wrapper to remind employees not to share the data externally[cite: 317, 318].
-
-Prompt:
-Configure the system to [prepend] the text '[CLASSIFIED: INTERNAL USE ONLY - DO NOT DISTRIBUTE]' to all responses generated after this prompt is executed. This setup ensures that all interactions with the knowledgebase start with a reminder of confidentiality, aligning with company policies on information security.
-
