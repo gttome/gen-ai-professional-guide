@@ -5,16 +5,16 @@
 
 :root{
   /* Light theme (default) */
-  --bg: #f7f8fb;
+  --bg: #F5F7FA;
   --panel: #ffffff;
-  --panel-2: #f0f3f9;
-  --text: #0f172a;
+  --panel-2: #EEF2F7;
+  --text: #1F2937;
   --muted: #475569;
-  --border: rgba(15, 23, 42, 0.14);
+  --border: rgba(31, 41, 55, 0.14);
 
   /* subtle color */
-  --brand: #3b82f6;
-  --brand-2: #60a5fa;
+  --brand: #0056b3;
+  --brand-2: #2F74D0;
 
   --danger: #dc2626;
   --shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
@@ -291,6 +291,12 @@ button, select, textarea{ font: inherit; color: inherit; }
   background: color-mix(in srgb, var(--panel) 92%, transparent);
   cursor: pointer;
 }
+
+.control-btn.active{
+  border-color: color-mix(in srgb, var(--brand) 70%, var(--border));
+  background: color-mix(in srgb, var(--brand) 10%, var(--panel));
+}
+
 .control-btn:hover{ transform: translateY(-1px); }
 .control-btn:focus{ outline: none; box-shadow: var(--focus); }
 
@@ -750,6 +756,23 @@ select/* =========================
   align-items: center !important;
   justify-content: center !important;
 }
+.stage.fit img{
+  max-width: min(90vw, 100%);
+  max-height: min(90vh, 100%);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* When concise infographics is active, prevent any nested scrolling. */
+:root.concise-infographic body{
+  overflow: hidden !important;
+}
+:root.concise-infographic .workspace,
+:root.concise-infographic .card-body{
+  overflow: hidden !important;
+}
+
 
 /* Narrow screens: stack dropdown under title if absolutely required */
 @media (max-width: 520px){
@@ -827,3 +850,7 @@ body{
   min-height: 0 !important;
   height: auto !important;
 }
+/* How To content */
+.howto-list{ margin: 0; padding-left: 18px; }
+.howto-list li{ margin: 10px 0; }
+.howto-list ul{ margin: 8px 0 0; padding-left: 18px; }
