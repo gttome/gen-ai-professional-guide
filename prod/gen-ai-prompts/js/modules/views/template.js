@@ -16,16 +16,7 @@ function downloadText(filename, text){
   document.body.appendChild(a);
   a.click();
   a.remove();
-  URL.revokeObjectURL(a.href);
-}
-
-async function copyToClipboard(text){
-  try{
-    await navigator.clipboard.writeText(text);
-    return true;
-  }catch{
-    return false;
-  }
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
 function debounce(fn, ms){
@@ -37,62 +28,208 @@ function debounce(fn, ms){
 }
 
 function safeFileBase(name){
-  return (name || 'prompt')
-    .replace(/[^a-z0-9\-_]+/gi, '_')
-    .replace(/^_+|_+$/g, '')
-    .slice(0, 80);
+  return String(name || 'prompt')
+    .trim()
+    .replace(/[\/:*?"<>|]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .slice(0, 90)
+    .trim() || 'prompt';
+}
+
+/**
+ * Derive a companion "use cases" file from a base template file.
+ * Example: "Acting As.txt" -> "Acting As uc.txt"
+ */
+function deriveUseCasesPath(templatePath){
+  const p = String(templatePath || '');
+  if (!p) return '';
+
+  const lastSlash = Math.max(p.lastIndexOf('/'), p.lastIndexOf('\\'));
+  const dir = lastSlash >= 0 ? p.slice(0, lastSlash + 1) : '';
+  const file = lastSlash >= 0 ? p.slice(lastSlash + 1) : p;
+
+  const dot = file.lastIndexOf('.');
+  const base = dot >= 0 ? file.slice(0, dot) : file;
+  const ext = dot >= 0 ? file.slice(dot) : '';
+
+  if (base.trim().toLowerCase().endsWith(' uc')) return p;
+
+  return dir + base + ' uc' + ext;
 }
 
 export async function renderTemplate(workspaceEl, prompt, state, saveState){
   const card = el('div', { class: 'card' });
+
   const header = el('div', { class: 'card-header' }, [
     el('div', { class: 'card-title' }, [
       el('h2', { text: 'Editable Template' }),
-      el('div', { class: 'hint', text: 'Edit the template, then copy or download as a .txt file.' }),
+      el('div', { class: 'hint', text: 'Load a file, edit text, then copy or download as a .txt file.' }),
     ])
   ]);
 
   const controls = el('div', { class: 'controls' });
-  const btnCopy = el('button', { class: 'control-btn', type: 'button', text: 'Copy to Clipboard' });
-  const btnDownload = el('button', { class: 'control-btn', type: 'button', text: 'Download .txt' });
-  const btnRestore = el('button', { class: 'control-btn', type: 'button', text: 'Restore original' });
-  controls.append(btnCopy, btnDownload, btnRestore);
+
+  const btnLoadTemplate = el('button', {
+    class: 'control-btn',
+    type: 'button',
+    text: 'Load Template',
+    title: 'Load the base template file (e.g., “Acting As.txt”)'
+  });
+
+  const btnLoadUseCases = el('button', {
+    class: 'control-btn',
+    type: 'button',
+    text: 'Load Use Cases',
+    title: 'Load the companion use-cases file (e.g., “Acting As uc.txt”)'
+  });
+
+  const btnCopy = el('button', {
+    class: 'control-btn',
+    type: 'button',
+    text: 'Copy to Clipboard',
+    title: 'Copy the current editor text to the clipboard'
+  });
+
+  const btnDownload = el('button', {
+    class: 'control-btn',
+    type: 'button',
+    text: 'Download .txt',
+    title: 'Download the current editor text as a .txt file'
+  });
+
+  const btnRestore = el('button', {
+    class: 'control-btn',
+    type: 'button',
+    text: 'Restore original',
+    title: 'Restore the original file contents (discarding local edits in the editor)'
+  });
+
+  controls.append(btnLoadTemplate, btnLoadUseCases, btnCopy, btnDownload, btnRestore);
   header.appendChild(controls);
 
   const body = el('div', { class: 'card-body' });
-  const label = el('label', { class: 'field-label', for: 'templateText', text: 'Prompt template' });
-  const ta = el('textarea', { id: 'templateText', class: 'textarea', rows: '14' });
+  const label = el('label', { class: 'field-label', for: 'templateText', text: 'Template text' });
+  const ta = el('textarea', {
+    id: 'templateText',
+    class: 'textarea',
+    rows: '16',
+    placeholder: 'Loading…'
+  });
 
   body.append(label, ta);
 
-  let originalText = '';
+  const templatePath = prompt.template ? String(prompt.template) : '';
+  const useCasesPath = (prompt.templateUseCases ? String(prompt.templateUseCases) : deriveUseCasesPath(templatePath));
 
-  // Load original (from file) if configured
-  if (!prompt.template){
-    ta.value = '';
-    body.appendChild(el('p', { class: 'muted', text: 'No template file is configured for this prompt.' }));
-  } else {
+  // Track which file is currently loaded in the editor.
+  let activeKind = 'template'; // 'template' | 'useCases'
+  let originalTemplateText = '';
+  let originalUseCasesText = '';
+
+  function setActiveUI(kind){
+    activeKind = kind;
+    const isUC = activeKind === 'useCases';
+    label.textContent = isUC ? 'Use cases text' : 'Template text';
+
+    btnLoadTemplate.classList.toggle('active', !isUC);
+    btnLoadUseCases.classList.toggle('active', isUC);
+  }
+
+  function ensureDraftContainers(){
+    if (!state) return;
+    state.templateDrafts = (state.templateDrafts && typeof state.templateDrafts === 'object') ? state.templateDrafts : {};
+    state.useCaseDrafts = (state.useCaseDrafts && typeof state.useCaseDrafts === 'object') ? state.useCaseDrafts : {};
+    state.templateActiveKind = (state.templateActiveKind && typeof state.templateActiveKind === 'object') ? state.templateActiveKind : {};
+  }
+
+  function getDraft(kind){
+    if (!state) return null;
+    if (kind === 'useCases'){
+      return (state.useCaseDrafts && typeof state.useCaseDrafts[prompt.id] === 'string') ? state.useCaseDrafts[prompt.id] : null;
+    }
+    return (state.templateDrafts && typeof state.templateDrafts[prompt.id] === 'string') ? state.templateDrafts[prompt.id] : null;
+  }
+
+  function setDraft(kind, value){
+    if (!state) return;
+    ensureDraftContainers();
+    if (kind === 'useCases'){
+      state.useCaseDrafts[prompt.id] = value;
+    } else {
+      state.templateDrafts[prompt.id] = value;
+    }
+    state.templateActiveKind[prompt.id] = kind;
+    saveState?.();
+  }
+
+  async function loadFromFile(kind, preferDraft = true){
+    setActiveUI(kind);
+
+    const isUC = kind === 'useCases';
+    const path = isUC ? useCasesPath : templatePath;
+
+    if (!path){
+      ta.value = '';
+      ta.placeholder = isUC
+        ? 'No use-cases file is configured for this prompt.'
+        : 'No template file is configured for this prompt.';
+      body.appendChild(el('p', { class: 'muted', text: ta.placeholder }));
+      return;
+    }
+
+    // Prefer local draft if present.
+    if (preferDraft){
+      const draft = getDraft(kind);
+      if (typeof draft === 'string'){
+        ta.value = draft;
+        ta.placeholder = '';
+        return;
+      }
+    }
+
     try{
-      originalText = await fetchText(prompt.template);
-      // If a draft exists in localStorage, use it; otherwise use original
-      const draft = state?.templateDrafts?.[prompt.id];
-      ta.value = typeof draft === 'string' ? draft : originalText;
+      const text = await fetchText(path);
+      if (isUC) originalUseCasesText = text;
+      else originalTemplateText = text;
+
+      ta.value = text;
+      ta.placeholder = '';
+      toast(isUC ? 'Loaded use cases.' : 'Loaded template.');
     }catch(err){
       console.error(err);
       ta.value = '';
-      body.appendChild(el('p', { class: 'muted', text: 'Template failed to load. Run via start-server.bat and confirm assets/templates contains the file.' }));
+      ta.placeholder = 'File not available. Run start-server.bat and confirm your assets/templates contains the file.';
+      body.appendChild(el('p', { class: 'muted', text: ta.placeholder }));
+      toast('Load failed (file not available).');
     }
   }
 
-  // Persist template drafts per prompt (debounced)
+  // Persist drafts per prompt + per kind (debounced)
   const persistDraft = debounce(() => {
     if (!state) return;
-    state.templateDrafts = (state.templateDrafts && typeof state.templateDrafts === 'object') ? state.templateDrafts : {};
-    state.templateDrafts[prompt.id] = ta.value;
-    saveState?.();
+    ensureDraftContainers();
+    setDraft(activeKind, ta.value);
   }, 450);
 
   ta.addEventListener('input', persistDraft);
+
+  // Default kind: resume last active kind (if available), otherwise template.
+  const lastKind = (state?.templateActiveKind && typeof state.templateActiveKind[prompt.id] === 'string')
+    ? state.templateActiveKind[prompt.id]
+    : 'template';
+
+  // Preload originals (best-effort) so "Restore original" works.
+  // We do it lazily when the user loads each file; but this gives a better first experience:
+  setActiveUI(lastKind === 'useCases' ? 'useCases' : 'template');
+  await loadFromFile(activeKind, true);
+
+  btnLoadTemplate.addEventListener('click', async () => {
+    await loadFromFile('template', true);
+  });
+
+  btnLoadUseCases.addEventListener('click', async () => {
+    await loadFromFile('useCases', true);
+  });
 
   btnCopy.addEventListener('click', async () => {
     const text = ta.value ?? '';
@@ -100,18 +237,8 @@ export async function renderTemplate(workspaceEl, prompt, state, saveState){
       toast('Nothing to copy.');
       return;
     }
-
-    const ok = await copyToClipboard(text);
-    if (ok){
-      toast('Copied to clipboard.');
-      return;
-    }
-
-    // Fallback
-    ta.focus();
-    ta.select();
     try{
-      document.execCommand('copy');
+      await navigator.clipboard.writeText(text);
       toast('Copied to clipboard.');
     }catch{
       toast('Copy failed (browser blocked).');
@@ -125,25 +252,24 @@ export async function renderTemplate(workspaceEl, prompt, state, saveState){
       return;
     }
     const safeName = safeFileBase(prompt.title);
-    downloadText(`${safeName}.txt`, text);
+    const suffix = (activeKind === 'useCases') ? ' uc' : '';
+    downloadText(`${safeName}${suffix}.txt`, text);
     toast('Downloaded.');
   });
 
   btnRestore.addEventListener('click', async () => {
-    if (!prompt.template){
-      toast('No original template is configured.');
-      return;
-    }
-
     try{
-      if (!originalText) originalText = await fetchText(prompt.template);
-      ta.value = originalText;
-      if (state){
-        state.templateDrafts = (state.templateDrafts && typeof state.templateDrafts === 'object') ? state.templateDrafts : {};
-        delete state.templateDrafts[prompt.id];
-        saveState?.();
-      }
-      toast('Restored original template.');
+      const isUC = activeKind === 'useCases';
+      const path = isUC ? useCasesPath : templatePath;
+      if (!path) throw new Error('No file configured');
+
+      const text = await fetchText(path);
+      if (isUC) originalUseCasesText = text;
+      else originalTemplateText = text;
+
+      ta.value = text;
+      setDraft(activeKind, text);
+      toast(isUC ? 'Restored original use cases.' : 'Restored original template.');
     }catch{
       toast('Restore failed (original file not available).');
     }
@@ -155,9 +281,19 @@ export async function renderTemplate(workspaceEl, prompt, state, saveState){
   ]);
   const notesWrap = el('div', { class: 'details-body' });
   const notesLabel = el('label', { class: 'field-label', for: 'notesText', text: 'Notes' });
-  const notesTa = el('textarea', { id: 'notesText', class: 'textarea', rows: '6', placeholder: 'Add your notes for this prompt…' });
+  const notesTa = el('textarea', {
+    id: 'notesText',
+    class: 'textarea',
+    rows: '6',
+    placeholder: 'Add your notes for this prompt…'
+  });
   const notesControls = el('div', { class: 'controls' });
-  const btnNotesDownload = el('button', { class: 'control-btn', type: 'button', text: 'Download notes .txt' });
+  const btnNotesDownload = el('button', {
+    class: 'control-btn',
+    type: 'button',
+    text: 'Download notes .txt',
+    title: 'Download your notes as a .txt file'
+  });
   notesControls.appendChild(btnNotesDownload);
 
   notesTa.value = (state?.notes && typeof state.notes === 'object' && typeof state.notes[prompt.id] === 'string')

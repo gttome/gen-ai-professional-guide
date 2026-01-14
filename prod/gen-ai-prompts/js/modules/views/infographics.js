@@ -40,10 +40,10 @@ export async function renderInfographics(workspaceEl, prompt, state, saveState){
   });
   if (variant) select.value = variant;
 
-  const btnZoomIn = el('button', { class: 'control-btn', type: 'button', text: 'Zoom +' });
-  const btnZoomOut = el('button', { class: 'control-btn', type: 'button', text: 'Zoom −' });
-  const btnReset = el('button', { class: 'control-btn', type: 'button', text: 'Reset' });
-  const btnOpen = el('button', { class: 'control-btn', type: 'button', text: 'Open' });
+  const btnZoomIn = el('button', { class: 'control-btn', type: 'button', text: 'Zoom +', title: 'Zoom in' });
+  const btnZoomOut = el('button', { class: 'control-btn', type: 'button', text: 'Zoom −', title: 'Zoom out' });
+  const btnReset = el('button', { class: 'control-btn', type: 'button', text: 'Reset', title: 'Reset zoom' });
+  const btnOpen = el('button', { class: 'control-btn', type: 'button', text: 'Open', title: 'Open infographic in a new tab (fit to viewport)' });
 
   controls.append(select, btnZoomIn, btnZoomOut, btnReset, btnOpen);
   header.appendChild(controls);
@@ -70,27 +70,13 @@ export async function renderInfographics(workspaceEl, prompt, state, saveState){
     if (!img) return;
     if (select.value !== 'concise') return;
 
-    // Force "fit" mode so the concise variant is fully visible without scrolling.
     stage.classList.add('fit');
-    // Reset zoom transform for fit baseline.
+
+    // Baseline: no zoom transform; sizing handled by CSS constraints.
     scale = 1;
     img.style.transform = 'none';
-
-    const sw = stage.clientWidth || 1;
-    const sh = stage.clientHeight || 1;
-    const iw = img.naturalWidth || sw;
-    const ih = img.naturalHeight || sh;
-
-    const pad = 10;
-    const maxW = Math.max(1, sw - pad);
-    const maxH = Math.max(1, sh - pad);
-
-    const ratio = Math.min(1, maxW / iw, maxH / ih);
-    img.style.width = Math.round(iw * ratio) + 'px';
-    img.style.height = Math.round(ih * ratio) + 'px';
-    img.style.objectFit = 'contain';
-    img.style.display = 'block';
-    img.style.margin = '0 auto';
+    img.style.width = '';
+    img.style.height = '';
   }
 
   function setScale(next){
@@ -160,20 +146,21 @@ export async function renderInfographics(workspaceEl, prompt, state, saveState){
   btnZoomOut.addEventListener('click', () => setScale(scale - 0.25));
   btnReset.addEventListener('click', () => setScale(1));
   btnOpen.addEventListener('click', () => {
-    // Prefer opening what is currently displayed (handles placeholder / failed loads).
+    // Open the currently displayed infographic directly (avoid about:blank).
     const currentSrc = (img && img.src) ? String(img.src) : '';
     const path = info[select.value] || '';
     const url = (path && String(path).startsWith('data:')) ? path : safeUrl(path);
     const absUrl = (url && !String(url).startsWith('data:')) ? new URL(url, window.location.href).toString() : url;
 
-    const toOpen = currentSrc || absUrl;
+    const src = currentSrc || absUrl;
 
-    if (!toOpen || !String(toOpen).trim()){
-      toast('No file to open.');
+    if (!src || !String(src).trim()){
+      toast('No infographic is configured for this prompt.');
       return;
     }
 
-    window.open(toOpen, '_blank', 'noopener,noreferrer');
+    // Open the image URL directly (new tab shows the infographic, not about:blank).
+    window.open(src, '_blank', 'noopener,noreferrer');
   });
 
   // Drag-to-pan (uses the scroll container)
