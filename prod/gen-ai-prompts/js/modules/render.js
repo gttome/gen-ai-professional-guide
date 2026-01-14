@@ -11,6 +11,10 @@ export async function renderAsset(workspaceEl, appData, state, saveState){
   const prompt = appData.prompts.find(p => p.id === state.promptId);
   workspaceEl.innerHTML = '';
 
+  // Global layout hint: prevent scrollbars when showing concise infographics.
+  const conciseMode = (state?.view === 'infographics') && (state?.infographicVariant === 'concise');
+  document.documentElement.classList.toggle('concise-infographic', !!conciseMode);
+
   if (!prompt){
     workspaceEl.appendChild(el('div', { class: 'card' }, [
       el('div', { class: 'card-header' }, [
