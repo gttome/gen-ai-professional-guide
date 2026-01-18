@@ -1,0 +1,12 @@
+Acting As:
+
+PROMPT TEMPLATE
+
+The "Acting As" prompt enables the AI to adopt a specific role, persona, or character. By using this template, you ensure the AI responds consistently with that chosen identity.
+
+Syntax:
+Acting as a [role or persona] and [task].
+
+Usage Instructions:
+Role or Persona: Define the specific identity (e.g., "Subject Matter Expert", "Linux Operating System").
+Task: Define the specific action, ensuring you provide enough contextual details to help the AI generate accurate responses.
