@@ -14,7 +14,7 @@
 <!-- Row 1: Menu -->
 <div class="topbar-row">
 <div aria-label="Top menu" class="topbar-right" role="navigation">
-<button class="ghost-btn" id="helpBtn" title="Open the user guide" type="button">How to use</button>
+<button class="ghost-btn" id="helpBtn" title="Open Help" type="button">Help</button>
 <button aria-label="Toggle light/dark theme" class="ghost-btn" id="themeToggleBtn" title="Toggle light/dark theme" type="button">
           Theme
         </button>
@@ -58,46 +58,106 @@
 <div aria-labelledby="helpTitle" aria-modal="true" class="modal" hidden="" id="helpModal" role="dialog">
 <div class="modal-card">
 <div class="modal-header">
-<h2 id="helpTitle">How to use</h2>
+<h2 id="helpTitle">Help</h2>
 <button aria-label="Close" class="icon-btn" data-close-modal="" title="Close" type="button">✕</button>
 </div>
 <div class="modal-body">
+<div class="resources">
+  <div class="res-tabs" role="tablist" aria-label="Help tabs">
+    <button type="button" class="res-tab-btn is-active" role="tab" aria-selected="true" aria-controls="resPanel-infographics" data-tab="infographics" title="View infographics">Infographics</button>
+    <button type="button" class="res-tab-btn" role="tab" aria-selected="false" aria-controls="resPanel-audio" data-tab="audio" title="Listen to audio">Audio</button>
+    <button type="button" class="res-tab-btn" role="tab" aria-selected="false" aria-controls="resPanel-video" data-tab="video" title="Watch video">Video</button>
+    <button type="button" class="res-tab-btn" role="tab" aria-selected="false" aria-controls="resPanel-slides" data-tab="slides" title="View the PDF slides deck">Slides</button>
+  </div>
 
-<section class="howto">
-  <ol class="howto-list">
-    <li>
-      <strong>Select a prompt</strong> using the dropdown next to the title.
-      <div class="muted">Each prompt can reference an infographic, video, audio file, and one or more templates.</div>
-    </li>
-    <li>
-      <strong>Switch views</strong> using the pill buttons: <em>Infographics</em>, <em>Videos</em>, <em>Audio</em>, <em>Templates</em>.
-      <ul>
-        <li><strong>Infographics</strong>: choose <em>Concise</em>, <em>Standard</em>, or <em>Detailed</em>. Use <em>Zoom</em> controls and <em>Reset</em>. Use <em>Open</em> to view the infographic in a new tab sized to the viewport (no scrollbars for concise).</li>
-        <li><strong>Videos</strong>: plays the configured video for the selected prompt (if present).</li>
-        <li><strong>Audio</strong>: plays the configured audio for the selected prompt (if present).</li>
-        <li><strong>Templates</strong>: edit the prompt template text and copy/download it. Use <em>Load Template</em> (base file) and <em>Load Use Cases</em> (companion “uc” file) when available.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>Favorites</strong>: click the star (☆/★) to save the current prompt in Favorites (stored locally in your browser).
-    </li>
-    <li>
-      <strong>Theme</strong>: use the <em>Theme</em> button to toggle Light/Dark mode.
-    </li>
-    <li>
-      <strong>Feedback</strong>: use the floating <em>Feedback / Contact</em> button to email feedback. The app name is included automatically.
-    </li>
-  </ol>
+  <div class="res-panels">
+    <section class="res-panel" id="resPanel-infographics" role="tabpanel">
+      <p class="muted">Tap a tile to open the infographic viewer.</p>
+      <div id="resInfographicsGrid" class="res-grid"></div>
+    </section>
 
-  <p class="muted" style="margin-top:12px;">
-    Tip: if media files don’t load, confirm you are running <strong>start-server.bat</strong> and that the files referenced in <strong>data/prompts.json</strong> exist alongside the app.
-  </p>
-</section>
+    <section class="res-panel" id="resPanel-audio" role="tabpanel" hidden>
+      <div id="resAudioList" class="res-media"></div>
+    </section>
+
+    <section class="res-panel" id="resPanel-video" role="tabpanel" hidden>
+      <p class="muted">Tap a tile to open the video viewer.</p>
+      <div id="resVideoGrid" class="res-grid"></div>
+    </section>
+
+    <section class="res-panel" id="resPanel-slides" role="tabpanel" hidden>
+      <div class="res-slides-card">
+        <div class="res-slides-meta">
+          <div class="res-slides-title">Slide Deck</div>
+          <div class="muted">Opens fullscreen with Back/Next buttons.</div>
+        </div>
+        <button type="button" class="primary-btn" id="resSlidesViewBtn" title="Open the slide deck viewer">View Slides</button>
+      </div>
+    </section>
+  </div>
+
+  <details class="res-howto">
+    <summary title="Open the in-app user guide">How to use (Quick Guide)</summary>
+    <section class="howto">
+      <ol class="howto-list">
+        <li>
+          <strong>Select a prompt</strong> using the dropdown next to the title.
+          <div class="muted">Each prompt can reference an infographic, video, audio file, and one or more templates.</div>
+        </li>
+        <li>
+          <strong>Switch views</strong> using the pill buttons: <em>Infographics</em>, <em>Video</em>, <em>Audio</em>, <em>Template</em>.
+        </li>
+        <li>
+          <strong>Favorites</strong>: click the star (☆/★) to save the current prompt in Favorites (stored locally in your browser).
+        </li>
+        <li>
+          <strong>Theme</strong>: use the Theme button to toggle Light/Dark mode.
+        </li>
+        <li>
+          <strong>Feedback</strong>: use the floating Feedback button to email feedback. The app name is included automatically.
+        </li>
+      </ol>
+
+      <p class="muted" style="margin-top:12px;">
+      </p>
+    </section>
+  </details>
+</div>
 </div>
 <div class="modal-footer">
 <button class="ghost-btn" data-close-modal="" title="Close" type="button">Close</button>
 </div>
 </div>
+</div>
+
+<!-- Modal: Resource Image Viewer -->
+<div aria-labelledby="resViewerTitle" aria-modal="true" class="modal fullscreen" hidden id="resourceImageModal" role="dialog">
+  <div class="modal-card modal-card-full">
+    <div class="modal-header">
+      <h2 id="resViewerTitle">Viewer</h2>
+      <button aria-label="Close" class="icon-btn" data-close-modal title="Close" type="button">✕</button>
+    </div>
+
+    <div class="modal-body res-viewer-body">
+      <img id="resViewerImg" class="res-viewer-img" alt="Infographic" hidden />
+      <video id="resViewerVideo" class="res-viewer-video" controls playsinline hidden></video>
+
+      <div id="resViewerPdfWrap" class="res-viewer-pdf" hidden>
+        <div class="res-viewer-pdf-toolbar">
+          <button type="button" class="ghost-btn" id="resViewerPdfPrev" title="Previous slide">Back</button>
+          <div class="muted" id="resViewerPdfPage" aria-live="polite">Page 1</div>
+          <button type="button" class="ghost-btn" id="resViewerPdfNext" title="Next slide">Next</button>
+        </div>
+        <iframe id="resViewerPdfFrame" class="res-viewer-pdf-frame" title="Slides PDF" loading="lazy"></iframe>
+      </div>
+
+      <div id="resViewerCaption" class="muted res-viewer-caption"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="ghost-btn" data-close-modal title="Close" type="button">Close</button>
+    </div>
+  </div>
 </div>
 <!-- Modal: Feedback -->
 <div aria-labelledby="feedbackTitle" aria-modal="true" class="modal" hidden="" id="feedbackModal" role="dialog">
