@@ -1,0 +1,39 @@
+{
+  "infographics": [
+    {
+      "id": "info-concise",
+      "title": "Visual Guide (Concise)",
+      "src": "resources/infographics/Gen AI Prompt Companion Visual Guide (concise).png"
+    },
+    {
+      "id": "info-standard",
+      "title": "Visual Guide (Standard)",
+      "src": "resources/infographics/Gen AI Prompt Companion Visual Guide (standard).png"
+    },
+    {
+      "id": "info-detailed",
+      "title": "Visual Guide (Detailed)",
+      "src": "resources/infographics/Gen AI Prompt Companion Visual Guide (detailed).png"
+    }
+  ],
+  "audio": [
+    {
+      "id": "aud-001",
+      "title": "Gen AI Prompt Companion (Audio)",
+      "src": "resources/audio/Gen_AI_Prompt_Companion.m4a"
+    }
+  ],
+  "video": [
+    {
+      "id": "vid-001",
+      "title": "Gen AI Prompt Companion (Video)",
+      "src": "resources/video/Gen_AI_Prompt_Companion.mp4"
+    }
+  ],
+  "slides": {
+    "id": "slides-001",
+    "title": "Gen AI Prompt Companion Guide (Slides)",
+    "src": "resources/slides/AI_Prompt_Companion_Guide.pdf",
+    "initialPage": 1
+  }
+}
