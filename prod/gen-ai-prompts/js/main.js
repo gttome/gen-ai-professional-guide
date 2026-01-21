@@ -12,6 +12,7 @@ import { renderAsset } from './modules/render.js';
 import { $, $$ } from './modules/dom.js';
 import { toast } from './modules/toast.js';
 import { openModal, initModals } from './modules/modals.js';
+import { initResources } from './modules/views/resources.js';
 const STORAGE_KEY = 'gaPromptCompanion.phase3';
 
 const THEME_KEY = 'gpc.theme';
@@ -389,6 +390,7 @@ populatePromptSelect();
   initNav();
   initFavorites();
   initModals();
+  initResources();
 initHelpAndFeedback();
   initShortcuts();
 
