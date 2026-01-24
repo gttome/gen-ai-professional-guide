@@ -1,0 +1,39 @@
+Perfect Prompt Structure — V2 (Template with Optional Modules)
+
+CORE (Always include these 4 parts)
+
+CONTEXT (Information):
+[Provide essential background: goal, audience, key facts/data, scope, what’s in/out.]
+
+TASK (Goal):
+[State the specific action you want the AI to perform, with clear deliverables and success criteria.]
+
+OUTPUT FORMAT:
+[Specify the structure you want back (e.g., bullets, table columns, outline, required headings/order).]
+
+CONSTRAINTS & TONE:
+[State rules and limits: tone, length, exclusions (“do not…”), must-include items, safety/privacy.]
+
+OPTIONAL MODULES (Add only when needed)
+
+ROLE & PERSONA (Optional):
+[Define the AI’s role/expertise and perspective. Add audience/voice rules if needed.]
+
+REASONING & QUALITY CHECKS (Optional):
+[Ask for a brief plan (e.g., 3–7 steps), then the final output. Require a self-check against success criteria and revision if needed.]
+
+GROUNDING & SOURCES (Optional):
+[Provide allowed data/sources and require a “Sources” section. Set a minimum [N] independent sources. If evidence is insufficient, state limitations instead of guessing.]
+
+--- Copy/Paste Version ---
+
+CORE
+CONTEXT: [CONTEXT]
+TASK: [TASK]
+OUTPUT FORMAT: [OUTPUT FORMAT]
+CONSTRAINTS & TONE: [CONSTRAINTS & TONE]
+
+OPTIONAL MODULES (include only the ones you need)
+ROLE & PERSONA: [ROLE/PERSONA]
+REASONING & QUALITY CHECKS: [PLAN + SELF-CHECK RULES / SUCCESS CRITERIA]
+GROUNDING & SOURCES: [DATA/SOURCES], [N], [LIMITATION RULES]
