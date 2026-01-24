@@ -1,0 +1,73 @@
+Fact Check a Response — Perfect Prompt Structure (V2) Template (with Key Facts)
+
+CORE
+
+CONTEXT (Information):
+- Domain: [DOMAIN]
+- Audience: [AUDIENCE]
+- Text/response to fact-check (paste in full): [RESPONSE_TO_FACT_CHECK]
+- Background (optional): [WHY_THIS_MATTERS / WHERE_THIS_WILL_BE_USED]
+- Scope (optional): [COUNTRY/REGION] | Timeframe: [TIMEFRAME]
+
+TASK (Goal):
+Fact-check the provided response for accuracy and integrity.
+1) Identify the response’s most important factual claims (core facts that materially affect correctness).
+2) Verify those claims using reputable evidence.
+3) Correct any inaccuracies and clearly indicate what changed.
+4) Provide a concise, improved final answer that is accurate and aligned to the user’s intent.
+
+OUTPUT FORMAT:
+Return the result using exactly these headings, in this order:
+1) Corrected Answer:
+2) Key Facts:  (a concise list of the most important factual claims you made)
+3) Evidence Notes:  (brief bullets stating what was verified and any corrections)
+4) Sources:  (at least [N] independent sources)
+
+CONSTRAINTS & TONE:
+- Tone: neutral, objective, and concise.
+- Do not speculate. If evidence is insufficient, say so and label the claim “Unsubstantiated.”
+- Prefer primary/authoritative sources (peer-reviewed research, official statistics, reputable reference bodies).
+- Avoid opinion pieces, blogs, or unsourced claims.
+- Keep language accessible for [AUDIENCE].
+- Keep “Key Facts” focused on core facts that, if wrong, would undermine the response.
+
+OPTIONAL MODULES (include only when needed)
+
+ROLE & PERSONA (Optional):
+You are a professional fact-check analyst. Your priority is accuracy, clarity, and evidence-based correction.
+
+REASONING & QUALITY CHECKS (Optional):
+Before finalizing (do not reveal hidden reasoning):
+- Confirm each item in “Key Facts” is explicitly supported in “Evidence Notes” and/or “Sources.”
+- Confirm “Corrected Answer” contains no unsupported factual assertions.
+- Remove or qualify any statements that cannot be verified within the given scope/timeframe.
+- Ensure the output follows the required headings exactly.
+
+GROUNDING & SOURCES (Optional):
+Use only: [ALLOWED SOURCES / PROVIDED LINKS / PROVIDED DOCUMENTS].
+If web access is available, find at least [N] independent reputable sources.
+In “Sources,” list each as: Title — Publisher/Organization — Year/Date — URL (if available).
+
+--- Copy/Paste Version ---
+
+CONTEXT:
+Domain: [DOMAIN]
+Audience: [AUDIENCE]
+Response to fact-check: [RESPONSE_TO_FACT_CHECK]
+Scope/Timeframe (optional): [SCOPE] / [TIMEFRAME]
+
+TASK:
+Fact-check the response. Identify and verify the core factual claims. Correct inaccuracies and produce an accurate final answer.
+
+OUTPUT FORMAT (use these headings in order):
+Corrected Answer:
+Key Facts:
+Evidence Notes:
+Sources: (≥ [N] independent sources)
+
+CONSTRAINTS & TONE:
+Neutral. No speculation. Prefer authoritative sources. If insufficient evidence, label “Unsubstantiated.” Keep Key Facts to only core facts.
+
+OPTIONAL — ROLE & PERSONA: [ROLE/PERSONA]
+OPTIONAL — REASONING & QUALITY CHECKS: Internal QC only; do not reveal hidden reasoning.
+OPTIONAL — GROUNDING & SOURCES: Use [ALLOWED SOURCES]; cite ≥ [N] independent sources; list Title — Publisher — Date — URL.
