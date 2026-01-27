@@ -1,0 +1,207 @@
+{
+  "app": "BookCoverTester",
+  "version": "1.0",
+  "count": 25,
+  "covers": [
+    {
+      "imageId": "1",
+      "label": "Cover 1",
+      "thumb300": "assets/covers/full/1.png",
+      "thumb600": "assets/covers/full/1.png",
+      "thumb1000": "assets/covers/full/1.png",
+      "full": "assets/covers/full/1.png"
+    },
+    {
+      "imageId": "2",
+      "label": "Cover 2",
+      "thumb300": "assets/covers/full/2.png",
+      "thumb600": "assets/covers/full/2.png",
+      "thumb1000": "assets/covers/full/2.png",
+      "full": "assets/covers/full/2.png"
+    },
+    {
+      "imageId": "3",
+      "label": "Cover 3",
+      "thumb300": "assets/covers/full/3.png",
+      "thumb600": "assets/covers/full/3.png",
+      "thumb1000": "assets/covers/full/3.png",
+      "full": "assets/covers/full/3.png"
+    },
+    {
+      "imageId": "4",
+      "label": "Cover 4",
+      "thumb300": "assets/covers/full/4.png",
+      "thumb600": "assets/covers/full/4.png",
+      "thumb1000": "assets/covers/full/4.png",
+      "full": "assets/covers/full/4.png"
+    },
+    {
+      "imageId": "5",
+      "label": "Cover 5",
+      "thumb300": "assets/covers/full/5.png",
+      "thumb600": "assets/covers/full/5.png",
+      "thumb1000": "assets/covers/full/5.png",
+      "full": "assets/covers/full/5.png"
+    },
+    {
+      "imageId": "6",
+      "label": "Cover 6",
+      "thumb300": "assets/covers/full/6.png",
+      "thumb600": "assets/covers/full/6.png",
+      "thumb1000": "assets/covers/full/6.png",
+      "full": "assets/covers/full/6.png"
+    },
+    {
+      "imageId": "7",
+      "label": "Cover 7",
+      "thumb300": "assets/covers/full/7.png",
+      "thumb600": "assets/covers/full/7.png",
+      "thumb1000": "assets/covers/full/7.png",
+      "full": "assets/covers/full/7.png"
+    },
+    {
+      "imageId": "8",
+      "label": "Cover 8",
+      "thumb300": "assets/covers/full/8.png",
+      "thumb600": "assets/covers/full/8.png",
+      "thumb1000": "assets/covers/full/8.png",
+      "full": "assets/covers/full/8.png"
+    },
+    {
+      "imageId": "9",
+      "label": "Cover 9",
+      "thumb300": "assets/covers/full/9.png",
+      "thumb600": "assets/covers/full/9.png",
+      "thumb1000": "assets/covers/full/9.png",
+      "full": "assets/covers/full/9.png"
+    },
+    {
+      "imageId": "10",
+      "label": "Cover 10",
+      "thumb300": "assets/covers/full/10.png",
+      "thumb600": "assets/covers/full/10.png",
+      "thumb1000": "assets/covers/full/10.png",
+      "full": "assets/covers/full/10.png"
+    },
+    {
+      "imageId": "11",
+      "label": "Cover 11",
+      "thumb300": "assets/covers/full/11.png",
+      "thumb600": "assets/covers/full/11.png",
+      "thumb1000": "assets/covers/full/11.png",
+      "full": "assets/covers/full/11.png"
+    },
+    {
+      "imageId": "12",
+      "label": "Cover 12",
+      "thumb300": "assets/covers/full/12.png",
+      "thumb600": "assets/covers/full/12.png",
+      "thumb1000": "assets/covers/full/12.png",
+      "full": "assets/covers/full/12.png"
+    },
+    {
+      "imageId": "13",
+      "label": "Cover 13",
+      "thumb300": "assets/covers/full/13.png",
+      "thumb600": "assets/covers/full/13.png",
+      "thumb1000": "assets/covers/full/13.png",
+      "full": "assets/covers/full/13.png"
+    },
+    {
+      "imageId": "14",
+      "label": "Cover 14",
+      "thumb300": "assets/covers/full/14.png",
+      "thumb600": "assets/covers/full/14.png",
+      "thumb1000": "assets/covers/full/14.png",
+      "full": "assets/covers/full/14.png"
+    },
+    {
+      "imageId": "15",
+      "label": "Cover 15",
+      "thumb300": "assets/covers/full/15.png",
+      "thumb600": "assets/covers/full/15.png",
+      "thumb1000": "assets/covers/full/15.png",
+      "full": "assets/covers/full/15.png"
+    },
+    {
+      "imageId": "16",
+      "label": "Cover 16",
+      "thumb300": "assets/covers/full/16.png",
+      "thumb600": "assets/covers/full/16.png",
+      "thumb1000": "assets/covers/full/16.png",
+      "full": "assets/covers/full/16.png"
+    },
+    {
+      "imageId": "17",
+      "label": "Cover 17",
+      "thumb300": "assets/covers/full/17.png",
+      "thumb600": "assets/covers/full/17.png",
+      "thumb1000": "assets/covers/full/17.png",
+      "full": "assets/covers/full/17.png"
+    },
+    {
+      "imageId": "18",
+      "label": "Cover 18",
+      "thumb300": "assets/covers/full/18.png",
+      "thumb600": "assets/covers/full/18.png",
+      "thumb1000": "assets/covers/full/18.png",
+      "full": "assets/covers/full/18.png"
+    },
+    {
+      "imageId": "19",
+      "label": "Cover 19",
+      "thumb300": "assets/covers/full/19.png",
+      "thumb600": "assets/covers/full/19.png",
+      "thumb1000": "assets/covers/full/19.png",
+      "full": "assets/covers/full/19.png"
+    },
+    {
+      "imageId": "20",
+      "label": "Cover 20",
+      "thumb300": "assets/covers/full/20.png",
+      "thumb600": "assets/covers/full/20.png",
+      "thumb1000": "assets/covers/full/20.png",
+      "full": "assets/covers/full/20.png"
+    },
+    {
+      "imageId": "21",
+      "label": "Cover 21",
+      "thumb300": "assets/covers/full/21.png",
+      "thumb600": "assets/covers/full/21.png",
+      "thumb1000": "assets/covers/full/21.png",
+      "full": "assets/covers/full/21.png"
+    },
+    {
+      "imageId": "22",
+      "label": "Cover 22",
+      "thumb300": "assets/covers/full/22.png",
+      "thumb600": "assets/covers/full/22.png",
+      "thumb1000": "assets/covers/full/22.png",
+      "full": "assets/covers/full/22.png"
+    },
+    {
+      "imageId": "23",
+      "label": "Cover 23",
+      "thumb300": "assets/covers/full/23.png",
+      "thumb600": "assets/covers/full/23.png",
+      "thumb1000": "assets/covers/full/23.png",
+      "full": "assets/covers/full/23.png"
+    },
+    {
+      "imageId": "24",
+      "label": "Cover 24",
+      "thumb300": "assets/covers/full/24.png",
+      "thumb600": "assets/covers/full/24.png",
+      "thumb1000": "assets/covers/full/24.png",
+      "full": "assets/covers/full/24.png"
+    },
+    {
+      "imageId": "25",
+      "label": "Cover 25",
+      "thumb300": "assets/covers/full/25.png",
+      "thumb600": "assets/covers/full/25.png",
+      "thumb1000": "assets/covers/full/25.png",
+      "full": "assets/covers/full/25.png"
+    }
+  ]
+}
