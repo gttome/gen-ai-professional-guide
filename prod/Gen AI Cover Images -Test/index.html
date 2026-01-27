@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Gen AI Prompt Companion — Cover Images</title>
+  <meta name="description" content="Mobile-first book cover evaluation: pick 1 per set, then choose Top 3 and Favorite, submit via email draft." />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-title">Gen AI Prompt Companion - Cover Images</div>
+        <div class="brand-subtitle" id="stepLabel"></div>
+      </div>
+      <div class="header-actions">
+        <button class="text-btn" id="infoBtn" type="button" aria-label="How your feedback is used">Info</button>
+        <button class="text-btn" id="themeBtn" type="button" aria-label="Toggle theme">Theme</button>
+        <button class="text-btn" id="exitBtn" type="button" aria-label="Exit to Home" hidden>Exit</button>
+      </div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-label" id="progressLabel">Progress</div>
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main" id="main" role="main">
+    <!-- HOME -->
+    <section class="screen" id="screenHome" aria-labelledby="homeTitle">
+      <h1 id="homeTitle">Pick the Best Cover</h1>
+      <p class="lead">Pick 1 cover per set (5 sets). Then choose your Top 3 — Favorite is #1.</p>
+      <div class="stack">
+        <button class="btn primary" id="startBtn" type="button">Start</button>
+        <button class="btn secondary" id="resumeBtn" type="button" hidden>Resume Session</button>
+      </div>
+    </section>
+
+    <!-- SHORTLIST -->
+    <section class="screen" id="screenShortlist" aria-labelledby="shortlistTitle" hidden>
+      <h1 id="shortlistTitle">Pick 1 cover</h1>
+      <p class="muted" id="shortlistInstruction">Tap one cover to represent this set.</p>
+      <div class="grid-5" id="shortlistGrid" role="list"></div>
+      <div class="bottom-bar">
+        <button class="btn ghost" id="undoBtn" type="button" disabled>Undo</button>
+        <button class="btn primary" id="nextSetBtn" type="button" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- TOP 3 -->
+<section class="screen" id="screenTop3" aria-labelledby="top3Title" hidden>
+      <h1 id="top3Title">Choose Your Top 3</h1>
+      <p class="muted">These are your 5 picks (one per set). Tap a slot to activate it, then tap a cover to assign. Favorite is #1.</p>
+
+      <div class="top3-toolbar">
+        <div class="small muted" id="top3Hint">Active slot: Favorite (#1)</div>
+        <button class="text-btn" id="resetTop3Btn" type="button">Reset</button>
+      </div>
+
+      <div class="top3-panel" aria-label="Your Top 3 selection">
+        <div class="top3-slot" id="slotCard1" data-rank="1" role="button" tabindex="0" aria-label="Favorite slot">
+          <div class="rank-badge">1</div>
+          <div class="slot-content">
+            <div class="slot-title">Favorite</div>
+            <div class="slot-value" id="slot1">Not selected</div>
+          </div>
+          <div class="slot-actions">
+            <button class="icon-btn" id="slot1Clear" type="button" aria-label="Clear Favorite" disabled>✕</button>
+          </div>
+        </div>
+
+        <div class="top3-slot" id="slotCard2" data-rank="2" role="button" tabindex="0" aria-label="Rank 2 slot">
+          <div class="rank-badge">2</div>
+          <div class="slot-content">
+            <div class="slot-title">Rank 2</div>
+            <div class="slot-value" id="slot2">Not selected</div>
+          </div>
+          <div class="slot-actions">
+            <button class="icon-btn" id="slot2Clear" type="button" aria-label="Clear Rank 2" disabled>✕</button>
+          </div>
+        </div>
+
+        <div class="top3-slot" id="slotCard3" data-rank="3" role="button" tabindex="0" aria-label="Rank 3 slot">
+          <div class="rank-badge">3</div>
+          <div class="slot-content">
+            <div class="slot-title">Rank 3</div>
+            <div class="slot-value" id="slot3">Not selected</div>
+          </div>
+          <div class="slot-actions">
+            <button class="icon-btn" id="slot3Clear" type="button" aria-label="Clear Rank 3" disabled>✕</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" id="top3Grid" role="list"></div>
+      <div class="bottom-bar">
+        <button class="btn ghost" id="top3BackBtn" type="button">Edit Picks</button>
+        <button class="btn primary" id="toSubmitBtn" type="button" disabled>Continue to Submit</button>
+      </div>
+    </section>
+
+    <!-- SUBMIT -->
+    <section class="screen" id="screenSubmit" aria-labelledby="submitTitle" hidden>
+      <h1 id="submitTitle">Submit</h1>
+      <p class="muted">We will open your email app with a pre-filled draft to agilityaiwork@gmail.com.</p>
+
+      <div class="card">
+        <div class="summary-title">Your selections</div>
+        <div class="summary-line" id="submitFavorite"></div>
+        <div class="summary-line" id="submitTop3"></div>
+      </div>
+
+      <form class="form" id="submitForm" autocomplete="on" novalidate>
+        <div class="details" id="contactDetails" role="group" aria-label="Optional contact info">
+          <div class="details-title">Optional contact info</div>
+          <label class="field">
+            <span>Name (optional)</span>
+            <input id="nameInput" type="text" inputmode="text" autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>Contact Email (optional)</span>
+            <input id="emailInput" type="email" inputmode="email" autocomplete="email" />
+          </label>
+          <div class="small muted">Used only for follow-up. This info is not saved to your device.</div>
+        </div>
+
+        <div class="stack">
+          <button class="btn primary" id="openEmailBtn" type="button" disabled>Open Email Draft</button>
+          <button class="btn secondary" id="copyTextBtn" type="button" disabled>Copy Submission Text</button>
+          <button class="btn ghost" id="submitBackBtn" type="button">Back</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- CONFIRM SENT -->
+    <section class="screen" id="screenConfirmSent" aria-labelledby="confirmTitle" hidden>
+      <h1 id="confirmTitle">Did you send the email?</h1>
+      <p class="muted">
+        We opened your email app with a pre-filled draft to <strong>agilityaiwork@gmail.com</strong>.
+        Mailto cannot confirm delivery.
+      </p>
+      <div class="stack">
+        <button class="btn primary" id="confirmYesBtn" type="button">Yes, I sent it</button>
+        <button class="btn secondary" id="confirmNoBtn" type="button">No, take me back</button>
+      </div>
+      <p class="small muted">If your email app did not open, go back and use “Copy Submission Text”.</p>
+    </section>
+
+    <!-- SUCCESS -->
+    <section class="screen" id="screenSuccess" aria-labelledby="successTitle" hidden>
+      <h1 id="successTitle">Thank you</h1>
+      <p class="muted">If you haven’t sent the email yet, go back and send it now.</p>
+      <div class="card">
+        <div class="summary-title">Favorite</div>
+        <div class="success-fav" id="successFavorite"></div>
+        <div class="summary-title">Top 3</div>
+        <div class="success-top3" id="successTop3"></div>
+      </div>
+      <div class="stack">
+        <button class="btn primary" id="startOverBtn" type="button">Start Over</button>
+        <button class="btn secondary" id="copyAgainBtn" type="button">Copy Submission Text Again</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: Privacy -->
+  <div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title" id="privacyTitle">How your feedback is used</div>
+        <button class="icon-btn" id="privacyCloseBtn" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>This app helps select a book cover from 25 candidates. You will pick 1 cover per set (5 sets), then rank your Top 3 and Favorite.</p>
+        <p>Your selections and basic usage metrics (time to complete, steps, viewport) are emailed to the author for analysis. Name and Contact Email are optional.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn primary" id="privacyOkBtn" type="button">OK</button>
+      </div>
+    </div>
+    <div class="modal-backdrop" id="privacyBackdrop" aria-hidden="true"></div>
+  </div>
+
+  <!-- MODAL: Image Preview -->
+  <div class="modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle" hidden>
+    <div class="modal-card preview-card">
+      <div class="modal-head">
+        <div class="modal-title" id="previewTitle">Preview</div>
+        <button class="icon-btn" id="previewCloseBtn" type="button" aria-label="Close preview">✕</button>
+      </div>
+      <div class="preview-body">
+        <img id="previewImg" alt="" />
+        <div class="small muted" id="previewCaption"></div>
+      </div>
+    </div>
+    <div class="modal-backdrop" id="previewBackdrop" aria-hidden="true"></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
