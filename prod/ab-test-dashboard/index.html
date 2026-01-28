@@ -211,6 +211,31 @@
           <div id="rank_heatmap_legend" class="heatLegend"></div>
         </div>
 
+        <div class="card" style="margin:12px 0 0 0;">
+          <div class="row" style="align-items:center;">
+            <h2 style="margin:0;">Session score ranking</h2>
+            <div class="spacer"></div>
+            <div class="pill" id="kpi_scoreboard_count" title="How many sessions are included in the ranking (after filters)">—</div>
+          </div>
+          <div class="hint">
+            Score = sum of <b>Top‑3 appearance counts</b> (within the current slice) for the three images selected in that session.
+            This helps identify sessions aligned with the slice’s most consistently selected images.
+          </div>
+          <table id="scoreboard" style="margin-top:8px;">
+            <thead>
+              <tr>
+                <th title="Rank in this table">#</th>
+                <th title="Source TXT filename (seed or imported)">file</th>
+                <th title="Session identifier (click for drilldown)">sessionId</th>
+                <th title="Sum of Top‑3 appearance counts for this session’s three picks">score</th>
+                <th title="Ranked Top‑3 picks for this session">top‑3 picks</th>
+                <th title="Per‑pick Top‑3 counts used in the score">breakdown</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
         <div class="hint" style="margin-top:10px;">
           Note: The current app flow reports <b>method=shortlist_then_rank</b> and <b>comparisonsMade=0</b> for all sessions in the seed dataset.
         </div>
@@ -402,7 +427,7 @@
     </div>
   </div>
 
-  <script src="js/tooltips.js?v=6.0.5"></script>
-  <script src="js/app.js?v=6.0.5"></script>
+  <script src="js/tooltips.js?v=6.0.4"></script>
+  <script src="js/app.js?v=6.0.4"></script>
     </body>
 </html>
