@@ -1,0 +1,9 @@
+Gen AI Prompt Companion — Cover Images
+Respondent: GTT <georgetome@live.com>
+Favorite: Cover 14
+Top 3: 1) Cover 14   2) Cover 9   3) Cover 3
+
+---BEGIN_JSON---
+{"app":"BookCoverTester","version":"1.2","respondent":{"name":"GTT","email":"georgetome@live.com"},"startedAt":"2026-01-27T03:16:12.316Z","submittedAt":"2026-01-27T03:17:03.010Z","results":{"favorite":{"imageId":"14"},"top3":[{"rank":1,"imageId":"14"},{"rank":2,"imageId":"9"},{"rank":3,"imageId":"3"}]},"metrics":{"sessionId":"302ef45e-05b3-4f06-8482-93d1eb3c8345","method":"shortlist_then_rank","setsViewed":5,"shortlistCount":5,"imagesExpandedCount":0,"comparisonsMade":0,"timeToCompleteSeconds":51,"device":{"category":"desktop","viewport":"1912x914"},"counts":{"taps":9,"marksToggled":5,"undoUsed":0,"top3Changes":3},"exposures":{"1":2,"2":2,"3":6,"4":2,"5":2,"6":2,"7":2,"8":2,"9":6,"10":2,"11":2,"12":2,"13":2,"14":6,"15":2,"16":2,"17":2,"18":6,"19":2,"20":2,"21":2,"22":2,"23":6,"24":2,"25":2},"fullResOpens":{},"submission":{"channel":"mailto","attempts":0,"mailtoOpenedAt":null,"copiedToClipboard":false,"userConfirmedSent":null,"confirmedAt":null},"dropOffStep":null,"errors":[]}}
+
+---END_JSON---

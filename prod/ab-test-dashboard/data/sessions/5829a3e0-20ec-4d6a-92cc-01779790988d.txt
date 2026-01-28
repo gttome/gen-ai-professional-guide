@@ -1,0 +1,8 @@
+Gen AI Prompt Companion — Cover Images
+Respondent: Andrew the genius again <andrew.lin.agile@gmail.com>
+Favorite: Cover 2
+Top 3: 1) Cover 2   2) Cover 23   3) Cover 15
+
+---BEGIN_JSON---
+{"app":"BookCoverTester","version":"1.2","respondent":{"name":"Andrew the genius again","email":"andrew.lin.agile@gmail.com"},"startedAt":"2026-01-27T04:18:14.793Z","submittedAt":"2026-01-27T04:20:38.105Z","results":{"favorite":{"imageId":"2"},"top3":[{"rank":1,"imageId":"2"},{"rank":2,"imageId":"23"},{"rank":3,"imageId":"15"}]},"metrics":{"sessionId":"5829a3e0-20ec-4d6a-92cc-01779790988d","method":"shortlist_then_rank","setsViewed":5,"shortlistCount":5,"imagesExpandedCount":0,"comparisonsMade":0,"timeToCompleteSeconds":143,"device":{"category":"mobile","viewport":"443x820"},"counts":{"taps":7,"marksToggled":5,"undoUsed":0,"top3Changes":3},"exposures":{"1":2,"2":6,"3":2,"4":2,"5":2,"6":6,"7":2,"8":2,"9":2,"10":2,"11":2,"12":2,"13":2,"14":2,"15":6,"16":2,"17":2,"18":6,"19":2,"20":2,"21":2,"22":2,"23":6,"24":2,"25":2},"fullResOpens":{},"submission":{"channel":"mailto","attempts":0,"mailtoOpenedAt":null,"copiedToClipboard":false,"userConfirmedSent":null,"confirmedAt":null},"dropOffStep":null,"errors":[]}}
+---END_JSON---

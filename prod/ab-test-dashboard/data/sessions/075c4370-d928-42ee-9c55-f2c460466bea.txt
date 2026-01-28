@@ -1,0 +1,8 @@
+Gen AI Prompt Companion — Cover Images
+Respondent: Joe Justice <joejustice0@gmail.com>
+Favorite: Cover 3
+Top 3: 1) Cover 3 2) Cover 6 3) Cover 14
+
+---BEGIN_JSON---
+{"app":"BookCoverTester","version":"1.2","respondent":{"name":"Joe Justice","email":"joejustice0@gmail.com"},"startedAt":"2026-01-27T03:49:54.776Z","submittedAt":"2026-01-27T03:52:02.907Z","results":{"favorite":{"imageId":"3"},"top3":[{"rank":1,"imageId":"3"},{"rank":2,"imageId":"6"},{"rank":3,"imageId":"14"}]},"metrics":{"sessionId":"075c4370-d928-42ee-9c55-f2c460466bea","method":"shortlist_then_rank","setsViewed":5,"shortlistCount":5,"imagesExpandedCount":0,"comparisonsMade":0,"timeToCompleteSeconds":128,"device":{"category":"mobile","viewport":"393x665"},"counts":{"taps":7,"marksToggled":6,"undoUsed":0,"top3Changes":3},"exposures":{"1":3,"2":3,"3":7,"4":3,"5":3,"6":6,"7":2,"8":2,"9":2,"10":2,"11":2,"12":2,"13":2,"14":6,"15":2,"16":2,"17":2,"18":2,"19":6,"20":2,"21":2,"22":2,"23":2,"24":2,"25":6},"fullResOpens":{},"submission":{"channel":"mailto","attempts":0,"mailtoOpenedAt":null,"copiedToClipboard":false,"userConfirmedSent":null,"confirmedAt":null},"dropOffStep":null,"errors":[]}}
+---END_JSON---

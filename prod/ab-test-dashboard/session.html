@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Book Cover Tester — Session Drilldown</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Session Drilldown</h1>
+        <div class="sub">PII-safe • Static dashboard</div>
+      </div>
+      <div class="controls">
+        <a class="btn" href="index.html" title="Return to the main dashboard">← Back to Dashboard</a>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="row" style="align-items:center;">
+        <div style="flex:1;">
+          <div class="hint">SessionId</div>
+          <div style="font-size:18px; font-weight:800; word-break:break-all;" id="sd_session">—</div>
+        </div>
+        <div class="pill">Build <span id="sd_build">—</span></div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div class="card">
+          <h2 style="margin-top:0;">Session Metrics</h2>
+          <div id="sd_kpis" class="compareKpis"></div>
+        </div>
+        <div class="card">
+          <h2 style="margin-top:0;">Selections (Top 3)</h2>
+          <table class="table" id="sd_sel">
+            <thead><tr><th>rank</th><th>image</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h2 style="margin-top:0;">Exposure + Opens</h2>
+        <div class="grid">
+          <div class="card">
+            <h3 style="margin-top:0;">Exposures</h3>
+            <table class="table" id="sd_exp">
+              <thead><tr><th>image</th><th>exposures</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0;">Full-res Opens</h3>
+            <table class="table" id="sd_opens">
+              <thead><tr><th>image</th><th>opens</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint" style="margin-top:10px;">
+        Respondent fields are never displayed on this page.
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>
+        <b>Local workflow:</b> run <span class="pill">server-start.bat</span> and open index.html.
+      </div>
+    </div>
+  </div>
+
+  <script src="js/tooltips.js?v=6.0.5"></script>
+  <script src="js/drilldown.js?v=6.0.5"></script>
+</body>
+</html>

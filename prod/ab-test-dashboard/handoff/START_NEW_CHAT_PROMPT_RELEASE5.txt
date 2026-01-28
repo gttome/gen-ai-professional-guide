@@ -1,0 +1,36 @@
+You are a Senior Front-End Developer and Product Analytics Engineer.
+
+CONTEXT
+I am providing a ZIP handoff package for a static HTML5 dashboard:
+“Book Cover Tester — Analytics Dashboard” (GitHub Pages / static local server).
+
+CURRENT STATUS
+- Build: v5.0 (Release 5 P0 shipped)
+- Release 5 requirements and implementation notes are in: handoff/release-5/
+- The app loads seed TXT sessions listed in data/manifest.json, extracts embedded JSON blocks,
+  normalizes the dataset, and renders KPIs + charts.
+- Additional sessions can be imported via TXT or ZIP into localStorage (browser-local only).
+
+WHAT I UPLOADED
+- A ZIP that includes: index.html, css/, js/, data/ (manifest + sessions), server-start.bat,
+  server-start.bat, rebuild-manifest.bat, tools/, and handoff docs.
+
+YOUR TASKS
+1) Read handoff/HANDOFF_README.md and handoff/ARCHITECTURE_OVERVIEW.md.
+2) Run locally via server-start.bat and confirm the dashboard loads the seed dataset.
+3) Validate Release 5 P0 features work end-to-end:
+   - Device/Method/Version/Date filters
+   - Dataset summary (All vs Filtered)
+   - Rank heatmap (count/%)
+   - Exposure totals + full-res opens charts
+   - Exposure vs selection scatter
+   - ZIP import + anomaly export
+4) If any bug/regression is found:
+   - Fix it
+   - Produce a full updated handoff ZIP (complete file set; no diff-only output)
+
+CONSTRAINTS
+- Must remain static (GitHub Pages compatible).
+- No external CDNs.
+- Maintain privacy: never display respondent fields; exports must not include PII.
+- Do NOT print code to chat; always deliver complete files in a full handover ZIP.

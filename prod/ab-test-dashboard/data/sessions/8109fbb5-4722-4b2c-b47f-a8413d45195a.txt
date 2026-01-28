@@ -1,0 +1,8 @@
+Gen AI Prompt Companion — Cover Images
+Respondent: Cody
+Favorite: Cover 1
+Top 3: 1) Cover 1   2) Cover 23   3) Cover 14
+
+---BEGIN_JSON---
+{"app":"BookCoverTester","version":"1.2","respondent":{"name":"Cody","email":""},"startedAt":"2026-01-27T03:38:08.971Z","submittedAt":"2026-01-27T03:42:47.610Z","results":{"favorite":{"imageId":"1"},"top3":[{"rank":1,"imageId":"1"},{"rank":2,"imageId":"23"},{"rank":3,"imageId":"14"}]},"metrics":{"sessionId":"8109fbb5-4722-4b2c-b47f-a8413d45195a","method":"shortlist_then_rank","setsViewed":5,"shortlistCount":5,"imagesExpandedCount":0,"comparisonsMade":0,"timeToCompleteSeconds":279,"device":{"category":"mobile","viewport":"360x744"},"counts":{"taps":14,"marksToggled":5,"undoUsed":0,"top3Changes":3},"exposures":{"1":6,"2":2,"3":2,"4":2,"5":2,"6":2,"7":6,"8":2,"9":2,"10":2,"11":2,"12":2,"13":2,"14":6,"15":2,"16":6,"17":2,"18":2,"19":2,"20":2,"21":2,"22":2,"23":6,"24":2,"25":2},"fullResOpens":{},"submission":{"channel":"mailto","attempts":0,"mailtoOpenedAt":null,"copiedToClipboard":false,"userConfirmedSent":null,"confirmedAt":null},"dropOffStep":null,"errors":[]}}
+---END_JSON---

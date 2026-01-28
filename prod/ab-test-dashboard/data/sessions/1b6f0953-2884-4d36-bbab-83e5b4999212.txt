@@ -1,0 +1,8 @@
+Gen AI Prompt Companion — Cover Images
+Respondent: Tom Wolf <twolf@visular.com>
+Favorite: Cover 11
+Top 3: 1) Cover 11 2) Cover 2 3) Cover 19
+
+---BEGIN_JSON---
+{"app":"BookCoverTester","version":"1.2","respondent":{"name":"Tom Wolf","email":"twolf@visular.com"},"startedAt":"2026-01-27T03:33:47.409Z","submittedAt":"2026-01-27T03:45:05.716Z","results":{"favorite":{"imageId":"11"},"top3":[{"rank":1,"imageId":"11"},{"rank":2,"imageId":"2"},{"rank":3,"imageId":"19"}]},"metrics":{"sessionId":"1b6f0953-2884-4d36-bbab-83e5b4999212","method":"shortlist_then_rank","setsViewed":5,"shortlistCount":5,"imagesExpandedCount":36,"comparisonsMade":0,"timeToCompleteSeconds":678,"device":{"category":"mobile","viewport":"402x714"},"counts":{"taps":90,"marksToggled":10,"undoUsed":1,"top3Changes":3},"exposures":{"1":4,"2":8,"3":4,"4":4,"5":4,"6":2,"7":6,"8":2,"9":2,"10":2,"11":6,"12":2,"13":2,"14":2,"15":2,"16":6,"17":6,"18":6,"19":10,"20":6,"21":2,"22":2,"23":2,"24":6,"25":2},"fullResOpens":{"1":2,"2":3,"3":1,"4":1,"5":1,"6":2,"7":2,"8":1,"9":1,"10":1,"11":3,"12":3,"13":1,"14":1,"15":1,"16":1,"17":2,"18":1,"19":3,"20":1,"21":1,"22":1,"23":1,"24":1},"submission":{"channel":"mailto","attempts":0,"mailtoOpenedAt":null,"copiedToClipboard":false,"userConfirmedSent":null,"confirmedAt":null},"dropOffStep":null,"errors":[]}}
+---END_JSON---

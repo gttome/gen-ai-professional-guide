@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Book Cover Tester — Image Drilldown</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Image Drilldown</h1>
+        <div class="sub">PII-safe • Static dashboard</div>
+      </div>
+      <div class="controls">
+        <a class="btn" href="index.html" title="Return to the main dashboard">← Back to Dashboard</a>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="row" style="align-items:center;">
+        <div style="flex:1;">
+          <div class="hint">Image</div>
+          <div style="font-size:28px; font-weight:800;" id="dd_image">—</div>
+        </div>
+        <div class="pill">Build <span id="dd_build">—</span></div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div class="card">
+          <h2 style="margin-top:0;">Selection</h2>
+          <div id="dd_sel_kpis" class="compareKpis"></div>
+        </div>
+        <div class="card">
+          <h2 style="margin-top:0;">Exposure + Opens</h2>
+          <div id="dd_exp_kpis" class="compareKpis"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h2 style="margin-top:0;">Breakdown (filtered only by ImageId)</h2>
+        <div class="hint">Counts by method and version (based on sessions that selected this image in Top 3)</div>
+        <div class="grid" style="margin-top:10px;">
+          <div class="card">
+            <h3 style="margin-top:0;">By Method</h3>
+            <table class="table" id="dd_by_method">
+              <thead><tr><th>method</th><th>top3</th><th>rank1</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0;">By Version</h3>
+            <table class="table" id="dd_by_version">
+              <thead><tr><th>version</th><th>top3</th><th>rank1</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>
+        <b>Note:</b> This page uses the same localStorage “Added” sessions as the main dashboard.
+      </div>
+    </div>
+  </div>
+
+  <script src="js/tooltips.js?v=6.0.5"></script>
+  <script src="js/drilldown.js?v=6.0.5"></script>
+</body>
+</html>

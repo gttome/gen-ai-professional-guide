@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Book Cover Tester — Analytics Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Book Cover Tester — Analytics Dashboard</h1>
+        <div class="sub">Static GitHub Pages dashboard • Seed dataset included • PII not displayed</div>
+      </div>
+
+      <div class="controls">
+  <div class="dropdown" id="device_dd">
+    <button class="btn selectbtn" id="device_btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="Device filter">
+      Device: All <span class="caret">▾</span>
+    </button>
+    <div class="menu" id="device_menu" role="listbox" aria-label="Device filter" hidden>
+      <button class="item" type="button" data-value="all">Device: All</button>
+      <button class="item" type="button" data-value="mobile">Device: Mobile</button>
+      <button class="item" type="button" data-value="desktop">Device: Desktop</button>
+      <button class="item" type="button" data-value="unknown">Device: Unknown</button>
+    </div>
+  </div>
+
+  <div class="dropdown" id="method_dd">
+    <button class="btn selectbtn" id="method_btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="Method filter">
+      Method: All <span class="caret">▾</span>
+    </button>
+    <div class="menu" id="method_menu" role="listbox" aria-label="Method filter" hidden>
+      <button class="item" type="button" data-value="all">Method: All</button>
+    </div>
+  </div>
+
+  <div class="dropdown" id="version_dd">
+    <button class="btn selectbtn" id="version_btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="Version filter">
+      Version: All <span class="caret">▾</span>
+    </button>
+    <div class="menu" id="version_menu" role="listbox" aria-label="Version filter" hidden>
+      <button class="item" type="button" data-value="all">Version: All</button>
+    </div>
+  </div>
+
+  <div class="dateRange" title="Filter by submitted date (fallback: started date)">
+    <span class="hint">From</span>
+    <input id="date_start" class="dateInput" type="date" />
+    <span class="hint">To</span>
+    <input id="date_end" class="dateInput" type="date" />
+    <button id="btn_clear_filters" class="btn" type="button" title="Clear method/version/date filters (keeps device filter)">Clear</button>
+  
+  <div class="dropdown" id="preset_dd">
+    <button class="btn selectbtn" id="preset_btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="Filter presets">
+      Preset: None <span class="caret">▾</span>
+    </button>
+    <div class="menu" id="preset_menu" role="listbox" aria-label="Presets" hidden>
+      <button class="item" type="button" data-value="__none__">Preset: None</button>
+    </div>
+  </div>
+
+  <button id="btn_preset_save" class="btn" type="button" title="Save current filters as a named preset">Save preset</button>
+  <button id="btn_preset_delete" class="btn" type="button" title="Delete the selected preset" disabled>Delete preset</button>
+
+
+</div>
+
+  <label class="btn" title="Import a ZIP containing TXT session files (stored locally in your browser)">
+    Import ZIP
+    <input id="import_zip" type="file" accept=".zip" style="display:none" />
+  </label>
+
+  <label class="btn primary" title="Add more TXT session files (stored locally in your browser)">
+    Add TXT Files
+    <input id="import_txt" type="file" accept=".txt" multiple style="display:none" />
+  </label>
+
+  <button id="btn_theme" class="btn" type="button" title="Toggle light/dark theme">Light theme</button>
+  <button id="btn_clear_extras" class="btn danger" type="button" title="Remove locally added sessions (keeps seed files)">Clear Added</button>
+  <button id="btn_export_csv" class="btn" type="button" title="Export key aggregates as CSV">Export CSV</button>
+  <button id="btn_export_jsonl" class="btn" type="button" title="Export cleaned sessions as JSONL (PII removed)">Export JSONL</button>
+  <button id="btn_export_anomalies" class="btn" type="button" title="Export anomaly + data-quality log as CSV (no PII)">Export Anomalies</button>
+  <span class="pill build" title="Application build version">Build: v6.0.4</span>
+</div>
+
+</header>
+
+    <div class="tabs">
+      <div id="tab_overview" class="tab active" title="Show Overview section">Overview</div>
+      <div id="tab_selection" class="tab" title="Show Selection section">Selection</div>
+      <div id="tab_exposure" class="tab" title="Show Exposure section">Exposure</div>
+      <div id="tab_compare" class="tab" title="Show Compare section">Compare</div>
+      <div id="tab_effort" class="tab" title="Show Effort section">Effort</div>
+      <div id="tab_submission" class="tab" title="Show Submission section">Submission</div>
+      <div id="tab_dq" class="tab" title="Show Data Quality section">Data Quality</div>
+      <div id="tab_anoms" class="tab" title="Show Anomalies section">Anomalies</div>
+      <div class="spacer"></div>
+      <div class="pill" title="Count of seed sessions loaded from data/sessions">Seed: <span id="seed_count">—</span></div>
+      <div class="pill" title="Count of locally added sessions stored in your browser (localStorage)">Added: <span id="extra_count">—</span></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="row">
+        <div class="hint">
+          <b>Status:</b> <span id="status">Loading…</span> <span id="status_detail" class="pill">—</span><br/>
+          This dashboard starts with the included TXT files (data/sessions). To add new runs, use <b>Add TXT Files</b>.
+          Added sessions are stored in your browser (localStorage). To permanently add files to the seed dataset,
+          copy new TXT files into <b>data/sessions</b>, run <b>rebuild-manifest.bat</b>, then restart the server.
+        </div>
+        <div class="spacer"></div>
+        <div class="hint" id="dataset_meta"></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" style="grid-column: 1 / -1;">
+        <h2>KPIs</h2>
+        <div class="kpis">
+          <div class="kpi"><div class="label">Sessions (filtered)</div><div id="kpi_sessions" class="value">—</div></div>
+          <div class="kpi"><div class="label">Completed</div><div id="kpi_completed" class="value">—</div></div>
+          <div class="kpi"><div class="label">Median time</div><div id="kpi_median_time" class="value">—</div></div>
+          <div class="kpi"><div class="label">p90 time</div><div id="kpi_p90_time" class="value">—</div></div>
+          <div class="kpi"><div class="label">Full-res usage</div><div id="kpi_fullres" class="value">—</div></div>
+          <div class="kpi"><div class="label">Mailto opened</div><div id="kpi_mailto" class="value">—</div></div>
+        </div>
+      </div>
+
+      <div class="card" id="dataset_summary" style="grid-column: 1 / -1;">
+        <div class="row" style="align-items:center;">
+          <div>
+            <h2 style="margin:0;">Dataset Summary</h2>
+            <div class="hint">All vs filtered summary for the current slice (no respondent fields, no PII)</div>
+          </div>
+          <div class="spacer"></div>
+          <button id="dataset_summary_toggle" class="btn small" type="button" aria-expanded="true" title="Collapse/expand dataset summary">Collapse</button>
+        </div>
+        <div id="dataset_summary_body">
+          <div class="summaryGrid">
+          <table id="summary_table" class="summaryTable" aria-label="Dataset summary table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>All</th>
+                <th>Filtered</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="summaryNotes">
+            <div class="pill">Active slice: <span id="summary_slice">—</span></div>
+            <div class="hint" style="margin-top:10px;">
+              Seed sessions load from <span class="pill">data/sessions</span> via <span class="pill">data/manifest.json</span>.
+              Added sessions are stored locally in your browser.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OVERVIEW -->
+      <div id="panel_overview" data-panel class="card" style="grid-column: 1 / -1;">
+        <h2>Overview</h2>
+        <div class="row">
+          <div style="flex:1;">
+            <div class="hint">Time-to-complete distribution (10 bins)</div>
+            <div id="time_hist" class="bars"></div>
+          </div>
+        </div>
+        <div class="grid" style="margin-top:12px;">
+          <div class="card" style="margin:0;">
+            <h2>Top #1 winners</h2>
+            <div class="hint">Counts of imageId ranked #1 (Top 10)</div>
+            <div id="top1_bars" class="bars"></div>
+          </div>
+          <div class="card" style="margin:0;">
+            <h2>Top 3 share-of-voice</h2>
+            <div class="hint">Counts of imageId appearing anywhere in Top 3 (Top 10)</div>
+            <div id="top3_bars" class="bars"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SELECTION -->
+      <div id="panel_selection" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+        <h2>Selection</h2>
+        <div class="grid">
+          <div class="card" style="margin:0;">
+            <h2>Top #1 winners</h2>
+            <div class="hint">ImageId counts for rank=1</div>
+            <div id="top1_bars_sel" class="bars"></div>
+          </div>
+          <div class="card" style="margin:0;">
+            <h2>Top 3 share-of-voice</h2>
+            <div class="hint">ImageId counts across ranks 1–3</div>
+            <div id="top3_bars_sel" class="bars"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin:12px 0 0 0;">
+          <div class="row" style="align-items:center;">
+            <h2 style="margin:0;">Rank heatmap</h2>
+            <div class="spacer"></div>
+            <button id="btn_heatmap_mode" class="btn" type="button" title="Toggle heatmap cell values between counts and percentages">Mode: Count</button>
+          </div>
+          <div class="hint">Counts (or % of filtered sessions) by imageId and rank (1–3).</div>
+          <div id="rank_heatmap" class="heatmapWrap" aria-label="Rank heatmap"></div>
+          <div id="rank_heatmap_legend" class="heatLegend"></div>
+        </div>
+
+        <div class="hint" style="margin-top:10px;">
+          Note: The current app flow reports <b>method=shortlist_then_rank</b> and <b>comparisonsMade=0</b> for all sessions in the seed dataset.
+        </div>
+      </div>
+
+      <!-- EXPOSURE -->
+      <div id="panel_exposure" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+        <h2>Exposure</h2>
+        <div class="row">
+          <div class="kpi" style="min-width:180px;">
+            <div class="label">Exposure CV</div>
+            <div id="fairness_cv" class="value">—</div>
+          </div>
+          <div class="kpi" style="min-width:180px;">
+            <div class="label">Exposure Gini</div>
+            <div id="fairness_gini" class="value">—</div>
+          </div>
+          <div class="hint">
+            CV and Gini are computed over total thumbnail exposures for imageId 1..25 in the filtered dataset.
+          </div>
+        </div>
+        <div class="hint" style="margin-top:10px;">
+          Tip: Exposure can inflate during review/ranking screens. Use this as a sanity signal, not proof of randomization bias.
+        </div>
+
+        <div class="grid" style="margin-top:12px;">
+          <div class="card" style="margin:0;">
+            <h2>Exposure totals (1–25)</h2>
+            <div class="hint">Sum of thumbnail exposures per imageId across the filtered dataset.</div>
+            <div id="exposure_totals_bars" class="bars"></div>
+          </div>
+          <div class="card" style="margin:0;">
+            <div class="row" style="align-items:center;">
+              <h2 style="margin:0;">Full‑res opens (1–25)</h2>
+              <div class="spacer"></div>
+              <div class="pill">Sessions w/ any full‑res open: <span id="kpi_fullres_sessions">—</span></div>
+            </div>
+            <div class="hint">Sum of full‑res opens per imageId across the filtered dataset.</div>
+            <div id="fullres_opens_bars" class="bars"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h2>Exposure vs selection</h2>
+          <div class="hint">Each point is an imageId. x = exposure totals, y = Top‑3 appearances (filtered dataset).</div>
+          <div id="exposure_selection_scatter" class="scatterWrap" aria-label="Exposure vs selection scatter"></div>
+        </div>
+
+      </div>
+
+      <!-- EFFORT -->
+      <div id="panel_effort" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+        <h2>Effort</h2>
+        <div class="hint">Top 10 longest sessions (PII removed)</div>
+        <table id="outliers">
+          <thead>
+            <tr>
+              <th>sessionId</th>
+              <th>device</th>
+              <th>time(s)</th>
+              <th>taps</th>
+              <th>expands</th>
+              <th>top3Changes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- SUBMISSION -->
+      <div id="panel_submission" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+        <h2>Submission</h2>
+        <div class="hint">mailto is inherently hard to confirm on the web; these are proxy telemetry signals.</div>
+        <div style="margin-top:10px;">
+          <div class="hint">Submission attempts distribution (Top values)</div>
+          <div id="attempts_bars" class="bars"></div>
+        </div>
+      </div>
+
+      <!-- DATA QUALITY -->
+      <div id="panel_dq" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+        <h2>Data Quality</h2>
+        <div class="row">
+          <div class="pill">Total issues: <span id="dq_total">—</span></div>
+          <div class="pill bad">bad: <span id="dq_bad">—</span></div>
+          <div class="pill warn">warn: <span id="dq_warn">—</span></div>
+        </div>
+        <table id="dq_table">
+          <thead>
+            <tr>
+              <th>sessionId</th>
+              <th>issue</th>
+              <th>severity</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="panel_compare" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+      <h2>Compare (Slice A vs Slice B)</h2>
+      <div class="hint">Compare two different filter slices side-by-side. This does not change your main filters above.</div>
+
+      <div class="compareGrid" style="margin-top:12px;">
+        <div class="card" style="margin:0;">
+          <h3 style="margin-top:0;">Slice A</h3>
+          <div class="compareFilters">
+            <select id="cmpA_device" class="select"><option value="all">Device: All</option><option value="mobile">Mobile</option><option value="desktop">Desktop</option><option value="unknown">Unknown</option></select>
+            <select id="cmpA_method" class="select"><option value="all">Method: All</option></select>
+            <select id="cmpA_version" class="select"><option value="all">Version: All</option></select>
+            <div class="dateRangeMini">
+              <input id="cmpA_start" class="dateInput" type="date" />
+              <span class="hint">to</span>
+              <input id="cmpA_end" class="dateInput" type="date" />
+            </div>
+          </div>
+          <div id="cmpA_kpis" class="compareKpis"></div>
+        </div>
+
+        <div class="card" style="margin:0;">
+          <h3 style="margin-top:0;">Slice B</h3>
+          <div class="compareFilters">
+            <select id="cmpB_device" class="select"><option value="all">Device: All</option><option value="mobile">Mobile</option><option value="desktop">Desktop</option><option value="unknown">Unknown</option></select>
+            <select id="cmpB_method" class="select"><option value="all">Method: All</option></select>
+            <select id="cmpB_version" class="select"><option value="all">Version: All</option></select>
+            <div class="dateRangeMini">
+              <input id="cmpB_start" class="dateInput" type="date" />
+              <span class="hint">to</span>
+              <input id="cmpB_end" class="dateInput" type="date" />
+            </div>
+          </div>
+          <div id="cmpB_kpis" class="compareKpis"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 style="margin-top:0;">Delta (B − A)</h3>
+        <div id="cmp_delta" class="compareKpis"></div>
+      </div>
+    </div>
+
+    <div id="panel_anoms" data-panel class="card" style="display:none; grid-column: 1 / -1;">
+      <h2>Anomalies</h2>
+      <div class="hint">Review import + seed + data-quality anomalies. This view never shows PII.</div>
+
+      <div class="anomControls" style="margin-top:12px;">
+        <select id="anom_severity" class="select">
+          <option value="all">Severity: All</option>
+          <option value="bad">bad</option>
+          <option value="warn">warn</option>
+          <option value="info">info</option>
+        </select>
+
+        <select id="anom_source" class="select">
+          <option value="all">Source: All</option>
+          <option value="seed">seed</option>
+          <option value="added">added</option>
+          <option value="dq">dq</option>
+        </select>
+
+        <input id="anom_search" class="textInput" type="text" placeholder="Search code / filename / sessionId" />
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <table class="table" id="anom_table">
+          <thead>
+            <tr>
+              <th>kind</th>
+              <th>sessionId</th>
+              <th>code</th>
+              <th>severity</th>
+              <th>source</th>
+              <th>filename</th>
+              <th>issue</th>
+              <th>ts</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="footer">
+      <div>
+        <b>Local workflow:</b> run <span class="pill" title="Local launcher script">server-start.bat</span> (serves index.html at http://localhost:5520).
+        To permanently add new TXT files: copy them into <span class="pill">data/sessions</span>, run <span class="pill">rebuild-manifest.bat</span>, then refresh the browser.
+      </div>
+    </div>
+  </div>
+
+  <script src="js/tooltips.js?v=6.0.5"></script>
+  <script src="js/app.js?v=6.0.5"></script>
+    </body>
+</html>

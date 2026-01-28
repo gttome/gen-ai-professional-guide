@@ -1,0 +1,8 @@
+Gen AI Prompt Companion — Cover Images
+Respondent: (not provided)
+Favorite: Cover 2
+Top 3: 1) Cover 2 2) Cover 12 3) Cover 8
+
+---BEGIN_JSON---
+{"app":"BookCoverTester","version":"1.2","respondent":{"name":"","email":""},"startedAt":"2026-01-27T16:04:23.412Z","submittedAt":"2026-01-27T16:10:46.279Z","results":{"favorite":{"imageId":"2"},"top3":[{"rank":1,"imageId":"2"},{"rank":2,"imageId":"12"},{"rank":3,"imageId":"8"}]},"metrics":{"sessionId":"836feea1-0cde-4875-b853-b3d5537771d2","method":"shortlist_then_rank","setsViewed":5,"shortlistCount":5,"imagesExpandedCount":0,"comparisonsMade":0,"timeToCompleteSeconds":383,"device":{"category":"mobile","viewport":"440x757"},"counts":{"taps":12,"marksToggled":5,"undoUsed":0,"top3Changes":3},"exposures":{"1":2,"2":6,"3":2,"4":2,"5":2,"6":2,"7":2,"8":6,"9":2,"10":2,"11":2,"12":6,"13":2,"14":2,"15":2,"16":2,"17":2,"18":2,"19":6,"20":2,"21":2,"22":2,"23":2,"24":6,"25":2},"fullResOpens":{},"submission":{"channel":"mailto","attempts":0,"mailtoOpenedAt":null,"copiedToClipboard":false,"userConfirmedSent":null,"confirmedAt":null},"dropOffStep":null,"errors":[]}}
+---END_JSON---

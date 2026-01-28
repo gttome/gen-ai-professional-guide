@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "description": "Seed dataset of submitted Book Cover Tester sessions (TXT files with embedded JSON blocks).",
+  "sessions": [
+    "data/sessions/02a8e19e-5487-4cab-9c1a-a2df71a1109c.txt",
+    "data/sessions/0746f00e-398f-4285-baf6-87e1e7f21b08.txt",
+    "data/sessions/075c4370-d928-42ee-9c55-f2c460466bea.txt",
+    "data/sessions/11ff8d73-ef04-45bd-b218-82c7374a9cc4.txt",
+    "data/sessions/1b6f0953-2884-4d36-bbab-83e5b4999212.txt",
+    "data/sessions/302ef45e-05b3-4f06-8482-93d1eb3c8345.txt",
+    "data/sessions/32b117d3-8d62-4efd-aca9-c28971741807.txt",
+    "data/sessions/529764dc-7266-4165-973e-adbd0ef170a0.txt",
+    "data/sessions/5829a3e0-20ec-4d6a-92cc-01779790988d.txt",
+    "data/sessions/59f93bbe-e00b-4a95-a5e4-e0e0ceda92f0.txt",
+    "data/sessions/60b19372-b32d-4520-b3e9-8b6c25ac6141.txt",
+    "data/sessions/73523863-52e7-4ecb-9bae-448f63cbdcbc.txt",
+    "data/sessions/8109fbb5-4722-4b2c-b47f-a8413d45195a.txt",
+    "data/sessions/836feea1-0cde-4875-b853-b3d5537771d2.txt",
+    "data/sessions/9d087836-3da5-4fdc-8d73-3ccb83c455c8.txt",
+    "data/sessions/JKnoid2026126.txt",
+    "data/sessions/bdd3c227-62ac-45c9-a47c-c635652a7d45.txt",
+    "data/sessions/d36296af-6dd1-46ec-bd7a-74d7e48ba371.txt",
+    "data/sessions/e2b3ecab-7dec-44b9-ac79-63ad92979553.txt",
+    "data/sessions/e7f15693-f2f5-4919-b762-16bc05320137.txt",
+    "data/sessions/fae1e6c3-c64b-40ee-9f62-228f9df119cb.txt"
+  ]
+}
