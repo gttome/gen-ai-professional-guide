@@ -461,6 +461,13 @@ function activeSliceLabel() {
   return parts.join(" | ");
 }
 
+function fileBasename(path) {
+  const s = String(path || "");
+  const clean = s.split("?")[0].split("#")[0];
+  const parts = clean.split(/[\\/]/);
+  return parts[parts.length - 1] || clean || "";
+}
+
 // -------------------------------
 // Rendering primitives
 // -------------------------------
@@ -675,6 +682,99 @@ function renderRankHeatmap() {
   const legend = $("#rank_heatmap_legend");
   if (legend) {
     legend.innerHTML = `<span class="hint">Intensity: low → high</span><span class="legendSwatch" aria-hidden="true"></span><span class="hint">max cell count: ${max}</span>`;
+  }
+}
+
+function renderSessionScoreboard() {
+  const tbody = document.querySelector("#scoreboard tbody");
+  if (!tbody) return;
+
+  const sessions = filteredSessions();
+  const ids = sessions.map(s => s.sessionId);
+  const sel = selectionRowsForSessions(ids);
+
+  // Image-level Top-3 appearance counts within the current slice.
+  const top3Counts = new Map();
+  for (const r of sel) {
+    const img = String(r.imageId);
+    top3Counts.set(img, (top3Counts.get(img) || 0) + 1);
+  }
+
+  // Session-level Top-3 picks (rank 1..3).
+  const picksBySession = new Map();
+  for (const r of sel) {
+    const sid = r.sessionId;
+    const rank = Number(r.rank);
+    if (!(rank === 1 || rank === 2 || rank === 3)) continue;
+    let p = picksBySession.get(sid);
+    if (!p) { p = { 1: null, 2: null, 3: null }; picksBySession.set(sid, p); }
+    p[rank] = String(r.imageId);
+  }
+
+  // Build ranked rows.
+  const rows = [];
+  for (const s of sessions) {
+    const p = picksBySession.get(s.sessionId);
+    const p1 = p?.[1];
+    const p2 = p?.[2];
+    const p3 = p?.[3];
+    if (!p1 || !p2 || !p3) continue;
+
+    const c1 = top3Counts.get(p1) || 0;
+    const c2 = top3Counts.get(p2) || 0;
+    const c3 = top3Counts.get(p3) || 0;
+    const score = c1 + c2 + c3;
+
+    const file = fileBasename(s.filename || "");
+    rows.push({
+      sessionId: s.sessionId,
+      file,
+      fileFull: s.filename || "",
+      source: s.source || "unknown",
+      dateKey: s.dateKey || "",
+      picks: [p1, p2, p3],
+      counts: [c1, c2, c3],
+      score
+    });
+  }
+
+  rows.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    // Tie-breakers: most recent date first, then sessionId.
+    if (a.dateKey && b.dateKey && a.dateKey !== b.dateKey) return a.dateKey < b.dateKey ? 1 : -1;
+    return String(a.sessionId).localeCompare(String(b.sessionId));
+  });
+
+  const kpi = document.querySelector("#kpi_scoreboard_count");
+  if (kpi) kpi.textContent = `${rows.length} sessions`;
+
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="hint">No sessions in the current slice have a complete ranked Top‑3.</td></tr>`;
+    return;
+  }
+
+  const MAX_ROWS = 250;
+  const shown = rows.slice(0, MAX_ROWS);
+  tbody.innerHTML = shown.map((r, idx) => {
+    const pickLinks = r.picks.map(id => linkImageId(id)).join(", ");
+    const breakdown = r.counts.join("+");
+    const fileLabel = r.file || "(unknown)";
+    const fileTitle = `${r.source}: ${r.fileFull || fileLabel}`;
+    const scoreTitle = `Score = ${r.counts.join(" + ")} = ${r.score}. Each term is the image’s Top‑3 appearance count in the current slice.`;
+    return `
+      <tr>
+        <td>${idx + 1}</td>
+        <td title="${escapeHtml(fileTitle)}">${escapeHtml(fileLabel)}</td>
+        <td>${linkSessionId(r.sessionId)}</td>
+        <td title="${escapeHtml(scoreTitle)}">${escapeHtml(r.score)}</td>
+        <td>${pickLinks}</td>
+        <td title="Top‑3 appearance counts for each of the three picks (within the current slice)">${escapeHtml(breakdown)}</td>
+      </tr>
+    `;
+  }).join("");
+
+  if (rows.length > MAX_ROWS) {
+    tbody.innerHTML += `<tr><td colspan="6" class="hint">Showing top ${MAX_ROWS} by score. Refine filters to narrow the slice.</td></tr>`;
   }
 }
 
@@ -1560,6 +1660,7 @@ function rerenderAll() {
   renderDatasetSummary();
   renderOverviewAndTables();
   renderRankHeatmap();
+  renderSessionScoreboard();
   renderExposureChartsAndScatter();
   renderCompare();
   renderAnomaliesPanel();
@@ -1757,8 +1858,7 @@ function renderAnomaliesPanel() {
     return "info: informational";
   };
 
-  const limited = rows.slice(0, 1000);
-  tbody.innerHTML = limited.map(r => `
+  tbody.innerHTML = rows.slice(0, 1000).map(r => `
     <tr>
       <td>${escapeHtml(r.kind)}</td>
       <td>${r.sessionId ? linkSessionId(r.sessionId) : ""}</td>
@@ -1770,10 +1870,10 @@ function renderAnomaliesPanel() {
       <td>${escapeHtml(r.ts)}</td>
     </tr>
   `).join("");
-  if (!limited.length) {
-    tbody.innerHTML = `<tr><td colspan="8" class="hint">No anomalies detected for the current dataset / filters.</td></tr>`;
-  }
 
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="8" class="hint">No anomalies match the current filters.</td></tr>`;
+  }
 }
 
 function renderActiveTab() {
